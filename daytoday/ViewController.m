@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import <sr-ios-library/UIColor+SR.h>
 @interface ViewController ()
 
 @end
@@ -17,6 +17,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor randomColor];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 

@@ -7,7 +7,8 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
+#import "SRTestCase.h"
 
-@interface daytodayTests : SenTestCase
+@interface daytodayTests : SRTestCase
 
 @end

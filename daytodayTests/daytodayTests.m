@@ -7,11 +7,13 @@
 //
 
 #import "daytodayTests.h"
+#import "SRTestCase.h"
 
 @implementation daytodayTests
 
 - (void)setUp
 {
+    self.modelURL = [NSString stringWithFormat:@"DayTodayModels"];
     [super setUp];
     
     // Set-up code here.
@@ -24,9 +26,9 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testMath
 {
-    STFail(@"Unit tests are not implemented yet in daytodayTests");
+    STAssertTrue(( (2+2) == 4),@"Math stopped working.");
 }
 
 @end
