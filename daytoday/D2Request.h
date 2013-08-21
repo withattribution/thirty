@@ -14,10 +14,13 @@
 @end
 
 @interface D2Request : NSObject
-
+@property (nonatomic,weak) NSManagedObjectContext* context;
 @property (readonly) AFHTTPClient *client;
 @property (nonatomic,retain) NSURL *baseURL;
-
+@property (readonly) NSString* identifier;
 @property (readonly) NSString* uuidString;
+
+- (id) initWithContext:(NSManagedObjectContext*)ctx;
+- (void) resetIdentifier;
 
 @end

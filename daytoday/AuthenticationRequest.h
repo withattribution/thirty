@@ -8,11 +8,13 @@
 
 #import "D2Request.h"
 @protocol AuthenticationRequestDelegate <D2RequestDelegate>
-- (void) authenticationSuccessful;
 
+-(void) authenticationSuccessful;
 
 @end
+
 @interface AuthenticationRequest : D2Request
+
 @property(nonatomic,weak) id <AuthenticationRequestDelegate> delegate;
 
 @end

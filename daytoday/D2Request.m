@@ -8,8 +8,10 @@
 
 #import "D2Request.h"
 
+#define kDeviceIdentifier @"com.submarinerich.daytoday.deviceidentifier"
+
 @implementation D2Request
-@synthesize baseURL;
+@synthesize baseURL, context;
 
 -(id)init
  {
@@ -20,6 +22,15 @@
     return self;
 }
 
+
+- (id) initWithContext:(NSManagedObjectContext*)ctx
+{
+    self = [self init];
+    if( self )
+        self.context = ctx;
+    
+    return self;
+}
 
 - (AFHTTPClient*)client
 {
@@ -35,6 +46,21 @@
         CFRelease(uuid);
         CFRelease(a);
         return [[uuidString stringByReplacingOccurrencesOfString:@"-" withString:@""] lowercaseString];
+}
+
+- (NSString*) identifier
+{
+    if([[NSUserDefaults standardUserDefaults] valueForKey:kDeviceIdentifier] == nil ){
+        [[NSUserDefaults standardUserDefaults] setValue:[self uuidString] forKey:kDeviceIdentifier];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    return (NSString*)[[NSUserDefaults standardUserDefaults] valueForKey:kDeviceIdentifier];
+}
+
+- (void) resetIdentifier
+{
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:kDeviceIdentifier];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

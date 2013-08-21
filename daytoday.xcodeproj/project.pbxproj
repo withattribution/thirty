@@ -97,6 +97,12 @@
 		B7E61E8617C2984F002B681B /* AuthenticationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E8417C2984F002B681B /* AuthenticationRequest.m */; };
 		B7E61E8917C29924002B681B /* UserRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E8817C29924002B681B /* UserRequest.m */; };
 		B7E61E8A17C29924002B681B /* UserRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E8817C29924002B681B /* UserRequest.m */; };
+		B7E61E8D17C4042A002B681B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E8C17C4042A002B681B /* User.m */; };
+		B7E61E8E17C4042A002B681B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E8C17C4042A002B681B /* User.m */; };
+		B7E61E9117C40464002B681B /* User+D2D.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E9017C40464002B681B /* User+D2D.m */; };
+		B7E61E9217C40464002B681B /* User+D2D.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E9017C40464002B681B /* User+D2D.m */; };
+		B7E61E9517C511AD002B681B /* NSDictionary+SR.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E9417C511AD002B681B /* NSDictionary+SR.m */; };
+		B7E61E9617C511AD002B681B /* NSDictionary+SR.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E9417C511AD002B681B /* NSDictionary+SR.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,6 +222,12 @@
 		B7E61E8417C2984F002B681B /* AuthenticationRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationRequest.m; sourceTree = "<group>"; };
 		B7E61E8717C29924002B681B /* UserRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserRequest.h; sourceTree = "<group>"; };
 		B7E61E8817C29924002B681B /* UserRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserRequest.m; sourceTree = "<group>"; };
+		B7E61E8B17C4042A002B681B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = daytoday/User.h; sourceTree = "<group>"; };
+		B7E61E8C17C4042A002B681B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = daytoday/User.m; sourceTree = "<group>"; };
+		B7E61E8F17C40464002B681B /* User+D2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "User+D2D.h"; path = "daytoday/User+D2D.h"; sourceTree = "<group>"; };
+		B7E61E9017C40464002B681B /* User+D2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "User+D2D.m"; path = "daytoday/User+D2D.m"; sourceTree = "<group>"; };
+		B7E61E9317C511AD002B681B /* NSDictionary+SR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+SR.h"; path = "sr-ios-library/sr-ios-library/NSDictionary+SR.h"; sourceTree = SOURCE_ROOT; };
+		B7E61E9417C511AD002B681B /* NSDictionary+SR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+SR.m"; path = "sr-ios-library/sr-ios-library/NSDictionary+SR.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +259,10 @@
 		B7E61D3517BD6AA5002B681B = {
 			isa = PBXGroup;
 			children = (
+				B7E61E8B17C4042A002B681B /* User.h */,
+				B7E61E8C17C4042A002B681B /* User.m */,
+				B7E61E8F17C40464002B681B /* User+D2D.h */,
+				B7E61E9017C40464002B681B /* User+D2D.m */,
 				B7E61DF817C27D24002B681B /* CoreData.framework */,
 				B7E61D4717BD6AA5002B681B /* daytoday */,
 				B7E61D6B17BD6AA5002B681B /* daytodayTests */,
@@ -347,6 +363,8 @@
 				B7E61DEB17C273C4002B681B /* UIColor+SR.m */,
 				B7E61DEC17C273C4002B681B /* UIImageView+SR.h */,
 				B7E61DED17C273C4002B681B /* UIImageView+SR.m */,
+				B7E61E9317C511AD002B681B /* NSDictionary+SR.h */,
+				B7E61E9417C511AD002B681B /* NSDictionary+SR.m */,
 			);
 			name = "sr-ios-library";
 			sourceTree = "<group>";
@@ -587,6 +605,9 @@
 				B7E61E8117C28674002B681B /* D2Request.m in Sources */,
 				B7E61E8517C2984F002B681B /* AuthenticationRequest.m in Sources */,
 				B7E61E8917C29924002B681B /* UserRequest.m in Sources */,
+				B7E61E8D17C4042A002B681B /* User.m in Sources */,
+				B7E61E9117C40464002B681B /* User+D2D.m in Sources */,
+				B7E61E9517C511AD002B681B /* NSDictionary+SR.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +650,9 @@
 				B7E61E8217C28674002B681B /* D2Request.m in Sources */,
 				B7E61E8617C2984F002B681B /* AuthenticationRequest.m in Sources */,
 				B7E61E8A17C29924002B681B /* UserRequest.m in Sources */,
+				B7E61E8E17C4042A002B681B /* User.m in Sources */,
+				B7E61E9217C40464002B681B /* User+D2D.m in Sources */,
+				B7E61E9617C511AD002B681B /* NSDictionary+SR.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

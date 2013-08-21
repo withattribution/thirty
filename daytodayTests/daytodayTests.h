@@ -8,7 +8,11 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "SRTestCase.h"
+#import "NIDebuggingTools.h"
+#import "UserRequest.h"
 
-@interface daytodayTests : SRTestCase
-
+@interface daytodayTests : SRTestCase <UserRequestDelegate>
+{
+    BOOL userCreated;
+}
 @end

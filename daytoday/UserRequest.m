@@ -7,23 +7,43 @@
 //
 
 #import "UserRequest.h"
+#import "User+D2D.h"
 
 @implementation UserRequest
 
-- (void) createUser:(NSString*) username withPassword:(NSString*)pw
+@synthesize delegate;
+
+
+- (void) createUser:(NSString*) username withPassword:(NSString*)pw additionalParameters:(NSDictionary*)params
 {
-    //NSMutableURLRequest* req = [[self client] requestWithMethod:@"PUT" path:@"/user" parameters:@{@"username" : username, @"pass" : pw}];
-    //[[self client]
-    [[self client] putPath:@"/user" parameters:@{@"username" : username, @"pass" : pw} success:^(AFHTTPRequestOperation *req, id responseObject){
+
     
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSMutableDictionary* d1 = [[NSMutableDictionary alloc] initWithDictionary:@{@"username" : username, @"pass" : pw, @"phone" : [self identifier]}];
+    [d1 addEntriesFromDictionary:params];
+
+    NSMutableURLRequest *req = [self.client requestWithMethod:@"PUT" path:@"/user" parameters:[NSDictionary dictionaryWithDictionary:d1]];
+    
+    AFJSONRequestOperation* jrequest = [AFJSONRequestOperation JSONRequestOperationWithRequest:req success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        NIDINFO(@" json response : %@",JSON);
+        NSDictionary* jsonDict = (NSDictionary*)JSON;
+        if([jsonDict valueForKey:@"success"] && [jsonDict valueForKey:@"user"] ){
+            User *u = [User fromDictionary:[jsonDict valueForKey:@"user"] inContext:self.context];
+            if( [self.delegate respondsToSelector:@selector(userCreatedSuccesfully:)] )
+                [self.delegate userCreatedSuccesfully:u];
+        }
         
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        if(self.delegate)
+            [self.delegate requestDidError:error];
     }];
+    [self.client enqueueHTTPRequestOperation:jrequest];
+
 }
 - (void) getUser:(NSNumber*)userId
 {
     
 }
+
 - (void) updateUserWithParameters:(NSDictionary*)dict
 {
     
