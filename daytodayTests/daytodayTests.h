@@ -10,9 +10,15 @@
 #import "SRTestCase.h"
 #import "NIDebuggingTools.h"
 #import "UserRequest.h"
+#import "AuthenticationRequest.h"
+#import "FollowRequest.h"
 
-@interface daytodayTests : SRTestCase <UserRequestDelegate>
+@interface daytodayTests : SRTestCase <UserRequestDelegate,AuthenticationRequestDelegate,FollowRequestDelegate>
 {
     BOOL userCreated;
+    BOOL userUpdated;
+    User* tempUser;
+    BOOL followWorked;
+    BOOL authSuccess;
 }
 @end

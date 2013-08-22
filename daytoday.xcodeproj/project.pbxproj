@@ -97,12 +97,36 @@
 		B7E61E8617C2984F002B681B /* AuthenticationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E8417C2984F002B681B /* AuthenticationRequest.m */; };
 		B7E61E8917C29924002B681B /* UserRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E8817C29924002B681B /* UserRequest.m */; };
 		B7E61E8A17C29924002B681B /* UserRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E8817C29924002B681B /* UserRequest.m */; };
-		B7E61E8D17C4042A002B681B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E8C17C4042A002B681B /* User.m */; };
-		B7E61E8E17C4042A002B681B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E8C17C4042A002B681B /* User.m */; };
 		B7E61E9117C40464002B681B /* User+D2D.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E9017C40464002B681B /* User+D2D.m */; };
 		B7E61E9217C40464002B681B /* User+D2D.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E9017C40464002B681B /* User+D2D.m */; };
 		B7E61E9517C511AD002B681B /* NSDictionary+SR.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E9417C511AD002B681B /* NSDictionary+SR.m */; };
 		B7E61E9617C511AD002B681B /* NSDictionary+SR.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E9417C511AD002B681B /* NSDictionary+SR.m */; };
+		B7E61E9E17C55662002B681B /* FollowRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E9D17C55662002B681B /* FollowRequest.m */; };
+		B7E61E9F17C55662002B681B /* FollowRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61E9D17C55662002B681B /* FollowRequest.m */; };
+		B7E61EA217C56202002B681B /* ChallengeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EA117C56202002B681B /* ChallengeRequest.m */; };
+		B7E61EA317C56202002B681B /* ChallengeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EA117C56202002B681B /* ChallengeRequest.m */; };
+		B7E61EA617C677AA002B681B /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EA517C677AA002B681B /* Like.m */; };
+		B7E61EA717C677AA002B681B /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EA517C677AA002B681B /* Like.m */; };
+		B7E61EAA17C677AB002B681B /* Intent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EA917C677AB002B681B /* Intent.m */; };
+		B7E61EAB17C677AB002B681B /* Intent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EA917C677AB002B681B /* Intent.m */; };
+		B7E61EAE17C677AC002B681B /* ChallengeDay.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EAD17C677AC002B681B /* ChallengeDay.m */; };
+		B7E61EAF17C677AC002B681B /* ChallengeDay.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EAD17C677AC002B681B /* ChallengeDay.m */; };
+		B7E61EB217C677AC002B681B /* Tick.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EB117C677AC002B681B /* Tick.m */; };
+		B7E61EB317C677AC002B681B /* Tick.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EB117C677AC002B681B /* Tick.m */; };
+		B7E61EB617C677AD002B681B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EB517C677AC002B681B /* User.m */; };
+		B7E61EB717C677AD002B681B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EB517C677AC002B681B /* User.m */; };
+		B7E61EBA17C677AD002B681B /* Challenge.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EB917C677AD002B681B /* Challenge.m */; };
+		B7E61EBB17C677AD002B681B /* Challenge.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EB917C677AD002B681B /* Challenge.m */; };
+		B7E61EBE17C677AD002B681B /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EBD17C677AD002B681B /* Comment.m */; };
+		B7E61EBF17C677AD002B681B /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EBD17C677AD002B681B /* Comment.m */; };
+		B7E61EC217C677AE002B681B /* Star.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EC117C677AD002B681B /* Star.m */; };
+		B7E61EC317C677AE002B681B /* Star.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61EC117C677AD002B681B /* Star.m */; };
+		B7E61ECE17C677EF002B681B /* Verification.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61ECD17C677EE002B681B /* Verification.m */; };
+		B7E61ECF17C677EF002B681B /* Verification.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61ECD17C677EE002B681B /* Verification.m */; };
+		B7E61ED217C67F07002B681B /* Follow+D2D.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61ED117C67F06002B681B /* Follow+D2D.m */; };
+		B7E61ED317C67F07002B681B /* Follow+D2D.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61ED117C67F06002B681B /* Follow+D2D.m */; };
+		B7E61ED617C68AC0002B681B /* Follow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61ED517C68AC0002B681B /* Follow.m */; };
+		B7E61ED717C68AC0002B681B /* Follow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E61ED517C68AC0002B681B /* Follow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -222,12 +246,36 @@
 		B7E61E8417C2984F002B681B /* AuthenticationRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationRequest.m; sourceTree = "<group>"; };
 		B7E61E8717C29924002B681B /* UserRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserRequest.h; sourceTree = "<group>"; };
 		B7E61E8817C29924002B681B /* UserRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserRequest.m; sourceTree = "<group>"; };
-		B7E61E8B17C4042A002B681B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = daytoday/User.h; sourceTree = "<group>"; };
-		B7E61E8C17C4042A002B681B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = daytoday/User.m; sourceTree = "<group>"; };
 		B7E61E8F17C40464002B681B /* User+D2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "User+D2D.h"; path = "daytoday/User+D2D.h"; sourceTree = "<group>"; };
 		B7E61E9017C40464002B681B /* User+D2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "User+D2D.m"; path = "daytoday/User+D2D.m"; sourceTree = "<group>"; };
 		B7E61E9317C511AD002B681B /* NSDictionary+SR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+SR.h"; path = "sr-ios-library/sr-ios-library/NSDictionary+SR.h"; sourceTree = SOURCE_ROOT; };
 		B7E61E9417C511AD002B681B /* NSDictionary+SR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+SR.m"; path = "sr-ios-library/sr-ios-library/NSDictionary+SR.m"; sourceTree = SOURCE_ROOT; };
+		B7E61E9C17C55662002B681B /* FollowRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowRequest.h; sourceTree = "<group>"; };
+		B7E61E9D17C55662002B681B /* FollowRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowRequest.m; sourceTree = "<group>"; };
+		B7E61EA017C56202002B681B /* ChallengeRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeRequest.h; sourceTree = "<group>"; };
+		B7E61EA117C56202002B681B /* ChallengeRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeRequest.m; sourceTree = "<group>"; };
+		B7E61EA417C677AA002B681B /* Like.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Like.h; path = daytoday/Like.h; sourceTree = "<group>"; };
+		B7E61EA517C677AA002B681B /* Like.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Like.m; path = daytoday/Like.m; sourceTree = "<group>"; };
+		B7E61EA817C677AB002B681B /* Intent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Intent.h; path = daytoday/Intent.h; sourceTree = "<group>"; };
+		B7E61EA917C677AB002B681B /* Intent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Intent.m; path = daytoday/Intent.m; sourceTree = "<group>"; };
+		B7E61EAC17C677AB002B681B /* ChallengeDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChallengeDay.h; path = daytoday/ChallengeDay.h; sourceTree = "<group>"; };
+		B7E61EAD17C677AC002B681B /* ChallengeDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChallengeDay.m; path = daytoday/ChallengeDay.m; sourceTree = "<group>"; };
+		B7E61EB017C677AC002B681B /* Tick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tick.h; path = daytoday/Tick.h; sourceTree = "<group>"; };
+		B7E61EB117C677AC002B681B /* Tick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tick.m; path = daytoday/Tick.m; sourceTree = "<group>"; };
+		B7E61EB417C677AC002B681B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = daytoday/User.h; sourceTree = "<group>"; };
+		B7E61EB517C677AC002B681B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = daytoday/User.m; sourceTree = "<group>"; };
+		B7E61EB817C677AD002B681B /* Challenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Challenge.h; path = daytoday/Challenge.h; sourceTree = "<group>"; };
+		B7E61EB917C677AD002B681B /* Challenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Challenge.m; path = daytoday/Challenge.m; sourceTree = "<group>"; };
+		B7E61EBC17C677AD002B681B /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Comment.h; path = daytoday/Comment.h; sourceTree = "<group>"; };
+		B7E61EBD17C677AD002B681B /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Comment.m; path = daytoday/Comment.m; sourceTree = "<group>"; };
+		B7E61EC017C677AD002B681B /* Star.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Star.h; path = daytoday/Star.h; sourceTree = "<group>"; };
+		B7E61EC117C677AD002B681B /* Star.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Star.m; path = daytoday/Star.m; sourceTree = "<group>"; };
+		B7E61ECC17C677EE002B681B /* Verification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Verification.h; sourceTree = "<group>"; };
+		B7E61ECD17C677EE002B681B /* Verification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Verification.m; sourceTree = "<group>"; };
+		B7E61ED017C67F06002B681B /* Follow+D2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Follow+D2D.h"; path = "daytoday/Follow+D2D.h"; sourceTree = "<group>"; };
+		B7E61ED117C67F06002B681B /* Follow+D2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Follow+D2D.m"; path = "daytoday/Follow+D2D.m"; sourceTree = "<group>"; };
+		B7E61ED417C68AC0002B681B /* Follow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Follow.h; path = daytoday/Follow.h; sourceTree = "<group>"; };
+		B7E61ED517C68AC0002B681B /* Follow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Follow.m; path = daytoday/Follow.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,8 +307,26 @@
 		B7E61D3517BD6AA5002B681B = {
 			isa = PBXGroup;
 			children = (
-				B7E61E8B17C4042A002B681B /* User.h */,
-				B7E61E8C17C4042A002B681B /* User.m */,
+				B7E61ED417C68AC0002B681B /* Follow.h */,
+				B7E61ED517C68AC0002B681B /* Follow.m */,
+				B7E61EC017C677AD002B681B /* Star.h */,
+				B7E61EC117C677AD002B681B /* Star.m */,
+				B7E61EBC17C677AD002B681B /* Comment.h */,
+				B7E61EBD17C677AD002B681B /* Comment.m */,
+				B7E61EB817C677AD002B681B /* Challenge.h */,
+				B7E61EB917C677AD002B681B /* Challenge.m */,
+				B7E61EB417C677AC002B681B /* User.h */,
+				B7E61EB517C677AC002B681B /* User.m */,
+				B7E61EB017C677AC002B681B /* Tick.h */,
+				B7E61EB117C677AC002B681B /* Tick.m */,
+				B7E61EAC17C677AB002B681B /* ChallengeDay.h */,
+				B7E61EAD17C677AC002B681B /* ChallengeDay.m */,
+				B7E61EA817C677AB002B681B /* Intent.h */,
+				B7E61EA917C677AB002B681B /* Intent.m */,
+				B7E61EA417C677AA002B681B /* Like.h */,
+				B7E61EA517C677AA002B681B /* Like.m */,
+				B7E61ED017C67F06002B681B /* Follow+D2D.h */,
+				B7E61ED117C67F06002B681B /* Follow+D2D.m */,
 				B7E61E8F17C40464002B681B /* User+D2D.h */,
 				B7E61E9017C40464002B681B /* User+D2D.m */,
 				B7E61DF817C27D24002B681B /* CoreData.framework */,
@@ -294,18 +360,13 @@
 		B7E61D4717BD6AA5002B681B /* daytoday */ = {
 			isa = PBXGroup;
 			children = (
+				B7E61E9717C547BE002B681B /* requests */,
 				B7E61E7317C27F60002B681B /* JSONKit */,
 				B7E61E4D17C27F43002B681B /* AFNetworking */,
 				B7E61DFB17C27F1A002B681B /* nimbus-core */,
 				B7E61DE317C2739A002B681B /* sr-ios-library */,
 				B7E61D5017BD6AA5002B681B /* AppDelegate.h */,
 				B7E61D5117BD6AA5002B681B /* AppDelegate.m */,
-				B7E61E7F17C28674002B681B /* D2Request.h */,
-				B7E61E8017C28674002B681B /* D2Request.m */,
-				B7E61E8717C29924002B681B /* UserRequest.h */,
-				B7E61E8817C29924002B681B /* UserRequest.m */,
-				B7E61E8317C2984F002B681B /* AuthenticationRequest.h */,
-				B7E61E8417C2984F002B681B /* AuthenticationRequest.m */,
 				B7E61D5917BD6AA5002B681B /* ViewController.h */,
 				B7E61D5A17BD6AA5002B681B /* ViewController.m */,
 				B7E61D5C17BD6AA5002B681B /* ViewController.xib */,
@@ -452,6 +513,25 @@
 				B7E61E7517C27F6E002B681B /* JSONKit.m */,
 			);
 			name = JSONKit;
+			sourceTree = "<group>";
+		};
+		B7E61E9717C547BE002B681B /* requests */ = {
+			isa = PBXGroup;
+			children = (
+				B7E61E7F17C28674002B681B /* D2Request.h */,
+				B7E61E8017C28674002B681B /* D2Request.m */,
+				B7E61E9C17C55662002B681B /* FollowRequest.h */,
+				B7E61E9D17C55662002B681B /* FollowRequest.m */,
+				B7E61EA017C56202002B681B /* ChallengeRequest.h */,
+				B7E61EA117C56202002B681B /* ChallengeRequest.m */,
+				B7E61E8717C29924002B681B /* UserRequest.h */,
+				B7E61E8817C29924002B681B /* UserRequest.m */,
+				B7E61E8317C2984F002B681B /* AuthenticationRequest.h */,
+				B7E61E8417C2984F002B681B /* AuthenticationRequest.m */,
+				B7E61ECC17C677EE002B681B /* Verification.h */,
+				B7E61ECD17C677EE002B681B /* Verification.m */,
+			);
+			name = requests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -605,9 +685,21 @@
 				B7E61E8117C28674002B681B /* D2Request.m in Sources */,
 				B7E61E8517C2984F002B681B /* AuthenticationRequest.m in Sources */,
 				B7E61E8917C29924002B681B /* UserRequest.m in Sources */,
-				B7E61E8D17C4042A002B681B /* User.m in Sources */,
 				B7E61E9117C40464002B681B /* User+D2D.m in Sources */,
 				B7E61E9517C511AD002B681B /* NSDictionary+SR.m in Sources */,
+				B7E61E9E17C55662002B681B /* FollowRequest.m in Sources */,
+				B7E61EA217C56202002B681B /* ChallengeRequest.m in Sources */,
+				B7E61EA617C677AA002B681B /* Like.m in Sources */,
+				B7E61EAA17C677AB002B681B /* Intent.m in Sources */,
+				B7E61EAE17C677AC002B681B /* ChallengeDay.m in Sources */,
+				B7E61EB217C677AC002B681B /* Tick.m in Sources */,
+				B7E61EB617C677AD002B681B /* User.m in Sources */,
+				B7E61EBA17C677AD002B681B /* Challenge.m in Sources */,
+				B7E61EBE17C677AD002B681B /* Comment.m in Sources */,
+				B7E61EC217C677AE002B681B /* Star.m in Sources */,
+				B7E61ECE17C677EF002B681B /* Verification.m in Sources */,
+				B7E61ED217C67F07002B681B /* Follow+D2D.m in Sources */,
+				B7E61ED617C68AC0002B681B /* Follow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,9 +742,21 @@
 				B7E61E8217C28674002B681B /* D2Request.m in Sources */,
 				B7E61E8617C2984F002B681B /* AuthenticationRequest.m in Sources */,
 				B7E61E8A17C29924002B681B /* UserRequest.m in Sources */,
-				B7E61E8E17C4042A002B681B /* User.m in Sources */,
 				B7E61E9217C40464002B681B /* User+D2D.m in Sources */,
 				B7E61E9617C511AD002B681B /* NSDictionary+SR.m in Sources */,
+				B7E61E9F17C55662002B681B /* FollowRequest.m in Sources */,
+				B7E61EA317C56202002B681B /* ChallengeRequest.m in Sources */,
+				B7E61EA717C677AA002B681B /* Like.m in Sources */,
+				B7E61EAB17C677AB002B681B /* Intent.m in Sources */,
+				B7E61EAF17C677AC002B681B /* ChallengeDay.m in Sources */,
+				B7E61EB317C677AC002B681B /* Tick.m in Sources */,
+				B7E61EB717C677AD002B681B /* User.m in Sources */,
+				B7E61EBB17C677AD002B681B /* Challenge.m in Sources */,
+				B7E61EBF17C677AD002B681B /* Comment.m in Sources */,
+				B7E61EC317C677AE002B681B /* Star.m in Sources */,
+				B7E61ECF17C677EF002B681B /* Verification.m in Sources */,
+				B7E61ED317C67F07002B681B /* Follow+D2D.m in Sources */,
+				B7E61ED717C68AC0002B681B /* Follow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

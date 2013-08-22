@@ -9,9 +9,34 @@
 #import "AuthenticationRequest.h"
 
 @implementation AuthenticationRequest
--(NSURL*) url
+- (void) loginUser:(NSString*) username withPassword:(NSString*)pw
 {
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/auth",self.baseURL]];
+    NSMutableDictionary* d1 = [[NSMutableDictionary alloc] initWithDictionary:@{@"username" : username, @"password" : pw, @"phone" : [self identifier]}];
+    
+    NSMutableURLRequest *req = [self.client requestWithMethod:@"POST" path:@"/auth" parameters:[NSDictionary dictionaryWithDictionary:d1]];
+    
+    AFJSONRequestOperation* jrequest = [AFJSONRequestOperation JSONRequestOperationWithRequest:req success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        NSDictionary* jsonDict = (NSDictionary*)JSON;
+        NIDINFO(@"authentication result: %@",JSON);
+        if([jsonDict valueForKey:@"success"] && [jsonDict valueForKey:@"user"] ){
+            User *u = [User fromDictionary:[jsonDict valueForKey:@"user"] inContext:self.context];
+            if( [self.delegate respondsToSelector:@selector(authenticationSuccessful:)] )
+                [self.delegate authenticationSuccessful:u];
+        }
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        if(self.delegate)
+            [self.delegate requestDidError:error];
+        NIDERROR(@"%@",JSON);
+    }];
+    [self.client enqueueHTTPRequestOperation:jrequest];
+}
+
+- (void) logoutDevice
+{
+    [self resetIdentifier];
+    if( self.delegate && [self.delegate respondsToSelector:@selector(logoutSuccessful)] )
+        [self.delegate logoutSuccessful];
     
 }
 @end
