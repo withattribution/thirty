@@ -9,5 +9,19 @@
 #import "ChallengeRequest.h"
 
 @implementation ChallengeRequest
+@synthesize delegate;
+
+- (void) createChallenge:(NSDictionary*)params
+{
+    
+}
+- (void) updateChallenge:(NSDictionary*)params
+{
+    
+}
+- (void) getChallenge:(NSNumber*)challengeId
+{
+    
+}
 
 @end

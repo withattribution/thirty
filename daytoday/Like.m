@@ -7,12 +7,14 @@
 //
 
 #import "Like.h"
+#import "ChallengeDay.h"
 #import "User.h"
 
 
 @implementation Like
 
 @dynamic createdAt;
+@dynamic likeId;
 @dynamic user;
 @dynamic challengeDay;
 

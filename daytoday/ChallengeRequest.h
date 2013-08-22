@@ -7,13 +7,19 @@
 //
 
 #import "D2Request.h"
+#import "Challenge.h"
 
 @protocol ChallengeRequestDelegate <D2RequestDelegate>
-- (void) challengeSuccessfullyCreated;
-- (void) gotChallenge;
-- (void) updatedChallenge;
+- (void) challengeSuccessfullyCreated:(Challenge*)challenge;
+- (void) gotChallenge:(Challenge*)challenge;
+- (void) updatedChallenge:(Challenge*)challenge;
 @end
 
 @interface ChallengeRequest : D2Request
 @property(nonatomic,weak) id <ChallengeRequestDelegate> delegate;
+
+- (void) createChallenge:(NSDictionary*)params;
+- (void) updateChallenge:(NSDictionary*)params;
+- (void) getChallenge:(NSNumber*)challengeId;
+
 @end

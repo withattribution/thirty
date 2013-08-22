@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class User;
+@class Challenge, ChallengeDay, User;
 
 @interface Intent : NSManagedObject
 
@@ -17,14 +17,14 @@
 @property (nonatomic, retain) NSDate * ending;
 @property (nonatomic, retain) NSNumber * intentId;
 @property (nonatomic, retain) User *user;
-@property (nonatomic, retain) NSManagedObject *challenge;
+@property (nonatomic, retain) Challenge *challenge;
 @property (nonatomic, retain) NSSet *days;
 @end
 
 @interface Intent (CoreDataGeneratedAccessors)
 
-- (void)addDaysObject:(NSManagedObject *)value;
-- (void)removeDaysObject:(NSManagedObject *)value;
+- (void)addDaysObject:(ChallengeDay *)value;
+- (void)removeDaysObject:(ChallengeDay *)value;
 - (void)addDays:(NSSet *)values;
 - (void)removeDays:(NSSet *)values;
 

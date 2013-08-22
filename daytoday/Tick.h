@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class ChallengeDay, Intent;
+@class ChallengeDay, Intent, Verification;
 
 @interface Tick : NSManagedObject
 
 @property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSNumber * tickId;
 @property (nonatomic, retain) Intent *intent;
 @property (nonatomic, retain) ChallengeDay *challengeDay;
-@property (nonatomic, retain) NSManagedObject *verification;
+@property (nonatomic, retain) Verification *verification;
 
 @end

@@ -9,11 +9,13 @@
 #import "Tick.h"
 #import "ChallengeDay.h"
 #import "Intent.h"
+#import "Verification.h"
 
 
 @implementation Tick
 
 @dynamic createdAt;
+@dynamic tickId;
 @dynamic intent;
 @dynamic challengeDay;
 @dynamic verification;

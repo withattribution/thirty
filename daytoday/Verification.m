@@ -18,6 +18,7 @@
 @dynamic desc;
 @dynamic wholeNumber;
 @dynamic floatNumber;
+@dynamic verificationId;
 @dynamic tick;
 
 @end

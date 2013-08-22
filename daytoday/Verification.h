@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSString * desc;
 @property (nonatomic, retain) NSNumber * wholeNumber;
 @property (nonatomic, retain) NSNumber * floatNumber;
+@property (nonatomic, retain) NSNumber * verificationId;
 @property (nonatomic, retain) Tick *tick;
 
 @end

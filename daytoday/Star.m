@@ -14,6 +14,7 @@
 @implementation Star
 
 @dynamic createdAt;
+@dynamic starId;
 @dynamic challenge;
 @dynamic user;
 

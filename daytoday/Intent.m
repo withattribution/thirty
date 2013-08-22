@@ -7,6 +7,8 @@
 //
 
 #import "Intent.h"
+#import "Challenge.h"
+#import "ChallengeDay.h"
 #import "User.h"
 
 

@@ -7,8 +7,12 @@
 //
 
 #import "User.h"
+#import "Challenge.h"
+#import "Comment.h"
+#import "Follow.h"
 #import "Intent.h"
 #import "Like.h"
+#import "Star.h"
 
 
 @implementation User

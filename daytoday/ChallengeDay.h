@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Intent, Like;
+@class Comment, Intent, Like, Tick;
 
 @interface ChallengeDay : NSManagedObject
 
@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSNumber * numberCompleted;
 @property (nonatomic, retain) NSNumber * numberRequired;
 @property (nonatomic, retain) NSDate * day;
+@property (nonatomic, retain) NSNumber * challengeDayId;
 @property (nonatomic, retain) Intent *intent;
 @property (nonatomic, retain) NSSet *ticks;
 @property (nonatomic, retain) NSSet *likes;
@@ -25,8 +26,8 @@
 
 @interface ChallengeDay (CoreDataGeneratedAccessors)
 
-- (void)addTicksObject:(NSManagedObject *)value;
-- (void)removeTicksObject:(NSManagedObject *)value;
+- (void)addTicksObject:(Tick *)value;
+- (void)removeTicksObject:(Tick *)value;
 - (void)addTicks:(NSSet *)values;
 - (void)removeTicks:(NSSet *)values;
 
@@ -35,8 +36,8 @@
 - (void)addLikes:(NSSet *)values;
 - (void)removeLikes:(NSSet *)values;
 
-- (void)addCommentsObject:(NSManagedObject *)value;
-- (void)removeCommentsObject:(NSManagedObject *)value;
+- (void)addCommentsObject:(Comment *)value;
+- (void)removeCommentsObject:(Comment *)value;
 - (void)addComments:(NSSet *)values;
 - (void)removeComments:(NSSet *)values;
 

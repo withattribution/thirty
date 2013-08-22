@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSString * comment;
 @property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSNumber * commentId;
 @property (nonatomic, retain) User *user;
 @property (nonatomic, retain) ChallengeDay *challengeDay;
 

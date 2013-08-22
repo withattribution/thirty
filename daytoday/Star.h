@@ -14,6 +14,7 @@
 @interface Star : NSManagedObject
 
 @property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSNumber * starId;
 @property (nonatomic, retain) Challenge *challenge;
 @property (nonatomic, retain) User *user;
 

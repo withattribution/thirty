@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Intent, Like;
+@class Challenge, Comment, Follow, Intent, Like, Star;
 
 @interface User : NSManagedObject
 
@@ -34,8 +34,8 @@
 - (void)addIntents:(NSSet *)values;
 - (void)removeIntents:(NSSet *)values;
 
-- (void)addChallengesCreatedObject:(NSManagedObject *)value;
-- (void)removeChallengesCreatedObject:(NSManagedObject *)value;
+- (void)addChallengesCreatedObject:(Challenge *)value;
+- (void)removeChallengesCreatedObject:(Challenge *)value;
 - (void)addChallengesCreated:(NSSet *)values;
 - (void)removeChallengesCreated:(NSSet *)values;
 
@@ -44,23 +44,23 @@
 - (void)addLikes:(NSSet *)values;
 - (void)removeLikes:(NSSet *)values;
 
-- (void)addCommentsObject:(NSManagedObject *)value;
-- (void)removeCommentsObject:(NSManagedObject *)value;
+- (void)addCommentsObject:(Comment *)value;
+- (void)removeCommentsObject:(Comment *)value;
 - (void)addComments:(NSSet *)values;
 - (void)removeComments:(NSSet *)values;
 
-- (void)addStarsObject:(NSManagedObject *)value;
-- (void)removeStarsObject:(NSManagedObject *)value;
+- (void)addStarsObject:(Star *)value;
+- (void)removeStarsObject:(Star *)value;
 - (void)addStars:(NSSet *)values;
 - (void)removeStars:(NSSet *)values;
 
-- (void)addFollowingObject:(NSManagedObject *)value;
-- (void)removeFollowingObject:(NSManagedObject *)value;
+- (void)addFollowingObject:(Follow *)value;
+- (void)removeFollowingObject:(Follow *)value;
 - (void)addFollowing:(NSSet *)values;
 - (void)removeFollowing:(NSSet *)values;
 
-- (void)addFollowersObject:(NSManagedObject *)value;
-- (void)removeFollowersObject:(NSManagedObject *)value;
+- (void)addFollowersObject:(Follow *)value;
+- (void)removeFollowersObject:(Follow *)value;
 - (void)addFollowers:(NSSet *)values;
 - (void)removeFollowers:(NSSet *)values;
 

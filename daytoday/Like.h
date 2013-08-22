@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class User;
+@class ChallengeDay, User;
 
 @interface Like : NSManagedObject
 
 @property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSNumber * likeId;
 @property (nonatomic, retain) User *user;
-@property (nonatomic, retain) NSManagedObject *challengeDay;
+@property (nonatomic, retain) ChallengeDay *challengeDay;
 
 @end

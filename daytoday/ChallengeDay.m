@@ -7,8 +7,10 @@
 //
 
 #import "ChallengeDay.h"
+#import "Comment.h"
 #import "Intent.h"
 #import "Like.h"
+#import "Tick.h"
 
 
 @implementation ChallengeDay
@@ -17,6 +19,7 @@
 @dynamic numberCompleted;
 @dynamic numberRequired;
 @dynamic day;
+@dynamic challengeDayId;
 @dynamic intent;
 @dynamic ticks;
 @dynamic likes;

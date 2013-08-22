@@ -15,6 +15,7 @@
 
 @dynamic comment;
 @dynamic createdAt;
+@dynamic commentId;
 @dynamic user;
 @dynamic challengeDay;
 
