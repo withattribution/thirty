@@ -43,4 +43,12 @@
     
     return returnObject;
 }
++(id) fromDictionary:(NSDictionary*)dictionary inContext:(NSManagedObjectContext*)context
+{
+    ChallengeDay *u = [ChallengeDay getForID:[dictionary valueForKey:@"id"] inContext:context];
+    
+    
+    return u;
+    
+}
 @end

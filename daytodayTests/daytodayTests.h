@@ -12,13 +12,27 @@
 #import "UserRequest.h"
 #import "AuthenticationRequest.h"
 #import "FollowRequest.h"
-
-@interface daytodayTests : SRTestCase <UserRequestDelegate,AuthenticationRequestDelegate,FollowRequestDelegate>
+#import "ChallengeRequest.h"
+#import "IntentRequest.h"
+#import "TickRequest.h"
+#import "LikeRequest.h"
+@interface daytodayTests : SRTestCase <UserRequestDelegate,
+    AuthenticationRequestDelegate,
+    FollowRequestDelegate,
+    ChallengeRequestDelegate,
+    IntentRequestDelegate, TickRequestDelegate, LikeRequestDelegate>
 {
     BOOL userCreated;
     BOOL userUpdated;
     User* tempUser;
+    Challenge* tempChallenge;
+    Intent* tempIntent;
+    ChallengeDay* tempChallengeDay;
     BOOL followWorked;
     BOOL authSuccess;
+    BOOL challengeCreated;
+    BOOL intentCreated;
+    BOOL tickCreated;
+    BOOL likeSuccess;
 }
 @end

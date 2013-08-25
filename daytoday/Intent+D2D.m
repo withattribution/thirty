@@ -42,4 +42,13 @@
     
     return returnObject;
 }
+
++(id) fromDictionary:(NSDictionary*)dictionary inContext:(NSManagedObjectContext*)context
+{
+    Intent *u = [Intent getForID:[dictionary valueForKey:@"id"] inContext:context];
+    
+
+    return u;
+    
+}
 @end

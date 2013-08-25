@@ -14,6 +14,9 @@
 
 - (void) createChallenge:(NSDictionary*)params
 {
+    [params assertKey:@"name"];
+    [params assertKey:@"description"];
+    
     NSMutableDictionary* d1 = [[NSMutableDictionary alloc] initWithDictionary:@{@"auth" : [self identifier]}];
     [d1 addEntriesFromDictionary:params];
     NSMutableURLRequest *req = [self.client requestWithMethod:@"PUT" path:@"/challenge" parameters:[NSDictionary dictionaryWithDictionary:d1]];

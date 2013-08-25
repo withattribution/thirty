@@ -17,7 +17,7 @@
 @end
 
 @interface LikeRequest : D2Request
-- (void) like:(ChallengeDay*)cd fromUser:(User*)user;
-- (void) unlike:(ChallengeDay*)cd fromUser:(User*)user;
-- (void) unlike:(Like*)like;
+@property(nonatomic,weak) id<LikeRequestDelegate> delegate;
+- (void) like:(ChallengeDay*)cd;
+- (void) unlike:(ChallengeDay*)cd;
 @end

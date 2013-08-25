@@ -17,7 +17,7 @@
     
     AFJSONRequestOperation* jrequest = [AFJSONRequestOperation JSONRequestOperationWithRequest:req success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         NSDictionary* jsonDict = (NSDictionary*)JSON;
-        NIDINFO(@"authentication result: %@",JSON);
+        //NIDINFO(@"authentication result: %@",JSON);
         if([jsonDict valueForKey:@"success"] && [jsonDict valueForKey:@"user"] ){
             User *u = [User fromDictionary:[jsonDict valueForKey:@"user"] inContext:self.context];
             if( [self.delegate respondsToSelector:@selector(authenticationSuccessful:)] )

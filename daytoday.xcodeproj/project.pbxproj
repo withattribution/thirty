@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
+		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B7E61D4217BD6AA5002B681B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4117BD6AA5002B681B /* UIKit.framework */; };
 		B7E61D4417BD6AA5002B681B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4317BD6AA5002B681B /* Foundation.framework */; };
 		B7E61D4617BD6AA5002B681B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4517BD6AA5002B681B /* CoreGraphics.framework */; };
@@ -160,6 +162,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
+		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
 		B7E61D3E17BD6AA5002B681B /* daytoday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = daytoday.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7E61D4117BD6AA5002B681B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B7E61D4317BD6AA5002B681B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -539,6 +543,8 @@
 			children = (
 				B7E61E7F17C28674002B681B /* D2Request.h */,
 				B7E61E8017C28674002B681B /* D2Request.m */,
+				B73366AF17CA8B87002524E4 /* TickRequest.h */,
+				B73366B017CA8B87002524E4 /* TickRequest.m */,
 				B7E61E9C17C55662002B681B /* FollowRequest.h */,
 				B7E61E9D17C55662002B681B /* FollowRequest.m */,
 				B7E61F1D17C9702D002B681B /* LikeRequest.h */,
@@ -779,6 +785,7 @@
 				B7E61F1F17C9702D002B681B /* LikeRequest.m in Sources */,
 				B7E61F2317C97039002B681B /* CommentRequest.m in Sources */,
 				B7E61F2717C97082002B681B /* Comment+D2D.m in Sources */,
+				B73366B117CA8B87002524E4 /* TickRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -846,6 +853,7 @@
 				B7E61F2017C9702D002B681B /* LikeRequest.m in Sources */,
 				B7E61F2417C97039002B681B /* CommentRequest.m in Sources */,
 				B7E61F2817C97082002B681B /* Comment+D2D.m in Sources */,
+				B73366B217CA8B87002524E4 /* TickRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1022,6 +1030,7 @@
 				B7E61D7817BD6AA5002B681B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B7E61D7917BD6AA5002B681B /* Build configuration list for PBXNativeTarget "daytodayTests" */ = {
 			isa = XCConfigurationList;
@@ -1030,6 +1039,7 @@
 				B7E61D7B17BD6AA5002B681B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

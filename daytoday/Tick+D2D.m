@@ -42,4 +42,12 @@
     
     return returnObject;
 }
++(id) fromDictionary:(NSDictionary*)dictionary inContext:(NSManagedObjectContext*)context
+{
+    Tick *u = [Tick getForID:[dictionary valueForKey:@"id"] inContext:context];
+    
+    
+    return u;
+    
+}
 @end

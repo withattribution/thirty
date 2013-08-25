@@ -9,6 +9,8 @@
 #import "daytodayTests.h"
 #import "SRTestCase.h"
 
+#define kWaitTimeForRequest 0.5f
+
 @interface Auth : NSObject
 @property(nonatomic,strong) NSString* username;
 @property(nonatomic,strong) NSString* password;
@@ -51,6 +53,11 @@
     userUpdated = NO;
     followWorked = NO;
     authSuccess = NO;
+    challengeCreated = NO;
+    intentCreated = NO;
+    tempIntent = nil;
+    tickCreated = NO;
+    likeSuccess = NO;
     [super setUp];
     
     // Set-up code here.
@@ -79,7 +86,7 @@
 
 - (void) userCreatedSuccesfully:(User*)user
 {
-    NIDINFO(@"user made! : %@",user);
+    //NIDINFO(@"user made! : %@",user);
     tempUser = user;
     userCreated = YES;
 }
@@ -121,6 +128,57 @@
     
 }
 
+#pragma mark -
+#pragma mark Challenge Request Delegate
+- (void) challengeSuccessfullyCreated:(Challenge*)challenge
+{
+    challengeCreated = YES;
+    tempChallenge = challenge;
+}
+- (void) gotChallenge:(Challenge*)challenge
+{
+    
+}
+- (void) updatedChallenge:(Challenge*)challenge
+{
+    
+}
+
+#pragma mark -
+#pragma mark Intent Request Delegate
+- (void) createdIntent:(Intent*)challenge
+{
+    intentCreated = YES;
+    if( tempIntent == nil )
+        tempIntent = challenge;
+}
+
+- (void) deletedIntent:(Intent*)challenge
+{
+    
+}
+
+#pragma mark - 
+#pragma mark Tick Request Delegate
+- (void) tickAccepted:(ChallengeDay*)cd andTick:(Tick*)t
+{
+    tickCreated = YES;
+    tempChallengeDay = cd;
+}
+
+#pragma mark -
+#pragma mark Like Request Delegate
+- (void) successfullyLiked:(Like*)like
+{
+    likeSuccess = YES;
+}
+- (void) successfullyUnliked
+{
+    
+}
+
+#pragma mark -
+
 - (void)testUserCreation
 {
     UserRequest * req = [[UserRequest alloc] initWithContext:self.managedObjectContext];
@@ -128,7 +186,7 @@
     NSString *username = [[self generateUUIDString] substringWithRange:NSMakeRange(0, 15)];
     STAssertFalse(userCreated, @"user created preemptively?");
     [req createUser:username withPassword:[self generateUUIDString] additionalParameters:nil];
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     STAssertTrue(userCreated, @"user not created!");
 }
 
@@ -138,21 +196,21 @@
     UserRequest * req = [[UserRequest alloc] initWithContext:self.managedObjectContext];
     req.delegate = self;
     [req updateUserWithParameters:@{@"real_name" :realname }];
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     STAssertTrue(userUpdated, @"user successfully updated");
     
     UserRequest *r1 = [[UserRequest alloc] initWithContext:self.managedObjectContext];
     r1.delegate = self;
     [r1 getUser:tempUser.userId];
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
-    NIDINFO(@"temp user looks like: %@",tempUser);
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    //NIDINFO(@"temp user looks like: %@",tempUser);
     STAssertTrue([tempUser.realName isEqualToString:realname], @"didn't get out what I put in");
 }
 
 -(void) testSharedApplicationDelegate
 {
     STAssertNotNil([UIApplication sharedApplication].delegate,@"delegate should exist");
-    NIDINFO(@"shared application delegate looks like: %@",[[UIApplication sharedApplication].delegate class]);
+    //NIDINFO(@"shared application delegate looks like: %@",[[UIApplication sharedApplication].delegate class]);
 }
 
 -(void)testFlow
@@ -164,7 +222,7 @@
 
     req.delegate = self;
     [req createUser:userA.username withPassword:userA.password additionalParameters:nil];
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     userA.userId = tempUser.userId;
     
     AuthenticationRequest* req1 = [[AuthenticationRequest alloc] initWithContext:self.managedObjectContext];
@@ -172,43 +230,92 @@
     [req1 logoutDevice];
     
     [req createUser:userB.username withPassword:userB.password additionalParameters:nil];
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     userB.userId = tempUser.userId;
     [req1 logoutDevice];
     
     [req createUser:userC.username withPassword:userC.password additionalParameters:nil];
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     userC.userId = tempUser.userId;
     [req1 logoutDevice];
     
     [req1 loginUser:userA.username withPassword:userA.password];
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     STAssertTrue(authSuccess, @"authentication was unusccessful");
     
     FollowRequest* fr = [[FollowRequest alloc] initWithContext:self.managedObjectContext];
     fr.delegate = self;
     [fr followUser:userB.userId];
     
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     STAssertTrue(followWorked, @"follow didn't go through successfully?");
     [req1 logoutDevice];
     followWorked = NO;
     authSuccess = NO;
     [req1 loginUser:userB.username withPassword:userB.password];
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     [fr followUser:userA.userId];
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     STAssertTrue(followWorked, @"follow didn't go through successfully?");
     [req1 logoutDevice];
     followWorked = NO;
     [req1 loginUser:userC.username withPassword:userC.password];
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     [fr followUser:userA.userId];
-    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.f]];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     STAssertTrue(followWorked, @"follow didn't go through successfully?");
     [req1 logoutDevice];
     
+    [req1 loginUser:userA.username withPassword:userA.password];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    ChallengeRequest *cr = [[ChallengeRequest alloc] initWithContext:self.managedObjectContext];
+    cr.delegate = self;
+    NSDictionary* challengeDict = @{ @"name": self.generateUUIDString, @"description" : self.generateUUIDString,
+                                     @"duration": self.generateNumber, @"frequency":self.generateNumber};
+    [cr createChallenge:challengeDict];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    STAssertTrue(challengeCreated, @"challenge not created successfully");
     
+    
+    IntentRequest* ir = [[IntentRequest alloc] initWithContext:self.managedObjectContext];
+    ir.delegate = self;
+    [ir createIntent:@{ @"challenge" : tempChallenge.challengeId }];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    STAssertTrue(intentCreated, @"intent not created");
+    [req1 logoutDevice];
+    intentCreated = NO;
+    
+    [req1 loginUser:userB.username withPassword:userB.password];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    [ir createIntent:@{@"challenge": tempChallenge.challengeId}];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    STAssertTrue(intentCreated, @"intent not created");
+    [req1 logoutDevice];
+    [req1 loginUser:userA.username withPassword:userA.password];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    TickRequest* tr = [[TickRequest alloc] initWithContext:self.managedObjectContext];
+    tr.delegate = self;
+    STAssertNotNil(tempIntent, @"intent shouldn't be nil here");
+    STAssertNotNil(tempIntent.intentId, @"intentid shouldn't be nil");
+    [tr makeTick:@{@"intent": tempIntent.intentId}];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    STAssertTrue(tickCreated, @"tick not created!");
+    [req1 logoutDevice];
+    [req1 loginUser:userB.username withPassword:userB.password];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    LikeRequest *lr = [[LikeRequest alloc] initWithContext:self.managedObjectContext];
+    lr.delegate = self;
+    [lr like:tempChallengeDay];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    STAssertTrue(likeSuccess, @"like didn't work!");
+    likeSuccess = NO;
+    [req1 logoutDevice];
+    [req1 loginUser:userC.username withPassword:userC.password];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    [lr like:tempChallengeDay];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    STAssertTrue(likeSuccess, @"like didn't work!");
+    likeSuccess = NO;
 }
 
 

@@ -43,4 +43,13 @@
     
     return returnObject;
 }
+
++(id) fromDictionary:(NSDictionary*)dictionary inContext:(NSManagedObjectContext*)context
+{
+    Star *u = [Star getForID:[dictionary valueForKey:@"id"] inContext:context];
+    
+    
+    return u;
+    
+}
 @end
