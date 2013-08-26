@@ -58,6 +58,8 @@
     tempIntent = nil;
     tickCreated = NO;
     likeSuccess = NO;
+    commentSuccess = NO;
+    commentDeleted = NO;
     [super setUp];
     
     // Set-up code here.
@@ -175,6 +177,18 @@
 - (void) successfullyUnliked
 {
     
+}
+
+#pragma mark -
+#pragma mark Comment Request Delegate
+- (void) createdComment:(Comment*)comment
+{
+    commentSuccess = YES;
+    tempComment = comment;
+}
+- (void) deletedComment
+{
+    commentDeleted = YES;
 }
 
 #pragma mark -
@@ -316,6 +330,32 @@
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     STAssertTrue(likeSuccess, @"like didn't work!");
     likeSuccess = NO;
+    
+    CommentRequest *cr1 = [[CommentRequest alloc] initWithContext:self.managedObjectContext];
+    cr1.delegate = self;
+    [cr1 createComment:tempChallengeDay comment:userC.uuidString];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    STAssertTrue(commentSuccess, @"comment not successfully created");
+    commentSuccess = NO;
+    [req1 logoutDevice];
+    [req1 loginUser:userB.username withPassword:userB.password];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    [cr1 createComment:tempChallengeDay comment:userB.uuidString];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    STAssertTrue(commentSuccess, @"comment not successfully created");
+    commentSuccess = NO;
+    
+    [cr1 deleteComment:tempComment.commentId];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    STAssertTrue(commentDeleted, @"comment not successfully deleted");
+    commentDeleted = NO;
+    
+    [req1 logoutDevice];
+    [req1 loginUser:userA.username withPassword:userA.password];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    [cr1 createComment:tempChallengeDay comment:userA.uuidString];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    STAssertTrue(commentSuccess, @"comment not successfully created");
 }
 
 

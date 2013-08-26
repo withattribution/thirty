@@ -16,11 +16,13 @@
 #import "IntentRequest.h"
 #import "TickRequest.h"
 #import "LikeRequest.h"
+#import "CommentRequest.h"
+
 @interface daytodayTests : SRTestCase <UserRequestDelegate,
     AuthenticationRequestDelegate,
     FollowRequestDelegate,
     ChallengeRequestDelegate,
-    IntentRequestDelegate, TickRequestDelegate, LikeRequestDelegate>
+    IntentRequestDelegate, TickRequestDelegate, LikeRequestDelegate,CommentRequestDelegate>
 {
     BOOL userCreated;
     BOOL userUpdated;
@@ -28,11 +30,14 @@
     Challenge* tempChallenge;
     Intent* tempIntent;
     ChallengeDay* tempChallengeDay;
+    Comment* tempComment;
     BOOL followWorked;
     BOOL authSuccess;
     BOOL challengeCreated;
     BOOL intentCreated;
     BOOL tickCreated;
     BOOL likeSuccess;
+    BOOL commentSuccess;
+    BOOL commentDeleted;
 }
 @end
