@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
+		B75D59A017CBAC9700160592 /* ResetPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */; };
+		B75D59A117CBAC9700160592 /* ResetPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */; };
 		B7E61D4217BD6AA5002B681B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4117BD6AA5002B681B /* UIKit.framework */; };
 		B7E61D4417BD6AA5002B681B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4317BD6AA5002B681B /* Foundation.framework */; };
 		B7E61D4617BD6AA5002B681B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4517BD6AA5002B681B /* CoreGraphics.framework */; };
@@ -164,6 +166,8 @@
 /* Begin PBXFileReference section */
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
+		B75D599E17CBAC9600160592 /* ResetPasswordRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordRequest.h; sourceTree = "<group>"; };
+		B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordRequest.m; sourceTree = "<group>"; };
 		B7E61D3E17BD6AA5002B681B /* daytoday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = daytoday.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7E61D4117BD6AA5002B681B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B7E61D4317BD6AA5002B681B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -559,6 +563,8 @@
 				B7E61E8817C29924002B681B /* UserRequest.m */,
 				B7E61E8317C2984F002B681B /* AuthenticationRequest.h */,
 				B7E61E8417C2984F002B681B /* AuthenticationRequest.m */,
+				B75D599E17CBAC9600160592 /* ResetPasswordRequest.h */,
+				B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */,
 			);
 			name = requests;
 			sourceTree = "<group>";
@@ -786,6 +792,7 @@
 				B7E61F2317C97039002B681B /* CommentRequest.m in Sources */,
 				B7E61F2717C97082002B681B /* Comment+D2D.m in Sources */,
 				B73366B117CA8B87002524E4 /* TickRequest.m in Sources */,
+				B75D59A017CBAC9700160592 /* ResetPasswordRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -854,6 +861,7 @@
 				B7E61F2417C97039002B681B /* CommentRequest.m in Sources */,
 				B7E61F2817C97082002B681B /* Comment+D2D.m in Sources */,
 				B73366B217CA8B87002524E4 /* TickRequest.m in Sources */,
+				B75D59A117CBAC9700160592 /* ResetPasswordRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
