@@ -9,7 +9,7 @@
 #import "daytodayTests.h"
 #import "SRTestCase.h"
 
-#define kWaitTimeForRequest 0.5f
+#define kWaitTimeForRequest 0.4f
 
 @interface Auth : NSObject
 @property(nonatomic,strong) NSString* username;
@@ -225,6 +225,39 @@
 {
     STAssertNotNil([UIApplication sharedApplication].delegate,@"delegate should exist");
     //NIDINFO(@"shared application delegate looks like: %@",[[UIApplication sharedApplication].delegate class]);
+}
+
+-(void)testImageUpload
+{
+    Auth *userA = [[Auth alloc] init];
+    UserRequest *req = [[UserRequest alloc] initWithContext:self.managedObjectContext];
+    req.delegate = self;
+    [req createUser:userA.username withPassword:userA.password additionalParameters:nil];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    userA.userId = tempUser.userId;
+    NSString* turtlePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"Two-Headed-Turtle1" ofType:@"jpg"];
+    STAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:turtlePath isDirectory:NO],@"file not where it's supposed to be!");
+    UIImage *turtleImage = [UIImage imageWithContentsOfFile:turtlePath];
+    NSData *imageData = UIImageJPEGRepresentation(turtleImage, 0.5);
+    STAssertNotNil(imageData, @"image is nil");
+    NSMutableURLRequest *req1 = [req.client multipartFormRequestWithMethod:@"POST" path:@"/user" parameters:@{@"auth": req.identifier} constructingBodyWithBlock:^(id <AFMultipartFormData>formData) {
+        
+        [formData appendPartWithFileData:imageData name:@"file" fileName:@"Two-Headed-Turtle1.jpg" mimeType:@"image/jpg"];
+    }];
+    
+    __block NSDictionary* jsonDict = nil;
+    
+    AFJSONRequestOperation *jrequest = [AFJSONRequestOperation JSONRequestOperationWithRequest:req1 success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        jsonDict = (NSDictionary*)JSON;
+        NIDINFO(@"json dictionary looks like: %@",jsonDict);
+        STAssertNotNil([jsonDict valueForKey:@"success"],@"success wasn't a thing that happened");
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        STAssertFalse(YES, @"if this gets hit, there was a failure");
+    }];
+    [req.client enqueueHTTPRequestOperation:jrequest];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+
+    
 }
 
 -(void)testFlow

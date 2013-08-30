@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
+		B74006FD17D0E5F80004460C /* Two-Headed-Turtle1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B74006FC17D0E5F80004460C /* Two-Headed-Turtle1.jpg */; };
 		B75D59A017CBAC9700160592 /* ResetPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */; };
 		B75D59A117CBAC9700160592 /* ResetPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */; };
 		B7E61D4217BD6AA5002B681B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4117BD6AA5002B681B /* UIKit.framework */; };
@@ -166,6 +167,7 @@
 /* Begin PBXFileReference section */
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
+		B74006FC17D0E5F80004460C /* Two-Headed-Turtle1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Two-Headed-Turtle1.jpg"; sourceTree = "<group>"; };
 		B75D599E17CBAC9600160592 /* ResetPasswordRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordRequest.h; sourceTree = "<group>"; };
 		B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordRequest.m; sourceTree = "<group>"; };
 		B7E61D3E17BD6AA5002B681B /* daytoday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = daytoday.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -420,6 +422,7 @@
 		B7E61D6B17BD6AA5002B681B /* daytodayTests */ = {
 			isa = PBXGroup;
 			children = (
+				B74006FC17D0E5F80004460C /* Two-Headed-Turtle1.jpg */,
 				B7E61D7117BD6AA5002B681B /* daytodayTests.h */,
 				B7E61D7217BD6AA5002B681B /* daytodayTests.m */,
 				B7E61D6C17BD6AA5002B681B /* Supporting Files */,
@@ -699,6 +702,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7E61D7017BD6AA5002B681B /* InfoPlist.strings in Resources */,
+				B74006FD17D0E5F80004460C /* Two-Headed-Turtle1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
