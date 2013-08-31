@@ -2,7 +2,7 @@
 //  Intent.h
 //  daytoday
 //
-//  Created by Anderson Miller on 8/22/13.
+//  Created by Anderson Miller on 8/31/13.
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
@@ -13,12 +13,12 @@
 
 @interface Intent : NSManagedObject
 
-@property (nonatomic, retain) NSDate * starting;
 @property (nonatomic, retain) NSDate * ending;
 @property (nonatomic, retain) NSNumber * intentId;
-@property (nonatomic, retain) User *user;
+@property (nonatomic, retain) NSDate * starting;
 @property (nonatomic, retain) Challenge *challenge;
 @property (nonatomic, retain) NSSet *days;
+@property (nonatomic, retain) User *user;
 @end
 
 @interface Intent (CoreDataGeneratedAccessors)

@@ -2,7 +2,7 @@
 //  Like.h
 //  daytoday
 //
-//  Created by Anderson Miller on 8/22/13.
+//  Created by Anderson Miller on 8/31/13.
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSNumber * likeId;
-@property (nonatomic, retain) User *user;
 @property (nonatomic, retain) ChallengeDay *challengeDay;
+@property (nonatomic, retain) User *user;
 
 @end

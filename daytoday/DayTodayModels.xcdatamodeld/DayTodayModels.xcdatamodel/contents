@@ -7,6 +7,7 @@
         <attribute name="frequency" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="created_by" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="challengesCreated" inverseEntity="User" syncable="YES"/>
+        <relationship name="image" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="challenge" inverseEntity="Image" syncable="YES"/>
         <relationship name="intents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Intent" inverseName="challenge" inverseEntity="Intent" syncable="YES"/>
     </entity>
     <entity name="ChallengeDay" representedClassName="ChallengeDay" syncable="YES">
@@ -25,6 +26,7 @@
         <attribute name="commentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="challengeDay" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ChallengeDay" inverseName="comments" inverseEntity="ChallengeDay" syncable="YES"/>
+        <relationship name="image" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="comment" inverseEntity="Image" syncable="YES"/>
         <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="comments" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Follow" representedClassName="Follow" syncable="YES">
@@ -32,6 +34,16 @@
         <attribute name="followId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="follower" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="following" inverseEntity="User" syncable="YES"/>
         <relationship name="superstar" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="followers" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Image" representedClassName="Image" syncable="YES">
+        <attribute name="imageId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="local" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="challenge" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Challenge" inverseName="image" inverseEntity="Challenge" syncable="YES"/>
+        <relationship name="comment" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Comment" inverseName="image" inverseEntity="Comment" syncable="YES"/>
+        <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="image" inverseEntity="User" syncable="YES"/>
+        <relationship name="verification" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Verification" inverseName="image" inverseEntity="Verification" syncable="YES"/>
     </entity>
     <entity name="Intent" representedClassName="Intent" syncable="YES">
         <attribute name="ending" attributeType="Date" syncable="YES"/>
@@ -70,6 +82,7 @@
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="user" inverseEntity="Comment" syncable="YES"/>
         <relationship name="followers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Follow" inverseName="superstar" inverseEntity="Follow" syncable="YES"/>
         <relationship name="following" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Follow" inverseName="follower" inverseEntity="Follow" syncable="YES"/>
+        <relationship name="image" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="user" inverseEntity="Image" syncable="YES"/>
         <relationship name="intents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Intent" inverseName="user" inverseEntity="Intent" syncable="YES"/>
         <relationship name="likes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Like" inverseName="user" inverseEntity="Like" syncable="YES"/>
         <relationship name="stars" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Star" inverseName="user" inverseEntity="Star" syncable="YES"/>
@@ -82,18 +95,20 @@
         <attribute name="foursquareId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="verificationId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="wholeNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="image" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="verification" inverseEntity="Image" syncable="YES"/>
         <relationship name="tick" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Tick" inverseName="verification" inverseEntity="Tick" syncable="YES"/>
     </entity>
     <elements>
-        <element name="User" positionX="-9" positionY="5" width="128" height="223"/>
-        <element name="Challenge" positionX="-441" positionY="-4" width="128" height="148"/>
-        <element name="Intent" positionX="-216" positionY="-64" width="128" height="133"/>
+        <element name="Challenge" positionX="-441" positionY="-4" width="128" height="163"/>
         <element name="ChallengeDay" positionX="7" positionY="-243" width="128" height="178"/>
-        <element name="Tick" positionX="-324" positionY="-297" width="128" height="118"/>
-        <element name="Like" positionX="169" positionY="-63" width="128" height="103"/>
-        <element name="Comment" positionX="288" positionY="-193" width="128" height="118"/>
-        <element name="Star" positionX="-281" positionY="182" width="128" height="103"/>
+        <element name="Comment" positionX="288" positionY="-193" width="128" height="133"/>
         <element name="Follow" positionX="304" positionY="198" width="128" height="103"/>
-        <element name="Verification" positionX="-614" positionY="-207" width="128" height="163"/>
+        <element name="Intent" positionX="-216" positionY="-64" width="128" height="133"/>
+        <element name="Like" positionX="169" positionY="-63" width="128" height="103"/>
+        <element name="Star" positionX="-281" positionY="182" width="128" height="103"/>
+        <element name="Tick" positionX="-324" positionY="-297" width="128" height="118"/>
+        <element name="User" positionX="-9" positionY="5" width="128" height="238"/>
+        <element name="Verification" positionX="-614" positionY="-207" width="128" height="178"/>
+        <element name="Image" positionX="-0" positionY="314" width="128" height="163"/>
     </elements>
 </model>

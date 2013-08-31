@@ -2,7 +2,7 @@
 //  ChallengeDay.m
 //  daytoday
 //
-//  Created by Anderson Miller on 8/22/13.
+//  Created by Anderson Miller on 8/31/13.
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
@@ -15,14 +15,14 @@
 
 @implementation ChallengeDay
 
+@dynamic challengeDayId;
 @dynamic completed;
+@dynamic day;
 @dynamic numberCompleted;
 @dynamic numberRequired;
-@dynamic day;
-@dynamic challengeDayId;
-@dynamic intent;
-@dynamic ticks;
-@dynamic likes;
 @dynamic comments;
+@dynamic intent;
+@dynamic likes;
+@dynamic ticks;
 
 @end

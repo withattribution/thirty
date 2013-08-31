@@ -2,7 +2,7 @@
 //  Intent.m
 //  daytoday
 //
-//  Created by Anderson Miller on 8/22/13.
+//  Created by Anderson Miller on 8/31/13.
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
@@ -14,11 +14,11 @@
 
 @implementation Intent
 
-@dynamic starting;
 @dynamic ending;
 @dynamic intentId;
-@dynamic user;
+@dynamic starting;
 @dynamic challenge;
 @dynamic days;
+@dynamic user;
 
 @end

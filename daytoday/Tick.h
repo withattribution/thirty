@@ -2,7 +2,7 @@
 //  Tick.h
 //  daytoday
 //
-//  Created by Anderson Miller on 8/22/13.
+//  Created by Anderson Miller on 8/31/13.
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
@@ -15,8 +15,8 @@
 
 @property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSNumber * tickId;
-@property (nonatomic, retain) Intent *intent;
 @property (nonatomic, retain) ChallengeDay *challengeDay;
+@property (nonatomic, retain) Intent *intent;
 @property (nonatomic, retain) Verification *verification;
 
 @end
