@@ -54,6 +54,8 @@
     if( [dictionary valueForKey:kFollowerKey] )
         [u setFollower:[User getForID:[dictionary valueForKey:kFollowerKey] inContext:context]];
     
+    if( [dictionary validKey:kCreatedAtKey] )
+        [u setCreatedAt:[NSDate fromString:[dictionary valueForKey:kCreatedAtKey]]];
     
     return u;
 }

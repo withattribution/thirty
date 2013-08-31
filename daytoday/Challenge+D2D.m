@@ -65,6 +65,9 @@
     if( [dictionary validKey:kCreatedByKey] )
         [u setCreated_by:[User getForID:[dictionary valueForKey:kCreatedByKey] inContext:context]];
     
+    if( [dictionary validKey:kCreatedAtKey] )
+        [u setCreatedAt:[NSDate fromString:[dictionary valueForKey:kCreatedAtKey]]];
+    
     return u;
     
 }

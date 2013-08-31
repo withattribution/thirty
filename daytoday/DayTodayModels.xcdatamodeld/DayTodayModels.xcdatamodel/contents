@@ -2,6 +2,7 @@
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Challenge" representedClassName="Challenge" syncable="YES">
         <attribute name="challengeId" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="frequency" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -36,6 +37,7 @@
         <relationship name="superstar" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="followers" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Image" representedClassName="Image" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="imageId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="local" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
@@ -88,6 +90,7 @@
         <relationship name="stars" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Star" inverseName="user" inverseEntity="Star" syncable="YES"/>
     </entity>
     <entity name="Verification" representedClassName="Verification" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="enumeration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -99,7 +102,7 @@
         <relationship name="tick" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Tick" inverseName="verification" inverseEntity="Tick" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Challenge" positionX="-441" positionY="-4" width="128" height="163"/>
+        <element name="Challenge" positionX="-441" positionY="-4" width="128" height="178"/>
         <element name="ChallengeDay" positionX="7" positionY="-243" width="128" height="178"/>
         <element name="Comment" positionX="288" positionY="-193" width="128" height="133"/>
         <element name="Follow" positionX="304" positionY="198" width="128" height="103"/>
@@ -108,7 +111,7 @@
         <element name="Star" positionX="-281" positionY="182" width="128" height="103"/>
         <element name="Tick" positionX="-324" positionY="-297" width="128" height="118"/>
         <element name="User" positionX="-9" positionY="5" width="128" height="238"/>
-        <element name="Verification" positionX="-614" positionY="-207" width="128" height="178"/>
-        <element name="Image" positionX="-0" positionY="314" width="128" height="163"/>
+        <element name="Verification" positionX="-614" positionY="-207" width="128" height="193"/>
+        <element name="Image" positionX="-0" positionY="314" width="128" height="178"/>
     </elements>
 </model>

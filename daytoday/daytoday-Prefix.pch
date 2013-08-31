@@ -18,4 +18,5 @@
     #import <Foundation/Foundation.h>
     #import "NIDebuggingTools.h"
     #import "NSDictionary+SR.h"
+    #import "NSDate+SR.h"
 #endif

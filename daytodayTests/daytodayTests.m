@@ -8,6 +8,7 @@
 
 #import "daytodayTests.h"
 #import "SRTestCase.h"
+#import "NSDate+SR.h"
 
 #define kWaitTimeForRequest 0.4f
 
@@ -389,6 +390,15 @@
     [cr1 createComment:tempChallengeDay comment:userA.uuidString];
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     STAssertTrue(commentSuccess, @"comment not successfully created");
+}
+
+-(void) testDateParsing
+{
+    NSString* dateString = @"2013-08-31 20:28:59 +0000";
+    NSDate *interpretedDate = [NSDate fromString:dateString];
+    NIDINFO(@"date thinks it's here %@",interpretedDate);
+    STAssertNotNil(interpretedDate, @"date shouldn't be nil");
+    
 }
 
 

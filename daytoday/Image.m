@@ -19,6 +19,7 @@
 @dynamic url;
 @dynamic local;
 @dynamic tag;
+@dynamic createdAt;
 @dynamic user;
 @dynamic challenge;
 @dynamic verification;

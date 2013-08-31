@@ -47,6 +47,8 @@
 {
     Like *u = [Like getForID:[dictionary valueForKey:@"id"] inContext:context];
     
+    if( [dictionary validKey:kCreatedAtKey] )
+        [u setCreatedAt:[NSDate fromString:[dictionary valueForKey:kCreatedAtKey]]];
     
     return u;
     

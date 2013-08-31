@@ -20,6 +20,7 @@
 @dynamic foursquareId;
 @dynamic verificationId;
 @dynamic wholeNumber;
+@dynamic createdAt;
 @dynamic tick;
 @dynamic image;
 

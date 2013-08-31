@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSString * local;
 @property (nonatomic, retain) NSString * tag;
+@property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) User *user;
 @property (nonatomic, retain) Challenge *challenge;
 @property (nonatomic, retain) Verification *verification;

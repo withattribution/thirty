@@ -20,6 +20,7 @@
 @property (nonatomic, retain) NSNumber * foursquareId;
 @property (nonatomic, retain) NSNumber * verificationId;
 @property (nonatomic, retain) NSNumber * wholeNumber;
+@property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) Tick *tick;
 @property (nonatomic, retain) Image *image;
 

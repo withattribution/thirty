@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSNumber * duration;
 @property (nonatomic, retain) NSNumber * frequency;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) User *created_by;
 @property (nonatomic, retain) NSSet *intents;
 @property (nonatomic, retain) Image *image;

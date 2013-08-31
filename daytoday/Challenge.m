@@ -19,6 +19,7 @@
 @dynamic duration;
 @dynamic frequency;
 @dynamic name;
+@dynamic createdAt;
 @dynamic created_by;
 @dynamic intents;
 @dynamic image;
