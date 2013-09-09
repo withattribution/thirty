@@ -47,6 +47,7 @@
     
     if( [dictionary validKey:kCreatedAtKey] )
         [u setCreatedAt:[NSDate fromString:[dictionary valueForKey:kCreatedAtKey]]];
+    
     return u;
     
 }

@@ -17,12 +17,13 @@
 #import "TickRequest.h"
 #import "LikeRequest.h"
 #import "CommentRequest.h"
+#import "ProfileRequest.h"
 
 @interface daytodayTests : SRTestCase <UserRequestDelegate,
     AuthenticationRequestDelegate,
     FollowRequestDelegate,
     ChallengeRequestDelegate,
-    IntentRequestDelegate, TickRequestDelegate, LikeRequestDelegate,CommentRequestDelegate>
+    IntentRequestDelegate, TickRequestDelegate, LikeRequestDelegate,CommentRequestDelegate,ProfileRequestDelegate>
 {
     BOOL userCreated;
     BOOL userUpdated;
@@ -39,5 +40,6 @@
     BOOL likeSuccess;
     BOOL commentSuccess;
     BOOL commentDeleted;
+    BOOL profileReturned;
 }
 @end

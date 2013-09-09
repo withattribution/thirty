@@ -61,6 +61,7 @@
     likeSuccess = NO;
     commentSuccess = NO;
     commentDeleted = NO;
+    profileReturned = NO;
     [super setUp];
     
     // Set-up code here.
@@ -190,6 +191,14 @@
 - (void) deletedComment
 {
     commentDeleted = YES;
+}
+
+#pragma mark -
+#pragma mark Profile Request Delegate
+
+-(void) gotProfile:(NSDictionary*)dict
+{
+    profileReturned = YES;
 }
 
 #pragma mark -
@@ -390,6 +399,13 @@
     [cr1 createComment:tempChallengeDay comment:userA.uuidString];
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     STAssertTrue(commentSuccess, @"comment not successfully created");
+    
+    
+    ProfileRequest *pr = [[ProfileRequest alloc] initWithContext:self.managedObjectContext];
+    pr.delegate = self;
+    [pr getMyProfile];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+    STAssertTrue(profileReturned, @"profile didn't return!");
 }
 
 -(void) testDateParsing

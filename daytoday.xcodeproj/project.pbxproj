@@ -34,6 +34,8 @@
 		B740078517D293C50004460C /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078317D293C40004460C /* Image.m */; };
 		B740078817D293C50004460C /* Star.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078717D293C50004460C /* Star.m */; };
 		B740078917D293C50004460C /* Star.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078717D293C50004460C /* Star.m */; };
+		B740078C17DE4F020004460C /* ProfileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078B17DE4F010004460C /* ProfileRequest.m */; };
+		B740078D17DE4F020004460C /* ProfileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078B17DE4F010004460C /* ProfileRequest.m */; };
 		B75D59A017CBAC9700160592 /* ResetPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */; };
 		B75D59A117CBAC9700160592 /* ResetPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */; };
 		B7E61D4217BD6AA5002B681B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4117BD6AA5002B681B /* UIKit.framework */; };
@@ -196,6 +198,8 @@
 		B740078317D293C40004460C /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Image.m; path = daytoday/Image.m; sourceTree = "<group>"; };
 		B740078617D293C50004460C /* Star.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Star.h; path = daytoday/Star.h; sourceTree = "<group>"; };
 		B740078717D293C50004460C /* Star.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Star.m; path = daytoday/Star.m; sourceTree = "<group>"; };
+		B740078A17DE4F010004460C /* ProfileRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileRequest.h; sourceTree = "<group>"; };
+		B740078B17DE4F010004460C /* ProfileRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileRequest.m; sourceTree = "<group>"; };
 		B75D599E17CBAC9600160592 /* ResetPasswordRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordRequest.h; sourceTree = "<group>"; };
 		B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordRequest.m; sourceTree = "<group>"; };
 		B7E61D3E17BD6AA5002B681B /* daytoday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = daytoday.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -576,6 +580,8 @@
 				B7E61E8417C2984F002B681B /* AuthenticationRequest.m */,
 				B75D599E17CBAC9600160592 /* ResetPasswordRequest.h */,
 				B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */,
+				B740078A17DE4F010004460C /* ProfileRequest.h */,
+				B740078B17DE4F010004460C /* ProfileRequest.m */,
 			);
 			name = requests;
 			sourceTree = "<group>";
@@ -811,6 +817,7 @@
 				B740078017D293C40004460C /* Verification.m in Sources */,
 				B740078417D293C50004460C /* Image.m in Sources */,
 				B740078817D293C50004460C /* Star.m in Sources */,
+				B740078C17DE4F020004460C /* ProfileRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -882,6 +889,7 @@
 				B740078117D293C40004460C /* Verification.m in Sources */,
 				B740078517D293C50004460C /* Image.m in Sources */,
 				B740078917D293C50004460C /* Star.m in Sources */,
+				B740078D17DE4F020004460C /* ProfileRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
