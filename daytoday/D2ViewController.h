@@ -12,4 +12,6 @@
 
 -(UIColor*) randomColor;
 
+-(NSManagedObjectContext*) context;
+
 @end

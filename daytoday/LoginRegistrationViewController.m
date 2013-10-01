@@ -99,7 +99,40 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"Login or Register", @"title for login/reg page");
     
+    userRequest = [[UserRequest alloc] initWithContext:self.context];
+    userRequest.delegate = self;
+    authenticationRequest = [[AuthenticationRequest alloc] initWithContext:self.context];
+    authenticationRequest.delegate = self;
+
 	// Do any additional setup after loading the view.
+}
+
+#pragma mark -
+#pragma mark UserRequestDelegate
+
+- (void) userCreatedSuccesfully:(User*)user
+{
+    
+}
+- (void) gotUser:(User*)user
+{
+    
+}
+- (void) userUpdated:(User*)user
+{
+    
+}
+
+#pragma mark -
+#pragma mark AuthenticationRequestDelegate
+
+-(void) authenticationSuccessful:(User*)user
+{
+    
+}
+-(void) logoutSuccessful
+{
+    
 }
 
 @end

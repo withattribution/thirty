@@ -7,6 +7,7 @@
 //
 
 #import "D2ViewController.h"
+#import "AppDelegate.h"
 
 @interface D2ViewController ()
 
@@ -39,6 +40,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(NSManagedObjectContext*) context
+{
+    return ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
 }
 
 @end
