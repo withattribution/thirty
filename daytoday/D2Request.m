@@ -8,7 +8,8 @@
 
 #import "D2Request.h"
 
-#define kDeviceIdentifier @"com.submarinerich.daytoday.deviceidentifier"
+
+NSString *const kDeviceIdentifier = @"com.submarinerich.daytoday.deviceidentifier";
 
 @implementation D2Request
 @synthesize baseURL, context;
@@ -19,6 +20,7 @@
     if (self)
         self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@",SERVER_HOST]];
 
+     NIDINFO(@"base URL:%@",self.baseURL);
     return self;
 }
 

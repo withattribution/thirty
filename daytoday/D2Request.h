@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AFNetworking.h"
+extern NSString *const kDeviceIdentifier;
 
 @protocol D2RequestDelegate <NSObject>
 - (void) requestDidError:(NSError*)err;

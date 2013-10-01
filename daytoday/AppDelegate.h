@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "D2NavController.h"
 #import "LoginRegistrationViewController.h"
+#import "ProfileViewController.h"
 #import <CoreData/CoreData.h>
 
 @class ViewController;
@@ -20,6 +21,8 @@
 @property (strong, nonatomic) D2NavController *navController;
 
 @property (strong,nonatomic) LoginRegistrationViewController *loginController;
+
+@property (strong,nonatomic) ProfileViewController *profileController;
 
 @property (strong, nonatomic) ViewController *viewController;
 

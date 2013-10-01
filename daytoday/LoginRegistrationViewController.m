@@ -90,8 +90,11 @@
 
 - (IBAction) signupOrLogin:(id)sender
 {
-    ProfileViewController *pvc = [[ProfileViewController alloc] init];
-    [self.navigationController pushViewController:pvc animated:YES];
+    if( !isLogin )
+        [authenticationRequest loginUser:emailField.text withPassword:passwordField.text];
+    else
+        [userRequest createUser:emailField.text withPassword:passwordField.text additionalParameters:nil];
+
 }
 
 - (void)viewDidLoad
@@ -112,7 +115,8 @@
 
 - (void) userCreatedSuccesfully:(User*)user
 {
-    
+    ProfileViewController *pvc = [[ProfileViewController alloc] init];
+    [self.navigationController pushViewController:pvc animated:YES];
 }
 - (void) gotUser:(User*)user
 {
@@ -128,11 +132,17 @@
 
 -(void) authenticationSuccessful:(User*)user
 {
-    
+    ProfileViewController *pvc = [[ProfileViewController alloc] init];
+    [self.navigationController pushViewController:pvc animated:YES];
 }
 -(void) logoutSuccessful
 {
     
+}
+
+- (void) requestDidError:(NSError*)err
+{
+    NIDERROR(@"error! :%@",[err localizedDescription]);
 }
 
 @end

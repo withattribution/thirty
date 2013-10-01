@@ -11,10 +11,12 @@
 #import "ViewController.h"
 #import <NSManagedObject+SR.h>
 #import <NSManagedObjectContext+SR.h>
+#import "D2Request.h"
 
 @implementation AppDelegate
 
 @synthesize navController;
+@synthesize loginController,profileController;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
@@ -26,7 +28,12 @@
     NIMaxLogLevel = NILOGLEVEL_INFO;
     
     self.loginController = [[LoginRegistrationViewController alloc] init];
-    self.navController = [[D2NavController alloc] initWithRootViewController:self.loginController];
+    self.profileController = [[ProfileViewController alloc] init];
+    if(![[NSUserDefaults standardUserDefaults] valueForKey:kDeviceIdentifier])
+        self.navController = [[D2NavController alloc] initWithRootViewController:self.loginController];
+    else
+        self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
+        
     self.window.rootViewController = self.navController;
     [self.window makeKeyAndVisible];
     return YES;
