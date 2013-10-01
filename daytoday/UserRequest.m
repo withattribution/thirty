@@ -34,6 +34,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         if(self.delegate)
             [self.delegate requestDidError:error];
+        [self resetIdentifier];
     }];
     [self.client enqueueHTTPRequestOperation:jrequest];
 
