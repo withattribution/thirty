@@ -7,12 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "D2NavController.h"
+#import "LoginRegistrationViewController.h"
 
 @class ViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+@property (strong, nonatomic) D2NavController *navController;
+
+@property (strong,nonatomic) LoginRegistrationViewController *loginController;
 
 @property (strong, nonatomic) ViewController *viewController;
 

@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
+		B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B017FB1C8800B9C9BB /* D2NavController.m */; };
+		B73903B417FB1DB600B9C9BB /* LoginRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B317FB1DB600B9C9BB /* LoginRegistrationViewController.m */; };
+		B73903C117FB4B2700B9C9BB /* deps in Resources */ = {isa = PBXBuildFile; fileRef = B73903B617FB4B2700B9C9BB /* deps */; };
+		B73903C217FB4B2700B9C9BB /* NIImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B917FB4B2700B9C9BB /* NIImageProcessing.m */; };
+		B73903C317FB4B2700B9C9BB /* NINetworkImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903BD17FB4B2700B9C9BB /* NINetworkImageView.m */; };
+		B73903C817FB5FED00B9C9BB /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903C717FB5FED00B9C9BB /* ProfileViewController.m */; };
+		B73903CB17FB6DC700B9C9BB /* SearchChallengesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903CA17FB6DC700B9C9BB /* SearchChallengesViewController.m */; };
+		B73903CE17FB6DD800B9C9BB /* CreateChallengeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903CD17FB6DD800B9C9BB /* CreateChallengeViewController.m */; };
+		B73903D117FB701A00B9C9BB /* D2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903D017FB701A00B9C9BB /* D2ViewController.m */; };
 		B74006FD17D0E5F80004460C /* Two-Headed-Turtle1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B74006FC17D0E5F80004460C /* Two-Headed-Turtle1.jpg */; };
 		B740072C17D286210004460C /* Image+D2D.m in Sources */ = {isa = PBXBuildFile; fileRef = B740072B17D286210004460C /* Image+D2D.m */; };
 		B740072D17D286210004460C /* Image+D2D.m in Sources */ = {isa = PBXBuildFile; fileRef = B740072B17D286210004460C /* Image+D2D.m */; };
@@ -173,6 +182,25 @@
 /* Begin PBXFileReference section */
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
+		B73903AF17FB1C8800B9C9BB /* D2NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D2NavController.h; sourceTree = "<group>"; };
+		B73903B017FB1C8800B9C9BB /* D2NavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = D2NavController.m; sourceTree = "<group>"; };
+		B73903B217FB1DB600B9C9BB /* LoginRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRegistrationViewController.h; sourceTree = "<group>"; };
+		B73903B317FB1DB600B9C9BB /* LoginRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRegistrationViewController.m; sourceTree = "<group>"; };
+		B73903B617FB4B2700B9C9BB /* deps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = deps; sourceTree = "<group>"; };
+		B73903B817FB4B2700B9C9BB /* NIImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIImageProcessing.h; sourceTree = "<group>"; };
+		B73903B917FB4B2700B9C9BB /* NIImageProcessing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIImageProcessing.m; sourceTree = "<group>"; };
+		B73903BA17FB4B2700B9C9BB /* NimbusNetworkImage+Namespace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NimbusNetworkImage+Namespace.h"; sourceTree = "<group>"; };
+		B73903BB17FB4B2700B9C9BB /* NimbusNetworkImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NimbusNetworkImage.h; sourceTree = "<group>"; };
+		B73903BC17FB4B2700B9C9BB /* NINetworkImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NINetworkImageView.h; sourceTree = "<group>"; };
+		B73903BD17FB4B2700B9C9BB /* NINetworkImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NINetworkImageView.m; sourceTree = "<group>"; };
+		B73903C617FB5FED00B9C9BB /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		B73903C717FB5FED00B9C9BB /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		B73903C917FB6DC700B9C9BB /* SearchChallengesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchChallengesViewController.h; sourceTree = "<group>"; };
+		B73903CA17FB6DC700B9C9BB /* SearchChallengesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchChallengesViewController.m; sourceTree = "<group>"; };
+		B73903CC17FB6DD800B9C9BB /* CreateChallengeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateChallengeViewController.h; sourceTree = "<group>"; };
+		B73903CD17FB6DD800B9C9BB /* CreateChallengeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateChallengeViewController.m; sourceTree = "<group>"; };
+		B73903CF17FB701A00B9C9BB /* D2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D2ViewController.h; sourceTree = "<group>"; };
+		B73903D017FB701A00B9C9BB /* D2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = D2ViewController.m; sourceTree = "<group>"; };
 		B74006FC17D0E5F80004460C /* Two-Headed-Turtle1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Two-Headed-Turtle1.jpg"; sourceTree = "<group>"; };
 		B740072A17D286210004460C /* Image+D2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Image+D2D.h"; path = "daytoday/Image+D2D.h"; sourceTree = "<group>"; };
 		B740072B17D286210004460C /* Image+D2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Image+D2D.m"; path = "daytoday/Image+D2D.m"; sourceTree = "<group>"; };
@@ -366,6 +394,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B73903AD17FB1B5A00B9C9BB /* dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				B73903B517FB4B2700B9C9BB /* networkimage */,
+				B7E61E4D17C27F43002B681B /* AFNetworking */,
+				B7E61DFB17C27F1A002B681B /* nimbus-core */,
+				B7E61DE317C2739A002B681B /* sr-ios-library */,
+				B7E61E7317C27F60002B681B /* JSONKit */,
+			);
+			name = dependencies;
+			sourceTree = "<group>";
+		};
+		B73903AE17FB1B7400B9C9BB /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B73903CF17FB701A00B9C9BB /* D2ViewController.h */,
+				B73903D017FB701A00B9C9BB /* D2ViewController.m */,
+				B73903C917FB6DC700B9C9BB /* SearchChallengesViewController.h */,
+				B73903CA17FB6DC700B9C9BB /* SearchChallengesViewController.m */,
+				B73903CC17FB6DD800B9C9BB /* CreateChallengeViewController.h */,
+				B73903CD17FB6DD800B9C9BB /* CreateChallengeViewController.m */,
+				B73903C617FB5FED00B9C9BB /* ProfileViewController.h */,
+				B73903C717FB5FED00B9C9BB /* ProfileViewController.m */,
+				B73903B217FB1DB600B9C9BB /* LoginRegistrationViewController.h */,
+				B73903B317FB1DB600B9C9BB /* LoginRegistrationViewController.m */,
+				B73903AF17FB1C8800B9C9BB /* D2NavController.h */,
+				B73903B017FB1C8800B9C9BB /* D2NavController.m */,
+			);
+			name = controllers;
+			sourceTree = "<group>";
+		};
+		B73903B517FB4B2700B9C9BB /* networkimage */ = {
+			isa = PBXGroup;
+			children = (
+				B73903B617FB4B2700B9C9BB /* deps */,
+				B73903B717FB4B2700B9C9BB /* src */,
+			);
+			name = networkimage;
+			path = "sr-ios-library/nimbus/src/networkimage";
+			sourceTree = SOURCE_ROOT;
+		};
+		B73903B717FB4B2700B9C9BB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				B73903B817FB4B2700B9C9BB /* NIImageProcessing.h */,
+				B73903B917FB4B2700B9C9BB /* NIImageProcessing.m */,
+				B73903BA17FB4B2700B9C9BB /* NimbusNetworkImage+Namespace.h */,
+				B73903BB17FB4B2700B9C9BB /* NimbusNetworkImage.h */,
+				B73903BC17FB4B2700B9C9BB /* NINetworkImageView.h */,
+				B73903BD17FB4B2700B9C9BB /* NINetworkImageView.m */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		B7E61D3517BD6AA5002B681B = {
 			isa = PBXGroup;
 			children = (
@@ -400,12 +482,10 @@
 		B7E61D4717BD6AA5002B681B /* daytoday */ = {
 			isa = PBXGroup;
 			children = (
+				B73903AE17FB1B7400B9C9BB /* controllers */,
+				B73903AD17FB1B5A00B9C9BB /* dependencies */,
 				B7E61F1C17C6C853002B681B /* models */,
 				B7E61E9717C547BE002B681B /* requests */,
-				B7E61E7317C27F60002B681B /* JSONKit */,
-				B7E61E4D17C27F43002B681B /* AFNetworking */,
-				B7E61DFB17C27F1A002B681B /* nimbus-core */,
-				B7E61DE317C2739A002B681B /* sr-ios-library */,
 				B7E61D5017BD6AA5002B681B /* AppDelegate.h */,
 				B7E61D5117BD6AA5002B681B /* AppDelegate.m */,
 				B7E61D5917BD6AA5002B681B /* ViewController.h */,
@@ -709,6 +789,7 @@
 			files = (
 				B7E61D4C17BD6AA5002B681B /* InfoPlist.strings in Resources */,
 				B7E61D5417BD6AA5002B681B /* Default.png in Resources */,
+				B73903C117FB4B2700B9C9BB /* deps in Resources */,
 				B7E61D5617BD6AA5002B681B /* Default@2x.png in Resources */,
 				B7E61D5817BD6AA5002B681B /* Default-568h@2x.png in Resources */,
 				B7E61D5E17BD6AA5002B681B /* ViewController.xib in Resources */,
@@ -764,9 +845,14 @@
 				B7E61E3317C27F32002B681B /* NIInMemoryCache.m in Sources */,
 				B7E61E3517C27F32002B681B /* NINavigationAppearance.m in Sources */,
 				B7E61E3717C27F32002B681B /* NINetworkActivity.m in Sources */,
+				B73903B417FB1DB600B9C9BB /* LoginRegistrationViewController.m in Sources */,
+				B73903CB17FB6DC700B9C9BB /* SearchChallengesViewController.m in Sources */,
 				B7E61E3917C27F32002B681B /* NINonEmptyCollectionTesting.m in Sources */,
 				B7E61E3B17C27F32002B681B /* NINonRetainingCollections.m in Sources */,
+				B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */,
 				B7E61E3D17C27F32002B681B /* NIOperations.m in Sources */,
+				B73903D117FB701A00B9C9BB /* D2ViewController.m in Sources */,
+				B73903C817FB5FED00B9C9BB /* ProfileViewController.m in Sources */,
 				B7E61E3F17C27F32002B681B /* NIPaths.m in Sources */,
 				B7E61E4117C27F32002B681B /* NIRuntimeClassModifications.m in Sources */,
 				B7E61E4317C27F32002B681B /* NISDKAvailability.m in Sources */,
@@ -800,8 +886,10 @@
 				B7E61EEA17C6B4C4002B681B /* Tick+D2D.m in Sources */,
 				B7E61EEE17C6B509002B681B /* Star+D2D.m in Sources */,
 				B7E61F1A17C6C65A002B681B /* IntentRequest.m in Sources */,
+				B73903C317FB4B2700B9C9BB /* NINetworkImageView.m in Sources */,
 				B7E61F1F17C9702D002B681B /* LikeRequest.m in Sources */,
 				B7E61F2317C97039002B681B /* CommentRequest.m in Sources */,
+				B73903CE17FB6DD800B9C9BB /* CreateChallengeViewController.m in Sources */,
 				B7E61F2717C97082002B681B /* Comment+D2D.m in Sources */,
 				B73366B117CA8B87002524E4 /* TickRequest.m in Sources */,
 				B75D59A017CBAC9700160592 /* ResetPasswordRequest.m in Sources */,
@@ -812,6 +900,7 @@
 				B740076C17D293C30004460C /* Follow.m in Sources */,
 				B740077017D293C30004460C /* Like.m in Sources */,
 				B740077417D293C30004460C /* Tick.m in Sources */,
+				B73903C217FB4B2700B9C9BB /* NIImageProcessing.m in Sources */,
 				B740077817D293C40004460C /* User.m in Sources */,
 				B740077C17D293C40004460C /* Intent.m in Sources */,
 				B740078017D293C40004460C /* Verification.m in Sources */,
