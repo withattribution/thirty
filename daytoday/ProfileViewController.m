@@ -30,7 +30,7 @@
     ProfileData *pf = [[ProfileData alloc] init];
     pf.selfUser = [User fakeSelfUser:pf.context];
     NSMutableArray *ma = [[NSMutableArray alloc] initWithCapacity:7];
-    int n = (rand()*100%6) +2;
+    int n = ceil((arc4random()%6)) +2;
     for( int i = 0; i < n; i++){
         Intent *i = [Intent fakeIntent:pf.context];
         i.user = pf.selfUser;
@@ -58,6 +58,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        NIDINFO(@"profile data: %d",[((ProfileData*)[ProfileData fakeProfileData]).intents count]);
         // Custom initialization
         searchChallengesButton = [UIButton buttonWithType:UIButtonTypeCustom];
         createChallengeButton = [UIButton buttonWithType:UIButtonTypeCustom];
