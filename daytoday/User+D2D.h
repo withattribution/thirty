@@ -11,4 +11,6 @@
 @interface User (D2D)
 +(id) getForID:(NSNumber*)ident inContext:(NSManagedObjectContext*)context;
 +(id) fromDictionary:(NSDictionary*)dictionary inContext:(NSManagedObjectContext*)context;
++(id) fakeUser:(NSManagedObjectContext*)context;
++(id) fakeSelfUser:(NSManagedObjectContext*)context;
 @end

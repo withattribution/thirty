@@ -10,9 +10,46 @@
 #import <UIColor+SR.h>
 #import "SearchChallengesViewController.h"
 #import "CreateChallengeViewController.h"
+#import "Intent+D2D.h"
+#import "User+D2D.h"
+#import "AppDelegate.h"
+
+
+@interface ProfileData : NSObject
+@property(nonatomic,strong) User* selfUser;
+@property(nonatomic,strong) NSArray* intents;
++(id) fakeProfileData;
+-(NSManagedObjectContext*) context;
+@end
+
+@implementation ProfileData
+@synthesize selfUser;
+@synthesize intents;
++(id) fakeProfileData
+{
+    ProfileData *pf = [[ProfileData alloc] init];
+    pf.selfUser = [User fakeSelfUser:pf.context];
+    NSMutableArray *ma = [[NSMutableArray alloc] initWithCapacity:7];
+    int n = (rand()*100%6) +2;
+    for( int i = 0; i < n; i++){
+        Intent *i = [Intent fakeIntent:pf.context];
+        i.user = pf.selfUser;
+        [ma addObject:i];
+    }
+    pf.intents = [NSArray arrayWithArray:ma];
+    return pf;
+}
+
+-(NSManagedObjectContext*) context
+{
+    return ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
+}
+@end
+
 @interface ProfileViewController ()
 - (IBAction) searchChallenges:(id)sender;
 - (IBAction) createChallenge:(id)sender;
+
 @end
 
 @implementation ProfileViewController

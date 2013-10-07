@@ -11,4 +11,5 @@
 @interface Challenge (D2D)
 +(id) getForID:(NSNumber*)ident inContext:(NSManagedObjectContext*)context;
 +(id) fromDictionary:(NSDictionary*)dictionary inContext:(NSManagedObjectContext*)context;
++(id) fakeChallenge:(NSManagedObjectContext*)context;
 @end

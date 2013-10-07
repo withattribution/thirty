@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import <sr-ios-library/UIColor+SR.h>
+#import "UIColor+SR.h"
 @interface ViewController ()
 
 @end

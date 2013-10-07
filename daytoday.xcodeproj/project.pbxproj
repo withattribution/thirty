@@ -47,6 +47,8 @@
 		B740078D17DE4F020004460C /* ProfileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078B17DE4F010004460C /* ProfileRequest.m */; };
 		B75D59A017CBAC9700160592 /* ResetPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */; };
 		B75D59A117CBAC9700160592 /* ResetPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */; };
+		B78481CB18020834008F2EB8 /* FakeDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B78481CA18020834008F2EB8 /* FakeDataUtils.m */; };
+		B78481CC18020834008F2EB8 /* FakeDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B78481CA18020834008F2EB8 /* FakeDataUtils.m */; };
 		B7E61D4217BD6AA5002B681B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4117BD6AA5002B681B /* UIKit.framework */; };
 		B7E61D4417BD6AA5002B681B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4317BD6AA5002B681B /* Foundation.framework */; };
 		B7E61D4617BD6AA5002B681B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4517BD6AA5002B681B /* CoreGraphics.framework */; };
@@ -230,6 +232,8 @@
 		B740078B17DE4F010004460C /* ProfileRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileRequest.m; sourceTree = "<group>"; };
 		B75D599E17CBAC9600160592 /* ResetPasswordRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordRequest.h; sourceTree = "<group>"; };
 		B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordRequest.m; sourceTree = "<group>"; };
+		B78481C918020834008F2EB8 /* FakeDataUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FakeDataUtils.h; path = ../FakeDataUtils.h; sourceTree = "<group>"; };
+		B78481CA18020834008F2EB8 /* FakeDataUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FakeDataUtils.m; path = ../FakeDataUtils.m; sourceTree = "<group>"; };
 		B7E61D3E17BD6AA5002B681B /* daytoday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = daytoday.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7E61D4117BD6AA5002B681B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B7E61D4317BD6AA5002B681B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -448,6 +452,15 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		B78481CD1802083E008F2EB8 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				B78481C918020834008F2EB8 /* FakeDataUtils.h */,
+				B78481CA18020834008F2EB8 /* FakeDataUtils.m */,
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
 		B7E61D3517BD6AA5002B681B = {
 			isa = PBXGroup;
 			children = (
@@ -482,6 +495,7 @@
 		B7E61D4717BD6AA5002B681B /* daytoday */ = {
 			isa = PBXGroup;
 			children = (
+				B78481CD1802083E008F2EB8 /* utils */,
 				B73903AE17FB1B7400B9C9BB /* controllers */,
 				B73903AD17FB1B5A00B9C9BB /* dependencies */,
 				B7E61F1C17C6C853002B681B /* models */,
@@ -888,6 +902,7 @@
 				B7E61F1A17C6C65A002B681B /* IntentRequest.m in Sources */,
 				B73903C317FB4B2700B9C9BB /* NINetworkImageView.m in Sources */,
 				B7E61F1F17C9702D002B681B /* LikeRequest.m in Sources */,
+				B78481CB18020834008F2EB8 /* FakeDataUtils.m in Sources */,
 				B7E61F2317C97039002B681B /* CommentRequest.m in Sources */,
 				B73903CE17FB6DD800B9C9BB /* CreateChallengeViewController.m in Sources */,
 				B7E61F2717C97082002B681B /* Comment+D2D.m in Sources */,
@@ -932,6 +947,7 @@
 				B7E61E4017C27F32002B681B /* NIPaths.m in Sources */,
 				B7E61E4217C27F32002B681B /* NIRuntimeClassModifications.m in Sources */,
 				B7E61E4417C27F32002B681B /* NISDKAvailability.m in Sources */,
+				B78481CC18020834008F2EB8 /* FakeDataUtils.m in Sources */,
 				B7E61E4817C27F32002B681B /* NIState.m in Sources */,
 				B7E61E4C17C27F32002B681B /* NSString+NimbusCore.m in Sources */,
 				B7E61E6217C27F5A002B681B /* AFHTTPClient.m in Sources */,

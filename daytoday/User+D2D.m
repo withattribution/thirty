@@ -9,6 +9,7 @@
 #import "User+D2D.h"
 #import "NSManagedObject+SR.h"
 #import "NSManagedObjectContext+SR.h"
+#import "FakeDataUtils.h"
 
 #define kEntityName @"User"
 #define kUniqueIdName @"userId"
@@ -63,5 +64,25 @@
     
     return u;
         
+}
+
++(id) fakeUser:(NSManagedObjectContext*)context
+{
+    User *u = [[User alloc] initWithContext:context];
+    [u setRealName:[FakeDataUtils uuidString]];
+    [u setUsername:[FakeDataUtils uuidString]];
+    [u setBio:[FakeDataUtils uuidString]];
+    [u setWebsite:[FakeDataUtils uuidString]];
+    return u;
+}
+
++(id) fakeSelfUser:(NSManagedObjectContext *)context
+{
+    User *u = [[User alloc] initWithContext:context];
+    [u setRealName:@"Johnny FakeName"];
+    [u setUsername:@"jmoney"];
+    [u setBio:@"I am not a real person."];
+    [u setWebsite:@"http://www.fakestuff.com"];
+    return u;
 }
 @end

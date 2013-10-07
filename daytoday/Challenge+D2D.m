@@ -10,6 +10,7 @@
 #import "User+D2D.h"
 #import "NSManagedObject+SR.h"
 #import "NSManagedObjectContext+SR.h"
+#import "FakeDataUtils.h"
 
 #define kEntityName @"Challenge"
 #define kUniqueIdName @"challengeId"
@@ -70,5 +71,18 @@
     
     return u;
     
+}
+
++(id) fakeChallenge:(NSManagedObjectContext*)context
+{
+    Challenge* c = [[Challenge alloc] initWithContext:context];
+    c.name = [FakeDataUtils uuidString];
+    c.desc = [FakeDataUtils uuidString];
+    c.duration = [NSNumber numberWithInt:30];
+    c.frequency = [NSNumber numberWithInt:1];
+    NSNumber *n = [FakeDataUtils randomNumber];
+    int daysAgo = ([n intValue] % 90) + 30;
+    c.createdAt = [NSDate dateWithTimeIntervalSinceNow:(-1 * daysAgo * (24*60*60))];
+    return c;
 }
 @end

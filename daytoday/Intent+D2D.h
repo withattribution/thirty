@@ -11,4 +11,5 @@
 @interface Intent (D2D)
 +(id) getForID:(NSNumber*)ident inContext:(NSManagedObjectContext*)context;
 +(id) fromDictionary:(NSDictionary*)dictionary inContext:(NSManagedObjectContext*)context;
++(id) fakeIntent:(NSManagedObjectContext*)context;
 @end

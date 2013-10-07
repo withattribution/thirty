@@ -7,7 +7,7 @@
 //
 
 #import "LoginRegistrationViewController.h"
-#import <sr-ios-library/UIColor+SR.h>
+#import "UIColor+SR.h"
 #import "ProfileViewController.h"
 
 @interface LoginRegistrationViewController ()
@@ -142,7 +142,19 @@
 
 - (void) requestDidError:(NSError*)err
 {
-    NIDERROR(@"error! :%@",[err localizedDescription]);
+    NIDERROR(@"server error! :%@",[err localizedDescription]);
+    NSString *title = NSLocalizedString(@"Oh Shit", @"alert view title for registration page");
+    NSString *message = NSLocalizedString(@"username or password nonsense", @"reason why the alert view");
+    NSString *cancel = NSLocalizedString(@"Nevermind", @"Cancel/OK");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:nil];
+    
+    
+    [alertView show];
 }
 
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NIDINFO(@"clicked on %d",buttonIndex);
+}
 @end

@@ -414,8 +414,19 @@
     NSDate *interpretedDate = [NSDate fromString:dateString];
     NIDINFO(@"date thinks it's here %@",interpretedDate);
     STAssertNotNil(interpretedDate, @"date shouldn't be nil");
-    
 }
 
+-(void) testFakeUserCreation
+{
+    User* testUser = [User fakeUser:self.managedObjectContext];
+    STAssertTrue(testUser.username.length > 5,@"username isn't as long as it should be");
+}
 
+-(void) testFakeIntents
+{
+    Intent* intent = [Intent fakeIntent:self.managedObjectContext];
+    intent.user = [User fakeUser:self.managedObjectContext];
+    intent.challenge.created_by = [User fakeUser:self.managedObjectContext];
+    STAssertNotNil(intent, @"this totally worked");
+}
 @end

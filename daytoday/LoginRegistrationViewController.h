@@ -10,7 +10,7 @@
 #import "UserRequest.h"
 #import "AuthenticationRequest.h"
 
-@interface LoginRegistrationViewController : D2ViewController <AuthenticationRequestDelegate,UserRequestDelegate>
+@interface LoginRegistrationViewController : D2ViewController <AuthenticationRequestDelegate,UserRequestDelegate, UIAlertViewDelegate>
 {
     UITextField *emailField;
     UITextField *passwordField;
