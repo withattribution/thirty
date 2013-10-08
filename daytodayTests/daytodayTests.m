@@ -245,13 +245,15 @@
     [req createUser:userA.username withPassword:userA.password additionalParameters:nil];
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
     userA.userId = tempUser.userId;
-    NSString* turtlePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"Two-Headed-Turtle1" ofType:@"jpg"];
+    NSString* turtlePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"turlet" ofType:@"jpg"];
     STAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:turtlePath isDirectory:NO],@"file not where it's supposed to be!");
     UIImage *turtleImage = [UIImage imageWithContentsOfFile:turtlePath];
     NSData *imageData = UIImageJPEGRepresentation(turtleImage, 0.5);
     STAssertNotNil(imageData, @"image is nil");
+    STAssertTrue(req.identifier.length > 10, @"identifier should be there");
+    
     NSMutableURLRequest *req1 = [req.client multipartFormRequestWithMethod:@"POST" path:@"/user" parameters:@{@"auth": req.identifier} constructingBodyWithBlock:^(id <AFMultipartFormData>formData) {
-        
+        [formData appendPartWithFormData:[req.identifier dataUsingEncoding:NSUTF8StringEncoding] name:@"auth"];
         [formData appendPartWithFileData:imageData name:@"file" fileName:@"Two-Headed-Turtle1.jpg" mimeType:@"image/jpg"];
     }];
     
@@ -262,6 +264,8 @@
         NIDINFO(@"json dictionary looks like: %@",jsonDict);
         STAssertNotNil([jsonDict valueForKey:@"success"],@"success wasn't a thing that happened");
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NIDERROR(@"the error: %@",[error localizedDescription]);
+        NIDERROR(@"here's the JSON: %@",JSON);
         STAssertFalse(YES, @"if this gets hit, there was a failure");
     }];
     [req.client enqueueHTTPRequestOperation:jrequest];

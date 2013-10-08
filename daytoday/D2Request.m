@@ -20,7 +20,7 @@ NSString *const kDeviceIdentifier = @"com.submarinerich.daytoday.deviceidentifie
     if (self)
         self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@",SERVER_HOST]];
 
-     NIDINFO(@"base URL:%@",self.baseURL);
+     //NIDINFO(@"base URL:%@",self.baseURL);
     return self;
 }
 
