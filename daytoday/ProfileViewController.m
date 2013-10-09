@@ -12,6 +12,7 @@
 #import "CreateChallengeViewController.h"
 #import "Intent+D2D.h"
 #import "User+D2D.h"
+#import "Challenge+D2D.h"
 #import "AppDelegate.h"
 #import "Image+D2D.h"
 
@@ -27,22 +28,36 @@
 @synthesize intents;
 +(id) fakeProfileData
 {
-    NSString* img1small = @"http://daytoday-dev.s3.amazonaws.com/images/a0e2d3d7813b495181f56a7f528012a8.jpg";
+    //NSString* img1small = @"http://daytoday-dev.s3.amazonaws.com/images/a0e2d3d7813b495181f56a7f528012a8.jpg";
     NSString* img1med = @"http://daytoday-dev.s3.amazonaws.com/images/8debb5be40f448f4a6583a8de67b731b.jpg";
-    NSString* img1large = @"http://daytoday-dev.s3.amazonaws.com/images/9720b86c720d4fb7a05d4b8cac8346a5.jpg";
+    //NSString* img1large = @"http://daytoday-dev.s3.amazonaws.com/images/9720b86c720d4fb7a05d4b8cac8346a5.jpg";
     
-    NSString *img2small = @"http://daytoday-dev.s3.amazonaws.com/images/6fdd5ad843b94bcf9b147328072e02a3.jpg";
+    //NSString *img2small = @"http://daytoday-dev.s3.amazonaws.com/images/6fdd5ad843b94bcf9b147328072e02a3.jpg";
     NSString *img2med  = @"http://daytoday-dev.s3.amazonaws.com/images/1433910dd3b9443fb3d3fb2151866114.jpg";
-    NSString *img2large = @"http://daytoday-dev.s3.amazonaws.com/images/a9fc822504d947318c8c0adf99f4b116.jpg";
+    //NSString *img2large = @"http://daytoday-dev.s3.amazonaws.com/images/a9fc822504d947318c8c0adf99f4b116.jpg";
+    
+
+    
     
     ProfileData *pf = [[ProfileData alloc] init];
+    Image *i1 = [Image imageWithURL:img1med andContext:pf.context];
+    i1.tag = @"MEDIUM";
     pf.selfUser = [User fakeSelfUser:pf.context];
-    //Image *avatar = [[Image alloc] initWithContext:pf.context];
+    pf.selfUser.image = i1;
+    [i1 setUser:pf.selfUser];
+    
     NSMutableArray *ma = [[NSMutableArray alloc] initWithCapacity:7];
     int n = ceil((arc4random()%6)) +2;
     for( int i = 0; i < n; i++){
         Intent *i = [Intent fakeIntent:pf.context];
         i.user = pf.selfUser;
+        Image *i3 = [Image imageWithURL:img2med andContext:pf.context];
+        i3.tag = @"MEDIUM";
+        Challenge *c1 = i.challenge;
+        
+        [c1 setImage:i3];
+        [i3 setChallenge:c1];
+        
         [ma addObject:i];
     }
     pf.intents = [NSArray arrayWithArray:ma];

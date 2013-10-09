@@ -11,4 +11,5 @@
 @interface Image (D2D)
 +(id) getForID:(NSNumber*)ident inContext:(NSManagedObjectContext*)context;
 +(id) fromDictionary:(NSDictionary*)dictionary inContext:(NSManagedObjectContext*)context;
++(id) imageWithURL:(NSString*)url andContext:(NSManagedObjectContext *)context;
 @end

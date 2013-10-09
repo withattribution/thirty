@@ -51,4 +51,11 @@
     return u;
     
 }
+
++(id) imageWithURL:(NSString*)url andContext:(NSManagedObjectContext *)context
+{
+    Image *u = [[Image alloc] initWithContext:context];
+    [u setUrl:url];
+    return u;
+}
 @end
