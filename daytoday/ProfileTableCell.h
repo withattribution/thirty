@@ -1,5 +1,5 @@
 //
-//  ProfileHistoryTableView.h
+//  ProfileTableCell.h
 //  daytoday
 //
 //  Created by pasmo on 10/10/13.
@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileHistoryTableView : UITableView <UITableViewDelegate,UITableViewDataSource>
+@interface ProfileTableCell : UITableViewCell
+
+@property (nonatomic) CGFloat contentHeight;
+
+- (CGFloat) getContentHeight;
 
 @end

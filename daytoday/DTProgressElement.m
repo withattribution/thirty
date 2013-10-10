@@ -45,7 +45,6 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
         progressColorGroup = pcg;
         progressUnits = units;
         [self determineRoundedRadius];
-        [self setBackgroundColor:[UIColor colorWithWhite:.7 alpha:.7]];
     }
     return self;
 }

@@ -19,7 +19,7 @@ static CGFloat TAG_PADDING = 2.0f;
     self = [super initWithFrame:frame];
     if (self) {
         CGSize textSize = [text sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:6]
-                        constrainedToSize:CGSizeMake(CGFLOAT_MAX,CGFLOAT_MAX)];
+                        constrainedToSize:CGSizeMake(self.frame.size.width,self.frame.size.height)];
         
         DTCaret *c = [[DTCaret alloc] initWithFrame:CGRectMake(0.f,
                                                                0.f,
