@@ -28,6 +28,7 @@
 		A1275C271806F97200019A91 /* profileBlank.png in Resources */ = {isa = PBXBuildFile; fileRef = A1275C251806F97200019A91 /* profileBlank.png */; };
 		A1275C281806F97200019A91 /* anotherCrop.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1275C261806F97200019A91 /* anotherCrop.jpg */; };
 		A1275C2C1806FD4600019A91 /* ProfileHistoryTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C2B1806FD4600019A91 /* ProfileHistoryTableView.m */; };
+		A1275C2F1807229200019A91 /* ProfileTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C2E1807229200019A91 /* ProfileTableCell.m */; };
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B017FB1C8800B9C9BB /* D2NavController.m */; };
@@ -244,6 +245,8 @@
 		A1275C261806F97200019A91 /* anotherCrop.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = anotherCrop.jpg; sourceTree = "<group>"; };
 		A1275C2A1806FD4600019A91 /* ProfileHistoryTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileHistoryTableView.h; sourceTree = "<group>"; };
 		A1275C2B1806FD4600019A91 /* ProfileHistoryTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileHistoryTableView.m; sourceTree = "<group>"; };
+		A1275C2D1807229200019A91 /* ProfileTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTableCell.h; sourceTree = "<group>"; };
+		A1275C2E1807229200019A91 /* ProfileTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableCell.m; sourceTree = "<group>"; };
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
 		B73903AF17FB1C8800B9C9BB /* D2NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D2NavController.h; sourceTree = "<group>"; };
@@ -478,6 +481,8 @@
 			children = (
 				A1275C2A1806FD4600019A91 /* ProfileHistoryTableView.h */,
 				A1275C2B1806FD4600019A91 /* ProfileHistoryTableView.m */,
+				A1275C2D1807229200019A91 /* ProfileTableCell.h */,
+				A1275C2E1807229200019A91 /* ProfileTableCell.m */,
 				A1275BED1806EB5B00019A91 /* DaysLeftView.h */,
 				A1275BEE1806EB5B00019A91 /* DaysLeftView.m */,
 				A1275BEF1806EB5B00019A91 /* ChallengersRow.h */,
@@ -1025,6 +1030,7 @@
 				B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */,
 				A1275C041806EB5B00019A91 /* ProfileSectionHeaderView.m in Sources */,
 				B7E61E3D17C27F32002B681B /* NIOperations.m in Sources */,
+				A1275C2F1807229200019A91 /* ProfileTableCell.m in Sources */,
 				B76D56091806DB02003DDD36 /* Comment.m in Sources */,
 				B73903D117FB701A00B9C9BB /* D2ViewController.m in Sources */,
 				B73903C817FB5FED00B9C9BB /* ProfileViewController.m in Sources */,

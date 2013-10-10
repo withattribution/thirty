@@ -22,6 +22,7 @@ static CGFloat CROP_RATIO = 3.75f;
         CGSize toSize = CGSizeMake(self.frame.size.width, self.frame.size.width);
         self.headerImage = [hImage resizeToSize:toSize thenCropWithRect:[self rectForHeaderImage:toSize]];
         UIImageView *headerImageView = [[UIImageView alloc] initWithImage:self.headerImage];
+//        headerImageView.frame = CGRectMake(0.0, 0.0, self.headerImage.size.width, 120);
         [self addSubview:headerImageView];
     }
     return self;

@@ -30,8 +30,9 @@
 @implementation ProgressSnapshotView
 
 static CGFloat ROW_SPACING = 4.f;
-static CGFloat TOP_PADDING = 5.f;
-//static int WEEK_ROWS = 2;
+static CGFloat TOP_PADDING = 2.f;
+static CGFloat ROW_HEIGHT = 40.f;
+static int WEEK_ROWS = 2;
 
 //layout two stacks of day rows
 //determine which two weeks to display
@@ -40,18 +41,20 @@ static CGFloat TOP_PADDING = 5.f;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        DTProgressElementLayout *topRow = [[DTProgressElementLayout alloc] initWithFrame:CGRectMake(0.0,
-                                                                                               TOP_PADDING,
-                                                                                               self.frame.size.width,
-                                                                                               self.frame.size.height)
-                                                                        forDayInRow:6];
+    if (self) {        
+        [self setFrame:CGRectMake(0.f, self.frame.origin.y, self.frame.size.width, (WEEK_ROWS * ROW_HEIGHT) + (2*TOP_PADDING) + ROW_SPACING)];
+
+        DTProgressElementLayout *topRow = [[DTProgressElementLayout alloc] initWithFrame:CGRectMake(0.f,
+                                                                                                    TOP_PADDING,
+                                                                                                    self.frame.size.width,
+                                                                                                    ROW_HEIGHT)
+                                                                             forDayInRow:6];
         [self addSubview:topRow];
 
         DTProgressElementLayout *bottomRow = [[DTProgressElementLayout alloc] initWithFrame:CGRectMake(0.0,
                                                                                                topRow.frame.origin.y + topRow.frame.size.height+ROW_SPACING,
                                                                                                self.frame.size.width,
-                                                                                               self.frame.size.height)
+                                                                                               ROW_HEIGHT)
                                                                         forDayInRow:6];
         [self addSubview:bottomRow];
     }

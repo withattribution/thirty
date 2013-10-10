@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileSectionHeaderView : UIView
+@interface ProfileSectionHeaderView : UITableViewHeaderFooterView
 
 @end

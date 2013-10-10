@@ -113,11 +113,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     // self.title = NSLocalizedString(@"Profile View", @"profile view");
-    
+
     UserInfoHeader *infoHeader = [[UserInfoHeader alloc] initWithFrame:CGRectMake(0.f,
                                                                                   [self padWithStatusBarHeight],
                                                                                   self.view.frame.size.width,
-                                                                                  120.f)];
+                                                                                  105.f)];
     [self.view addSubview:infoHeader];
     
     //start the tableview madness
@@ -126,7 +126,8 @@
     ProfileHistoryTableView *historyTable = [[ProfileHistoryTableView alloc] initWithFrame:CGRectMake(0,
                                                                                                       profileHeightOffset,
                                                                                                       self.view.frame.size.width,
-                                                                                                      self.view.frame.size.width - profileHeightOffset)];
+                                                                                                      self.view.frame.size.height - profileHeightOffset)];
+
     [self.view addSubview:historyTable];
 }
 

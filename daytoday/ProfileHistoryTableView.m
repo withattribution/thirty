@@ -7,8 +7,16 @@
 //
 
 #import "ProfileHistoryTableView.h"
+#import "ProfileTableCell.h"
+#import "ProfileSectionHeaderView.h"
+
+#import "UIColor+SR.h"
 
 @implementation ProfileHistoryTableView
+
+static NSString *currentProgressCellReuseIdentifier = @"currentProgressCellIdentifier";
+static NSString *summaryProgressCellReuseIdentifier = @"summaryProgressCellIdentifier";
+static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIdentifier";
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -18,6 +26,11 @@
         [self setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [self setShowsVerticalScrollIndicator:NO];
         [self setContentInset:UIEdgeInsetsZero];
+        [self setDelegate:self];
+        [self setDataSource:self];
+        
+        [self registerClass:[ProfileTableCell class] forCellReuseIdentifier:currentProgressCellReuseIdentifier];
+        [self registerClass:[ProfileSectionHeaderView class] forHeaderFooterViewReuseIdentifier:sectionHeaderViewReuseIdentifier];
     }
     return self;
 }
@@ -26,71 +39,37 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 10;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if (section == 0) {
-//        return 1;
-//    }else {
-//        if (self.currentVenues && [self.currentVenues count] > 0) {
-//            return [self.currentVenues count];
-//        }else {
-//            return 1;
-//        }
-//    }
     return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellReuseIdentifier   = @"parallaxTableViewCell";
-    static NSString *windowReuseIdentifier = @"parallaxWindow";
-    
-    UITableViewCell *cell = nil;
-    
-    if (indexPath.section == 0) {
-        cell = [tableView dequeueReusableCellWithIdentifier:windowReuseIdentifier];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:windowReuseIdentifier];
-            cell.backgroundColor = [UIColor clearColor];
-            cell.contentView.backgroundColor = [UIColor clearColor];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
-    } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:cellReuseIdentifier];
-//        if ( !cell || [[tableView cellForRowAtIndexPath:indexPath] viewWithTag:indexPath.row] == nil ) {
-//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReuseIdentifier];
-//            
-//            VenueCellView *venueView = nil;
-//            
-//            if ([self.currentVenues count] > 0) {
-//                venueView = [[VenueCellView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.venueTable.bounds.size.width, ROW_HEIGHT)
-//                                                        andVenue:[self.currentVenues objectAtIndex:indexPath.row]];
-//            }else {
-//                venueView = [[VenueCellView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.venueTable.bounds.size.width, ROW_HEIGHT)];
-//            }
-//            
-//            [venueView setTag:indexPath.row];
-//            [cell addSubview:venueView];
-//            
-//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        }
-        //self fadeAnim:cell];
-    }
+    ProfileTableCell *cell = (ProfileTableCell *)[tableView dequeueReusableCellWithIdentifier:currentProgressCellReuseIdentifier forIndexPath:indexPath];
     return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.section == 0) {
-//        return WINDOW_HEIGHT;
-//    }else {
-//        return ROW_HEIGHT;
-//    }
-    return 50.f;
+    return 168.f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 100.0;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    ProfileSectionHeaderView *sectHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionHeaderViewReuseIdentifier];
+    if (!sectHeaderView){
+        NIDINFO(@"SECTION HEADER VIEW IS NIL");
+    }
+    return sectHeaderView;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -100,8 +79,8 @@
     //    }
 }
 
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
 //    if (self.viewDeckController.leftControllerIsClosed) {
 //        if (indexPath.section != 0) {
 //            [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
@@ -111,6 +90,6 @@
 //            [self presentFullScreenMapView:nil];
 //        }
 //    }
-//}
+}
 
 @end
