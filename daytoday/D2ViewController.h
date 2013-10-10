@@ -11,7 +11,8 @@
 @interface D2ViewController : ViewController
 
 -(UIColor*) randomColor;
-
 -(NSManagedObjectContext*) context;
+
+- (CGFloat) padWithStatusBarHeight;
 
 @end

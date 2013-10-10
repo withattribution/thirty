@@ -29,11 +29,19 @@
     
     self.loginController = [[LoginRegistrationViewController alloc] init];
     self.profileController = [[ProfileViewController alloc] init];
+    
     if(![[NSUserDefaults standardUserDefaults] valueForKey:kDeviceIdentifier])
         self.navController = [[D2NavController alloc] initWithRootViewController:self.loginController];
     else
         self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
+    
+    #define PROFILE_VIEWCONTROLLER_DEV 1
         
+    #ifdef PROFILE_VIEWCONTROLLER_DEV
+        self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
+        [self.navController.navigationBar setHidden:YES];
+    #endif
+    
     self.window.rootViewController = self.navController;
     [self.window makeKeyAndVisible];
     

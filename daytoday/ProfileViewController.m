@@ -15,6 +15,8 @@
 #import "Challenge+D2D.h"
 #import "AppDelegate.h"
 #import "Image+D2D.h"
+#import "UserInfoHeader.h"
+#import "ProfileHistoryTableView.h"
 
 @interface ProfileData : NSObject
 @property(nonatomic,strong) User* selfUser;
@@ -31,14 +33,10 @@
     NSString* img1small = @"http://daytoday-dev.s3.amazonaws.com/images/a0e2d3d7813b495181f56a7f528012a8.jpg";
     NSString* img1med = @"http://daytoday-dev.s3.amazonaws.com/images/8debb5be40f448f4a6583a8de67b731b.jpg";
     NSString* img1large = @"http://daytoday-dev.s3.amazonaws.com/images/9720b86c720d4fb7a05d4b8cac8346a5.jpg";
-    
     NSString *img2small = @"http://daytoday-dev.s3.amazonaws.com/images/6fdd5ad843b94bcf9b147328072e02a3.jpg";
     NSString *img2med  = @"http://daytoday-dev.s3.amazonaws.com/images/1433910dd3b9443fb3d3fb2151866114.jpg";
     NSString *img2large = @"http://daytoday-dev.s3.amazonaws.com/images/a9fc822504d947318c8c0adf99f4b116.jpg";
-    
 
-    
-    
     ProfileData *pf = [[ProfileData alloc] init];
     Image *i1 = [Image imageWithURL:img1med andContext:pf.context];
     i1.tag = kImageMediumTag;
@@ -93,20 +91,19 @@
     if (self) {
         NIDINFO(@"profile data: %d",[((ProfileData*)[ProfileData fakeProfileData]).intents count]);
         // Custom initialization
-        searchChallengesButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        createChallengeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        searchChallengesButton.frame = CGRectMake(10, 100, 300, 100);
-        createChallengeButton.frame = CGRectMake(10, 210, 300, 100);
-        [searchChallengesButton setTitle:NSLocalizedString(@"Search Challenges", @"search challenges (button)") forState:UIControlStateNormal];
-        [createChallengeButton setTitle:NSLocalizedString(@"Create Challenges", @"create challenges (button)") forState:UIControlStateNormal];
-        
-        searchChallengesButton.backgroundColor = [UIColor randomColor];
-        createChallengeButton.backgroundColor = [UIColor randomColor];
-        [searchChallengesButton addTarget:self action:@selector(searchChallenges:) forControlEvents:UIControlEventTouchUpInside];
-        [createChallengeButton addTarget:self action:@selector(createChallenge:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:searchChallengesButton];
-        [self.view addSubview:createChallengeButton];
-        
+//        searchChallengesButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        createChallengeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        searchChallengesButton.frame = CGRectMake(10, 100, 300, 100);
+//        createChallengeButton.frame = CGRectMake(10, 210, 300, 100);
+//        [searchChallengesButton setTitle:NSLocalizedString(@"Search Challenges", @"search challenges (button)") forState:UIControlStateNormal];
+//        [createChallengeButton setTitle:NSLocalizedString(@"Create Challenges", @"create challenges (button)") forState:UIControlStateNormal];
+//        
+//        searchChallengesButton.backgroundColor = [UIColor randomColor];
+//        createChallengeButton.backgroundColor = [UIColor randomColor];
+//        [searchChallengesButton addTarget:self action:@selector(searchChallenges:) forControlEvents:UIControlEventTouchUpInside];
+//        [createChallengeButton addTarget:self action:@selector(createChallenge:) forControlEvents:UIControlEventTouchUpInside];
+//        [self.view addSubview:searchChallengesButton];
+//        [self.view addSubview:createChallengeButton];
     }
     return self;
 }
@@ -114,8 +111,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"Profile View", @"profile view");
-	// Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.
+    // self.title = NSLocalizedString(@"Profile View", @"profile view");
+    
+    UserInfoHeader *infoHeader = [[UserInfoHeader alloc] initWithFrame:CGRectMake(0.f,
+                                                                                  [self padWithStatusBarHeight],
+                                                                                  self.view.frame.size.width,
+                                                                                  120.f)];
+    [self.view addSubview:infoHeader];
+    
+    //start the tableview madness
+    CGFloat profileHeightOffset = infoHeader.frame.origin.y + infoHeader.frame.size.height;
+    
+    ProfileHistoryTableView *historyTable = [[ProfileHistoryTableView alloc] initWithFrame:CGRectMake(0,
+                                                                                                      profileHeightOffset,
+                                                                                                      self.view.frame.size.width,
+                                                                                                      self.view.frame.size.width - profileHeightOffset)];
+    [self.view addSubview:historyTable];
 }
 
 - (IBAction) searchChallenges:(id)sender
