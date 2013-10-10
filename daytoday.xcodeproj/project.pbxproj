@@ -21,32 +21,32 @@
 		B74006FD17D0E5F80004460C /* Two-Headed-Turtle1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B74006FC17D0E5F80004460C /* Two-Headed-Turtle1.jpg */; };
 		B740072C17D286210004460C /* Image+D2D.m in Sources */ = {isa = PBXBuildFile; fileRef = B740072B17D286210004460C /* Image+D2D.m */; };
 		B740072D17D286210004460C /* Image+D2D.m in Sources */ = {isa = PBXBuildFile; fileRef = B740072B17D286210004460C /* Image+D2D.m */; };
-		B740076017D293C10004460C /* Challenge.m in Sources */ = {isa = PBXBuildFile; fileRef = B740075F17D293C10004460C /* Challenge.m */; };
-		B740076117D293C10004460C /* Challenge.m in Sources */ = {isa = PBXBuildFile; fileRef = B740075F17D293C10004460C /* Challenge.m */; };
-		B740076417D293C20004460C /* ChallengeDay.m in Sources */ = {isa = PBXBuildFile; fileRef = B740076317D293C20004460C /* ChallengeDay.m */; };
-		B740076517D293C20004460C /* ChallengeDay.m in Sources */ = {isa = PBXBuildFile; fileRef = B740076317D293C20004460C /* ChallengeDay.m */; };
-		B740076817D293C20004460C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = B740076717D293C20004460C /* Comment.m */; };
-		B740076917D293C20004460C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = B740076717D293C20004460C /* Comment.m */; };
-		B740076C17D293C30004460C /* Follow.m in Sources */ = {isa = PBXBuildFile; fileRef = B740076B17D293C20004460C /* Follow.m */; };
-		B740076D17D293C30004460C /* Follow.m in Sources */ = {isa = PBXBuildFile; fileRef = B740076B17D293C20004460C /* Follow.m */; };
-		B740077017D293C30004460C /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = B740076F17D293C30004460C /* Like.m */; };
-		B740077117D293C30004460C /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = B740076F17D293C30004460C /* Like.m */; };
-		B740077417D293C30004460C /* Tick.m in Sources */ = {isa = PBXBuildFile; fileRef = B740077317D293C30004460C /* Tick.m */; };
-		B740077517D293C30004460C /* Tick.m in Sources */ = {isa = PBXBuildFile; fileRef = B740077317D293C30004460C /* Tick.m */; };
-		B740077817D293C40004460C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B740077717D293C40004460C /* User.m */; };
-		B740077917D293C40004460C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B740077717D293C40004460C /* User.m */; };
-		B740077C17D293C40004460C /* Intent.m in Sources */ = {isa = PBXBuildFile; fileRef = B740077B17D293C40004460C /* Intent.m */; };
-		B740077D17D293C40004460C /* Intent.m in Sources */ = {isa = PBXBuildFile; fileRef = B740077B17D293C40004460C /* Intent.m */; };
-		B740078017D293C40004460C /* Verification.m in Sources */ = {isa = PBXBuildFile; fileRef = B740077F17D293C40004460C /* Verification.m */; };
-		B740078117D293C40004460C /* Verification.m in Sources */ = {isa = PBXBuildFile; fileRef = B740077F17D293C40004460C /* Verification.m */; };
-		B740078417D293C50004460C /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078317D293C40004460C /* Image.m */; };
-		B740078517D293C50004460C /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078317D293C40004460C /* Image.m */; };
-		B740078817D293C50004460C /* Star.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078717D293C50004460C /* Star.m */; };
-		B740078917D293C50004460C /* Star.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078717D293C50004460C /* Star.m */; };
 		B740078C17DE4F020004460C /* ProfileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078B17DE4F010004460C /* ProfileRequest.m */; };
 		B740078D17DE4F020004460C /* ProfileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B740078B17DE4F010004460C /* ProfileRequest.m */; };
 		B75D59A017CBAC9700160592 /* ResetPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */; };
 		B75D59A117CBAC9700160592 /* ResetPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */; };
+		B76D56091806DB02003DDD36 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56081806DB02003DDD36 /* Comment.m */; };
+		B76D560A1806DB02003DDD36 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56081806DB02003DDD36 /* Comment.m */; };
+		B76D560D1806DB02003DDD36 /* Challenge.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D560C1806DB02003DDD36 /* Challenge.m */; };
+		B76D560E1806DB02003DDD36 /* Challenge.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D560C1806DB02003DDD36 /* Challenge.m */; };
+		B76D56111806DB02003DDD36 /* ChallengeDay.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56101806DB02003DDD36 /* ChallengeDay.m */; };
+		B76D56121806DB02003DDD36 /* ChallengeDay.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56101806DB02003DDD36 /* ChallengeDay.m */; };
+		B76D56151806DB02003DDD36 /* Follow.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56141806DB02003DDD36 /* Follow.m */; };
+		B76D56161806DB02003DDD36 /* Follow.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56141806DB02003DDD36 /* Follow.m */; };
+		B76D56191806DB1D003DDD36 /* Intent.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56181806DB1D003DDD36 /* Intent.m */; };
+		B76D561A1806DB1D003DDD36 /* Intent.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56181806DB1D003DDD36 /* Intent.m */; };
+		B76D561D1806DB1D003DDD36 /* Verification.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D561C1806DB1D003DDD36 /* Verification.m */; };
+		B76D561E1806DB1D003DDD36 /* Verification.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D561C1806DB1D003DDD36 /* Verification.m */; };
+		B76D56211806DB1D003DDD36 /* Star.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56201806DB1D003DDD36 /* Star.m */; };
+		B76D56221806DB1D003DDD36 /* Star.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56201806DB1D003DDD36 /* Star.m */; };
+		B76D56251806DB1D003DDD36 /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56241806DB1D003DDD36 /* Like.m */; };
+		B76D56261806DB1D003DDD36 /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56241806DB1D003DDD36 /* Like.m */; };
+		B76D56291806DB1D003DDD36 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56281806DB1D003DDD36 /* Image.m */; };
+		B76D562A1806DB1D003DDD36 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56281806DB1D003DDD36 /* Image.m */; };
+		B76D562D1806DB1D003DDD36 /* Tick.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D562C1806DB1D003DDD36 /* Tick.m */; };
+		B76D562E1806DB1D003DDD36 /* Tick.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D562C1806DB1D003DDD36 /* Tick.m */; };
+		B76D56311806DB1D003DDD36 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56301806DB1D003DDD36 /* User.m */; };
+		B76D56321806DB1D003DDD36 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56301806DB1D003DDD36 /* User.m */; };
 		B78481CB18020834008F2EB8 /* FakeDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B78481CA18020834008F2EB8 /* FakeDataUtils.m */; };
 		B78481CC18020834008F2EB8 /* FakeDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B78481CA18020834008F2EB8 /* FakeDataUtils.m */; };
 		B7B4072C1804465E00A0F049 /* food.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B7B4072A1804465E00A0F049 /* food.jpg */; };
@@ -208,32 +208,32 @@
 		B74006FC17D0E5F80004460C /* Two-Headed-Turtle1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Two-Headed-Turtle1.jpg"; sourceTree = "<group>"; };
 		B740072A17D286210004460C /* Image+D2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Image+D2D.h"; path = "daytoday/Image+D2D.h"; sourceTree = "<group>"; };
 		B740072B17D286210004460C /* Image+D2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Image+D2D.m"; path = "daytoday/Image+D2D.m"; sourceTree = "<group>"; };
-		B740075E17D293C10004460C /* Challenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Challenge.h; path = daytoday/Challenge.h; sourceTree = "<group>"; };
-		B740075F17D293C10004460C /* Challenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Challenge.m; path = daytoday/Challenge.m; sourceTree = "<group>"; };
-		B740076217D293C20004460C /* ChallengeDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChallengeDay.h; path = daytoday/ChallengeDay.h; sourceTree = "<group>"; };
-		B740076317D293C20004460C /* ChallengeDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChallengeDay.m; path = daytoday/ChallengeDay.m; sourceTree = "<group>"; };
-		B740076617D293C20004460C /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Comment.h; path = daytoday/Comment.h; sourceTree = "<group>"; };
-		B740076717D293C20004460C /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Comment.m; path = daytoday/Comment.m; sourceTree = "<group>"; };
-		B740076A17D293C20004460C /* Follow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Follow.h; path = daytoday/Follow.h; sourceTree = "<group>"; };
-		B740076B17D293C20004460C /* Follow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Follow.m; path = daytoday/Follow.m; sourceTree = "<group>"; };
-		B740076E17D293C30004460C /* Like.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Like.h; path = daytoday/Like.h; sourceTree = "<group>"; };
-		B740076F17D293C30004460C /* Like.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Like.m; path = daytoday/Like.m; sourceTree = "<group>"; };
-		B740077217D293C30004460C /* Tick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tick.h; path = daytoday/Tick.h; sourceTree = "<group>"; };
-		B740077317D293C30004460C /* Tick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tick.m; path = daytoday/Tick.m; sourceTree = "<group>"; };
-		B740077617D293C30004460C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = daytoday/User.h; sourceTree = "<group>"; };
-		B740077717D293C40004460C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = daytoday/User.m; sourceTree = "<group>"; };
-		B740077A17D293C40004460C /* Intent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Intent.h; path = daytoday/Intent.h; sourceTree = "<group>"; };
-		B740077B17D293C40004460C /* Intent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Intent.m; path = daytoday/Intent.m; sourceTree = "<group>"; };
-		B740077E17D293C40004460C /* Verification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Verification.h; path = daytoday/Verification.h; sourceTree = "<group>"; };
-		B740077F17D293C40004460C /* Verification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Verification.m; path = daytoday/Verification.m; sourceTree = "<group>"; };
-		B740078217D293C40004460C /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = daytoday/Image.h; sourceTree = "<group>"; };
-		B740078317D293C40004460C /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Image.m; path = daytoday/Image.m; sourceTree = "<group>"; };
-		B740078617D293C50004460C /* Star.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Star.h; path = daytoday/Star.h; sourceTree = "<group>"; };
-		B740078717D293C50004460C /* Star.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Star.m; path = daytoday/Star.m; sourceTree = "<group>"; };
 		B740078A17DE4F010004460C /* ProfileRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileRequest.h; sourceTree = "<group>"; };
 		B740078B17DE4F010004460C /* ProfileRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileRequest.m; sourceTree = "<group>"; };
 		B75D599E17CBAC9600160592 /* ResetPasswordRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordRequest.h; sourceTree = "<group>"; };
 		B75D599F17CBAC9600160592 /* ResetPasswordRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordRequest.m; sourceTree = "<group>"; };
+		B76D56071806DB02003DDD36 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Comment.h; path = daytoday/Comment.h; sourceTree = "<group>"; };
+		B76D56081806DB02003DDD36 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Comment.m; path = daytoday/Comment.m; sourceTree = "<group>"; };
+		B76D560B1806DB02003DDD36 /* Challenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Challenge.h; path = daytoday/Challenge.h; sourceTree = "<group>"; };
+		B76D560C1806DB02003DDD36 /* Challenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Challenge.m; path = daytoday/Challenge.m; sourceTree = "<group>"; };
+		B76D560F1806DB02003DDD36 /* ChallengeDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChallengeDay.h; path = daytoday/ChallengeDay.h; sourceTree = "<group>"; };
+		B76D56101806DB02003DDD36 /* ChallengeDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChallengeDay.m; path = daytoday/ChallengeDay.m; sourceTree = "<group>"; };
+		B76D56131806DB02003DDD36 /* Follow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Follow.h; path = daytoday/Follow.h; sourceTree = "<group>"; };
+		B76D56141806DB02003DDD36 /* Follow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Follow.m; path = daytoday/Follow.m; sourceTree = "<group>"; };
+		B76D56171806DB1D003DDD36 /* Intent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Intent.h; path = daytoday/Intent.h; sourceTree = "<group>"; };
+		B76D56181806DB1D003DDD36 /* Intent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Intent.m; path = daytoday/Intent.m; sourceTree = "<group>"; };
+		B76D561B1806DB1D003DDD36 /* Verification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Verification.h; path = daytoday/Verification.h; sourceTree = "<group>"; };
+		B76D561C1806DB1D003DDD36 /* Verification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Verification.m; path = daytoday/Verification.m; sourceTree = "<group>"; };
+		B76D561F1806DB1D003DDD36 /* Star.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Star.h; path = daytoday/Star.h; sourceTree = "<group>"; };
+		B76D56201806DB1D003DDD36 /* Star.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Star.m; path = daytoday/Star.m; sourceTree = "<group>"; };
+		B76D56231806DB1D003DDD36 /* Like.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Like.h; path = daytoday/Like.h; sourceTree = "<group>"; };
+		B76D56241806DB1D003DDD36 /* Like.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Like.m; path = daytoday/Like.m; sourceTree = "<group>"; };
+		B76D56271806DB1D003DDD36 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = daytoday/Image.h; sourceTree = "<group>"; };
+		B76D56281806DB1D003DDD36 /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Image.m; path = daytoday/Image.m; sourceTree = "<group>"; };
+		B76D562B1806DB1D003DDD36 /* Tick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tick.h; path = daytoday/Tick.h; sourceTree = "<group>"; };
+		B76D562C1806DB1D003DDD36 /* Tick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tick.m; path = daytoday/Tick.m; sourceTree = "<group>"; };
+		B76D562F1806DB1D003DDD36 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = daytoday/User.h; sourceTree = "<group>"; };
+		B76D56301806DB1D003DDD36 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = daytoday/User.m; sourceTree = "<group>"; };
 		B78481C918020834008F2EB8 /* FakeDataUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FakeDataUtils.h; path = ../FakeDataUtils.h; sourceTree = "<group>"; };
 		B78481CA18020834008F2EB8 /* FakeDataUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FakeDataUtils.m; path = ../FakeDataUtils.m; sourceTree = "<group>"; };
 		B7B4072A1804465E00A0F049 /* food.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = food.jpg; sourceTree = "<group>"; };
@@ -689,28 +689,6 @@
 		B7E61F1C17C6C853002B681B /* models */ = {
 			isa = PBXGroup;
 			children = (
-				B740078617D293C50004460C /* Star.h */,
-				B740078717D293C50004460C /* Star.m */,
-				B740078217D293C40004460C /* Image.h */,
-				B740078317D293C40004460C /* Image.m */,
-				B740077E17D293C40004460C /* Verification.h */,
-				B740077F17D293C40004460C /* Verification.m */,
-				B740077A17D293C40004460C /* Intent.h */,
-				B740077B17D293C40004460C /* Intent.m */,
-				B740077617D293C30004460C /* User.h */,
-				B740077717D293C40004460C /* User.m */,
-				B740077217D293C30004460C /* Tick.h */,
-				B740077317D293C30004460C /* Tick.m */,
-				B740076E17D293C30004460C /* Like.h */,
-				B740076F17D293C30004460C /* Like.m */,
-				B740076A17D293C20004460C /* Follow.h */,
-				B740076B17D293C20004460C /* Follow.m */,
-				B740076617D293C20004460C /* Comment.h */,
-				B740076717D293C20004460C /* Comment.m */,
-				B740076217D293C20004460C /* ChallengeDay.h */,
-				B740076317D293C20004460C /* ChallengeDay.m */,
-				B740075E17D293C10004460C /* Challenge.h */,
-				B740075F17D293C10004460C /* Challenge.m */,
 				B740072A17D286210004460C /* Image+D2D.h */,
 				B740072B17D286210004460C /* Image+D2D.m */,
 				B7E61EEC17C6B508002B681B /* Star+D2D.h */,
@@ -731,6 +709,28 @@
 				B7E61E9017C40464002B681B /* User+D2D.m */,
 				B7E61F2517C97082002B681B /* Comment+D2D.h */,
 				B7E61F2617C97082002B681B /* Comment+D2D.m */,
+				B76D56071806DB02003DDD36 /* Comment.h */,
+				B76D56081806DB02003DDD36 /* Comment.m */,
+				B76D560B1806DB02003DDD36 /* Challenge.h */,
+				B76D560C1806DB02003DDD36 /* Challenge.m */,
+				B76D560F1806DB02003DDD36 /* ChallengeDay.h */,
+				B76D56101806DB02003DDD36 /* ChallengeDay.m */,
+				B76D56131806DB02003DDD36 /* Follow.h */,
+				B76D56141806DB02003DDD36 /* Follow.m */,
+				B76D56171806DB1D003DDD36 /* Intent.h */,
+				B76D56181806DB1D003DDD36 /* Intent.m */,
+				B76D561B1806DB1D003DDD36 /* Verification.h */,
+				B76D561C1806DB1D003DDD36 /* Verification.m */,
+				B76D561F1806DB1D003DDD36 /* Star.h */,
+				B76D56201806DB1D003DDD36 /* Star.m */,
+				B76D56231806DB1D003DDD36 /* Like.h */,
+				B76D56241806DB1D003DDD36 /* Like.m */,
+				B76D56271806DB1D003DDD36 /* Image.h */,
+				B76D56281806DB1D003DDD36 /* Image.m */,
+				B76D562B1806DB1D003DDD36 /* Tick.h */,
+				B76D562C1806DB1D003DDD36 /* Tick.m */,
+				B76D562F1806DB1D003DDD36 /* User.h */,
+				B76D56301806DB1D003DDD36 /* User.m */,
 			);
 			name = models;
 			path = ..;
@@ -850,6 +850,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B76D56311806DB1D003DDD36 /* User.m in Sources */,
 				B7E61D4E17BD6AA5002B681B /* main.m in Sources */,
 				B7E61D5217BD6AA5002B681B /* AppDelegate.m in Sources */,
 				B7E61D5B17BD6AA5002B681B /* ViewController.m in Sources */,
@@ -862,6 +863,7 @@
 				B7E61E2917C27F32002B681B /* NIDataStructures.m in Sources */,
 				B7E61E2B17C27F32002B681B /* NIDebuggingTools.m in Sources */,
 				B7E61E2D17C27F32002B681B /* NIDeviceOrientation.m in Sources */,
+				B76D561D1806DB1D003DDD36 /* Verification.m in Sources */,
 				B7E61E2F17C27F32002B681B /* NIError.m in Sources */,
 				B7E61E3117C27F32002B681B /* NIFoundationMethods.m in Sources */,
 				B7E61E3317C27F32002B681B /* NIInMemoryCache.m in Sources */,
@@ -873,6 +875,7 @@
 				B7E61E3B17C27F32002B681B /* NINonRetainingCollections.m in Sources */,
 				B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */,
 				B7E61E3D17C27F32002B681B /* NIOperations.m in Sources */,
+				B76D56091806DB02003DDD36 /* Comment.m in Sources */,
 				B73903D117FB701A00B9C9BB /* D2ViewController.m in Sources */,
 				B73903C817FB5FED00B9C9BB /* ProfileViewController.m in Sources */,
 				B7E61E3F17C27F32002B681B /* NIPaths.m in Sources */,
@@ -890,6 +893,7 @@
 				B7E61E6B17C27F5A002B681B /* AFPropertyListRequestOperation.m in Sources */,
 				B7E61E6D17C27F5A002B681B /* AFURLConnectionOperation.m in Sources */,
 				B7E61E6F17C27F5A002B681B /* AFXMLRequestOperation.m in Sources */,
+				B76D560D1806DB02003DDD36 /* Challenge.m in Sources */,
 				B7E61E7117C27F5A002B681B /* UIImageView+AFNetworking.m in Sources */,
 				B7E61E7617C27F6E002B681B /* JSONKit.m in Sources */,
 				B7E61E7D17C284C9002B681B /* DayTodayModels.xcdatamodeld in Sources */,
@@ -902,10 +906,13 @@
 				B7E61EA217C56202002B681B /* ChallengeRequest.m in Sources */,
 				B7E61ED217C67F07002B681B /* Follow+D2D.m in Sources */,
 				B7E61EDA17C695A6002B681B /* Challenge+D2D.m in Sources */,
+				B76D56151806DB02003DDD36 /* Follow.m in Sources */,
 				B7E61EDE17C6B461002B681B /* Like+D2D.m in Sources */,
 				B7E61EE217C6B490002B681B /* Intent+D2D.m in Sources */,
 				B7E61EE617C6B4B2002B681B /* ChallengeDay+D2D.m in Sources */,
 				B7E61EEA17C6B4C4002B681B /* Tick+D2D.m in Sources */,
+				B76D562D1806DB1D003DDD36 /* Tick.m in Sources */,
+				B76D56111806DB02003DDD36 /* ChallengeDay.m in Sources */,
 				B7E61EEE17C6B509002B681B /* Star+D2D.m in Sources */,
 				B7E61F1A17C6C65A002B681B /* IntentRequest.m in Sources */,
 				B73903C317FB4B2700B9C9BB /* NINetworkImageView.m in Sources */,
@@ -914,21 +921,14 @@
 				B7E61F2317C97039002B681B /* CommentRequest.m in Sources */,
 				B73903CE17FB6DD800B9C9BB /* CreateChallengeViewController.m in Sources */,
 				B7E61F2717C97082002B681B /* Comment+D2D.m in Sources */,
+				B76D56291806DB1D003DDD36 /* Image.m in Sources */,
 				B73366B117CA8B87002524E4 /* TickRequest.m in Sources */,
+				B76D56251806DB1D003DDD36 /* Like.m in Sources */,
+				B76D56191806DB1D003DDD36 /* Intent.m in Sources */,
 				B75D59A017CBAC9700160592 /* ResetPasswordRequest.m in Sources */,
 				B740072C17D286210004460C /* Image+D2D.m in Sources */,
-				B740076017D293C10004460C /* Challenge.m in Sources */,
-				B740076417D293C20004460C /* ChallengeDay.m in Sources */,
-				B740076817D293C20004460C /* Comment.m in Sources */,
-				B740076C17D293C30004460C /* Follow.m in Sources */,
-				B740077017D293C30004460C /* Like.m in Sources */,
-				B740077417D293C30004460C /* Tick.m in Sources */,
+				B76D56211806DB1D003DDD36 /* Star.m in Sources */,
 				B73903C217FB4B2700B9C9BB /* NIImageProcessing.m in Sources */,
-				B740077817D293C40004460C /* User.m in Sources */,
-				B740077C17D293C40004460C /* Intent.m in Sources */,
-				B740078017D293C40004460C /* Verification.m in Sources */,
-				B740078417D293C50004460C /* Image.m in Sources */,
-				B740078817D293C50004460C /* Star.m in Sources */,
 				B740078C17DE4F020004460C /* ProfileRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -937,6 +937,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B76D561E1806DB1D003DDD36 /* Verification.m in Sources */,
 				B7E61D7317BD6AA5002B681B /* daytodayTests.m in Sources */,
 				B7E61DEF17C273C4002B681B /* NSDate+SR.m in Sources */,
 				B7E61DF117C273C4002B681B /* NSManagedObject+SR.m in Sources */,
@@ -954,34 +955,44 @@
 				B7E61E3E17C27F32002B681B /* NIOperations.m in Sources */,
 				B7E61E4017C27F32002B681B /* NIPaths.m in Sources */,
 				B7E61E4217C27F32002B681B /* NIRuntimeClassModifications.m in Sources */,
+				B76D561A1806DB1D003DDD36 /* Intent.m in Sources */,
+				B76D56221806DB1D003DDD36 /* Star.m in Sources */,
 				B7E61E4417C27F32002B681B /* NISDKAvailability.m in Sources */,
 				B78481CC18020834008F2EB8 /* FakeDataUtils.m in Sources */,
 				B7E61E4817C27F32002B681B /* NIState.m in Sources */,
 				B7E61E4C17C27F32002B681B /* NSString+NimbusCore.m in Sources */,
+				B76D560E1806DB02003DDD36 /* Challenge.m in Sources */,
 				B7E61E6217C27F5A002B681B /* AFHTTPClient.m in Sources */,
 				B7E61E6417C27F5A002B681B /* AFHTTPRequestOperation.m in Sources */,
 				B7E61E6617C27F5A002B681B /* AFImageRequestOperation.m in Sources */,
 				B7E61E6817C27F5A002B681B /* AFJSONRequestOperation.m in Sources */,
+				B76D560A1806DB02003DDD36 /* Comment.m in Sources */,
 				B7E61E6A17C27F5A002B681B /* AFNetworkActivityIndicatorManager.m in Sources */,
 				B7E61E6C17C27F5A002B681B /* AFPropertyListRequestOperation.m in Sources */,
 				B7E61E6E17C27F5A002B681B /* AFURLConnectionOperation.m in Sources */,
+				B76D562A1806DB1D003DDD36 /* Image.m in Sources */,
 				B7E61E7017C27F5A002B681B /* AFXMLRequestOperation.m in Sources */,
+				B76D56261806DB1D003DDD36 /* Like.m in Sources */,
 				B7E61E7217C27F5A002B681B /* UIImageView+AFNetworking.m in Sources */,
 				B7E61E7717C27F6E002B681B /* JSONKit.m in Sources */,
 				B7E61E7A17C28073002B681B /* SRTestCase.m in Sources */,
+				B76D56121806DB02003DDD36 /* ChallengeDay.m in Sources */,
 				B7E61E7E17C284C9002B681B /* DayTodayModels.xcdatamodeld in Sources */,
 				B7E61E8217C28674002B681B /* D2Request.m in Sources */,
 				B7E61E8617C2984F002B681B /* AuthenticationRequest.m in Sources */,
 				B7E61E8A17C29924002B681B /* UserRequest.m in Sources */,
 				B7E61E9217C40464002B681B /* User+D2D.m in Sources */,
 				B7E61E9617C511AD002B681B /* NSDictionary+SR.m in Sources */,
+				B76D562E1806DB1D003DDD36 /* Tick.m in Sources */,
 				B7E61E9F17C55662002B681B /* FollowRequest.m in Sources */,
 				B7E61EA317C56202002B681B /* ChallengeRequest.m in Sources */,
 				B7E61ED317C67F07002B681B /* Follow+D2D.m in Sources */,
+				B76D56321806DB1D003DDD36 /* User.m in Sources */,
 				B7E61EDB17C695A6002B681B /* Challenge+D2D.m in Sources */,
 				B7E61EDF17C6B461002B681B /* Like+D2D.m in Sources */,
 				B7E61EE317C6B490002B681B /* Intent+D2D.m in Sources */,
 				B7E61EE717C6B4B2002B681B /* ChallengeDay+D2D.m in Sources */,
+				B76D56161806DB02003DDD36 /* Follow.m in Sources */,
 				B7E61EEB17C6B4C4002B681B /* Tick+D2D.m in Sources */,
 				B7E61EEF17C6B509002B681B /* Star+D2D.m in Sources */,
 				B7E61F1B17C6C65A002B681B /* IntentRequest.m in Sources */,
@@ -991,17 +1002,6 @@
 				B73366B217CA8B87002524E4 /* TickRequest.m in Sources */,
 				B75D59A117CBAC9700160592 /* ResetPasswordRequest.m in Sources */,
 				B740072D17D286210004460C /* Image+D2D.m in Sources */,
-				B740076117D293C10004460C /* Challenge.m in Sources */,
-				B740076517D293C20004460C /* ChallengeDay.m in Sources */,
-				B740076917D293C20004460C /* Comment.m in Sources */,
-				B740076D17D293C30004460C /* Follow.m in Sources */,
-				B740077117D293C30004460C /* Like.m in Sources */,
-				B740077517D293C30004460C /* Tick.m in Sources */,
-				B740077917D293C40004460C /* User.m in Sources */,
-				B740077D17D293C40004460C /* Intent.m in Sources */,
-				B740078117D293C40004460C /* Verification.m in Sources */,
-				B740078517D293C50004460C /* Image.m in Sources */,
-				B740078917D293C50004460C /* Star.m in Sources */,
 				B740078D17DE4F020004460C /* ProfileRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

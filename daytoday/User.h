@@ -2,7 +2,7 @@
 //  User.h
 //  daytoday
 //
-//  Created by Anderson Miller on 8/31/13.
+//  Created by Anderson Miller on 10/10/13.
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
@@ -22,10 +22,10 @@
 @property (nonatomic, retain) NSSet *comments;
 @property (nonatomic, retain) NSSet *followers;
 @property (nonatomic, retain) NSSet *following;
+@property (nonatomic, retain) NSSet *image;
 @property (nonatomic, retain) NSSet *intents;
 @property (nonatomic, retain) NSSet *likes;
 @property (nonatomic, retain) NSSet *stars;
-@property (nonatomic, retain) Image *image;
 @end
 
 @interface User (CoreDataGeneratedAccessors)
@@ -49,6 +49,11 @@
 - (void)removeFollowingObject:(Follow *)value;
 - (void)addFollowing:(NSSet *)values;
 - (void)removeFollowing:(NSSet *)values;
+
+- (void)addImageObject:(Image *)value;
+- (void)removeImageObject:(Image *)value;
+- (void)addImage:(NSSet *)values;
+- (void)removeImage:(NSSet *)values;
 
 - (void)addIntentsObject:(Intent *)value;
 - (void)removeIntentsObject:(Intent *)value;

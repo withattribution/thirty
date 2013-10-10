@@ -2,7 +2,7 @@
 //  Image.m
 //  daytoday
 //
-//  Created by Anderson Miller on 8/31/13.
+//  Created by Anderson Miller on 10/10/13.
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
@@ -15,14 +15,14 @@
 
 @implementation Image
 
+@dynamic createdAt;
 @dynamic imageId;
-@dynamic url;
 @dynamic local;
 @dynamic tag;
-@dynamic createdAt;
-@dynamic user;
+@dynamic url;
 @dynamic challenge;
-@dynamic verification;
 @dynamic comment;
+@dynamic user;
+@dynamic verification;
 
 @end

@@ -7,7 +7,9 @@
 //
 
 #import "Image.h"
-
+extern NSString *const kImageSmallTag;
+extern NSString *const kImageMediumTag;
+extern NSString *const kImageLargeTag;
 @interface Image (D2D)
 +(id) getForID:(NSNumber*)ident inContext:(NSManagedObjectContext*)context;
 +(id) fromDictionary:(NSDictionary*)dictionary inContext:(NSManagedObjectContext*)context;

@@ -444,23 +444,21 @@
     
     Intent* intent = [Intent fakeIntent:self.managedObjectContext];
     Image *i1 = [Image imageWithURL:img2small andContext:self.managedObjectContext];
-    i1.tag = @"SMALL";
+    i1.tag = kImageSmallTag;
     Image *i2 = [Image imageWithURL:img2med andContext:self.managedObjectContext];
-    i2.tag = @"MEDIUM";
+    i2.tag = kImageMediumTag;
     Image *i3 = [Image imageWithURL:img2large andContext:self.managedObjectContext];
-    i3.tag = @"LARGE";
+    i3.tag = kImageLargeTag;
     
-    [i1 setChallenge:intent.challenge];
-    [i2 setChallenge:intent.challenge];
-    [i3 setChallenge:intent.challenge];
-    [intent.challenge setImage:i1];
+
+    [intent.challenge setImage:[NSSet setWithObjects:i1,i2,i3, nil]];
     NSError *error = nil;
 
     NSEntityDescription* entity = [NSEntityDescription entityForName:@"Image" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     request.entity = entity;
-    request.predicate = [NSPredicate predicateWithFormat:@"tag=%@ AND challenge=%@",@"SMALL",intent.challenge];
+    request.predicate = [NSPredicate predicateWithFormat:@"tag=%@ AND challenge=%@",kImageSmallTag,intent.challenge];
     [request setReturnsObjectsAsFaults:NO];
     NSArray *returnObjects = [self.managedObjectContext executeFetchRequest:request error:&error];
     NIDINFO(@"return objects: %@",returnObjects);

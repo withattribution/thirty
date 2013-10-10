@@ -2,7 +2,7 @@
 //  User.m
 //  daytoday
 //
-//  Created by Anderson Miller on 8/31/13.
+//  Created by Anderson Miller on 10/10/13.
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
@@ -27,9 +27,9 @@
 @dynamic comments;
 @dynamic followers;
 @dynamic following;
+@dynamic image;
 @dynamic intents;
 @dynamic likes;
 @dynamic stars;
-@dynamic image;
 
 @end

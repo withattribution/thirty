@@ -2,7 +2,7 @@
 //  Comment.h
 //  daytoday
 //
-//  Created by Anderson Miller on 8/31/13.
+//  Created by Anderson Miller on 10/10/13.
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
@@ -17,7 +17,15 @@
 @property (nonatomic, retain) NSNumber * commentId;
 @property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) ChallengeDay *challengeDay;
+@property (nonatomic, retain) NSSet *image;
 @property (nonatomic, retain) User *user;
-@property (nonatomic, retain) Image *image;
+@end
+
+@interface Comment (CoreDataGeneratedAccessors)
+
+- (void)addImageObject:(Image *)value;
+- (void)removeImageObject:(Image *)value;
+- (void)addImage:(NSSet *)values;
+- (void)removeImage:(NSSet *)values;
 
 @end

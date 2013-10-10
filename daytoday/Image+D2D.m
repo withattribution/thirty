@@ -16,6 +16,10 @@
 #define kCreatedAtKey @"created_at"
 #define kUpdatedAtKey @"updated_at"
 
+NSString *const kImageSmallTag = @"SMALL";
+NSString *const kImageMediumTag = @"MEDIUM";
+NSString *const kImageLargeTag = @"LARGE";
+
 @implementation Image (D2D)
 +(id) getForID:(NSNumber*)ident inContext:(NSManagedObjectContext*)context
 {
