@@ -113,8 +113,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    // self.title = NSLocalizedString(@"Profile View", @"profile view");
-
+    self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.];
     UserInfoHeader *infoHeader = [[UserInfoHeader alloc] initWithFrame:CGRectMake(0.f,
                                                                                   [self padWithStatusBarHeight],
                                                                                   self.view.frame.size.width,
@@ -127,18 +126,8 @@
                                                                                                       profileHeightOffset,
                                                                                                       self.view.frame.size.width,
                                                                                                       self.view.frame.size.height - profileHeightOffset)];
+    [historyTable setIntents:((ProfileData*)[ProfileData fakeProfileData]).intents];
     [self.view addSubview:historyTable];
-//    User *selfUser = ((ProfileData*)[ProfileData fakeProfileData]).selfUser;
-//    NIDINFO(@"profile data: %@",((ProfileData*)[ProfileData fakeProfileData]).selfUser);
-//    NIDINFO(@"the fake info %@",[ProfileData fakeProfileData]);
-
-//     these are intents!
-//    @property (nonatomic, retain) NSDate * ending;
-//    @property (nonatomic, retain) NSNumber * intentId;
-//    @property (nonatomic, retain) NSDate * starting;
-//    @property (nonatomic, retain) Challenge *challenge;
-//    @property (nonatomic, retain) NSSet *days;
-//    @property (nonatomic, retain) User *user;
 }
 
 - (IBAction) searchChallenges:(id)sender

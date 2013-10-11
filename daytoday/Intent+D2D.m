@@ -70,6 +70,9 @@
     NSTimeInterval thirtyDays = 60.0*60.0*24.0*30.0;
     NSDate *ending = [NSDate dateWithTimeInterval:thirtyDays sinceDate:starting];
     
+    [i setStarting:starting];
+    [i setEnding:ending];
+
     NSDate *iteratorDate = starting;
     while( [iteratorDate lessThan:ending] ){
         if( abs(arc4random() % 100) < 50 ){

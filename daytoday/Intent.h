@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSNumber * intentId;
 @property (nonatomic, retain) NSDate * starting;
 @property (nonatomic, retain) Challenge *challenge;
-@property (nonatomic, retain) NSSet *days;
+@property (nonatomic, retain) NSSet *days; //Days participated
 @property (nonatomic, retain) User *user;
 @end
 

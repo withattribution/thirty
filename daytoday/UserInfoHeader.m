@@ -18,20 +18,6 @@
 // and the number of users following
 // also the way to toggle between the history and the saved list of challenges
 
-//@property (nonatomic, retain) NSString * bio;
-//@property (nonatomic, retain) NSString * realName;
-//@property (nonatomic, retain) NSNumber * userId;
-//@property (nonatomic, retain) NSString * username;
-//@property (nonatomic, retain) NSString * website;
-//@property (nonatomic, retain) NSSet *challengesCreated;
-//@property (nonatomic, retain) NSSet *comments;
-//@property (nonatomic, retain) NSSet *followers;
-//@property (nonatomic, retain) NSSet *following;
-//@property (nonatomic, retain) NSSet *image;
-//@property (nonatomic, retain) NSSet *intents;
-//@property (nonatomic, retain) NSSet *likes;
-//@property (nonatomic, retain) NSSet *stars;
-
 @implementation UserInfoHeader
 
 static CGFloat INFO_PADDING = 3.0f;
@@ -41,21 +27,15 @@ static int LABEL_ROWS = 3;
 #define HISTORY_TAG 30
 #define SAVED_TAG 31
 
-//- (void)networkImageViewDidStartLoad:(NINetworkImageView *)imageView
-//{
-//    NIDINFO(@"totes started loading");
-//}
-
 - (void)networkImageView:(NINetworkImageView *)imageView didFailWithError:(NSError *)error
 {
-    NSLog(@"anything? %@", error);
+//    NSLog(@"anything? %@", error);
 }
 
 - (void) networkImageView:(NINetworkImageView *) imageView didLoadImage:(UIImage *) image
 {
-    NIDINFO(@"did load");
+//    NIDINFO(@"did load");
 }
-
 
 - (id)initWithFrame:(CGRect)frame withUser:(User *)user
 {
@@ -70,7 +50,7 @@ static int LABEL_ROWS = 3;
             }
         } ];
         
-        NIDINFO(@"URL URL URL : %@",profileImage.url);
+//        NIDINFO(@"URL URL URL : %@",profileImage.url);
         
 //        NINetworkImageView *userImage = [[NINetworkImageView alloc] initWithFrame:CGRectMake(INFO_PADDING, INFO_PADDING, PROFILE_SIZE, PROFILE_SIZE)];
 //        [userImage setPathToNetworkImage:@"http://daytoday-dev.s3.amazonaws.com/images/a0e2d3d7813b495181f56a7f528012a8.jpeg"];
@@ -82,7 +62,7 @@ static int LABEL_ROWS = 3;
         [userImage setPathToNetworkImage: @"http://daytoday-dev.s3.amazonaws.com/images/a0e2d3d7813b495181f56a7f528012a8.jpeg"
                           forDisplaySize: CGSizeMake(PROFILE_SIZE, PROFILE_SIZE)
                              contentMode: UIViewContentModeScaleAspectFill];
-        [userImage setDelegate:self];
+//        [userImage setDelegate:self];
 
         userImage.frame = CGRectMake(INFO_PADDING, INFO_PADDING, PROFILE_SIZE, PROFILE_SIZE);
 //        UIImageView *userImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"profileBlank.png"]];
@@ -135,15 +115,15 @@ static int LABEL_ROWS = 3;
         
             switch (i) {
                 case 0:
-                    count.text = @"3";
-                    label.text = @"CHALLENGERS";
+                    count.text = [NSString stringWithFormat:@"%d",[user.intents count]];
+                    label.text = @"CHALLENGES";
                     break;
                 case 1:
-                    count.text = @"44";
+                    count.text = [NSString stringWithFormat:@"%d",[user.followers count]];
                     label.text = @"FOLLOWERS";
                     break;
                 case 2:
-                    count.text = @"100";
+                    count.text = [NSString stringWithFormat:@"%d",[user.following count]];
                     label.text = @"FOLLOWING";
                     break;
                 default:
