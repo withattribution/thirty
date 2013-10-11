@@ -34,8 +34,6 @@
                                                                                                        self.contentHeight,
                                                                                                        self.frame.size.width,
                                                                                                        40.f)];
-        
-        
         [self addSubview:twoWeekProgress];
 
         self.contentHeight += twoWeekProgress.frame.size.height;

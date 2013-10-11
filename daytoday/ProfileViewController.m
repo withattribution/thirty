@@ -78,6 +78,7 @@
 @end
 
 @interface ProfileViewController ()
+
 - (IBAction) searchChallenges:(id)sender;
 - (IBAction) createChallenge:(id)sender;
 
@@ -89,7 +90,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        NIDINFO(@"profile data: %d",[((ProfileData*)[ProfileData fakeProfileData]).intents count]);
+//        NIDINFO(@"profile data: %d",[((ProfileData*)[ProfileData fakeProfileData]).intents count]);
         // Custom initialization
 //        searchChallengesButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //        createChallengeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -117,18 +118,27 @@
     UserInfoHeader *infoHeader = [[UserInfoHeader alloc] initWithFrame:CGRectMake(0.f,
                                                                                   [self padWithStatusBarHeight],
                                                                                   self.view.frame.size.width,
-                                                                                  105.f)];
+                                                                                  105.f)
+                                  withUser:((ProfileData*)[ProfileData fakeProfileData]).selfUser];
     [self.view addSubview:infoHeader];
     
-    //start the tableview madness
     CGFloat profileHeightOffset = infoHeader.frame.origin.y + infoHeader.frame.size.height;
-    
     ProfileHistoryTableView *historyTable = [[ProfileHistoryTableView alloc] initWithFrame:CGRectMake(0,
                                                                                                       profileHeightOffset,
                                                                                                       self.view.frame.size.width,
                                                                                                       self.view.frame.size.height - profileHeightOffset)];
-
     [self.view addSubview:historyTable];
+//    User *selfUser = ((ProfileData*)[ProfileData fakeProfileData]).selfUser;
+//    NIDINFO(@"profile data: %@",((ProfileData*)[ProfileData fakeProfileData]).selfUser);
+//    NIDINFO(@"the fake info %@",[ProfileData fakeProfileData]);
+
+//     these are intents!
+//    @property (nonatomic, retain) NSDate * ending;
+//    @property (nonatomic, retain) NSNumber * intentId;
+//    @property (nonatomic, retain) NSDate * starting;
+//    @property (nonatomic, retain) Challenge *challenge;
+//    @property (nonatomic, retain) NSSet *days;
+//    @property (nonatomic, retain) User *user;
 }
 
 - (IBAction) searchChallenges:(id)sender
