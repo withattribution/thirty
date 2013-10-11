@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NINetworkImageView.h"
 
 @interface ProfileSectionHeaderView : UITableViewHeaderFooterView
+
+//@property (nonatomic,retain) Intent *intent;
+@property (nonatomic,retain) UILabel *challengeLabel;
+@property (nonatomic,retain) NINetworkImageView *sectionImageView;
 
 @end

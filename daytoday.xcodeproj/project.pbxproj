@@ -29,6 +29,7 @@
 		A1275C281806F97200019A91 /* anotherCrop.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1275C261806F97200019A91 /* anotherCrop.jpg */; };
 		A1275C2C1806FD4600019A91 /* ProfileHistoryTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C2B1806FD4600019A91 /* ProfileHistoryTableView.m */; };
 		A1275C2F1807229200019A91 /* ProfileTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C2E1807229200019A91 /* ProfileTableCell.m */; };
+		A1275C3B180888EB00019A91 /* sectionImageHolder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1275C3A180888EB00019A91 /* sectionImageHolder.jpg */; };
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B017FB1C8800B9C9BB /* D2NavController.m */; };
@@ -257,6 +258,7 @@
 		A1275C2B1806FD4600019A91 /* ProfileHistoryTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileHistoryTableView.m; sourceTree = "<group>"; };
 		A1275C2D1807229200019A91 /* ProfileTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTableCell.h; sourceTree = "<group>"; };
 		A1275C2E1807229200019A91 /* ProfileTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableCell.m; sourceTree = "<group>"; };
+		A1275C3A180888EB00019A91 /* sectionImageHolder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sectionImageHolder.jpg; sourceTree = "<group>"; };
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
 		B73903AF17FB1C8800B9C9BB /* D2NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D2NavController.h; sourceTree = "<group>"; };
@@ -565,6 +567,7 @@
 			isa = PBXGroup;
 			children = (
 				A1275C251806F97200019A91 /* profileBlank.png */,
+				A1275C3A180888EB00019A91 /* sectionImageHolder.jpg */,
 				A1275C261806F97200019A91 /* anotherCrop.jpg */,
 			);
 			name = assets;
@@ -1001,6 +1004,7 @@
 				B77F7F07180C63BF0072954E /* AirshipConfig.plist in Resources */,
 				B7E61D5417BD6AA5002B681B /* Default.png in Resources */,
 				A1275C281806F97200019A91 /* anotherCrop.jpg in Resources */,
+				A1275C3B180888EB00019A91 /* sectionImageHolder.jpg in Resources */,
 				B73903C117FB4B2700B9C9BB /* deps in Resources */,
 				B7E61D5617BD6AA5002B681B /* Default@2x.png in Resources */,
 				B7E61D5817BD6AA5002B681B /* Default-568h@2x.png in Resources */,

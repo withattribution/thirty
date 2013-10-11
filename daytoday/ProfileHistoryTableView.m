@@ -9,10 +9,14 @@
 #import "ProfileHistoryTableView.h"
 #import "ProfileTableCell.h"
 #import "ProfileSectionHeaderView.h"
+#import "Intent+D2D.h"
+#import "Image+D2D.h"
+#import "Challenge+D2D.h"
 
-#import "UIColor+SR.h"
+#import <UIColor+SR.h>
 
 @implementation ProfileHistoryTableView
+@synthesize intents;
 
 static NSString *currentProgressCellReuseIdentifier = @"currentProgressCellIdentifier";
 static NSString *summaryProgressCellReuseIdentifier = @"summaryProgressCellIdentifier";
@@ -39,7 +43,10 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 10;
+//    NIDINFO(@"intent count %d", [self.intents count]);
+    if (self.intents && [self.intents count] > 0) return [self.intents count];
+
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -50,9 +57,10 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ProfileTableCell *cell = (ProfileTableCell *)[tableView dequeueReusableCellWithIdentifier:currentProgressCellReuseIdentifier forIndexPath:indexPath];
+//    NIDINFO(@"dequed cell: %@",cell);
+    
     return cell;
 }
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -61,14 +69,21 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 100.0;
+    return 140.f;
 }
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    ProfileSectionHeaderView *sectHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionHeaderViewReuseIdentifier];
-    if (!sectHeaderView){
-        NIDINFO(@"SECTION HEADER VIEW IS NIL");
-    }
+    ProfileSectionHeaderView *sectHeaderView = (ProfileSectionHeaderView *)[tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionHeaderViewReuseIdentifier];
+    sectHeaderView.challengeLabel.text = [((Intent *)[self.intents objectAtIndex:section]).challenge name];
+    [sectHeaderView.sectionImageView setPathToNetworkImage: ((Image *)[((Intent *)[self.intents objectAtIndex:section]).challenge.image anyObject]).url
+                                            forDisplaySize: CGSizeMake(320., 140.)
+                                               contentMode: UIViewContentModeScaleAspectFill];
+    
+//    [sectHeaderView.sectionImageView setPathToNetworkImage: @"http://daytoday-dev.s3.amazonaws.com/images/a0e2d3d7813b495181f56a7f528012a8.jpeg"
+//                                            forDisplaySize: CGSizeMake(320., 140.)
+//                                               contentMode: UIViewContentModeScaleAspectFill];
+    
     return sectHeaderView;
 }
 

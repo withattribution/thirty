@@ -27,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [self randomColor];
+//    self.view.backgroundColor = [self randomColor];
 	// Do any additional setup after loading the view.
 }
 
