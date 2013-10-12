@@ -13,6 +13,8 @@
 #import "Image+D2D.h"
 #import "Challenge+D2D.h"
 
+#import "DaysLeftTableCell.h"
+
 #import <UIColor+SR.h>
 
 @implementation ProfileHistoryTableView
@@ -33,7 +35,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         [self setDelegate:self];
         [self setDataSource:self];
         
-        [self registerClass:[ProfileTableCell class] forCellReuseIdentifier:currentProgressCellReuseIdentifier];
+        [self registerClass:[DaysLeftTableCell class] forCellReuseIdentifier:currentProgressCellReuseIdentifier];
         [self registerClass:[ProfileSectionHeaderView class] forHeaderFooterViewReuseIdentifier:sectionHeaderViewReuseIdentifier];
     }
     return self;
@@ -43,10 +45,10 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    NIDINFO(@"intent count %d", [self.intents count]);
-    if (self.intents && [self.intents count] > 0) return [self.intents count];
-
-    return 1;
+    if (self.intents && [self.intents count] > 0)
+        return [self.intents count];
+    else
+        return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -56,55 +58,39 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ProfileTableCell *cell = (ProfileTableCell *)[tableView dequeueReusableCellWithIdentifier:currentProgressCellReuseIdentifier forIndexPath:indexPath];
-//    NIDINFO(@"dequed cell: %@",cell);
+    DaysLeftTableCell *cell = (DaysLeftTableCell *)[tableView dequeueReusableCellWithIdentifier:currentProgressCellReuseIdentifier forIndexPath:indexPath];
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 168.f;
+    return 40.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 140.f;
+    return 110.f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     ProfileSectionHeaderView *sectHeaderView = (ProfileSectionHeaderView *)[tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionHeaderViewReuseIdentifier];
     sectHeaderView.challengeLabel.text = [((Intent *)[self.intents objectAtIndex:section]).challenge name];
-    [sectHeaderView.sectionImageView setPathToNetworkImage: ((Image *)[((Intent *)[self.intents objectAtIndex:section]).challenge.image anyObject]).url
-                                            forDisplaySize: CGSizeMake(320., 140.)
-                                               contentMode: UIViewContentModeScaleAspectFill];
-    
-//    [sectHeaderView.sectionImageView setPathToNetworkImage: @"http://daytoday-dev.s3.amazonaws.com/images/a0e2d3d7813b495181f56a7f528012a8.jpeg"
+//    [sectHeaderView.sectionImageView setPathToNetworkImage: ((Image *)[((Intent *)[self.intents objectAtIndex:section]).challenge.image anyObject]).url
 //                                            forDisplaySize: CGSizeMake(320., 140.)
 //                                               contentMode: UIViewContentModeScaleAspectFill];
+    
+    [sectHeaderView.sectionImageView setPathToNetworkImage: @"http://daytoday-dev.s3.amazonaws.com/images/a0e2d3d7813b495181f56a7f528012a8.jpeg"
+                                            forDisplaySize: CGSizeMake(320., 110.)
+                                               contentMode: UIViewContentModeScaleAspectFill];
     
     return sectHeaderView;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //    if (indexPath.section != 0) {
-    //        [self fadeAnim:cell];
-    //    }
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (self.viewDeckController.leftControllerIsClosed) {
-//        if (indexPath.section != 0) {
-//            [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//            self.selectedVenue = [self.currentVenues objectAtIndex:indexPath.row];
-//            self.venueTable.scrollEnabled = NO;
-//        }else {
-//            [self presentFullScreenMapView:nil];
-//        }
-//    }
+    
 }
 
 @end
