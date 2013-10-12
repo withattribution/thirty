@@ -12,6 +12,8 @@
 #import "ProgressSnapshotView.h"
 #import "ChallengersRow.h"
 
+
+
 #import "UIColor+SR.h"
 
 @implementation ProfileTableCell

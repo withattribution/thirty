@@ -12,7 +12,6 @@
 
 @interface UserInfoHeader : UIView <NINetworkImageViewDelegate>
 
-
 - (id)initWithFrame:(CGRect)frame withUser:(User *)user;
 
 @end
