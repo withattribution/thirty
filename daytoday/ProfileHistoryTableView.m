@@ -7,20 +7,26 @@
 //
 
 #import "ProfileHistoryTableView.h"
-#import "ProfileTableCell.h"
+
 #import "ProfileSectionHeaderView.h"
+
 #import "Intent+D2D.h"
 #import "Image+D2D.h"
 #import "Challenge+D2D.h"
 
 #import "DaysLeftTableCell.h"
+#import "ProgressRowTableCell.h"
+#import "ParticipantsRowTableCell.h"
 
 #import <UIColor+SR.h>
 
 @implementation ProfileHistoryTableView
 @synthesize intents;
 
-static NSString *currentProgressCellReuseIdentifier = @"currentProgressCellIdentifier";
+static NSString *daysLeftCellReuseIdentifier = @"daysLeftCellReuseIdentifier";
+static NSString *progressRowCellReuseIdentifier = @"progressRowCellReuseIdentifier";
+static NSString *participantsRowCellReuseIdentifier = @"participantsRowCellReuseIdentifier";
+
 static NSString *summaryProgressCellReuseIdentifier = @"summaryProgressCellIdentifier";
 static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIdentifier";
 
@@ -35,7 +41,10 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         [self setDelegate:self];
         [self setDataSource:self];
         
-        [self registerClass:[DaysLeftTableCell class] forCellReuseIdentifier:currentProgressCellReuseIdentifier];
+        [self registerClass:[DaysLeftTableCell class] forCellReuseIdentifier:daysLeftCellReuseIdentifier];
+        [self registerClass:[ProgressRowTableCell class] forCellReuseIdentifier:progressRowCellReuseIdentifier];
+        [self registerClass:[ParticipantsRowTableCell class] forCellReuseIdentifier:participantsRowCellReuseIdentifier];
+        
         [self registerClass:[ProfileSectionHeaderView class] forHeaderFooterViewReuseIdentifier:sectionHeaderViewReuseIdentifier];
     }
     return self;
@@ -53,19 +62,58 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DaysLeftTableCell *cell = (DaysLeftTableCell *)[tableView dequeueReusableCellWithIdentifier:currentProgressCellReuseIdentifier forIndexPath:indexPath];
-    
-    return cell;
+    if (indexPath.row == 0) {
+        DaysLeftTableCell *cell = (DaysLeftTableCell *)[tableView dequeueReusableCellWithIdentifier:daysLeftCellReuseIdentifier forIndexPath:indexPath];
+
+        NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
+        unsigned int unitFlags = NSMonthCalendarUnit | NSDayCalendarUnit | NSYearCalendarUnit;
+        NSDateComponents *comps = [cal components:unitFlags fromDate:[NSDate date]  toDate:((Intent *)[self.intents objectAtIndex:indexPath.section]).ending  options:0];
+        cell.daysLeft.text = [NSString stringWithFormat:@"%d",[comps day]];
+
+        NSDateComponents *starting = [cal components:unitFlags fromDate:((Intent *)[self.intents objectAtIndex:indexPath.section]).starting];
+        NSDateComponents *ending = [cal components:unitFlags fromDate:((Intent *)[self.intents objectAtIndex:indexPath.section]).ending];
+
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        df.locale = [NSLocale autoupdatingCurrentLocale];
+        NSString *startingMonthName = [[df shortStandaloneMonthSymbols] objectAtIndex:([starting month]-1)];
+        NSString *endingMonthName = [[df shortStandaloneMonthSymbols] objectAtIndex:([ending month]-1)];
+
+//        NIDINFO(@"starting name %@",startingMonthName);
+//        NIDINFO(@"ending name %@",endingMonthName);
+//        NIDINFO(@"ending year %d",[ending year]);
+
+        cell.monthSpan.text = [NSString stringWithFormat:@"%@ - %@ %d",[startingMonthName uppercaseString], [endingMonthName uppercaseString],[ending year]];
+        return cell;
+    }
+    if (indexPath.row == 1) {
+        ProgressRowTableCell *cell = (ProgressRowTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier forIndexPath:indexPath];
+        return cell;
+    }
+    if (indexPath.row == 2) {
+        ParticipantsRowTableCell *cell = (ParticipantsRowTableCell *)[tableView dequeueReusableCellWithIdentifier:participantsRowCellReuseIdentifier forIndexPath:indexPath];
+        return cell;
+    }
+    else {
+        //doing this to shut the warnings up
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"generic"];
+        return  cell;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 40.f;
+    if (indexPath.row == 1)
+        return 87.f;
+    if (indexPath.row == 2) {
+        return 45.f;
+    }
+    else
+        return 40.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
