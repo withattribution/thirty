@@ -8,9 +8,6 @@
 
 #import "DaysLeftTableCell.h"
 
-//#import "DTDotElement.h"
-//#import "DTDotColorGroup.h"
-
 @implementation DaysLeftTableCell
 @synthesize daysLeft,monthSpan;
 
@@ -20,10 +17,9 @@ static CGFloat PADDING = 3.0f;
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
         self.monthSpan = [[UILabel alloc] initWithFrame:CGRectMake(2*PADDING,
                                                                    0.f,
-                                                                   165.f,
+                                                                   280.f,
                                                                    40.)];
         self.monthSpan.textColor = [UIColor darkGrayColor];
         self.monthSpan.backgroundColor = [UIColor clearColor];
@@ -32,7 +28,7 @@ static CGFloat PADDING = 3.0f;
         self.monthSpan.numberOfLines = 1;
         self.monthSpan.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.monthSpan];
-        
+
         self.daysLeft = [[UILabel alloc] initWithFrame:CGRectMake(320. - 70. - 27. - PADDING,
                                                                   0.f,
                                                                   70.f,
@@ -43,7 +39,7 @@ static CGFloat PADDING = 3.0f;
         self.daysLeft.text = @"20";
         self.daysLeft.numberOfLines = 1;
         self.daysLeft.textAlignment = NSTextAlignmentLeft;
-        
+
         [self addSubview:self.daysLeft];
         
         UILabel *daysLabel = [[UILabel alloc] initWithFrame:CGRectMake(320. - 70. - PADDING,
@@ -57,12 +53,12 @@ static CGFloat PADDING = 3.0f;
         daysLabel.numberOfLines = 1;
         daysLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:daysLabel];
-        
+
         UIView *underline = [[UIView alloc] initWithFrame:CGRectMake(daysLabel.frame.origin.x, 26., daysLeft.frame.size.width - PADDING, 2.f)];
         [underline setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:1.0]];
         [self addSubview:underline];
-        
-        [self setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:95]];
+
+        [self setBackgroundColor:[UIColor colorWithWhite:0.95f alpha:1.f]];
     }
     return self;
 }

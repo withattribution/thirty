@@ -58,7 +58,6 @@ static int DAY_WIDTH = 50.0f;
     return pSummary;
 }
 
-
 - (UIView*)layoutSummaryView
 {
     //dot with percent number complete
