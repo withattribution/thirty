@@ -19,6 +19,7 @@ extern NSString *const kDeviceIdentifier;
 @property (readonly) AFHTTPClient *client;
 @property (nonatomic,retain) NSURL *baseURL;
 @property (readonly) NSString* identifier;
+@property (readonly) NSString* pushIdentifier;
 @property (readonly) NSString* uuidString;
 
 - (id) initWithContext:(NSManagedObjectContext*)ctx;

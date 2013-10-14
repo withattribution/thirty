@@ -13,6 +13,9 @@
 {
     NSMutableDictionary* d1 = [[NSMutableDictionary alloc] initWithDictionary:@{@"username" : username, @"password" : pw, @"phone" : [self identifier]}];
     
+    if( [self pushIdentifier] != nil )
+        [d1 setValue:[self pushIdentifier] forKey:@"push_identifier"];
+    
     NSMutableURLRequest *req = [self.client requestWithMethod:@"POST" path:@"/auth" parameters:[NSDictionary dictionaryWithDictionary:d1]];
     
     AFJSONRequestOperation* jrequest = [AFJSONRequestOperation JSONRequestOperationWithRequest:req success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {

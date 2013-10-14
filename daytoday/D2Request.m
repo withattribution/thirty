@@ -59,9 +59,17 @@ NSString *const kDeviceIdentifier = @"com.submarinerich.daytoday.deviceidentifie
     return (NSString*)[[NSUserDefaults standardUserDefaults] valueForKey:kDeviceIdentifier];
 }
 
+-(NSString*) pushIdentifier
+{
+    return (NSString*)[[NSUserDefaults standardUserDefaults] valueForKey:@"kUADeviceToken"];
+}
+
+
 - (void) resetIdentifier
 {
+    NSString *k = @"kUADeviceToken";
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:kDeviceIdentifier];
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:k];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

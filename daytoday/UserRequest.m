@@ -20,6 +20,9 @@
     
     NSMutableDictionary* d1 = [[NSMutableDictionary alloc] initWithDictionary:@{@"username" : username, @"password" : pw, @"phone" : [self identifier]}];
     [d1 addEntriesFromDictionary:params];
+    
+    if( [self pushIdentifier] != nil )
+        [d1 setValue:[self pushIdentifier] forKey:@"push_identifier"];
 
     NSMutableURLRequest *req = [self.client requestWithMethod:@"PUT" path:@"/user" parameters:[NSDictionary dictionaryWithDictionary:d1]];
     
