@@ -30,6 +30,33 @@
     return dcg;
 }
 
++(DTDotColorGroup *) someParticipationAndStillActiveColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor orangeColor];
+    dcg.fillColor   = [UIColor lightGrayColor];
+    dcg.textColor  = [UIColor whiteColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) someParticipationButFailedColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor blackColor];
+    dcg.fillColor   = [UIColor darkGrayColor];
+    dcg.textColor  = [UIColor whiteColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) futuresSoBrightYouGottaWearShadesColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor lightGrayColor];
+    dcg.fillColor   = [UIColor lightGrayColor];
+    dcg.textColor  = [UIColor whiteColor];
+    return dcg;
+}
+
 +(DTDotColorGroup *) failedDayColorGroup
 {
     DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
