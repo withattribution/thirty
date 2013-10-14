@@ -23,6 +23,7 @@
 		A1275C4018090A2400019A91 /* DaysLeftTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C3F18090A2400019A91 /* DaysLeftTableCell.m */; };
 		A1275C431809EEEA00019A91 /* ProgressRowTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C421809EEEA00019A91 /* ProgressRowTableCell.m */; };
 		A1275C461809F66600019A91 /* ParticipantsRowTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C451809F66600019A91 /* ParticipantsRowTableCell.m */; };
+		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B017FB1C8800B9C9BB /* D2NavController.m */; };
@@ -238,6 +239,8 @@
 		A1275C421809EEEA00019A91 /* ProgressRowTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressRowTableCell.m; sourceTree = "<group>"; };
 		A1275C441809F66600019A91 /* ParticipantsRowTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantsRowTableCell.h; sourceTree = "<group>"; };
 		A1275C451809F66600019A91 /* ParticipantsRowTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsRowTableCell.m; sourceTree = "<group>"; };
+		A1275C4A180B8BBF00019A91 /* NSCalendar+equalWithGranularity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+equalWithGranularity.h"; sourceTree = "<group>"; };
+		A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+equalWithGranularity.m"; sourceTree = "<group>"; };
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
 		B73903AF17FB1C8800B9C9BB /* D2NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D2NavController.h; sourceTree = "<group>"; };
@@ -524,6 +527,8 @@
 		A1275C1E1806EC5400019A91 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A1275C4A180B8BBF00019A91 /* NSCalendar+equalWithGranularity.h */,
+				A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */,
 			);
 			name = extensions;
 			sourceTree = "<group>";
@@ -1013,6 +1018,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B76D56311806DB1D003DDD36 /* User.m in Sources */,
+				A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */,
 				B7E61D4E17BD6AA5002B681B /* main.m in Sources */,
 				B7E61D5217BD6AA5002B681B /* AppDelegate.m in Sources */,
 				A1275C021806EB5B00019A91 /* UserInfoHeader.m in Sources */,

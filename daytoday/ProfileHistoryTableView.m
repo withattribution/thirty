@@ -13,10 +13,15 @@
 #import "Intent+D2D.h"
 #import "Image+D2D.h"
 #import "Challenge+D2D.h"
+#import "ChallengeDay+D2D.h"
 
 #import "DaysLeftTableCell.h"
 #import "ProgressRowTableCell.h"
 #import "ParticipantsRowTableCell.h"
+
+#import "DTDotElement.h"
+#import "DTDotColorGroup.h"
+#import "NSCalendar+equalWithGranularity.h"
 
 #import <UIColor+SR.h>
 
@@ -92,6 +97,9 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
     }
     if (indexPath.row == 1) {
         ProgressRowTableCell *cell = (ProgressRowTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier forIndexPath:indexPath];
+
+
+
         return cell;
     }
     if (indexPath.row == 2) {
@@ -109,9 +117,8 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 {
     if (indexPath.row == 1)
         return 87.f;
-    if (indexPath.row == 2) {
+    if (indexPath.row == 2)
         return 45.f;
-    }
     else
         return 40.f;
 }
