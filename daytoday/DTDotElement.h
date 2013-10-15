@@ -12,9 +12,11 @@
 @interface DTDotElement : UIView
 
 @property (nonatomic) CGFloat radius;
+@property (nonatomic,retain) NSNumber *dotNumber;
+@property (nonatomic,retain) NSDate *dotDate;
 
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg;
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg andNumber:(NSNumber *)num;
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg andImage:(UIImage *)img;
-
+- (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg andDate:(NSDate *)date;
 @end
