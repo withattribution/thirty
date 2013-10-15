@@ -15,6 +15,7 @@
 
 - (void)dotRadius;
 - (void)drawDTDotElement;
+- (NSNumber*)numberFromDate:(NSDate *)d;
 - (CGFloat)strokeWidthForFrame;
 - (void)drawLabelWithNumber:(NSNumber *)number;
 
@@ -23,7 +24,7 @@
 @end
 
 @implementation DTDotElement
-@synthesize radius;
+@synthesize radius,dotNumber,dotDate;
 
 static CGFloat DOT_PADDING = 3.f;
 static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentage of frame height
@@ -42,6 +43,7 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
     self = [super initWithFrame:f];
     if (self) {
         dotColorGroup = dg;
+        
         [self dotRadius];
         [self drawDTDotElement];
     }
@@ -55,11 +57,36 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
     self = [super initWithFrame:f];
     if (self) {
         dotColorGroup = dg;
+        self.dotNumber = num;
+        
         [self dotRadius];
         [self drawDTDotElement];
         [self drawLabelWithNumber:num];
     }
     return self;
+}
+
+- (id)initWithFrame:(CGRect)f
+      andColorGroup:(DTDotColorGroup *)dg
+          andDate:(NSDate *)date;
+{
+    self = [super initWithFrame:f];
+    if (self) {
+        dotColorGroup = dg;
+        self.dotDate = date;
+        self.dotNumber = [self numberFromDate:self.dotDate];
+
+        [self dotRadius];
+        [self drawDTDotElement];
+        [self drawLabelWithNumber:self.dotNumber];
+    }
+    return self;
+}
+
+- (NSNumber*)numberFromDate:(NSDate *)d
+{
+    NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
+    return [NSNumber numberWithInt:[[cal components:NSDayCalendarUnit fromDate:d] day]];
 }
 
 - (id)initWithFrame:(CGRect)f

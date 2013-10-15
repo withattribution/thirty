@@ -9,7 +9,6 @@
 // removed from ios7 beta but added back because it's amazeballs
 // https://github.com/ojfoggin/NSCalendar-EqualWithGranularity/blob/master/NSCalendar%2BequalWithGranularity.h
 
-
 #import "NSCalendar+equalWithGranularity.h"
 
 @implementation NSCalendar (equalWithGranularity)
@@ -47,7 +46,6 @@
     
     return [date1 compare:date2];
 }
-
 
 - (int)ojf_componentFlagsWithGranularity:(NSCalendarUnit)granularity
 {
