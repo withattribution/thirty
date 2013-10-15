@@ -24,6 +24,7 @@
 		A1275C431809EEEA00019A91 /* ProgressRowTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C421809EEEA00019A91 /* ProgressRowTableCell.m */; };
 		A1275C461809F66600019A91 /* ParticipantsRowTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C451809F66600019A91 /* ParticipantsRowTableCell.m */; };
 		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
+		A1275C52180DC07E00019A91 /* ProgressRowLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C51180DC07E00019A91 /* ProgressRowLogic.m */; };
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B017FB1C8800B9C9BB /* D2NavController.m */; };
@@ -241,6 +242,8 @@
 		A1275C451809F66600019A91 /* ParticipantsRowTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsRowTableCell.m; sourceTree = "<group>"; };
 		A1275C4A180B8BBF00019A91 /* NSCalendar+equalWithGranularity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+equalWithGranularity.h"; sourceTree = "<group>"; };
 		A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+equalWithGranularity.m"; sourceTree = "<group>"; };
+		A1275C50180DC07E00019A91 /* ProgressRowLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressRowLogic.h; sourceTree = "<group>"; };
+		A1275C51180DC07E00019A91 /* ProgressRowLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressRowLogic.m; sourceTree = "<group>"; };
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
 		B73903AF17FB1C8800B9C9BB /* D2NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D2NavController.h; sourceTree = "<group>"; };
@@ -489,6 +492,8 @@
 		A1275BEC1806EB4200019A91 /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				A1275C50180DC07E00019A91 /* ProgressRowLogic.h */,
+				A1275C51180DC07E00019A91 /* ProgressRowLogic.m */,
 				A1275C2A1806FD4600019A91 /* ProfileHistoryTableView.h */,
 				A1275C2B1806FD4600019A91 /* ProfileHistoryTableView.m */,
 				A1275C3E18090A2400019A91 /* DaysLeftTableCell.h */,
@@ -1101,6 +1106,7 @@
 				B73903CE17FB6DD800B9C9BB /* CreateChallengeViewController.m in Sources */,
 				B7E61F2717C97082002B681B /* Comment+D2D.m in Sources */,
 				A1275C4018090A2400019A91 /* DaysLeftTableCell.m in Sources */,
+				A1275C52180DC07E00019A91 /* ProgressRowLogic.m in Sources */,
 				B76D56291806DB1D003DDD36 /* Image.m in Sources */,
 				B73366B117CA8B87002524E4 /* TickRequest.m in Sources */,
 				B76D56251806DB1D003DDD36 /* Like.m in Sources */,
