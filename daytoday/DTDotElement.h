@@ -7,7 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DTDotColorGroup.h"
+
+@interface DTDotColorGroup : NSObject
+
++(DTDotColorGroup *) currentActiveDayColorGroup;
++(DTDotColorGroup *) accomplishedDayColorGroup;
++(DTDotColorGroup *) someParticipationAndStillActiveColorGroup;
++(DTDotColorGroup *) someParticipationButFailedColorGroup;
++(DTDotColorGroup *) failedDayColorGroup;
++(DTDotColorGroup *) futuresSoBrightYouGottaWearShadesColorGroup;
++(DTDotColorGroup *) repetitionCountColorGroup;
++(DTDotColorGroup *) challengersCountColorGroup;
++(DTDotColorGroup *) summaryDayColorGroup;
++(DTDotColorGroup *) summaryPercentageColorGroup;
+
+@property (nonatomic, strong) UIColor* strokeColor;
+@property (nonatomic, strong) UIColor* fillColor;
+@property (nonatomic, strong) UIColor* textColor;
+
+@end
 
 @interface DTDotElement : UIView
 
@@ -19,4 +37,5 @@
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg andNumber:(NSNumber *)num;
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg andImage:(UIImage *)img;
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg andDate:(NSDate *)date;
+
 @end
