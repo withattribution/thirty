@@ -23,6 +23,8 @@
 #import "DTDotColorGroup.h"
 #import "NSCalendar+equalWithGranularity.h"
 
+#import "ProgressRowLogic.h"
+
 #import <UIColor+SR.h>
 
 @implementation ProfileHistoryTableView
@@ -104,46 +106,72 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         NSSet *participationDays = ((Intent *)[self.intents objectAtIndex:indexPath.section]).days;
         
         NSDate *startDate = ((Intent *)[self.intents objectAtIndex:indexPath.section]).starting;
-//        NSDate *endDate = ((Intent *)[self.intents objectAtIndex:indexPath.section]).ending;
+        NSDate *endDate = ((Intent *)[self.intents objectAtIndex:indexPath.section]).ending;
         
         ///////// BUILD A LIST OF CHALLENGE DAY FOR CHALLENGE DURATION //////////////
         NSDateComponents *offset = [[NSDateComponents alloc] init];
         NSMutableArray *allTheDates = [NSMutableArray arrayWithObject:startDate];
 //        NIDINFO(@"the start date: %@",startDate);
         
-        for (int i = 1; i < [challengeDuration intValue]; i++) {
+        [offset setDay:[challengeDuration intValue]];
+        NSDate *nextDay1 = [cal dateByAddingComponents:offset toDate:startDate options:0];
+
+        NSLog(@"initial starting date: %@ NEXTEND: %@ and REALENDING: %@ and duration: %d",startDate,nextDay1,endDate,[challengeDuration intValue]);
+        
+        
+        NSLog(@"START: %@ and END: %@", startDate,endDate);
+        
+        for (int i = 1; i <= [challengeDuration intValue]; i++) {
             [offset setDay:i];
             NSDate *nextDay = [cal dateByAddingComponents:offset toDate:startDate options:0];
             [allTheDates addObject:nextDay];
         }
-//        for (int i = 0; i < [allTheDates count]; i++) {
-//            NSLog(@"the dates: %@",[allTheDates objectAtIndex:i]);
-//        }
-//        NSLog(@"the count: %d",[allTheDates count]);
+        for (int i = 0; i < [allTheDates count]; i++) {
+            NSLog(@"the dates: %@",[allTheDates objectAtIndex:i]);
+        }
+        NSLog(@"the count: %d",[allTheDates count]);
 
         
         NSArray *challengeDayArray = [participationDays allObjects];
+        NSLog(@"number of challenge days: %d", [challengeDayArray count]);
 ////
 //        for (int i = 0; i < [challengeDayArray count]; i++) {
 //            NSLog(@"the challenge dayes: %@",[(ChallengeDay*)[challengeDayArray objectAtIndex:i] day]);
 //        }
 
-        for (int i = 0; i < [allTheDates count]; i++ ) {
+        
+        NSArray *safeArray = [NSArray arrayWithArray:allTheDates];
+        NSMutableArray *objectsToReplace = [[NSMutableArray alloc] init];
+        NSMutableIndexSet *indexesToReplace = [[NSMutableIndexSet alloc] init];
+        
+        for (int i = 0; i < [safeArray count]; i++ ) {
             for (int j = 0; j < [challengeDayArray count]; j++) {
                 
-                NSDate *challengeDayDate = (NSDate*)[(ChallengeDay*)[challengeDayArray objectAtIndex:j] day];
+                NSDate *challengeDayDate = (NSDate*)((ChallengeDay*)[challengeDayArray objectAtIndex:j]).day;
 //                NSLog(@"the dates :%@", challengeDayDate);
-
-                NSDate *durationDate = [allTheDates objectAtIndex:i];
+                ChallengeDay *chalDay = (ChallengeDay*)[challengeDayArray objectAtIndex:j];
+                NSDate *durationDate = (NSDate*)[safeArray objectAtIndex:i];
 //                NSLog(@"the dates :%@ and %@", challengeDayDate, durationDate);
                 
-                if ([cal ojf_isDate:durationDate
-                        equalToDate:challengeDayDate
-                    withGranularity:NSDayCalendarUnit]) {
-                    [allTheDates replaceObjectAtIndex:i withObject:challengeDayDate];
+                if ([cal ojf_isDate:durationDate equalToDate:challengeDayDate withGranularity:NSDayCalendarUnit]) {
+//                    NSLog(@"challenge day: %@",chalDay);
+                    [objectsToReplace addObject:chalDay];
+                    [indexesToReplace addIndex:i];
+                    
+//                    [allTheDates replaceObjectAtIndex:i withObject:chalDay];
+//                    [allTheDates replaceObjectsAtIndexes:  withObjects:<#(NSArray *)#>]
+//                    [allTheDates addObject:[NSNumber numberWithBool:YES]];
                 }
             }
         }
+        
+        [allTheDates replaceObjectsAtIndexes:indexesToReplace withObjects:objectsToReplace];
+        for (int q = 0; q < [allTheDates count]; q++) {
+            NSLog(@"q: %d and all the dates objects: %@ ",q,[allTheDates objectAtIndex:q]);
+        }
+        
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
         
         for (int i = 0; i < [allTheDates count]; i++) {
             if ([[allTheDates objectAtIndex:i] class] == [ChallengeDay class]) {
@@ -156,257 +184,240 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         
         
         NSArray *masterArray = [NSArray arrayWithArray:allTheDates];
+        NSMutableArray *dotsForChallenge = [[NSMutableArray alloc] init];
         
-        
-//        NSSortDescriptor *sortDaysDescriptor = [[NSSortDescriptor alloc] initWithKey:@"day" ascending:YES];
-//        NSArray *sortedChallengeDays = [partDays sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDaysDescriptor]];
-////        NIDINFO(@"sorted array: %@",sortedChallengeDays);
-//        
-//        NSMutableArray *dotsForDuration = [[NSMutableArray alloc] initWithCapacity:[allTheDates count]];
-//        
-//        NSArray *durationDatesArray = [NSArray arrayWithArray:[allTheDates allObjects]];
-//        NSSortDescriptor *sortDurationDatesDescriptor = [[NSSortDescriptor alloc] initWithKey:@"self" ascending:YES];
-//        NSArray *sortedDurationDates = [durationDatesArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDurationDatesDescriptor]];
-        
-//        NIDINFO(@"the sorted duration dates :%@", theSortedDurationDates);
-//        NIDINFO(@"date day: %@", ((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day);
-//        NIDINFO(@"been there %d",[[cal components:NSDayCalendarUnit fromDate:((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day] day]);
-
-//        NIDINFO(@"the duration date set count :%d", [allTheDates count]);
-//        NIDINFO(@"the sorted duration date count :%d", [sortedDurationDates count]);
-//        NIDINFO(@"the sorted challenge date count :%d", [sortedChallengeDays count]);
-
         NSDate *today = [NSDate date];
 
-//        NSMutableDictionary *weekRowsDict = [[NSMutableDictionary alloc] init];
-//        NSNumber *rowKey = [NSNumber numberWithInt:0];
+        for (int i = 0; i < [masterArray count]; i++) {
+            
+            //check to see if object is a challenge day or a nsdate object
+            if ([[masterArray objectAtIndex:i] class] == [ChallengeDay class]) {
+//                NSLog(@"i: %d and Challenge day with date: %@",i,[(ChallengeDay*)[allTheDates objectAtIndex:i] day]);
+               
+                //If there is a ChallengeDay for TODAY then the possible states are:
+                //challenge day completed
+                //participated but did not complete (partial completion view opportunity)
+                //and active day dot but no completion
+                if ([cal ojf_isDate:[(ChallengeDay*)[masterArray objectAtIndex:i] day]
+                        equalToDate:today
+                    withGranularity:NSDayCalendarUnit]) {
+                    if ([((ChallengeDay*)[masterArray objectAtIndex:i]).completed boolValue]) {
+                        //Make a dot for participated and did complete
+                        DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
+                                                                  andColorGroup:[DTDotColorGroup accomplishedDayColorGroup]
+                                                                        andDate:((ChallengeDay*)[masterArray objectAtIndex:i]).day];
+                        NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
+                        NSLog(@"-----------------------------------------------------");
+                        [dotsForChallenge addObject:dot];
+                    }
+                    else {
+                        //Make a dot for the state of "Participated but didn't complete"
+                        DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
+                                                                  andColorGroup:[DTDotColorGroup someParticipationAndStillActiveColorGroup]
+                                                                        andDate:((ChallengeDay*)[masterArray objectAtIndex:i]).day];
+                        NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
+                        NSLog(@"-----------------------------------------------------");
+                        [dotsForChallenge addObject:dot];
+                    }
+                }
+                
+                //If there is a challenge day for the past then the possible states are:
+                //failed
+                //participated but did not complete (failed but with some effort)
+                //just didn't participate at all -- complete and utter failure
+                if ([cal ojf_compareDate:[(ChallengeDay*)[masterArray objectAtIndex:i] day]
+                                  toDate:today
+                       toUnitGranularity:NSCalendarUnitDay] == NSOrderedAscending) {
+                    //                NIDINFO(@"these are in the past: %@ today: %@",[sortedDurationDates objectAtIndex:i],today);
+                    if ([((ChallengeDay*)[masterArray objectAtIndex:i]).completed boolValue]) {
+                        //Make a dot for participated and did complete
+                        DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
+                                                                  andColorGroup:[DTDotColorGroup accomplishedDayColorGroup]
+                                                                        andDate:((ChallengeDay*)[masterArray objectAtIndex:i]).day];
+                        NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
+                        NSLog(@"-----------------------------------------------------");
+                        [dotsForChallenge addObject:dot];
+                    }
+                    else {
+                        //Make a dot for the state of "Participated but didn't complete"
+                        DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
+                                                                  andColorGroup:[DTDotColorGroup someParticipationButFailedColorGroup]
+                                                                        andDate:((ChallengeDay*)[masterArray objectAtIndex:i]).day];
+                        NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
+                        NSLog(@"-----------------------------------------------------");
+                        [dotsForChallenge addObject:dot];
+                    }
+                }
+            }
+            //otherwise these are just regular NSDate objects
+            else {
+                //check if day is the day today
+                if ([cal ojf_isDate:([masterArray objectAtIndex:i])
+                        equalToDate:today
+                    withGranularity:NSDayCalendarUnit]) {
+                    //Make a dot for the active state of the day today and there is no participation for the day today
+                    DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
+                                                              andColorGroup:[DTDotColorGroup currentActiveDayColorGroup]
+                                                                    andDate:[masterArray objectAtIndex:i]];
+                    NSLog(@"the loop date: %@ and position: %d", [masterArray  objectAtIndex:i],i);
+                    NSLog(@"****************************************************");
+                    [dotsForChallenge addObject:dot];
+                }
+                //check dates in the past
+                if ([cal ojf_compareDate:[masterArray objectAtIndex:i]
+                                  toDate:today
+                       toUnitGranularity:NSCalendarUnitDay] == NSOrderedAscending) {
+                    //Make a dot for failure state because you can't just up and change the past
+                    DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
+                                                              andColorGroup:[DTDotColorGroup failedDayColorGroup]
+                                                                    andDate:[masterArray objectAtIndex:i]];
+                    NSLog(@"the loop date: %@ and position: %d", [masterArray  objectAtIndex:i],i);
+                    NSLog(@"****************************************************");
+                    [dotsForChallenge addObject:dot];
+                }
+                //check and handle all future dates
+                if ([cal ojf_compareDate:[masterArray objectAtIndex:i]
+                                  toDate:today
+                       toUnitGranularity:NSCalendarUnitDay] == NSOrderedDescending) {
+                    //                NIDINFO(@"these are in the future: %@ today: %@",[sortedDurationDates objectAtIndex:i],today);
+                    //The future is simple because it's just chock full of opportunity
+                    //make a dot for the state of "USER HAS NOT PARTICIPATED"
+                    DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
+                                                              andColorGroup:[DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup]
+                                                                    andDate:[masterArray objectAtIndex:i]];
+                    NSLog(@"the loop date: %@ and position: %d", [masterArray  objectAtIndex:i],i);
+                    NSLog(@"****************************************************");
+                    [dotsForChallenge addObject:dot];
+                }
+            }
+        }
         
-//        for (int i = 0; i < [allTheDates count]; i++) {
-//            //check if day is the day today
-//            if ([cal ojf_isDate:([sortedDurationDates objectAtIndex:i])
-//                    equalToDate:today
-//                withGranularity:NSDayCalendarUnit]) {
-////                NIDINFO(@"this is the day today: %@ today: %@",[sortedDurationDates objectAtIndex:i],today);
-//
-//                //If there is a ChallengeDay for TODAY then the possible states are:
-//                //challenge day completed
-//                //participated but did not complete (partial completion view opportunity)
-//                //and active day dot but no completion
-//                if ( i < [sortedChallengeDays count]) {
-//                    if ([allTheDates containsObject:((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day]) {
-//                        if ([((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).completed boolValue]) {
-//                            //Make a dot for participated and did complete
-////                            NSNumber *dotNumber = [NSNumber numberWithInteger:[[cal components:NSDayCalendarUnit fromDate:((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day] day]];
-//                            DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
-//                                                                      andColorGroup:[DTDotColorGroup accomplishedDayColorGroup]
-//                                                                          andDate:((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day];
-//                            NSLog(@"the loop date: %@ the added date: %@ and position: %d", [sortedDurationDates  objectAtIndex:i],((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day,i);
-//                            NSLog(@"-----------------------------------------------------");
-//                            [dotsForDuration addObject:dot];
-//                        }
-//                        else {
-//                            //Make a dot for the state of "Participated but didn't complete"
-////                            NSNumber *dotNumber = [NSNumber numberWithInteger:[[cal components:NSDayCalendarUnit fromDate:((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day] day]];
-//                            DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
-//                                                                      andColorGroup:[DTDotColorGroup someParticipationAndStillActiveColorGroup]
-//                                                                            andDate:((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day];
-//                            NSLog(@"the loop date: %@ the added date: %@ and position: %d", [sortedDurationDates  objectAtIndex:i],((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day,i);
-//                            NSLog(@"-----------------------------------------------------");
-//                            [dotsForDuration addObject:dot];
-//                        }
-//                    }
-//                }
-//                else{
-//                    //Make a dot for the active state of the day today and there is no participation for the day today
-////                    NSNumber *dotNumber = [NSNumber numberWithInteger:[[cal components:NSDayCalendarUnit fromDate:[sortedDurationDates objectAtIndex:i]] day] ];
-//                    DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
-//                                                              andColorGroup:[DTDotColorGroup currentActiveDayColorGroup]
-//                                                                  andDate:[sortedDurationDates objectAtIndex:i]];
-//                    NSLog(@"the loop date: %@ and position: %d", [sortedDurationDates  objectAtIndex:i],i);
-//                    NSLog(@"****************************************************");
-//                    [dotsForDuration addObject:dot];
-//                }
-//            }
-//
-//            //check dates in the past
-//            if ([cal ojf_compareDate:[sortedDurationDates objectAtIndex:i]
-//                              toDate:today toUnitGranularity:NSCalendarUnitDay] == NSOrderedAscending) {
-////                NIDINFO(@"these are in the past: %@ today: %@",[sortedDurationDates objectAtIndex:i],today);
-//                //If there is a challenge day for the past then the possible states are:
-//                //failed
-//                //participated but did not complete (failed but with some effort)
-//                //just didn't participate at all -- complete and utter failure
-//                if ( i < [sortedChallengeDays count]) {
-//                    if ([allTheDates containsObject:((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day]) {
-//                        if ([((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).completed boolValue]) {
-//                            //Make a dot for participated and did complete
-////                            NSNumber *dotNumber = [NSNumber numberWithInteger:[[cal components:NSDayCalendarUnit fromDate:((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day] day]];
-//                            DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
-//                                                                      andColorGroup:[DTDotColorGroup accomplishedDayColorGroup]
-//                                                                            andDate:((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day];
-//                            NSLog(@"the loop date: %@ the added date: %@ and position: %d", [sortedDurationDates  objectAtIndex:i],((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day,i);
-//                            NSLog(@"-----------------------------------------------------");
-//                            [dotsForDuration addObject:dot];
-//                            [dotsForDuration addObject:dot];
-//                        }
-//                        else {
-//                            //Make a dot for the state of "Participated but didn't complete"
-////                            NSNumber *dotNumber = [NSNumber numberWithInteger:[[cal components:NSDayCalendarUnit fromDate:((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day] day]];
-//                            DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
-//                                                                      andColorGroup:[DTDotColorGroup someParticipationButFailedColorGroup]
-//                                                                            andDate:((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day];
-//                            NSLog(@"the loop date: %@ the added date: %@ and position: %d", [sortedDurationDates  objectAtIndex:i],((ChallengeDay*)[sortedChallengeDays objectAtIndex:i]).day,i);
-//                            NSLog(@"-----------------------------------------------------");
-//                            [dotsForDuration addObject:dot];
-//                            [dotsForDuration addObject:dot];
-//                        }
-//                    }
-//                }
-//                else{
-//                    //Make a dot for failure state because you can't just up and change the past
-////                    NSNumber *dotNumber = [NSNumber numberWithInteger:[[cal components:NSDayCalendarUnit fromDate:[sortedDurationDates objectAtIndex:i]] day] ];
-//                    DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
-//                                                              andColorGroup:[DTDotColorGroup failedDayColorGroup]
-//                                                                    andDate:[sortedDurationDates objectAtIndex:i]];
-//                    NSLog(@"the loop date: %@ and position: %d", [sortedDurationDates  objectAtIndex:i],i);
-//                    NSLog(@"****************************************************");
-//                    [dotsForDuration addObject:dot];
-//                }
-//                
-//            }
-//
-//            //check and handle all future dates
-//            if ([cal ojf_compareDate:[sortedDurationDates objectAtIndex:i]
-//                              toDate:today toUnitGranularity:NSCalendarUnitDay] == NSOrderedDescending) {
-////                NIDINFO(@"these are in the future: %@ today: %@",[sortedDurationDates objectAtIndex:i],today);
-//                //The future is simple because it's just chock full of opportunity
-//                //make a dot for the state of "USER HAS NOT PARTICIPATED"
-////                NSNumber *dotNumber = [NSNumber numberWithInteger:[[cal components:NSDayCalendarUnit fromDate:[sortedDurationDates objectAtIndex:i]] day] ];
-//                DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
-//                                                          andColorGroup:[DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup]
-//                                                                andDate:[sortedDurationDates objectAtIndex:i]];
-//                NSLog(@"the loop date: %@ and position: %d", [sortedDurationDates  objectAtIndex:i],i);
-//                NSLog(@"****************************************************");
-//                [dotsForDuration addObject:dot];
-//            }
-//        }
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
+        
+        for (int t = 0; t < [dotsForChallenge count]; t++) {
+            NSLog(@"i: %d dot date: %@",t,[[dotsForChallenge objectAtIndex:t] dotDate]);
+        }
+        
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
 
-//        NSArray *testArray = [NSArray arrayWithArray:dotsForDuration];
-//        
-//        NSMutableArray *arrayOfArrays = [NSMutableArray array];
-//        
-//        int itemsRemaining = [testArray count];
-//        int aa = 0;
-//        
-//        while(aa < [testArray count]) {
-//            NSRange range = NSMakeRange(aa, MIN(7, itemsRemaining));
-//            NSArray *subarray = [testArray subarrayWithRange:range];
-//            [arrayOfArrays addObject:subarray];
-//            itemsRemaining-=range.length;
-//            aa+=range.length;
-//        }
-//        
-//        for (int qq = 0; qq < [arrayOfArrays count]; qq++) {
-//            for (int q1 = 0; q1 < [[arrayOfArrays objectAtIndex:qq] count]; q1++) {
-//                NSLog(@"%@", [[[arrayOfArrays objectAtIndex:qq] objectAtIndex:q1] dotDate]);
-//            }
-//        }
-//        
-//        for (int t = 0; t < [dotsForDuration count]; t++) {
-//            NSLog(@"something else: %@", [[dotsForDuration objectAtIndex:t] dotDate]);
-//        }
-//        
-//        NSLog(@"even more");
+        NSArray *testArray = [NSArray arrayWithArray:dotsForChallenge];
         
-//        for (NSString* key in [weekRowsDict allKeys] ) {
-//            NIDINFO(@"the key: %@ and the row: %@",key,[weekRowsDict objectForKey:key]);
-//        }
+        NSMutableArray *arrayOfArrays = [NSMutableArray array];
         
-//        [weekRowsDict enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
-//            NIDINFO(@"the key: %@ and the row: %@",key,object);
-//        }];
-
-
-//        - (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id obj, BOOL *stop))block NS_AVAILABLE(10_6, 4_0);
-
+        int itemsRemaining = [testArray count];
+        int aa = 0;
         
-        ////////////// TEST DT ELEMENT FILTER ///////////////
-//        for (int q = 0 ; q < [dotsForDuration count]; q++) {
-//            NIDINFO(@"dotsforduration DATE: %@", [[dotsForDuration objectAtIndex:q] dotDate]);
-//        }
+        while(aa < [testArray count]) {
+            NSRange range = NSMakeRange(aa, MIN(7, itemsRemaining));
+            NSArray *subarray = [testArray subarrayWithRange:range];
+            [arrayOfArrays addObject:subarray];
+            itemsRemaining-=range.length;
+            aa+=range.length;
+        }
         
+        for (int qq = 0; qq < [arrayOfArrays count]; qq++) {
+            for (int q1 = 0; q1 < [[arrayOfArrays objectAtIndex:qq] count]; q1++) {
+                NSLog(@"%@", [[[arrayOfArrays objectAtIndex:qq] objectAtIndex:q1] dotDate]);
+            }
+        }
         
-        ////////// BREAK APART DOTS INTO WEEK-ROWS /////////////
-//        NSMutableArray *weekRows = [NSArray splitArray:dotsForDuration componentsPerSegment:7];
-//        NSMutableArray *weekRows = [NSMutableArray arrayWithArray:[NSArray splitArray:dotsForDuration componentsPerSegment:7]];
-
-//        for (int z = 0; z < [weekRows count]; z++) {
-//            for (int y = 0; y < [[weekRows objectAtIndex:z] count]; y++) {
-//                NIDINFO(@"test some bs happening DATE: %@",[[[weekRows objectAtIndex:z] objectAtIndex:y] dotDate]);
-//            }
-//        }
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
         
+        NSMutableArray *weekRows = [NSMutableArray arrayWithArray:arrayOfArrays];
         
         ////////// PAD WEEK ROWS WITH EXTRA DAYS UNTIL ROW IS FULL //////////
-//        for (int i = 0; i < [weekRows count]; i++) {
-//            if ([[weekRows objectAtIndex:i] count] < 7) {
-////                NIDINFO(@"this is the weekrow that needs to be padded: %@", [weekRows objectAtIndex:i]);
-//                //this week-row needs to be padded and replaced
-//                int indexToReplace = i;
-//                
-//                //grab dot number from previous dot and extend into the future to pad the week-row
-//                NSMutableArray *paddedWeekRow = [NSMutableArray arrayWithArray:[weekRows objectAtIndex:i]];
-//                DTDotElement *lastDot = [paddedWeekRow lastObject];
-//                
-//                NSDateComponents *paddedOffSetComponent = [cal components:NSCalendarUnitDay fromDate:lastDot.dotDate];
-//
-//                for (int j = 1; [paddedWeekRow count] < 7; j++) {
-//                    [paddedOffSetComponent setDay:j];
-//                    NSDate *paddedDate = [cal dateByAddingComponents:paddedOffSetComponent toDate:lastDot.dotDate options:0];
-//                    DTDotElement *paddedFutureDot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
-//                                                              andColorGroup:[DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup]
-//                                                                    andDate:paddedDate];
-//                    [paddedWeekRow addObject:paddedFutureDot];
-//                }
-//                [weekRows replaceObjectAtIndex:indexToReplace withObject:paddedWeekRow];
-//            }
-//        }
+        for (int i = 0; i < [weekRows count]; i++) {
+            if ([[weekRows objectAtIndex:i] count] < 7) {
+//                NIDINFO(@"this is the weekrow that needs to be padded: %@", [weekRows objectAtIndex:i]);
+                //this week-row needs to be padded and replaced
+                int indexToReplace = i;
+                
+                //grab dot number from previous dot and extend into the future to pad the week-row
+                NSMutableArray *paddedWeekRow = [NSMutableArray arrayWithArray:[weekRows objectAtIndex:i]];
+                DTDotElement *lastDot = [paddedWeekRow lastObject];
+                
+                NSDateComponents *paddedOffSetComponent = [cal components:NSCalendarUnitDay fromDate:lastDot.dotDate];
+
+                for (int j = 1; [paddedWeekRow count] < 7; j++) {
+                    [paddedOffSetComponent setDay:j];
+                    NSDate *paddedDate = [cal dateByAddingComponents:paddedOffSetComponent toDate:lastDot.dotDate options:0];
+                    DTDotElement *paddedFutureDot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
+                                                              andColorGroup:[DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup]
+                                                                    andDate:paddedDate];
+                    [paddedWeekRow addObject:paddedFutureDot];
+                }
+                [weekRows replaceObjectAtIndex:indexToReplace withObject:paddedWeekRow];
+            }
+        }
+        
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
 
         ////////// TEST PADDED WEEK ROWS ///////////////
-//        for (int i = 0; i < [weekRows count]; i++) {
-//            NIDINFO(@"weekrow count: %d",[[weekRows objectAtIndex:i] count]);
-////            NIDINFO(@"week row %d %@ and date: %@",i,[weekRows objectAtIndex:i],((DTDotElement*)[weekRows objectAtIndex:i]).dotDate);
-//            for (int j = 0; j < [[weekRows objectAtIndex:i] count]; j ++) {
-//                NIDINFO(@"week row %d and date: %@",i,[[[weekRows objectAtIndex:i] objectAtIndex:j] dotDate]);
-//            }
-//        }
-        ////pASSes for now
+        for (int i = 0; i < [weekRows count]; i++) {
+            NIDINFO(@"weekrow count: %d",[[weekRows objectAtIndex:i] count]);
+//            NIDINFO(@"week row %d %@ and date: %@",i,[weekRows objectAtIndex:i],((DTDotElement*)[weekRows objectAtIndex:i]).dotDate);
+            for (int j = 0; j < [[weekRows objectAtIndex:i] count]; j ++) {
+                NIDINFO(@"week row %d and date: %@",i,[[[weekRows objectAtIndex:i] objectAtIndex:j] dotDate]);
+            }
+        }
+        ////PASSES
+        
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
+        NSLog(@"-----------------------------------------------------");
 
         
         ////////// DETERMINE ROW QUALITIES ///////////// --> THESE WILL BE ROW STYLES
-        //DTProgressRowStyleFlat            --> if entire row is a past row
+        //DTProgressRowStyleFlat            --> if entire row is a past row and does not have a start day
         //DTProgressRowStyleFlatLeft        --> if row contains current day and the last row is a past row
         //DTProgressRowStyleFlatRight       --> if row contains current day and the current row is in the past
         //DTProgressRowStyleRounded         --> if row contains current day and current row is the only row
 
+        NSLog(@"**************************************");
+
+        for (int k = 0; k < [weekRows count]; k++) {
+            ProgressRowLogic *prl = [[ProgressRowLogic alloc] initWithRow:[weekRows objectAtIndex:k] withIntent:[intents objectAtIndex:indexPath.section]];
+            NSLog(@"temporal: %d and EndStyle: %d   <-----",[prl temporalStatusForRow] ,[prl endStyleForRow]);
+        }
+        NSLog(@"**************************************");
+
+        
+        //This will be an object but for now its a dictionary:
+//        NSMutableDictionary *progressRowDict = [[NSMutableDictionary alloc] init];
+//        
 //        for (int i = 0; i < [weekRows count]; i++ ) {
+//            
+//            //test to see if row is a start row
 //            NSIndexSet *indexes = [[weekRows objectAtIndex:i] indexesOfObjectsPassingTest:^BOOL(DTDotElement *obj, NSUInteger idx, BOOL *stop) {
-//                NIDINFO(@"the BOOL: %d and the date: %@",[cal ojf_isDate:obj.dotDate equalToDate:today withGranularity:NSDayCalendarUnit],obj.dotDate);
+////                NIDINFO(@"the BOOL: %d and the date: %@",[cal ojf_isDate:obj.dotDate equalToDate:today withGranularity:NSDayCalendarUnit],obj.dotDate);
 //                return ([cal ojf_isDate:obj.dotDate equalToDate:today withGranularity:NSDayCalendarUnit]);
 //            }];
-//            NSLog(@"OooooooooooooooooooooooooooooooO");
-//            NSArray *results = [[weekRows objectAtIndex:i] objectsAtIndexes:indexes];
-//
-//            for (int j = 0; j < [results count]; j++) {
-//                NIDINFO(@"object at index: %@",[results objectAtIndex:j]);
-//            }
-    
+////            NSLog(@"OooooooooooooooooooooooooooooooO");
+////            NSArray *results = [[weekRows objectAtIndex:i] objectsAtIndexes:indexes];
+////
+////            for (int j = 0; j < [results count]; j++) {
+////                NIDINFO(@"object at index: %@",[results objectAtIndex:j]);
+////            }
+//    
 //            NIDINFO(@"the indexes %@",indexes);
-//            NSRange weekRange = {0,6};
-//            NIDINFO(@"the indexes: %d",[indexes count]);
-//            NIDINFO(@"is there a today day in one of these?: BOOL: %d, and week-row: %d",[indexes containsIndexesInRange:weekRange],i);
+////            NSRange weekRange = {0,6};
+////            NIDINFO(@"the indexes: %d",[indexes count]);
+////            NIDINFO(@"is there a today day in one of these?: BOOL: %d, and week-row: %d",[indexes containsIndexesInRange:weekRange],i);
 //        }
-        
+    
         //- (BOOL)containsIndexesInRange:(NSRange)range;
         //NSRange NSMakeRange(NSUInteger loc, NSUInteger len)
                             

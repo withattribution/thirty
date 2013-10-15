@@ -33,7 +33,7 @@
     
     date1 = [self ojf_dateFromDate:date1 withComponentFlags:componentFlags];
     date2 = [self ojf_dateFromDate:date2 withComponentFlags:componentFlags];
-
+ 
     return [date1 isEqualToDate:date2];
 }
 
