@@ -7,7 +7,113 @@
 //
 
 #import "DTDotElement.h"
+
 #import "UIColor+SR.h"
+
+@implementation DTDotColorGroup
+
+@synthesize textColor,strokeColor,fillColor;
+
++(DTDotColorGroup *) currentActiveDayColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor blackColor];
+    dcg.fillColor   = [UIColor whiteColor];
+    dcg.textColor  = [UIColor grayColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) accomplishedDayColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor clearColor];
+    dcg.fillColor   = [UIColor blueColor];
+    dcg.textColor  = [UIColor whiteColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) someParticipationAndStillActiveColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor orangeColor];
+    dcg.fillColor   = [UIColor lightGrayColor];
+    dcg.textColor  = [UIColor whiteColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) someParticipationButFailedColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor blackColor];
+    dcg.fillColor   = [UIColor darkGrayColor];
+    dcg.textColor  = [UIColor whiteColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) futuresSoBrightYouGottaWearShadesColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor lightGrayColor];
+    dcg.fillColor   = [UIColor lightGrayColor];
+    dcg.textColor  = [UIColor whiteColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) failedDayColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor clearColor];
+    dcg.fillColor   = [UIColor lightGrayColor];
+    dcg.textColor  = [UIColor grayColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) repetitionCountColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor clearColor];
+    dcg.fillColor   = [UIColor blueColor];
+    dcg.textColor  = [UIColor whiteColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) challengersCountColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor clearColor];
+    dcg.fillColor   = [UIColor yellowColor]; //try to get okra color
+    dcg.textColor  = [UIColor whiteColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) summaryDayColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor clearColor];
+    dcg.fillColor   = [UIColor lightGrayColor];
+    dcg.textColor  = [UIColor grayColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) summaryPercentageColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor clearColor];
+    dcg.fillColor   = [UIColor blueColor];
+    dcg.textColor  = [UIColor whiteColor];
+    return dcg;
+}
+
++(DTDotColorGroup *) daySelectionColorGroup
+{
+    DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+    dcg.strokeColor = [UIColor lightGrayColor];
+    dcg.fillColor   = [UIColor grayColor];
+    dcg.textColor  = [UIColor whiteColor];
+    return dcg;
+}
+
+@end
 
 @interface DTDotElement () {
     DTDotColorGroup *dotColorGroup;
@@ -112,9 +218,6 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
     UIBezierPath *smoothedPath = [UIBezierPath bezierPath];
     
     CGPoint startPoint = [self pointOnCircleWithCenter:self.center radius:self.radius angleInDegrees:0];
-
-//    CGPoint startPoint = CGPointMake(self.frame.origin.x - END_PADDING,
-//                                     self.frame.size.height - (2*END_PADDING));
 
     int sampleCount = 80;
     [smoothedPath moveToPoint:startPoint];

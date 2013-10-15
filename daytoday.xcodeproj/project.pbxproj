@@ -11,9 +11,7 @@
 		A1275C031806EB5B00019A91 /* ProgressSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275BF61806EB5B00019A91 /* ProgressSummaryView.m */; };
 		A1275C041806EB5B00019A91 /* ProfileSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275BF81806EB5B00019A91 /* ProfileSectionHeaderView.m */; };
 		A1275C171806EB8C00019A91 /* DTDotElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C0A1806EB8C00019A91 /* DTDotElement.m */; };
-		A1275C181806EB8C00019A91 /* DTDotColorGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C0C1806EB8C00019A91 /* DTDotColorGroup.m */; };
 		A1275C191806EB8C00019A91 /* DTProgressElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C0E1806EB8C00019A91 /* DTProgressElement.m */; };
-		A1275C1A1806EB8C00019A91 /* DTProgressColorGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C101806EB8C00019A91 /* DTProgressColorGroup.m */; };
 		A1275C1B1806EB8C00019A91 /* DTProgressElementLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C121806EB8C00019A91 /* DTProgressElementLayout.m */; };
 		A1275C231806ECE200019A91 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1275C221806ECE200019A91 /* QuartzCore.framework */; };
 		A1275C271806F97200019A91 /* profileBlank.png in Resources */ = {isa = PBXBuildFile; fileRef = A1275C251806F97200019A91 /* profileBlank.png */; };
@@ -220,12 +218,8 @@
 		A1275BF81806EB5B00019A91 /* ProfileSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSectionHeaderView.m; sourceTree = "<group>"; };
 		A1275C091806EB8C00019A91 /* DTDotElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDotElement.h; sourceTree = "<group>"; };
 		A1275C0A1806EB8C00019A91 /* DTDotElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDotElement.m; sourceTree = "<group>"; };
-		A1275C0B1806EB8C00019A91 /* DTDotColorGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDotColorGroup.h; sourceTree = "<group>"; };
-		A1275C0C1806EB8C00019A91 /* DTDotColorGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDotColorGroup.m; sourceTree = "<group>"; };
 		A1275C0D1806EB8C00019A91 /* DTProgressElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTProgressElement.h; sourceTree = "<group>"; };
 		A1275C0E1806EB8C00019A91 /* DTProgressElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTProgressElement.m; sourceTree = "<group>"; };
-		A1275C0F1806EB8C00019A91 /* DTProgressColorGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTProgressColorGroup.h; sourceTree = "<group>"; };
-		A1275C101806EB8C00019A91 /* DTProgressColorGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTProgressColorGroup.m; sourceTree = "<group>"; };
 		A1275C111806EB8C00019A91 /* DTProgressElementLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTProgressElementLayout.h; sourceTree = "<group>"; };
 		A1275C121806EB8C00019A91 /* DTProgressElementLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTProgressElementLayout.m; sourceTree = "<group>"; };
 		A1275C221806ECE200019A91 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -517,12 +511,8 @@
 			children = (
 				A1275C091806EB8C00019A91 /* DTDotElement.h */,
 				A1275C0A1806EB8C00019A91 /* DTDotElement.m */,
-				A1275C0B1806EB8C00019A91 /* DTDotColorGroup.h */,
-				A1275C0C1806EB8C00019A91 /* DTDotColorGroup.m */,
 				A1275C0D1806EB8C00019A91 /* DTProgressElement.h */,
 				A1275C0E1806EB8C00019A91 /* DTProgressElement.m */,
-				A1275C0F1806EB8C00019A91 /* DTProgressColorGroup.h */,
-				A1275C101806EB8C00019A91 /* DTProgressColorGroup.m */,
 				A1275C111806EB8C00019A91 /* DTProgressElementLayout.h */,
 				A1275C121806EB8C00019A91 /* DTProgressElementLayout.m */,
 			);
@@ -1030,7 +1020,6 @@
 				B7E61D5B17BD6AA5002B681B /* ViewController.m in Sources */,
 				B7E61DEE17C273C4002B681B /* NSDate+SR.m in Sources */,
 				B7E61DF017C273C4002B681B /* NSManagedObject+SR.m in Sources */,
-				A1275C1A1806EB8C00019A91 /* DTProgressColorGroup.m in Sources */,
 				B7E61DF217C273C4002B681B /* NSManagedObjectContext+SR.m in Sources */,
 				B7E61DF417C273C4002B681B /* UIColor+SR.m in Sources */,
 				B7E61DF617C273C4002B681B /* UIImageView+SR.m in Sources */,
@@ -1050,7 +1039,6 @@
 				B73903CB17FB6DC700B9C9BB /* SearchChallengesViewController.m in Sources */,
 				B7E61E3917C27F32002B681B /* NINonEmptyCollectionTesting.m in Sources */,
 				B7E61E3B17C27F32002B681B /* NINonRetainingCollections.m in Sources */,
-				A1275C181806EB8C00019A91 /* DTDotColorGroup.m in Sources */,
 				B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */,
 				A1275C041806EB5B00019A91 /* ProfileSectionHeaderView.m in Sources */,
 				B7E61E3D17C27F32002B681B /* NIOperations.m in Sources */,

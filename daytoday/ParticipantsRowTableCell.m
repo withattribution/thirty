@@ -8,7 +8,6 @@
 
 #import "ParticipantsRowTableCell.h"
 #import "DTDotElement.h"
-#import "DTDotColorGroup.h"
 
 
 @interface ParticipantsRowTableCell ()

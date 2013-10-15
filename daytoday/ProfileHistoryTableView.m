@@ -20,12 +20,12 @@
 #import "ParticipantsRowTableCell.h"
 
 #import "DTDotElement.h"
-#import "DTDotColorGroup.h"
 #import "NSCalendar+equalWithGranularity.h"
 
 #import "ProgressRowLogic.h"
 
 #import <UIColor+SR.h>
+#import "DTProgressElement.h"
 
 @implementation ProfileHistoryTableView
 @synthesize intents;
@@ -93,13 +93,16 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 //        NIDINFO(@"starting name %@",startingMonthName);
 //        NIDINFO(@"ending name %@",endingMonthName);
 //        NIDINFO(@"ending year %d",[ending year]);
-
+        
         cell.monthSpan.text = [NSString stringWithFormat:@"%@ - %@ %d",[startingMonthName uppercaseString], [endingMonthName uppercaseString],[ending year]];
         return cell;
     }
     if (indexPath.row == 1) {
+        
         ProgressRowTableCell *cell = (ProgressRowTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier forIndexPath:indexPath];
 
+        DTProgressElementLayout *dl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
+        
         NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
         
         NSNumber *challengeDuration = [((Intent *)[self.intents objectAtIndex:indexPath.section]).challenge duration];
@@ -157,10 +160,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 //                    NSLog(@"challenge day: %@",chalDay);
                     [objectsToReplace addObject:chalDay];
                     [indexesToReplace addIndex:i];
-                    
-//                    [allTheDates replaceObjectAtIndex:i withObject:chalDay];
-//                    [allTheDates replaceObjectsAtIndexes:  withObjects:<#(NSArray *)#>]
-//                    [allTheDates addObject:[NSNumber numberWithBool:YES]];
+
                 }
             }
         }
@@ -306,6 +306,10 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         NSLog(@"-----------------------------------------------------");
         NSLog(@"-----------------------------------------------------");
 
+        
+        /////// ---------> YOU ARE HERE!
+        
+        
         NSArray *testArray = [NSArray arrayWithArray:dotsForChallenge];
         
         NSMutableArray *arrayOfArrays = [NSMutableArray array];
@@ -386,13 +390,13 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         //DTProgressRowStyleFlatRight       --> if row contains current day and the current row is in the past
         //DTProgressRowStyleRounded         --> if row contains current day and current row is the only row
 
-        NSLog(@"**************************************");
-
-        for (int k = 0; k < [weekRows count]; k++) {
-            ProgressRowLogic *prl = [[ProgressRowLogic alloc] initWithRow:[weekRows objectAtIndex:k] withIntent:[intents objectAtIndex:indexPath.section]];
-            NSLog(@"temporal: %d and EndStyle: %d   <-----",[prl temporalStatusForRow] ,[prl endStyleForRow]);
-        }
-        NSLog(@"**************************************");
+//        NSLog(@"**************************************");
+//
+//        for (int k = 0; k < [weekRows count]; k++) {
+//            ProgressRowLogic *prl = [[ProgressRowLogic alloc] initWithRow:[weekRows objectAtIndex:k] withIntent:[intents objectAtIndex:indexPath.section]];
+//            NSLog(@"temporal: %d and EndStyle: %d   <-----",[prl temporalStatusForRow] ,[prl endStyleForRow]);
+//        }
+//        NSLog(@"**************************************");
 
         
         //This will be an object but for now its a dictionary:
