@@ -27,6 +27,16 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
     DTProgressRowTemporalStatusUndefined
 };
 
+@interface DTProgressRow : NSObject
+
+@property(nonatomic) DTProgressRowEndStyle style;
+@property(nonatomic) DTProgressRowTemporalStatus phase;
+@property(nonatomic,retain) NSArray *weekRow;
+
++ (DTProgressRow *)withEndStyle:(DTProgressRowEndStyle)end phase:(DTProgressRowTemporalStatus)status row:(NSArray *)row;
+
+@end
+
 @interface DTProgressColorGroup : NSObject
 
 +(DTProgressColorGroup *) summaryProgressBackground;
@@ -37,7 +47,6 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 @property (nonatomic, strong) UIColor* fillColor;
 
 @end
-
 
 //return an object that holds onto the progress elements that
 //will be used in particular views
@@ -50,13 +59,16 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 
 @property (nonatomic,retain) Intent *intent;
 @property (nonatomic,retain) NSArray *weekRows; //Array of arrays with dotWeeks-rows for progressElement rows
-
 @property (nonatomic,retain) UIView *layoutView;
+@property (nonatomic,retain) NSArray *progressRows; //rows of weeks with all the elements necessary to build a DTProgressElement
+
+//- (DTProgressRowTemporalStatus)temporalStatusForRow;
+//- (DTProgressRowEndStyle)endStyleForRow;
+- (DTProgressRowTemporalStatus)temporalStatusForRow:(NSArray *)row;
+- (DTProgressRowEndStyle)endStyleForRow:(NSArray *)row;
 
 - (id)initWithIntent:(Intent *)i;
 - (id)initWithRow:(NSArray *)weekRow withIntent:(Intent *)i;
-- (DTProgressRowTemporalStatus)temporalStatusForRow;
-- (DTProgressRowEndStyle)endStyleForRow;
 
 //- (id)initWithFrame:(CGRect)frame forDayInRow:(int)day;
 //- (id)initWithFrame:(CGRect)frame forSummaryWithPercent:(CGFloat)percentComplete;

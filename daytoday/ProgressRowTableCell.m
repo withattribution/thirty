@@ -7,7 +7,6 @@
 //
 
 #import "ProgressRowTableCell.h"
-#import "DTProgressElementLayout.h"
 #import "UIColor+SR.h"
 
 @implementation ProgressRowTableCell

@@ -48,13 +48,26 @@
 //
 //@end
 
+@implementation DTProgressRow
+@synthesize style,phase,weekRow;
+
++ (DTProgressRow *)withEndStyle:(DTProgressRowEndStyle)end phase:(DTProgressRowTemporalStatus)status row:(NSArray *)row
+{
+    DTProgressRow *pr = [[DTProgressRow alloc] init];
+    pr.style = end;
+    pr.phase = status;
+    pr.weekRow = row;
+    return pr;
+}
+@end
+
+
 @interface DTProgressElementLayout (){
     NSCalendar *layoutCalendar;
     NSArray *challengeCalendarDays;
     NSArray *dtDotsForChallengeCalendar;
-    NSArray *row;
+//    NSArray *row;
     NSSet   *rowDateSet;
-
     NSDate *startDate;
     NSDate *endDate;
 }
@@ -65,25 +78,43 @@
 @end
 
 @implementation DTProgressElementLayout
-@synthesize intent,layoutView,weekRows;
+@synthesize intent,layoutView,weekRows,progressRows;
 
 static int NUM_DAYS_FOR_ROW = 7;
 //static CGFloat EDGE_PADDING = 3.f;
 
+//- (id)initWithRow:(NSArray*)weekRow withIntent:(Intent *)i
+//{
+//    self = [super init];
+//    if (self) {
+//        self.intent = i;
+//        row = [NSArray arrayWithArray:weekRow];
+//        rowDateSet = [self rowDatesAsSet];
+////        UIView *test = [[UIView alloc] initWithFrame:CGRectZero];
+////        self.layoutView = test;
+//    }
+//    
+//    return self;
+//}
 
-- (id)initWithRow:(NSArray*)weekRow withIntent:(Intent *)i
+//create snapshot layout view
+//logic for snapshow view
+//get current week row -- if current is only row show future row second
+//if current row has a past row show past row first
+
+- (NSArray *)progressRowsForChallengeCalendar
 {
-    self = [super init];
-    if (self) {
-        self.intent = i;
-        row = [NSArray arrayWithArray:weekRow];
-        rowDateSet = [self rowDatesAsSet];
-//        UIView *test = [[UIView alloc] initWithFrame:CGRectZero];
-//        self.layoutView = test;
+    NSMutableArray *prows = [[NSMutableArray alloc] initWithCapacity:[self.weekRows count]];
+    
+    for(int i = 0; i < [self.weekRows count]; i++){
+        DTProgressRowTemporalStatus status = [self temporalStatusForRow:[self.weekRows objectAtIndex:i]];
+        DTProgressRowEndStyle style = [self endStyleForRow:[self.weekRows objectAtIndex:i]];
+        [prows addObject:[DTProgressRow withEndStyle:style phase:status row:[self.weekRows objectAtIndex:i]]];
     }
     
-    return self;
+    return prows;
 }
+
 
 - (id)initWithIntent:(Intent *)i
 {
@@ -96,7 +127,8 @@ static int NUM_DAYS_FOR_ROW = 7;
         challengeCalendarDays = [NSArray arrayWithArray:[self buildChallengeCalendar:[[self.intent.challenge duration] integerValue]]];
         dtDotsForChallengeCalendar = [NSArray arrayWithArray:[self dotForChallengeCalendar:challengeCalendarDays]];
         self.weekRows = [NSArray arrayWithArray:[self weekRowsFrom:dtDotsForChallengeCalendar]];
-
+        self.progressRows = [self progressRowsForChallengeCalendar];
+        
 //        for (int i = 0; i < [weekRows count]; i++) {
 //            NIDINFO(@"weekrow count: %d",[[weekRows objectAtIndex:i] count]);
 //            //            NIDINFO(@"week row %d %@ and date: %@",i,[weekRows objectAtIndex:i],((DTDotElement*)[weekRows objectAtIndex:i]).dotDate);
@@ -124,13 +156,11 @@ static int NUM_DAYS_FOR_ROW = 7;
         itemsRemaining-=range.length;
         aa+=range.length;
     }
-    
-    for (int qq = 0; qq < [arrayOfArrays count]; qq++) {
-        for (int q1 = 0; q1 < [[arrayOfArrays objectAtIndex:qq] count]; q1++) {
-            NSLog(@"%@", [[[arrayOfArrays objectAtIndex:qq] objectAtIndex:q1] dotDate]);
-        }
-    }
-    
+//    for (int qq = 0; qq < [arrayOfArrays count]; qq++) {
+//        for (int q1 = 0; q1 < [[arrayOfArrays objectAtIndex:qq] count]; q1++) {
+//            NSLog(@"%@", [[[arrayOfArrays objectAtIndex:qq] objectAtIndex:q1] dotDate]);
+//        }
+//    }
     NSMutableArray *tempWeekRows = [NSMutableArray arrayWithArray:arrayOfArrays];
     ////////// PAD WEEK ROWS WITH EXTRA DAYS UNTIL ROW IS FULL //////////
     for (int i = 0; i < [tempWeekRows count]; i++) {
@@ -159,7 +189,6 @@ static int NUM_DAYS_FOR_ROW = 7;
     return tempWeekRows;
 }
 
-
 - (NSArray*)dotForChallengeCalendar:(NSArray *)challengeDays
 {
     NSArray *masterArray = [NSArray arrayWithArray:challengeDays];
@@ -185,8 +214,8 @@ static int NUM_DAYS_FOR_ROW = 7;
                     DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
                                                               andColorGroup:[DTDotColorGroup accomplishedDayColorGroup]
                                                                     andDate:((ChallengeDay*)[masterArray objectAtIndex:i]).day];
-                    NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
-                    NSLog(@"-----------------------------------------------------");
+//                    NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
+//                    NSLog(@"-----------------------------------------------------");
                     [dotsForChallenge addObject:dot];
                 }
                 else {
@@ -194,12 +223,11 @@ static int NUM_DAYS_FOR_ROW = 7;
                     DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
                                                               andColorGroup:[DTDotColorGroup someParticipationAndStillActiveColorGroup]
                                                                     andDate:((ChallengeDay*)[masterArray objectAtIndex:i]).day];
-                    NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
-                    NSLog(@"-----------------------------------------------------");
+//                    NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
+//                    NSLog(@"-----------------------------------------------------");
                     [dotsForChallenge addObject:dot];
                 }
             }
-            
             //If there is a challenge day for the past then the possible states are:
             //failed
             //participated but did not complete (failed but with some effort)
@@ -213,8 +241,8 @@ static int NUM_DAYS_FOR_ROW = 7;
                     DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
                                                               andColorGroup:[DTDotColorGroup accomplishedDayColorGroup]
                                                                     andDate:((ChallengeDay*)[masterArray objectAtIndex:i]).day];
-                    NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
-                    NSLog(@"-----------------------------------------------------");
+//                    NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
+//                    NSLog(@"-----------------------------------------------------");
                     [dotsForChallenge addObject:dot];
                 }
                 else {
@@ -222,8 +250,8 @@ static int NUM_DAYS_FOR_ROW = 7;
                     DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
                                                               andColorGroup:[DTDotColorGroup someParticipationButFailedColorGroup]
                                                                     andDate:((ChallengeDay*)[masterArray objectAtIndex:i]).day];
-                    NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
-                    NSLog(@"-----------------------------------------------------");
+//                    NSLog(@"the loop date: %@ the added date: %@ and position: %d", [masterArray  objectAtIndex:i],((ChallengeDay*)[masterArray objectAtIndex:i]).day,i);
+//                    NSLog(@"-----------------------------------------------------");
                     [dotsForChallenge addObject:dot];
                 }
             }
@@ -238,8 +266,8 @@ static int NUM_DAYS_FOR_ROW = 7;
                 DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
                                                           andColorGroup:[DTDotColorGroup currentActiveDayColorGroup]
                                                                 andDate:[masterArray objectAtIndex:i]];
-                NSLog(@"the loop date: %@ and position: %d", [masterArray  objectAtIndex:i],i);
-                NSLog(@"****************************************************");
+//                NSLog(@"the loop date: %@ and position: %d", [masterArray  objectAtIndex:i],i);
+//                NSLog(@"****************************************************");
                 [dotsForChallenge addObject:dot];
             }
             //check dates in the past
@@ -250,8 +278,8 @@ static int NUM_DAYS_FOR_ROW = 7;
                 DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
                                                           andColorGroup:[DTDotColorGroup failedDayColorGroup]
                                                                 andDate:[masterArray objectAtIndex:i]];
-                NSLog(@"the loop date: %@ and position: %d", [masterArray  objectAtIndex:i],i);
-                NSLog(@"****************************************************");
+//                NSLog(@"the loop date: %@ and position: %d", [masterArray  objectAtIndex:i],i);
+//                NSLog(@"****************************************************");
                 [dotsForChallenge addObject:dot];
             }
             //check and handle all future dates
@@ -264,8 +292,8 @@ static int NUM_DAYS_FOR_ROW = 7;
                 DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
                                                           andColorGroup:[DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup]
                                                                 andDate:[masterArray objectAtIndex:i]];
-                NSLog(@"the loop date: %@ and position: %d", [masterArray  objectAtIndex:i],i);
-                NSLog(@"****************************************************");
+//                NSLog(@"the loop date: %@ and position: %d", [masterArray  objectAtIndex:i],i);
+//                NSLog(@"****************************************************");
                 [dotsForChallenge addObject:dot];
             }
         }
@@ -276,22 +304,10 @@ static int NUM_DAYS_FOR_ROW = 7;
 
 - (NSArray*)buildChallengeCalendar:(NSInteger)forDuration
 {
-//    challengeDuration = [self.intent.challenge duration]; //[((Intent *)[self.intents objectAtIndex:indexPath.section]).challenge duration];
     NSArray *challengeDays = [[self.intent days] allObjects];  //((Intent *)[self.intents objectAtIndex:indexPath.section]).days;
-    
-    
     
     startDate = self.intent.starting;
     endDate = self.intent.ending;
-    
-    NSLog(@"start date: %@ and startDate: %@", self.intent.starting, startDate);
-
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    df.locale = [NSLocale autoupdatingCurrentLocale];
-    [df setDateStyle:NSDateFormatterMediumStyle];
-    [df setTimeStyle:NSDateFormatterMediumStyle];
-    
-    NSLog(@"Now in New York: %@", [df stringFromDate:self.intent.starting]);
     
     ///////// BUILD A LIST OF CHALLENGE DAY FOR CHALLENGE DURATION //////////////
     NSDateComponents *offset = [[NSDateComponents alloc] init];
@@ -326,24 +342,17 @@ static int NUM_DAYS_FOR_ROW = 7;
         }
     }
     [datesForDuration replaceObjectsAtIndexes:indexesToReplace withObjects:objectsToReplace];
-    
-    for (int i = 0; i < [datesForDuration count]; i++) {
-        if ([[datesForDuration objectAtIndex:i] class] == [ChallengeDay class]) {
-            NSLog(@"i: %d and Challenge day with date: %@",i,[(ChallengeDay*)[datesForDuration objectAtIndex:i] day]);
-        }else {
-            NSLog(@"i: %d and date: %@",i,[datesForDuration objectAtIndex:i]);
-        }
-    }
-    
-    //one array and now the row logic ::sad face::
-
-    
-    
-    
+//    for (int i = 0; i < [datesForDuration count]; i++) {
+//        if ([[datesForDuration objectAtIndex:i] class] == [ChallengeDay class]) {
+//            NSLog(@"i: %d and Challenge day with date: %@",i,[(ChallengeDay*)[datesForDuration objectAtIndex:i] day]);
+//        }else {
+//            NSLog(@"i: %d and date: %@",i,[datesForDuration objectAtIndex:i]);
+//        }
+//    }
     return datesForDuration;
 }
 
-- (DTProgressRowTemporalStatus)temporalStatusForRow
+- (DTProgressRowTemporalStatus)temporalStatusForRow:(NSArray *)row
 {
     NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
     NSDate *today = [NSDate date];
@@ -377,30 +386,32 @@ static int NUM_DAYS_FOR_ROW = 7;
         //one index contains the current date so entire row is the current row
         return DTProgressRowFuture;
     }
-    
+
     return DTProgressRowTemporalStatusUndefined;
 }
 
-- (NSSet *)rowDatesAsSet
+- (NSSet *)setFromRow:(NSArray *)row
 {
     NSMutableArray *dates = [[NSMutableArray alloc] init];
     for (int i = 0; i < [row count]; i++) {
-        NSLog(@"row: %d and date: %@",i,[(DTDotElement*)[row objectAtIndex:i] dotDate]);
+//        NSLog(@"row: %d and date: %@",i,[(DTDotElement*)[row objectAtIndex:i] dotDate]);
         [dates addObject:[(DTDotElement*)[row objectAtIndex:i] dotDate]];
     }
     return [NSSet setWithArray:dates];
 }
 
-- (DTProgressRowEndStyle)endStyleForRow
+- (DTProgressRowEndStyle)endStyleForRow:(NSArray *)row
 {
-    if ([self temporalStatusForRow] == DTProgressRowPast &&
-        (![rowDateSet containsObject:self.intent.starting] && ![rowDateSet containsObject:self.intent.ending]) )
+    NSSet *rowSet = [self setFromRow:row];
+    
+    if ([self temporalStatusForRow:row] == DTProgressRowPast &&
+        (![rowSet containsObject:self.intent.starting] && ![rowSet containsObject:self.intent.ending]) )
         return DTProgressRowEndFlat;
-    if ([self temporalStatusForRow] == DTProgressRowCurrent && ![rowDateSet containsObject:self.intent.starting])
+    if ([self temporalStatusForRow:row] == DTProgressRowCurrent && ![rowSet containsObject:self.intent.starting])
         return DTProgressRowEndFlatLeft;
-    if ([self temporalStatusForRow] == DTProgressRowPast && [rowDateSet containsObject:self.intent.starting])
+    if ([self temporalStatusForRow:row] == DTProgressRowPast && [rowSet containsObject:self.intent.starting])
         return DTProgressRowEndFlatRight;
-    if ([self temporalStatusForRow] == DTProgressRowCurrent && [rowDateSet containsObject:self.intent.starting])
+    if ([self temporalStatusForRow:row] == DTProgressRowCurrent && [rowSet containsObject:self.intent.starting])
         return DTProgressRowEndBothRounded;
     return DTProgressRowEndUndefined;
 }
@@ -605,7 +616,6 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
     //is not in the current week-row.
     
     CGPoint endCenter = CGPointZero;
-    
     CGPoint startPoint = [self pointOnCircleWithCenter:endCenter
                                                 radius:endRadius
                                         angleInDegrees:90];
@@ -633,7 +643,6 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
 - (void)drawRoundedProgressElement
 {
     CGPoint endCenter = CGPointZero;
-
     CGPoint startPoint = [self pointOnCircleWithCenter:endCenter
                                                 radius:endRadius
                                         angleInDegrees:90];
