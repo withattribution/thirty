@@ -12,7 +12,6 @@
 		A1275C041806EB5B00019A91 /* ProfileSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275BF81806EB5B00019A91 /* ProfileSectionHeaderView.m */; };
 		A1275C171806EB8C00019A91 /* DTDotElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C0A1806EB8C00019A91 /* DTDotElement.m */; };
 		A1275C191806EB8C00019A91 /* DTProgressElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C0E1806EB8C00019A91 /* DTProgressElement.m */; };
-		A1275C1B1806EB8C00019A91 /* DTProgressElementLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C121806EB8C00019A91 /* DTProgressElementLayout.m */; };
 		A1275C231806ECE200019A91 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1275C221806ECE200019A91 /* QuartzCore.framework */; };
 		A1275C271806F97200019A91 /* profileBlank.png in Resources */ = {isa = PBXBuildFile; fileRef = A1275C251806F97200019A91 /* profileBlank.png */; };
 		A1275C281806F97200019A91 /* anotherCrop.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1275C261806F97200019A91 /* anotherCrop.jpg */; };
@@ -22,7 +21,6 @@
 		A1275C431809EEEA00019A91 /* ProgressRowTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C421809EEEA00019A91 /* ProgressRowTableCell.m */; };
 		A1275C461809F66600019A91 /* ParticipantsRowTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C451809F66600019A91 /* ParticipantsRowTableCell.m */; };
 		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
-		A1275C52180DC07E00019A91 /* ProgressRowLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C51180DC07E00019A91 /* ProgressRowLogic.m */; };
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B017FB1C8800B9C9BB /* D2NavController.m */; };
@@ -210,8 +208,6 @@
 		A1275C0A1806EB8C00019A91 /* DTDotElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDotElement.m; sourceTree = "<group>"; };
 		A1275C0D1806EB8C00019A91 /* DTProgressElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTProgressElement.h; sourceTree = "<group>"; };
 		A1275C0E1806EB8C00019A91 /* DTProgressElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTProgressElement.m; sourceTree = "<group>"; };
-		A1275C111806EB8C00019A91 /* DTProgressElementLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTProgressElementLayout.h; sourceTree = "<group>"; };
-		A1275C121806EB8C00019A91 /* DTProgressElementLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTProgressElementLayout.m; sourceTree = "<group>"; };
 		A1275C221806ECE200019A91 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A1275C251806F97200019A91 /* profileBlank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profileBlank.png; sourceTree = "<group>"; };
 		A1275C261806F97200019A91 /* anotherCrop.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = anotherCrop.jpg; sourceTree = "<group>"; };
@@ -226,8 +222,6 @@
 		A1275C451809F66600019A91 /* ParticipantsRowTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsRowTableCell.m; sourceTree = "<group>"; };
 		A1275C4A180B8BBF00019A91 /* NSCalendar+equalWithGranularity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+equalWithGranularity.h"; sourceTree = "<group>"; };
 		A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+equalWithGranularity.m"; sourceTree = "<group>"; };
-		A1275C50180DC07E00019A91 /* ProgressRowLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressRowLogic.h; sourceTree = "<group>"; };
-		A1275C51180DC07E00019A91 /* ProgressRowLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressRowLogic.m; sourceTree = "<group>"; };
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
 		B73903AF17FB1C8800B9C9BB /* D2NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D2NavController.h; sourceTree = "<group>"; };
@@ -460,8 +454,6 @@
 		A1275BEC1806EB4200019A91 /* profile */ = {
 			isa = PBXGroup;
 			children = (
-				A1275C50180DC07E00019A91 /* ProgressRowLogic.h */,
-				A1275C51180DC07E00019A91 /* ProgressRowLogic.m */,
 				A1275C2A1806FD4600019A91 /* ProfileHistoryTableView.h */,
 				A1275C2B1806FD4600019A91 /* ProfileHistoryTableView.m */,
 				A1275C3E18090A2400019A91 /* DaysLeftTableCell.h */,
@@ -487,8 +479,6 @@
 				A1275C0A1806EB8C00019A91 /* DTDotElement.m */,
 				A1275C0D1806EB8C00019A91 /* DTProgressElement.h */,
 				A1275C0E1806EB8C00019A91 /* DTProgressElement.m */,
-				A1275C111806EB8C00019A91 /* DTProgressElementLayout.h */,
-				A1275C121806EB8C00019A91 /* DTProgressElementLayout.m */,
 			);
 			name = "ui elements";
 			sourceTree = "<group>";
@@ -1015,7 +1005,6 @@
 				B7E61E6B17C27F5A002B681B /* AFPropertyListRequestOperation.m in Sources */,
 				B7E61E6D17C27F5A002B681B /* AFURLConnectionOperation.m in Sources */,
 				B7E61E6F17C27F5A002B681B /* AFXMLRequestOperation.m in Sources */,
-				A1275C1B1806EB8C00019A91 /* DTProgressElementLayout.m in Sources */,
 				B76D560D1806DB02003DDD36 /* Challenge.m in Sources */,
 				B7E61E7117C27F5A002B681B /* UIImageView+AFNetworking.m in Sources */,
 				B7E61E7617C27F6E002B681B /* JSONKit.m in Sources */,
@@ -1048,7 +1037,6 @@
 				B73903CE17FB6DD800B9C9BB /* CreateChallengeViewController.m in Sources */,
 				B7E61F2717C97082002B681B /* Comment+D2D.m in Sources */,
 				A1275C4018090A2400019A91 /* DaysLeftTableCell.m in Sources */,
-				A1275C52180DC07E00019A91 /* ProgressRowLogic.m in Sources */,
 				B76D56291806DB1D003DDD36 /* Image.m in Sources */,
 				B73366B117CA8B87002524E4 /* TickRequest.m in Sources */,
 				B76D56251806DB1D003DDD36 /* Like.m in Sources */,
