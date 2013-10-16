@@ -48,9 +48,9 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 
 @interface DTProgressElementLayout : NSObject
 
-@property (nonatomic,retain) NSArray *row;
-@property (nonatomic,retain) NSSet   *rowDateSet;
 @property (nonatomic,retain) Intent *intent;
+@property (nonatomic,retain) NSArray *weekRows; //Array of arrays with dotWeeks-rows for progressElement rows
+
 @property (nonatomic,retain) UIView *layoutView;
 
 - (id)initWithIntent:(Intent *)i;
