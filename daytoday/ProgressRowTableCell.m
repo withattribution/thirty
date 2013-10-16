@@ -7,38 +7,39 @@
 //
 
 #import "ProgressRowTableCell.h"
+#import "DTProgressElement.h"
+
 #import "UIColor+SR.h"
 
 @implementation ProgressRowTableCell
+@synthesize snapShotElements;
 
 static CGFloat ROW_SPACING = 2.f;
 static CGFloat TOP_PADDING = 2.f;
 static CGFloat ROW_HEIGHT = 40.f;
 static int WEEK_ROWS = 2;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withDTProgressRows:(NSArray *)rows
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.snapShotElements = rows;
+        
         [self setFrame:CGRectMake(0.f, self.frame.origin.y, self.frame.size.width, (WEEK_ROWS * ROW_HEIGHT) + (2*TOP_PADDING) + ROW_SPACING)];
         
-//        DTProgressElementLayout *topRow = [[DTProgressElementLayout alloc] initWithFrame:CGRectMake(0.f,
-//                                                                                                    1.f,
-//                                                                                                    self.frame.size.width,
-//                                                                                                    ROW_HEIGHT)
-//                                                                             forDayInRow:6];
-//        [self addSubview:topRow];
-//        
-//        UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0.f, topRow.frame.size.height + 2.f, self.frame.size.width, ROW_SPACING)];
-//        [spacerView setBackgroundColor:[UIColor colorWithWhite:1.f alpha:1.f]];
-//        [self addSubview:spacerView];
-//        
-//        DTProgressElementLayout *bottomRow = [[DTProgressElementLayout alloc] initWithFrame:CGRectMake(0.0,
-//                                                                                                       spacerView.frame.origin.y + spacerView.frame.size.height +1.f,
-//                                                                                                       self.frame.size.width,
-//                                                                                                       ROW_HEIGHT)
-//                                                                                forDayInRow:6];
-//        [self addSubview:bottomRow];
+        if (self.snapShotElements && [self.snapShotElements count] > 0) {
+            [self addSubview:[self.snapShotElements objectAtIndex:0]];
+        }
+        
+        UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0.f, ROW_HEIGHT + 2.f, self.frame.size.width, ROW_SPACING)];
+        [spacerView setBackgroundColor:[UIColor colorWithWhite:1.f alpha:1.f]];
+        [self addSubview:spacerView];
+        
+        if (self.snapShotElements && [self.snapShotElements count] > 0) {
+            [[self.snapShotElements objectAtIndex:1] setFrame:CGRectMake(0., spacerView.frame.origin.y + spacerView.frame.size.height, self.frame.size.width, ROW_HEIGHT)];
+            [self addSubview:[self.snapShotElements objectAtIndex:1]];
+        }
+        
         [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
     }
     return self;

@@ -10,4 +10,8 @@
 
 @interface ProgressRowTableCell : UITableViewCell
 
+@property (nonatomic,retain) NSArray *snapShotElements;
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withDTProgressRows:(NSArray *)rows;
+
 @end
