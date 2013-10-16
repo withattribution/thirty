@@ -9,7 +9,6 @@
 #import "ParticipantsRowTableCell.h"
 #import "DTDotElement.h"
 
-
 @interface ParticipantsRowTableCell ()
 - (CGFloat)calculateChallegerEndPoint:(int)cc;
 @end

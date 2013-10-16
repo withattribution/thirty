@@ -20,6 +20,7 @@
 #import "ParticipantsRowTableCell.h"
 
 #import "DTProgressElement.h"
+
 #import <UIColor+SR.h>
 
 @implementation ProfileHistoryTableView
@@ -44,7 +45,6 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         [self setDataSource:self];
         
         [self registerClass:[DaysLeftTableCell class] forCellReuseIdentifier:daysLeftCellReuseIdentifier];
-        [self registerClass:[ProgressRowTableCell class] forCellReuseIdentifier:progressRowCellReuseIdentifier];
         [self registerClass:[ParticipantsRowTableCell class] forCellReuseIdentifier:participantsRowCellReuseIdentifier];
         
         [self registerClass:[ProfileSectionHeaderView class] forHeaderFooterViewReuseIdentifier:sectionHeaderViewReuseIdentifier];
@@ -93,9 +93,11 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         return cell;
     }
     if (indexPath.row == 1) {
-        ProgressRowTableCell *cell = (ProgressRowTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier forIndexPath:indexPath];
-        DTProgressElementLayout *dl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
-        
+        ProgressRowTableCell *cell = (ProgressRowTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
+        if (cell == nil) {
+            DTProgressElementLayout *dl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
+            cell = [[ProgressRowTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:progressRowCellReuseIdentifier withDTProgressRows:[dl progressSnapShotElements]];
+        }
         return cell;
     }
     if (indexPath.row == 2) {

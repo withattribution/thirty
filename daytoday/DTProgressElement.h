@@ -31,9 +31,11 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 
 @property(nonatomic) DTProgressRowEndStyle style;
 @property(nonatomic) DTProgressRowTemporalStatus phase;
-@property(nonatomic,retain) NSArray *weekRow;
+@property(nonatomic,retain) NSArray *weekRow;           //Row of DTDotElements for challenge calendar
 
-+ (DTProgressRow *)withEndStyle:(DTProgressRowEndStyle)end phase:(DTProgressRowTemporalStatus)status row:(NSArray *)row;
++ (DTProgressRow *)withEndStyle:(DTProgressRowEndStyle)end
+                          phase:(DTProgressRowTemporalStatus)status
+                            row:(NSArray *)row;
 
 @end
 
@@ -58,17 +60,10 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 @interface DTProgressElementLayout : NSObject
 
 @property (nonatomic,retain) Intent *intent;
-@property (nonatomic,retain) NSArray *weekRows; //Array of arrays with dotWeeks-rows for progressElement rows
-@property (nonatomic,retain) UIView *layoutView;
-@property (nonatomic,retain) NSArray *progressRows; //rows of weeks with all the elements necessary to build a DTProgressElement
-
-//- (DTProgressRowTemporalStatus)temporalStatusForRow;
-//- (DTProgressRowEndStyle)endStyleForRow;
-- (DTProgressRowTemporalStatus)temporalStatusForRow:(NSArray *)row;
-- (DTProgressRowEndStyle)endStyleForRow:(NSArray *)row;
+@property (nonatomic,retain) NSArray *progressRows; //Array holding DTProgressRows indexed by week
 
 - (id)initWithIntent:(Intent *)i;
-- (id)initWithRow:(NSArray *)weekRow withIntent:(Intent *)i;
+- (NSArray *)progressSnapShotElements;
 
 //- (id)initWithFrame:(CGRect)frame forDayInRow:(int)day;
 //- (id)initWithFrame:(CGRect)frame forSummaryWithPercent:(CGFloat)percentComplete;
@@ -82,8 +77,8 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 @property (nonatomic) CGFloat percent;
 @property (nonatomic) CGFloat radius;
 
-//- (id)initWithEndStyle:(DTProgressRowEndStyle)style andColorGroup:(DTProgressColorGroup *)pcg withPercent:(CGFloat)p;
-//- (id)initWithEndStyle:(DTProgressRowEndStyle)style andColorGroup:(DTProgressColorGroup *)pcg progressUnits:(CGFloat)units;
+- (id)initForSummaryElementWithColorGroup:(DTProgressColorGroup *)pcg percent:(CGFloat)p;
+- (id)initWithEndStyle:(DTProgressRowEndStyle)style andColorGroup:(DTProgressColorGroup *)pcg progressUnits:(CGFloat)units;
 
 - (id)initWithFrame:(CGRect)frame andColorGroup:(DTProgressColorGroup *)pcg withPercent:(CGFloat)p;
 - (id)initWithFrame:(CGRect)frame andColorGroup:(DTProgressColorGroup *)pcg progressUnits:(CGFloat)units;
