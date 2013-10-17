@@ -61,6 +61,7 @@
 		B78481CC18020834008F2EB8 /* FakeDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B78481CA18020834008F2EB8 /* FakeDataUtils.m */; };
 		B7B4072C1804465E00A0F049 /* food.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B7B4072A1804465E00A0F049 /* food.jpg */; };
 		B7B4072D1804465E00A0F049 /* turlet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B7B4072B1804465E00A0F049 /* turlet.jpg */; };
+		B7D3633E18102C6800E4DC79 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D3633D18102C6800E4DC79 /* FacebookSDK.framework */; };
 		B7E61D4217BD6AA5002B681B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4117BD6AA5002B681B /* UIKit.framework */; };
 		B7E61D4417BD6AA5002B681B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4317BD6AA5002B681B /* Foundation.framework */; };
 		B7E61D4617BD6AA5002B681B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4517BD6AA5002B681B /* CoreGraphics.framework */; };
@@ -256,6 +257,7 @@
 		B78481CA18020834008F2EB8 /* FakeDataUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FakeDataUtils.m; path = ../FakeDataUtils.m; sourceTree = "<group>"; };
 		B7B4072A1804465E00A0F049 /* food.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = food.jpg; sourceTree = "<group>"; };
 		B7B4072B1804465E00A0F049 /* turlet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = turlet.jpg; sourceTree = "<group>"; };
+		B7D3633D18102C6800E4DC79 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		B7E61D3E17BD6AA5002B681B /* daytoday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = daytoday.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7E61D4117BD6AA5002B681B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B7E61D4317BD6AA5002B681B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -404,6 +406,7 @@
 				B77F7F13180C66C60072954E /* SystemConfiguration.framework in Frameworks */,
 				B77F7F11180C66AF0072954E /* libsqlite3.dylib in Frameworks */,
 				B77F7F0F180C66A60072954E /* Security.framework in Frameworks */,
+				B7D3633E18102C6800E4DC79 /* FacebookSDK.framework in Frameworks */,
 				B77F7F0D180C66980072954E /* CoreLocation.framework in Frameworks */,
 				B7E61DFA17C27D2B002B681B /* CoreData.framework in Frameworks */,
 				B7E61D4217BD6AA5002B681B /* UIKit.framework in Frameworks */,
@@ -513,6 +516,7 @@
 		B7E61D4017BD6AA5002B681B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B7D3633D18102C6800E4DC79 /* FacebookSDK.framework */,
 				B77F7F09180C63DD0072954E /* libUAirship-3.0.1.a */,
 				B7E61DF817C27D24002B681B /* CoreData.framework */,
 				B77F7F16180C66E40072954E /* CoreTelephony.framework */,
@@ -1152,6 +1156,10 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/andersonmiller/Documents/d2dios/daytoday,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "daytoday/daytoday-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1178,6 +1186,10 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/andersonmiller/Documents/d2dios/daytoday,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "daytoday/daytoday-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
