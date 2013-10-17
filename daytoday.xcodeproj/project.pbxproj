@@ -1161,8 +1161,8 @@
 				);
 				INFOPLIST_FILE = "daytoday/daytoday-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
+					airship/,
 					"$(inherited)",
-					/Users/andersonmiller/Documents/d2dios/daytoday/airship,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1187,8 +1187,8 @@
 				);
 				INFOPLIST_FILE = "daytoday/daytoday-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
+					airship/,
 					"$(inherited)",
-					/Users/andersonmiller/Documents/d2dios/daytoday/airship,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1211,7 +1211,7 @@
 				INFOPLIST_FILE = "daytodayTests/daytodayTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/andersonmiller/Documents/d2dios/daytoday/airship,
+					daytoday/airship,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -1232,7 +1232,7 @@
 				INFOPLIST_FILE = "daytodayTests/daytodayTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/andersonmiller/Documents/d2dios/daytoday/airship,
+					daytoday/airship,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
