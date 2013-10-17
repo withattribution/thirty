@@ -417,7 +417,7 @@ static CGFloat EDGE_PADDING = 3.f;
 - (DTProgressElement *)progressElementForDTProgressRow:(DTProgressRow *)progressRow
 {
     CGRect GENERIC_DOT_FRAME = CGRectMake(0.f, 0.f, 40.f, 40.f);
-    
+
     DTProgressElement *rowElement = [[DTProgressElement alloc] initWithEndStyle:progressRow.style
                                                                   andColorGroup:[DTProgressColorGroup snapshotProgress]
                                                                   progressUnits:[self progressUnitsForDTProgressRow:progressRow]];
@@ -436,7 +436,7 @@ static CGFloat EDGE_PADDING = 3.f;
 - (CGFloat)progressUnitsForDTProgressRow:(DTProgressRow *)progressRow
 {
     NSDate *today = [NSDate date];
-    
+
     if (progressRow.phase == DTProgressRowCurrent) {
         NSIndexSet *currentDayIndex = [progressRow.weekRow indexesOfObjectsPassingTest:^BOOL(DTDotElement *obj, NSUInteger idx, BOOL *stop) {
             return ([layoutCalendar ojf_isDate:obj.dotDate equalToDate:today withGranularity:NSDayCalendarUnit]);
@@ -552,7 +552,6 @@ static CGFloat EDGE_PADDING = 3.f;
 //    [endDay setCenter:[summaryProgressForeground rightCenter]];
 //    [self addSubview:endDay];
 //}
-
 @end
 
 @interface DTProgressElement () {
