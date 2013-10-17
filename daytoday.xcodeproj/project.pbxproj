@@ -494,8 +494,6 @@
 		B7E61D3517BD6AA5002B681B = {
 			isa = PBXGroup;
 			children = (
-				B77F7F09180C63DD0072954E /* libUAirship-3.0.1.a */,
-				B7E61DF817C27D24002B681B /* CoreData.framework */,
 				B7E61D4717BD6AA5002B681B /* daytoday */,
 				B7E61D6B17BD6AA5002B681B /* daytodayTests */,
 				B7E61D4017BD6AA5002B681B /* Frameworks */,
@@ -515,6 +513,8 @@
 		B7E61D4017BD6AA5002B681B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B77F7F09180C63DD0072954E /* libUAirship-3.0.1.a */,
+				B7E61DF817C27D24002B681B /* CoreData.framework */,
 				B77F7F16180C66E40072954E /* CoreTelephony.framework */,
 				B77F7F14180C66D70072954E /* libz.dylib */,
 				B77F7F12180C66C60072954E /* SystemConfiguration.framework */,

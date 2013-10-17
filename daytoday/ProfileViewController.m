@@ -28,13 +28,14 @@
 @synthesize intents;
 +(id) fakeProfileData
 {
-    NSString* img1small = @"http://daytoday-dev.s3.amazonaws.com/images/a0e2d3d7813b495181f56a7f528012a8.jpg";
-    NSString* img1med = @"http://daytoday-dev.s3.amazonaws.com/images/8debb5be40f448f4a6583a8de67b731b.jpg";
-    NSString* img1large = @"http://daytoday-dev.s3.amazonaws.com/images/9720b86c720d4fb7a05d4b8cac8346a5.jpg";
+
+    NSString* img1small = @"http://daytoday-dev.s3.amazonaws.com/images/2c32de43c82d4bdf9cccf3af21f806ba.jpg";
+    NSString* img1med = @"http://daytoday-dev.s3.amazonaws.com/images/b0a01ab4d03f4357b615a87ffec289ff.jpg";
+    NSString* img1large = @"http://daytoday-dev.s3.amazonaws.com/images/f2b0f86ebf5b4919b5d802cfdebb3ec6.jpg";
     
-    NSString *img2small = @"http://daytoday-dev.s3.amazonaws.com/images/6fdd5ad843b94bcf9b147328072e02a3.jpg";
-    NSString *img2med  = @"http://daytoday-dev.s3.amazonaws.com/images/1433910dd3b9443fb3d3fb2151866114.jpg";
-    NSString *img2large = @"http://daytoday-dev.s3.amazonaws.com/images/a9fc822504d947318c8c0adf99f4b116.jpg";
+    NSString *img2small = @"http://daytoday-dev.s3.amazonaws.com/images/369db3f333dd48c181f9aec5abd5613e.jpg";
+    NSString *img2med  = @"http://daytoday-dev.s3.amazonaws.com/images/11517c77f110459ba2e2fa7ef473cbcb.jpg";
+    NSString *img2large = @"http://daytoday-dev.s3.amazonaws.com/images/5f9d500d33e243e4acca433649f26aa7.jpg";
     
 
     
