@@ -23,3 +23,7 @@ task :submodule do
   FileUtils.cd pwd
 end
 
+desc "test for incorrect pathing"
+task :path do
+  sh "cat daytoday.xcodeproj/project.pbxproj | grep Users"
+end
