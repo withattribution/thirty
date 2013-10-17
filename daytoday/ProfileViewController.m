@@ -48,7 +48,7 @@
     pf.selfUser = [User fakeSelfUser:pf.context];
     [pf.selfUser addImage:imgs];
     [i1 setUser:pf.selfUser];
-    
+
     NSMutableArray *ma = [[NSMutableArray alloc] initWithCapacity:7];
     int n = ceil((arc4random()%6)) +2;
     for( int i = 0; i < n; i++){
@@ -120,7 +120,7 @@
                                                                                   105.f)
                                   withUser:((ProfileData*)[ProfileData fakeProfileData]).selfUser];
     [self.view addSubview:infoHeader];
-    
+
     CGFloat profileHeightOffset = infoHeader.frame.origin.y + infoHeader.frame.size.height;
     ProfileHistoryTableView *historyTable = [[ProfileHistoryTableView alloc] initWithFrame:CGRectMake(0,
                                                                                                       profileHeightOffset,
