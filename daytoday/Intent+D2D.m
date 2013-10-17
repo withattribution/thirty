@@ -97,4 +97,39 @@
     
     return i;
 }
+
+#pragma mark Intent Utility Methods
+
+- (NSInteger)daysLeft
+{
+    NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
+    unsigned int unitFlags = NSDayCalendarUnit;
+    NSDateComponents *comps = [cal components:unitFlags fromDate:[NSDate date]  toDate:self.ending  options:0];
+    return [comps day];
+}
+
+- (NSString *)monthSpan
+{
+    NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
+    unsigned int unitFlags = NSMonthCalendarUnit | NSYearCalendarUnit;
+    
+    NSDateComponents *starting = [cal components:unitFlags fromDate:self.starting];
+    NSDateComponents *ending = [cal components:unitFlags fromDate:self.ending];
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.locale = [NSLocale autoupdatingCurrentLocale];
+    NSString *startingMonthName = [[df shortStandaloneMonthSymbols] objectAtIndex:([starting month]-1)];
+    NSString *endingMonthName = [[df shortStandaloneMonthSymbols] objectAtIndex:([ending month]-1)];
+    
+    return[NSString stringWithFormat:@"%@ - %@ %d",[startingMonthName uppercaseString], [endingMonthName uppercaseString],[ending year]];
+}
+
+- (CGFloat)percentCompleted
+{
+    
+
+    return 1.0;
+}
+
+
 @end

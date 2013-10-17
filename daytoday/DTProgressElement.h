@@ -64,9 +64,7 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 
 - (id)initWithIntent:(Intent *)i;
 - (NSArray *)progressSnapShotElements;
-
-//- (id)initWithFrame:(CGRect)frame forDayInRow:(int)day;
-//- (id)initWithFrame:(CGRect)frame forSummaryWithPercent:(CGFloat)percentComplete;
+- (UIView *)summaryProgressView;
 
 @end
 
@@ -77,7 +75,7 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 @property (nonatomic) CGFloat percent;
 @property (nonatomic) CGFloat radius;
 
-- (id)initForSummaryElementWithColorGroup:(DTProgressColorGroup *)pcg percent:(CGFloat)p;
+- (id)initForSummaryElement:(CGFloat)p;
 - (id)initWithEndStyle:(DTProgressRowEndStyle)style andColorGroup:(DTProgressColorGroup *)pcg progressUnits:(CGFloat)units;
 
 - (id)initWithFrame:(CGRect)frame andColorGroup:(DTProgressColorGroup *)pcg withPercent:(CGFloat)p;

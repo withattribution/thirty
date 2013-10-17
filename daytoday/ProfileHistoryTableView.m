@@ -18,6 +18,7 @@
 #import "DaysLeftTableCell.h"
 #import "ProgressRowTableCell.h"
 #import "ParticipantsRowTableCell.h"
+#import "ProgressSummaryCell.h"
 
 #import "DTProgressElement.h"
 
@@ -54,6 +55,47 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 
 #pragma mark - Table View Datasource
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell;
+    
+    //TODO might be interesting to cache the results of the element layout call for each row
+    DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
+    
+    if([((Intent *)[self.intents objectAtIndex:indexPath.section]) daysLeft] > 0){
+        if (indexPath.row == 0) {
+            DaysLeftTableCell *cell = (DaysLeftTableCell *)[tableView dequeueReusableCellWithIdentifier:daysLeftCellReuseIdentifier forIndexPath:indexPath];
+            cell.daysLeft.text = [NSString stringWithFormat:@"%d",[((Intent *)[self.intents objectAtIndex:indexPath.section]) daysLeft]];
+            cell.monthSpan.text = [((Intent *)[self.intents objectAtIndex:indexPath.section]) monthSpan];
+            return cell;
+        }
+        if (indexPath.row == 1) {
+            ProgressRowTableCell *cell = (ProgressRowTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
+            if (cell == nil) {
+                cell = [[ProgressRowTableCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                   reuseIdentifier:progressRowCellReuseIdentifier
+                                                withDTProgressRows:[pl progressSnapShotElements]];
+            }
+            return cell;
+        }
+        if (indexPath.row == 2) {
+            ParticipantsRowTableCell *cell = (ParticipantsRowTableCell *)[tableView dequeueReusableCellWithIdentifier:participantsRowCellReuseIdentifier forIndexPath:indexPath];
+            return cell;
+        }
+    }else {
+        ProgressSummaryCell *cell = (ProgressSummaryCell *)[tableView dequeueReusableCellWithIdentifier:summaryProgressCellReuseIdentifier];
+        if (cell == nil) {
+            cell = [[ProgressSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                              reuseIdentifier:summaryProgressCellReuseIdentifier
+                                              withSummaryView:[pl summaryProgressView]
+                                                   completion:[((Intent *)[self.intents objectAtIndex:indexPath.section]) percentCompleted]];
+        }
+        return cell;
+    }
+
+    return cell;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (self.intents && [self.intents count] > 0)
@@ -64,61 +106,25 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        DaysLeftTableCell *cell = (DaysLeftTableCell *)[tableView dequeueReusableCellWithIdentifier:daysLeftCellReuseIdentifier forIndexPath:indexPath];
-
-        NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
-        unsigned int unitFlags = NSMonthCalendarUnit | NSDayCalendarUnit | NSYearCalendarUnit;
-        NSDateComponents *comps = [cal components:unitFlags fromDate:[NSDate date]  toDate:((Intent *)[self.intents objectAtIndex:indexPath.section]).ending  options:0];
-        cell.daysLeft.text = [NSString stringWithFormat:@"%d",[comps day]];
-
-        NSDateComponents *starting = [cal components:unitFlags fromDate:((Intent *)[self.intents objectAtIndex:indexPath.section]).starting];
-        NSDateComponents *ending = [cal components:unitFlags fromDate:((Intent *)[self.intents objectAtIndex:indexPath.section]).ending];
-
-        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-        df.locale = [NSLocale autoupdatingCurrentLocale];
-        NSString *startingMonthName = [[df shortStandaloneMonthSymbols] objectAtIndex:([starting month]-1)];
-        NSString *endingMonthName = [[df shortStandaloneMonthSymbols] objectAtIndex:([ending month]-1)];
-
-//        NIDINFO(@"starting name %@",startingMonthName);
-//        NIDINFO(@"ending name %@",endingMonthName);
-//        NIDINFO(@"ending year %d",[ending year]);
-        
-        cell.monthSpan.text = [NSString stringWithFormat:@"%@ - %@ %d",[startingMonthName uppercaseString], [endingMonthName uppercaseString],[ending year]];
-        return cell;
-    }
-    if (indexPath.row == 1) {
-        ProgressRowTableCell *cell = (ProgressRowTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
-        if (cell == nil) {
-            DTProgressElementLayout *dl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
-            cell = [[ProgressRowTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:progressRowCellReuseIdentifier withDTProgressRows:[dl progressSnapShotElements]];
-        }
-        return cell;
-    }
-    if (indexPath.row == 2) {
-        ParticipantsRowTableCell *cell = (ParticipantsRowTableCell *)[tableView dequeueReusableCellWithIdentifier:participantsRowCellReuseIdentifier forIndexPath:indexPath];
-        return cell;
-    }
-    else {
-        //doing this to shut the warnings up
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"generic"];
-        return  cell;
-    }
+    if([((Intent *)[self.intents objectAtIndex:section]) daysLeft] > 0)
+        return 3;
+    else
+        return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 1)
-        return 87.f;
-    if (indexPath.row == 2)
-        return 45.f;
+    if([((Intent *)[self.intents objectAtIndex:indexPath.section]) daysLeft] > 0){
+        if (indexPath.row == 1)
+            return 87.f;
+        if (indexPath.row == 2)
+            return 45.f;
+        else
+            return 40.f;
+    }
     else
-        return 40.f;
+        return 84;
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

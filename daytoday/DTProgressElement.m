@@ -447,111 +447,38 @@ static CGFloat EDGE_PADDING = 3.f;
     }
 }
 
-//- (id)initWithFrame:(CGRect)frame forDayInRow:(int)day
-//{
-//    self = [super initWithFrame:frame];
-//    if (self) {
-//        DTDotElementFrameWidth = [self getFrameWidth];
-//        progress = DTDotElementFrameWidth * day;
-//        
-//        pElement = [[DTProgressElement alloc] initWithFrame:CGRectMake(0.0f,
-//                                                                       0.0f,
-//                                                                       self.frame.size.width,
-//                                                                       self.frame.size.height)
-//                                              andColorGroup:[DTProgressColorGroup snapshotProgress]
-//                                              progressUnits:progress];
-//        //        if(row is for previous week) {
-//        //            if(row contains start-day){
-//        [pElement drawFlatRightProgressElement];
-//        //           else {
-//        //            [pElement drawFlatProgressElement];
-//        //            }
-//        //        }else{
-//        //            if(row contains start-day){
-//        //            [pElement drawRoundedProgressElement];
-//        //            else {
-//        //            [pElement drawFlatLeftProgressElement];
-//        //            }
-//        //        }
-//        [self addSubview:pElement];
-//        [self drawDTDotElementsForDays:NUM_DAYS_FOR_ROW];
-//    }
-//    return self;
-//}
+- (DTDotElement *)withDate:(NSDate *)d
+{
+    DTDotElement *dot = nil;
+    
+    for (int i = 0; i < [self.progressRows count]; i++) {
+        NSIndexSet *dotIndex = [[[self.progressRows objectAtIndex:i] weekRow] indexesOfObjectsPassingTest:^BOOL(DTDotElement *obj, NSUInteger idx, BOOL *stop) {
+            return ([layoutCalendar ojf_isDate:obj.dotDate equalToDate:d withGranularity:NSDayCalendarUnit]);
+        }];
+        if ([dotIndex count] > 0) {
+            dot = [[[self.progressRows objectAtIndex:i] weekRow] objectAtIndex:[dotIndex firstIndex]];
+            return dot;
+        }
+        
+    }
+    return dot;
+}
 
-//- (id)initWithFrame:(CGRect)frame forSummaryWithPercent:(CGFloat)percentComplete
-//{
-//    self = [super initWithFrame:frame];
-//    if (self) {
-//        progress = percentComplete;
-//        [self dayProgressSummary];
-//    }
-//    return self;
-//}
+- (UIView *)summaryProgressView
+{
+    DTDotElement *startDot = [self withDate:self.intent.starting];
+    DTDotElement *endDot = [self withDate:self.intent.ending];
+    
+    DTProgressElement *summaryElement = [[DTProgressElement alloc] initForSummaryElement:0.9];
+    
+    [startDot setCenter:[summaryElement leftCenter]];
+    [endDot setCenter:[summaryElement rightCenter]];
 
-//- (CGFloat)getFrameWidth
-//{
-//    return (self.frame.size.width - (2*EDGE_PADDING)) / NUM_DAYS_FOR_ROW;
-//}
-
-////#TODO NEED TO LABEL WITH ACTUAL DAY NUMBER
-//- (void)drawDTDotElementsForDays:(int)days
-//{
-//    for (int i = 0; i < NUM_DAYS_FOR_ROW; i++) {
-//        CGRect DTDotElementFrame = CGRectMake(i*DTDotElementFrameWidth+EDGE_PADDING,
-//                                              0.,
-//                                              pElement.frame.size.height,
-//                                              pElement.frame.size.height);
-//        
-//        DTDotElement *element = [[DTDotElement alloc] initWithFrame:DTDotElementFrame
-//                                                      andColorGroup:[DTDotColorGroup currentActiveDayColorGroup]
-//                                                          andNumber:[NSNumber numberWithInt:i]];
-//        [self addSubview:element];
-//    }
-//}
-
-// the progress element for the summary
-// two days centered vertically and at each endpoint spaced from left and right edges of the screen
-// both ends rounded and spaced with equal margins
-// unlayer with clear or white fill and colored stroke to imitate progress view
-//- (void)dayProgressSummary
-//{
-//    DTProgressElement *summaryProgressBackground = [[DTProgressElement alloc] initWithFrame:CGRectMake(0.f,
-//                                                                                                       0.f,
-//                                                                                                       self.frame.size.width,
-//                                                                                                       self.frame.size.height)
-//                                                                              andColorGroup:[DTProgressColorGroup summaryProgressBackground]
-//                                                                                withPercent:1.f];
-//    [self addSubview:summaryProgressBackground];
-//    
-//    DTProgressElement *summaryProgressForeground = [[DTProgressElement alloc] initWithFrame:CGRectMake(0.f,
-//                                                                                                       0.f,
-//                                                                                                       self.frame.size.width ,
-//                                                                                                       self.frame.size.height)
-//                                                                              andColorGroup:[DTProgressColorGroup summaryProgressForeground]
-//                                                                                withPercent:progress];
-//    [summaryProgressBackground leftCenter];
-//    [self addSubview:summaryProgressForeground];
-//    
-//    DTDotElement *startDay = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f,
-//                                                                            0.f,
-//                                                                            summaryProgressForeground.frame.size.height,
-//                                                                            summaryProgressForeground.frame.size.height)
-//                                                   andColorGroup:[DTDotColorGroup accomplishedDayColorGroup]
-//                                                       andNumber:[NSNumber numberWithInt:11]];
-//    [startDay setCenter:[summaryProgressForeground leftCenter]];
-//    [summaryProgressForeground addSubview:startDay];
-//    
-//    DTDotElement *endDay = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f,
-//                                                                          0.f,
-//                                                                          self.frame.size.height,
-//                                                                          self.frame.size.height)
-//                                                 andColorGroup:[DTDotColorGroup accomplishedDayColorGroup]
-//                                                     andNumber:[NSNumber numberWithInt:28]];
-//    
-//    [endDay setCenter:[summaryProgressForeground rightCenter]];
-//    [self addSubview:endDay];
-//}
+    [summaryElement addSubview:startDot];
+    [summaryElement addSubview:endDot];
+    
+    return summaryElement;
+}
 @end
 
 @interface DTProgressElement () {
@@ -586,15 +513,21 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
     return self;
 }
 
-- (id)initForSummaryElementWithColorGroup:(DTProgressColorGroup *)pcg percent:(CGFloat)p
+- (id)initForSummaryElement:(CGFloat)p
 {
     CGRect GENERIC_PROGRESS_FRAME = CGRectMake(0.f, 0.f, 320.f, 40.f);
     self = [super initWithFrame:GENERIC_PROGRESS_FRAME];
     if (self) {
         self.percent = p;
-        progressColorGroup = pcg;
+        
+        progressColorGroup = [DTProgressColorGroup summaryProgressBackground];
+        
         [self determineRoundedRadius];
+        progressUnits = [self convertPercentToProgressUnits:1.0];
+        [self drawRoundedProgressElement];
+        
         progressUnits = [self convertPercentToProgressUnits:p];
+        progressColorGroup = [DTProgressColorGroup summaryProgressForeground];
         [self drawRoundedProgressElement];
     }
     return self;

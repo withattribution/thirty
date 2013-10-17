@@ -12,4 +12,9 @@
 +(id) getForID:(NSNumber*)ident inContext:(NSManagedObjectContext*)context;
 +(id) fromDictionary:(NSDictionary*)dictionary inContext:(NSManagedObjectContext*)context;
 +(id) fakeIntent:(NSManagedObjectContext*)context;
+
+- (NSInteger)daysLeft;
+- (NSString *)monthSpan;
+- (CGFloat)percentCompleted;
+
 @end
