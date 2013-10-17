@@ -17,6 +17,7 @@
     UIButton *loginButton;
     UIButton *signupButton;
     UIButton *switchButton;
+    UIButton *facebookLoginButton;
     UILabel *usernameLabel;
     UILabel *passwordLabel;
     BOOL isLogin;

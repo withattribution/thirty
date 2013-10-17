@@ -9,10 +9,13 @@
 #import "LoginRegistrationViewController.h"
 #import "UIColor+SR.h"
 #import "ProfileViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
+
 
 @interface LoginRegistrationViewController ()
 - (IBAction) toggleSignupButton:(id)sender;
 - (IBAction) signupOrLogin:(id)sender;
+- (IBAction) facebookLogin:(id)sender;
 @end
 
 @implementation LoginRegistrationViewController
@@ -65,10 +68,72 @@
         
         [self.view addSubview:signupButton];
         [self.view addSubview:switchButton];
+        
+        facebookLoginButton  = [UIButton buttonWithType:UIButtonTypeCustom];
+        facebookLoginButton.frame = CGRectMake((320-200)/2,300, 200.f, 30.f);
+        [facebookLoginButton setTitle:NSLocalizedString(@"Login with Facebook", @"facebook login button") forState:UIControlStateNormal];
+        facebookLoginButton.backgroundColor = [UIColor randomColor];
+        [facebookLoginButton addTarget:self action:@selector(facebookLogin:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:facebookLoginButton];
 
         
     }
     return self;
+}
+
+//https://developers.facebook.com/docs/ios/ios-sdk-tutorial/authenticate/
+//https://developers.facebook.com/docs/ios/ios-sdk-tutorial/
+//https://developers.facebook.com/apps/305208832954290/summary?save=1
+//https://developers.facebook.com/docs/ios/share-appid-across-multiple-apps-ios-sdk/
+- (void)sessionStateChanged:(FBSession *)session
+                      state:(FBSessionState) state
+                      error:(NSError *)error
+{
+    switch (state) {
+        case FBSessionStateOpen: {
+            UIViewController *topViewController =
+            [self.navigationController topViewController];
+            if ([[topViewController modalViewController]
+                 isKindOfClass:[LoginRegistrationViewController class]]) {
+                [topViewController dismissModalViewControllerAnimated:YES];
+            }
+        }
+            break;
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed:
+            // Once the user has logged in, we want them to
+            // be looking at the root view.
+            [self.navigationController popToRootViewControllerAnimated:NO];
+            
+            [FBSession.activeSession closeAndClearTokenInformation];
+            
+            //[self showLoginView];
+            break;
+        default:
+            break;
+    }
+    
+    if (error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Error"
+                                  message:error.localizedDescription
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+    }    
+}
+
+- (IBAction) facebookLogin:(id)sender
+{
+    NIDINFO(@"facebook login button touched!");
+    [FBSession openActiveSessionWithReadPermissions:nil
+                                       allowLoginUI:YES
+                                  completionHandler:
+     ^(FBSession *session,
+       FBSessionState state, NSError *error) {
+         [self sessionStateChanged:session state:state error:error];
+     }];
 }
 
 - (IBAction) toggleSignupButton:(id)sender
