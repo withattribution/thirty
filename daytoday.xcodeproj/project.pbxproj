@@ -76,6 +76,8 @@
 		B7B4072C1804465E00A0F049 /* food.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B7B4072A1804465E00A0F049 /* food.jpg */; };
 		B7B4072D1804465E00A0F049 /* turlet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B7B4072B1804465E00A0F049 /* turlet.jpg */; };
 		B7D3633E18102C6800E4DC79 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D3633D18102C6800E4DC79 /* FacebookSDK.framework */; };
+		B7D363411811776500E4DC79 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D363401811776500E4DC79 /* Constants.m */; };
+		B7D363421811776500E4DC79 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D363401811776500E4DC79 /* Constants.m */; };
 		B7E61D4217BD6AA5002B681B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4117BD6AA5002B681B /* UIKit.framework */; };
 		B7E61D4417BD6AA5002B681B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4317BD6AA5002B681B /* Foundation.framework */; };
 		B7E61D4617BD6AA5002B681B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4517BD6AA5002B681B /* CoreGraphics.framework */; };
@@ -296,6 +298,8 @@
 		B7B4072A1804465E00A0F049 /* food.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = food.jpg; sourceTree = "<group>"; };
 		B7B4072B1804465E00A0F049 /* turlet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = turlet.jpg; sourceTree = "<group>"; };
 		B7D3633D18102C6800E4DC79 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		B7D3633F1811776500E4DC79 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		B7D363401811776500E4DC79 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		B7E61D3E17BD6AA5002B681B /* daytoday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = daytoday.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7E61D4117BD6AA5002B681B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B7E61D4317BD6AA5002B681B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -590,6 +594,8 @@
 			children = (
 				B78481C918020834008F2EB8 /* FakeDataUtils.h */,
 				B78481CA18020834008F2EB8 /* FakeDataUtils.m */,
+				B7D3633F1811776500E4DC79 /* Constants.h */,
+				B7D363401811776500E4DC79 /* Constants.m */,
 			);
 			name = utils;
 			sourceTree = "<group>";
@@ -1096,6 +1102,7 @@
 				B76D56211806DB1D003DDD36 /* Star.m in Sources */,
 				B73903C217FB4B2700B9C9BB /* NIImageProcessing.m in Sources */,
 				B740078C17DE4F020004460C /* ProfileRequest.m in Sources */,
+				B7D363411811776500E4DC79 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1104,6 +1111,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B76D561E1806DB1D003DDD36 /* Verification.m in Sources */,
+				B7D363421811776500E4DC79 /* Constants.m in Sources */,
 				B7E61D7317BD6AA5002B681B /* daytodayTests.m in Sources */,
 				B7E61DEF17C273C4002B681B /* NSDate+SR.m in Sources */,
 				B7E61DF117C273C4002B681B /* NSManagedObject+SR.m in Sources */,

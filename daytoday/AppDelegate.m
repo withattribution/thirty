@@ -26,6 +26,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     NIMaxLogLevel = NILOGLEVEL_INFO;
+
     
     self.loginController = [[LoginRegistrationViewController alloc] init];
     self.profileController = [[ProfileViewController alloc] init];
@@ -60,7 +61,9 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     
+    
     NIDINFO(@"APN device token: %@", deviceToken);
+
     NSString *k = @"kUADeviceToken";
     if( [[NSUserDefaults standardUserDefaults] valueForKey:k] == nil ){
         NSString * dToken = [NSString stringWithFormat:@"%@",deviceToken];

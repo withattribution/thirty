@@ -89,14 +89,20 @@
                       state:(FBSessionState) state
                       error:(NSError *)error
 {
+    NIDINFO(@"session state changed!");
+    NIDINFO(@"session accesstoken: %@",session.accessTokenData);
     switch (state) {
         case FBSessionStateOpen: {
-            UIViewController *topViewController =
-            [self.navigationController topViewController];
-            if ([[topViewController modalViewController]
-                 isKindOfClass:[LoginRegistrationViewController class]]) {
-                [topViewController dismissModalViewControllerAnimated:YES];
+            NIDINFO(@"session accesstoken: %@",session.accessTokenData);
+            if( [[NSUserDefaults standardUserDefaults] valueForKey:kFacebookAuthToken] == nil ){
+                [[NSUserDefaults standardUserDefaults] setValue:session.accessTokenData forKey:kFacebookAuthToken];
+                [[NSUserDefaults standardUserDefaults] synchronize];
             }
+            
+            [self.navigationController.topViewController dismissViewControllerAnimated:YES completion:^(void){
+                NIDINFO(@"fb session looks like: %@",session.accessTokenData);
+            
+            }];
         }
             break;
         case FBSessionStateClosed:
@@ -107,7 +113,6 @@
             
             [FBSession.activeSession closeAndClearTokenInformation];
             
-            //[self showLoginView];
             break;
         default:
             break;

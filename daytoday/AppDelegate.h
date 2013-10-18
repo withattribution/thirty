@@ -11,6 +11,7 @@
 #import "LoginRegistrationViewController.h"
 #import "ProfileViewController.h"
 #import <CoreData/CoreData.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "UAirship.h"
 #import "UAConfig.h"
 #import "UAPush.h"
