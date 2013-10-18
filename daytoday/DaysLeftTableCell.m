@@ -19,9 +19,9 @@ static CGFloat PADDING = 1.5f;
     if (self) {
         self.intent = i;
         UILabel *monthSpan = [[UILabel alloc] initWithFrame:CGRectMake(5*PADDING,
-                                                                   0.f,
-                                                                   280.f,
-                                                                   40.)];
+                                                                       0.f,
+                                                                       280.f,
+                                                                       40.)];
         monthSpan.textColor = [UIColor darkGrayColor];
         monthSpan.backgroundColor = [UIColor clearColor];
         monthSpan.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];

@@ -58,7 +58,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
     UITableViewCell *cell;
     
     //TODO might be interesting to cache the results of the element layout call for each row
-    DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
+//    DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
     
     if([((Intent *)[self.intents objectAtIndex:indexPath.section]) daysLeft] > 0){
         if (indexPath.row == 0) {
@@ -72,6 +72,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         if (indexPath.row == 1) {
             ProgressSnapShotTableCell *cell = (ProgressSnapShotTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
             if (cell == nil) {
+                DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
                 cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                    reuseIdentifier:progressRowCellReuseIdentifier
                                                 withDTProgressRows:[pl progressSnapShotElements]];
@@ -88,6 +89,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
     }else {
         ProgressSummaryCell *cell = (ProgressSummaryCell *)[tableView dequeueReusableCellWithIdentifier:summaryProgressCellReuseIdentifier];
         if (cell == nil) {
+            DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
             cell = [[ProgressSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault
                                               reuseIdentifier:summaryProgressCellReuseIdentifier
                                               withSummaryView:[pl summaryProgressView]
@@ -126,7 +128,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
             return 40.f;
     }
     else
-        return 84;
+        return 68;
 
 }
 

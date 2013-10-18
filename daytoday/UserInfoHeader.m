@@ -27,21 +27,12 @@ static int LABEL_ROWS = 3;
 #define HISTORY_TAG 30
 #define SAVED_TAG 31
 
-- (void)networkImageView:(NINetworkImageView *)imageView didFailWithError:(NSError *)error
-{
-//    NSLog(@"anything? %@", error);
-}
-
-- (void) networkImageView:(NINetworkImageView *) imageView didLoadImage:(UIImage *) image
-{
-//    NIDINFO(@"did load");
-}
-
 - (id)initWithFrame:(CGRect)frame withUser:(User *)user
 {
     self = [super initWithFrame:frame];
     if (self && user) {
         
+        //TODO put this in the user model class
         __block Image *profileImage = nil;
         [user.image enumerateObjectsUsingBlock:^(Image *obj, BOOL *stop){
             if ([obj.tag isEqualToString:@"SMALL"]) {
@@ -50,24 +41,11 @@ static int LABEL_ROWS = 3;
             }
         } ];
         
-//        NIDINFO(@"URL URL URL : %@",profileImage.url);
-        
-//        NINetworkImageView *userImage = [[NINetworkImageView alloc] initWithFrame:CGRectMake(INFO_PADDING, INFO_PADDING, PROFILE_SIZE, PROFILE_SIZE)];
-//        [userImage setPathToNetworkImage:@"http://daytoday-dev.s3.amazonaws.com/images/a0e2d3d7813b495181f56a7f528012a8.jpeg"];
-//        [userImage setDelegate:self];
-        
-//        [userImage setBackgroundColor:[UIColor blackColor]];
-        
         NINetworkImageView *userImage = [[NINetworkImageView alloc] initWithImage:[UIImage imageNamed:@"profileBlank.png"]];
-        [userImage setPathToNetworkImage: @"http://daytoday-dev.s3.amazonaws.com/images/a0e2d3d7813b495181f56a7f528012a8.jpeg"
+        [userImage setPathToNetworkImage: profileImage.url
                           forDisplaySize: CGSizeMake(PROFILE_SIZE, PROFILE_SIZE)
                              contentMode: UIViewContentModeScaleAspectFill];
-//        [userImage setDelegate:self];
-
         userImage.frame = CGRectMake(INFO_PADDING, INFO_PADDING, PROFILE_SIZE, PROFILE_SIZE);
-//        UIImageView *userImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"profileBlank.png"]];
-//        userImage.frame = CGRectMake(INFO_PADDING, INFO_PADDING, PROFILE_SIZE, PROFILE_SIZE);
-
         [self addSubview:userImage];
         
         //space to the right of the user Image
