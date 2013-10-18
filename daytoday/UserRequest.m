@@ -15,7 +15,7 @@
 
 - (void) createUser:(NSString*) facebookAuthToken
 {
-  NSMutableDictionary* d1 = [[NSMutableDictionary alloc]; initWithDictionary:@{@"phone" :[self identifier], @"fb_token": facebookAuthToken}];
+  NSMutableDictionary* d1 = [[NSMutableDictionary alloc] initWithDictionary:@{@"phone" :[self identifier], @"fb_token": facebookAuthToken}];
   if( self.pushIdentifier != nil )
     [d1 setValue:self.pushIdentifier forKey:@"push_identifier"];
   
