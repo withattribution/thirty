@@ -9,8 +9,6 @@
 #import "D2Request.h"
 
 
-NSString *const kDeviceIdentifier = @"com.submarinerich.daytoday.deviceidentifier";
-
 @implementation D2Request
 @synthesize baseURL, context;
 

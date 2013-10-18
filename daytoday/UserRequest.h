@@ -19,6 +19,7 @@
 @interface UserRequest : D2Request
 @property(nonatomic,weak) id <UserRequestDelegate> delegate;
 
+- (void) createUser:(NSString*) facebookAuthToken;
 - (void) createUser:(NSString*) username withPassword:(NSString*)pw additionalParameters:(NSDictionary*)dict;
 - (void) getUser:(NSNumber*)userId;
 - (void) updateUserWithParameters:(NSDictionary*)dict;
