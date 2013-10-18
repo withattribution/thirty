@@ -1,17 +1,17 @@
 //
-//  ProgressRowTableCell.m
+//  ProgressSnapShotTableCell.m
 //  daytoday
 //
 //  Created by pasmo on 10/12/13.
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
-#import "ProgressRowTableCell.h"
+#import "ProgressSnapShotTableCell.h"
 #import "DTProgressElement.h"
 
 #import "UIColor+SR.h"
 
-@implementation ProgressRowTableCell
+@implementation ProgressSnapShotTableCell
 @synthesize snapShotElements;
 
 static CGFloat ROW_SPACING = 2.f;

@@ -1,5 +1,5 @@
 //
-//  ProgressRowTableCell.h
+//  ProgressSnapShotTableCell.h
 //  daytoday
 //
 //  Created by pasmo on 10/12/13.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProgressRowTableCell : UITableViewCell
+@interface ProgressSnapShotTableCell : UITableViewCell
 
 @property (nonatomic,retain) NSArray *snapShotElements;
 

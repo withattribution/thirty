@@ -1,5 +1,5 @@
 //
-//  DaysLeftTableCell.h
+//  ParticipantsTableCell.h
 //  daytoday
 //
 //  Created by pasmo on 10/12/13.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Intent+D2D.h"
 
-@interface DaysLeftTableCell : UITableViewCell
+@interface ParticipantsTableCell : UITableViewCell
 
 @property (nonatomic,retain) Intent *intent;
 

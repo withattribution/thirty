@@ -16,8 +16,8 @@
 #import "ChallengeDay+D2D.h"
 
 #import "DaysLeftTableCell.h"
-#import "ProgressRowTableCell.h"
-#import "ParticipantsRowTableCell.h"
+#import "ProgressSnapShotTableCell.h"
+#import "ParticipantsTableCell.h"
 #import "ProgressSummaryCell.h"
 
 #import "DTProgressElement.h"
@@ -45,9 +45,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         [self setDelegate:self];
         [self setDataSource:self];
         
-        [self registerClass:[DaysLeftTableCell class] forCellReuseIdentifier:daysLeftCellReuseIdentifier];
-        [self registerClass:[ParticipantsRowTableCell class] forCellReuseIdentifier:participantsRowCellReuseIdentifier];
-        
+        //register the header view so that we can "fancy deque it"
         [self registerClass:[ProfileSectionHeaderView class] forHeaderFooterViewReuseIdentifier:sectionHeaderViewReuseIdentifier];
     }
     return self;
@@ -64,22 +62,27 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
     
     if([((Intent *)[self.intents objectAtIndex:indexPath.section]) daysLeft] > 0){
         if (indexPath.row == 0) {
-            DaysLeftTableCell *cell = (DaysLeftTableCell *)[tableView dequeueReusableCellWithIdentifier:daysLeftCellReuseIdentifier forIndexPath:indexPath];
-            cell.daysLeft.text = [NSString stringWithFormat:@"%d",[((Intent *)[self.intents objectAtIndex:indexPath.section]) daysLeft]];
-            cell.monthSpan.text = [((Intent *)[self.intents objectAtIndex:indexPath.section]) monthSpan];
+            DaysLeftTableCell *cell = (DaysLeftTableCell *)[tableView dequeueReusableCellWithIdentifier:daysLeftCellReuseIdentifier];
+            if (cell == nil) {
+                cell = [[DaysLeftTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:daysLeftCellReuseIdentifier
+                                                     withIntent:(Intent *)[self.intents objectAtIndex:indexPath.section]];
+            }
             return cell;
         }
         if (indexPath.row == 1) {
-            ProgressRowTableCell *cell = (ProgressRowTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
+            ProgressSnapShotTableCell *cell = (ProgressSnapShotTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
             if (cell == nil) {
-                cell = [[ProgressRowTableCell alloc] initWithStyle:UITableViewCellStyleDefault
+                cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                    reuseIdentifier:progressRowCellReuseIdentifier
                                                 withDTProgressRows:[pl progressSnapShotElements]];
             }
             return cell;
         }
         if (indexPath.row == 2) {
-            ParticipantsRowTableCell *cell = (ParticipantsRowTableCell *)[tableView dequeueReusableCellWithIdentifier:participantsRowCellReuseIdentifier forIndexPath:indexPath];
+          ParticipantsTableCell *cell = (ParticipantsTableCell *)[tableView dequeueReusableCellWithIdentifier:participantsRowCellReuseIdentifier];
+          if (cell == nil) {
+            cell = [[ParticipantsTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:participantsRowCellReuseIdentifier withIntent:(Intent *)[self.intents objectAtIndex:indexPath.section]];
+          }
             return cell;
         }
     }else {

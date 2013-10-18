@@ -27,7 +27,7 @@
         percentLabel.backgroundColor = [UIColor clearColor];
         percentLabel.textAlignment = NSTextAlignmentCenter;
         percentLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13];
-        percentLabel.text = [NSString stringWithFormat:@"%.0f %% COMPLETED",(percent * 100.)];
+        percentLabel.text = [NSString stringWithFormat:@"%.0f%% COMPLETED",(percent * 100.)];
  
         CGRect centerFrame = CGRectMake(0.0, 0.0, self.frame.size.width + 3.0f + self.frame.size.width, 30.0f);
         UIView *centeredView = [[UIView alloc] initWithFrame:centerFrame];
@@ -42,7 +42,7 @@
                                                                      sv.frame.origin.y+sv.frame.size.height + 30.,
                                                                      widthForPercent.width - 3.,
                                                                      2.f)];
-        
+
         [underline setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:1.0]];
         [self addSubview:underline];
         

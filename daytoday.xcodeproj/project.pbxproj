@@ -18,8 +18,8 @@
 		A1275C2C1806FD4600019A91 /* ProfileHistoryTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C2B1806FD4600019A91 /* ProfileHistoryTableView.m */; };
 		A1275C3D1808FD6B00019A91 /* sectionImageHolder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1275C3C1808FD6B00019A91 /* sectionImageHolder.jpg */; };
 		A1275C4018090A2400019A91 /* DaysLeftTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C3F18090A2400019A91 /* DaysLeftTableCell.m */; };
-		A1275C431809EEEA00019A91 /* ProgressRowTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C421809EEEA00019A91 /* ProgressRowTableCell.m */; };
-		A1275C461809F66600019A91 /* ParticipantsRowTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C451809F66600019A91 /* ParticipantsRowTableCell.m */; };
+		A1275C431809EEEA00019A91 /* ProgressSnapShotTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C421809EEEA00019A91 /* ProgressSnapShotTableCell.m */; };
+		A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C451809F66600019A91 /* ParticipantsTableCell.m */; };
 		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
@@ -227,10 +227,10 @@
 		A1275C3C1808FD6B00019A91 /* sectionImageHolder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sectionImageHolder.jpg; sourceTree = "<group>"; };
 		A1275C3E18090A2400019A91 /* DaysLeftTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaysLeftTableCell.h; sourceTree = "<group>"; };
 		A1275C3F18090A2400019A91 /* DaysLeftTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaysLeftTableCell.m; sourceTree = "<group>"; };
-		A1275C411809EEEA00019A91 /* ProgressRowTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressRowTableCell.h; sourceTree = "<group>"; };
-		A1275C421809EEEA00019A91 /* ProgressRowTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressRowTableCell.m; sourceTree = "<group>"; };
-		A1275C441809F66600019A91 /* ParticipantsRowTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantsRowTableCell.h; sourceTree = "<group>"; };
-		A1275C451809F66600019A91 /* ParticipantsRowTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsRowTableCell.m; sourceTree = "<group>"; };
+		A1275C411809EEEA00019A91 /* ProgressSnapShotTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressSnapShotTableCell.h; sourceTree = "<group>"; };
+		A1275C421809EEEA00019A91 /* ProgressSnapShotTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressSnapShotTableCell.m; sourceTree = "<group>"; };
+		A1275C441809F66600019A91 /* ParticipantsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantsTableCell.h; sourceTree = "<group>"; };
+		A1275C451809F66600019A91 /* ParticipantsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsTableCell.m; sourceTree = "<group>"; };
 		A1275C4A180B8BBF00019A91 /* NSCalendar+equalWithGranularity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+equalWithGranularity.h"; sourceTree = "<group>"; };
 		A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+equalWithGranularity.m"; sourceTree = "<group>"; };
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
@@ -487,10 +487,10 @@
 				A1275C2B1806FD4600019A91 /* ProfileHistoryTableView.m */,
 				A1275C3E18090A2400019A91 /* DaysLeftTableCell.h */,
 				A1275C3F18090A2400019A91 /* DaysLeftTableCell.m */,
-				A1275C411809EEEA00019A91 /* ProgressRowTableCell.h */,
-				A1275C421809EEEA00019A91 /* ProgressRowTableCell.m */,
-				A1275C441809F66600019A91 /* ParticipantsRowTableCell.h */,
-				A1275C451809F66600019A91 /* ParticipantsRowTableCell.m */,
+				A1275C411809EEEA00019A91 /* ProgressSnapShotTableCell.h */,
+				A1275C421809EEEA00019A91 /* ProgressSnapShotTableCell.m */,
+				A1275C441809F66600019A91 /* ParticipantsTableCell.h */,
+				A1275C451809F66600019A91 /* ParticipantsTableCell.m */,
 				A1275BF31806EB5B00019A91 /* UserInfoHeader.h */,
 				A1275BF41806EB5B00019A91 /* UserInfoHeader.m */,
 				A116E60718106F5200F9248F /* ProgressSummaryCell.h */,
@@ -1019,7 +1019,7 @@
 				B7E61DF417C273C4002B681B /* UIColor+SR.m in Sources */,
 				B7E61DF617C273C4002B681B /* UIImageView+SR.m in Sources */,
 				B7E61E2717C27F32002B681B /* NICommonMetrics.m in Sources */,
-				A1275C461809F66600019A91 /* ParticipantsRowTableCell.m in Sources */,
+				A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */,
 				B7E61E2917C27F32002B681B /* NIDataStructures.m in Sources */,
 				A1275C191806EB8C00019A91 /* DTProgressElement.m in Sources */,
 				B7E61E2B17C27F32002B681B /* NIDebuggingTools.m in Sources */,
@@ -1046,7 +1046,7 @@
 				B7E61E4517C27F32002B681B /* NISnapshotRotation.m in Sources */,
 				B7E61E4717C27F32002B681B /* NIState.m in Sources */,
 				B7E61E4917C27F32002B681B /* NIViewRecycler.m in Sources */,
-				A1275C431809EEEA00019A91 /* ProgressRowTableCell.m in Sources */,
+				A1275C431809EEEA00019A91 /* ProgressSnapShotTableCell.m in Sources */,
 				B7E61E4B17C27F32002B681B /* NSString+NimbusCore.m in Sources */,
 				B7E61E6117C27F5A002B681B /* AFHTTPClient.m in Sources */,
 				B7E61E6317C27F5A002B681B /* AFHTTPRequestOperation.m in Sources */,
