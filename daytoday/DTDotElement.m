@@ -282,6 +282,4 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
     return CGPointMake(x, y);
 }
 
-
-
 @end

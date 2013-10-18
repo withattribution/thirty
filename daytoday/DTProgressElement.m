@@ -469,7 +469,7 @@ static CGFloat EDGE_PADDING = 3.f;
     DTDotElement *startDot = [self withDate:self.intent.starting];
     DTDotElement *endDot = [self withDate:self.intent.ending];
     
-    DTProgressElement *summaryElement = [[DTProgressElement alloc] initForSummaryElement:0.9];
+    DTProgressElement *summaryElement = [[DTProgressElement alloc] initForSummaryElement:self.intent.percentCompleted];
     
     [startDot setCenter:[summaryElement leftCenter]];
     [endDot setCenter:[summaryElement rightCenter]];

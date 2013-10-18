@@ -25,18 +25,28 @@ static int WEEK_ROWS = 2;
     if (self) {
         self.snapShotElements = rows;
         
-        [self setFrame:CGRectMake(0.f, self.frame.origin.y, self.frame.size.width, (WEEK_ROWS * ROW_HEIGHT) + (2*TOP_PADDING) + ROW_SPACING)];
+        [self setFrame:CGRectMake(0.f,
+                                  self.frame.origin.y,
+                                  self.frame.size.width,
+                                  (WEEK_ROWS * ROW_HEIGHT) + (2*TOP_PADDING) + ROW_SPACING)];
         
         if (self.snapShotElements && [self.snapShotElements count] > 0) {
             [self addSubview:[self.snapShotElements objectAtIndex:0]];
         }
         
-        UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0.f, ROW_HEIGHT + 2.f, self.frame.size.width, ROW_SPACING)];
+        UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0.f,
+                                                                      ROW_HEIGHT + 2.f,
+                                                                      self.frame.size.width,
+                                                                      ROW_SPACING)];
         [spacerView setBackgroundColor:[UIColor colorWithWhite:1.f alpha:1.f]];
         [self addSubview:spacerView];
         
         if (self.snapShotElements && [self.snapShotElements count] > 0) {
-            [[self.snapShotElements objectAtIndex:1] setFrame:CGRectMake(0., spacerView.frame.origin.y + spacerView.frame.size.height, self.frame.size.width, ROW_HEIGHT)];
+            [[self.snapShotElements objectAtIndex:1] setFrame:CGRectMake(0.,
+                                                                         spacerView.frame.origin.y + spacerView.frame.size.height,
+                                                                         self.frame.size.width,
+                                                                         ROW_HEIGHT)];
+            
             [self addSubview:[self.snapShotElements objectAtIndex:1]];
         }
         

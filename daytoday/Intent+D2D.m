@@ -126,10 +126,14 @@
 
 - (CGFloat)percentCompleted
 {
-    
-
-    return 1.0;
+    int completed = 0;
+    NSArray *participatedDays = [NSArray arrayWithArray:[self.days allObjects]];
+    for (int i = 0; i < [participatedDays count]; i++) {
+        if ([[[participatedDays objectAtIndex:i] completed] intValue]) {
+            completed++;
+        }
+    }
+    return (completed / [self.challenge.duration floatValue]);
 }
-
 
 @end
