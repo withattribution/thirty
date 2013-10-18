@@ -10,43 +10,42 @@
 
 @implementation ProgressSummaryCell
 
+static CGFloat PADDING = 1.5f;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
     withSummaryView:(UIView *)sv
          completion:(CGFloat)percent
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        [sv setFrame:CGRectMake(sv.frame.origin.x, sv.frame.origin.y + (2*PADDING), sv.frame.size.width, sv.frame.size.height)];
         [self addSubview:sv];
 
-        UILabel *percentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.f + 3.0f,
-                                                                          0.0f,
+        NSString *percentText = [NSString stringWithFormat:@"%.0f%% COMPLETED",(percent * 100.)];
+        
+        CGRect percentLabelRect = [percentText boundingRectWithSize:CGSizeMake(self.frame.size.width/2.f,FLT_MAX)
+                                                              options:NSStringDrawingUsesLineFragmentOrigin
+                                                           attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]}
+                                                              context:nil];
+        
+        UILabel *percentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.f,
+                                                                          sv.frame.origin.y + sv.frame.size.height + (2*PADDING),
                                                                           self.frame.size.width,
-                                                                          30.0f)];
+                                                                          percentLabelRect.size.height)];
         percentLabel.textColor = [UIColor grayColor];
         percentLabel.backgroundColor = [UIColor clearColor];
         percentLabel.textAlignment = NSTextAlignmentCenter;
         percentLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13];
-        percentLabel.text = [NSString stringWithFormat:@"%.0f%% COMPLETED",(percent * 100.)];
- 
-        CGRect centerFrame = CGRectMake(0.0, 0.0, self.frame.size.width + 3.0f + self.frame.size.width, 30.0f);
-        UIView *centeredView = [[UIView alloc] initWithFrame:centerFrame];
-        [centeredView addSubview:percentLabel];
-        [centeredView setCenter:CGPointMake(self.frame.size.width, (self.frame.size.height / 2.) + sv.frame.size.height )];
+        percentLabel.text = percentText;
+        [self addSubview:percentLabel];
         
-        CGSize widthForPercent = [percentLabel.text sizeWithFont:percentLabel.font
-                                          constrainedToSize:CGSizeMake(percentLabel.frame.size.width,40.)
-                                              lineBreakMode:percentLabel.lineBreakMode];
-        
-        UIView *underline = [[UIView alloc] initWithFrame:CGRectMake(108.,
-                                                                     sv.frame.origin.y+sv.frame.size.height + 30.,
-                                                                     widthForPercent.width - 3.,
+        UIView *underline = [[UIView alloc] initWithFrame:CGRectMake(percentLabel.frame.origin.x,
+                                                                     percentLabel.frame.origin.y + percentLabel.frame.size.height,
+                                                                     percentLabelRect.size.width,
                                                                      2.f)];
-
-        [underline setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:1.0]];
+        [underline setCenter:CGPointMake(self.frame.size.width /2. , (self.frame.size.height / 2.) + sv.frame.size.height )];
+        [underline setBackgroundColor:[UIColor colorWithWhite:0.5 alpha:1.0]];
         [self addSubview:underline];
-        
-        [self addSubview:centeredView];
     }
     return self;
 }

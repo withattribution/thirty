@@ -50,7 +50,8 @@ static CGFloat PADDING = 1.5f;
         daysLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:daysLabel];
         
-        CGRect daysCountRect = [[NSString stringWithFormat:@"%d",self.intent.daysLeft] boundingRectWithSize:CGSizeMake(self.frame.size.width/3.f,FLT_MAX)
+        NSString *daysCountText = [NSString stringWithFormat:@"%d",self.intent.daysLeft];
+        CGRect daysCountRect = [daysCountText boundingRectWithSize:CGSizeMake(self.frame.size.width/3.f,FLT_MAX)
                                                           options:NSStringDrawingUsesLineFragmentOrigin
                                                        attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-BOLD" size:22]}
                                                           context:nil];
@@ -62,7 +63,7 @@ static CGFloat PADDING = 1.5f;
         daysLeft.textColor = [UIColor darkGrayColor];
         daysLeft.backgroundColor = [UIColor clearColor];
         daysLeft.font = [UIFont fontWithName:@"HelveticaNeue-BOLD" size:22];
-        daysLeft.text = [NSString stringWithFormat:@"%d",self.intent.daysLeft];
+        daysLeft.text = daysCountText;
         daysLeft.numberOfLines = 1;
         daysLeft.textAlignment = NSTextAlignmentLeft;
                 
