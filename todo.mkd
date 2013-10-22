@@ -1,3 +1,6 @@
 ## Todo List ##
 
 * days in intent should be daysparticipated
+* foursquare venue nearby listing
+* foursquare checkin requests
+* foursquare login requests
