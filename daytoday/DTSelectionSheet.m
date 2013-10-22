@@ -20,11 +20,12 @@
 #import "DTSelectionSheet.h"
 #import "UIColor+SR.m"
 #import "DTDotElement.h"
+#import "DTInfiniteScrollView.h"
 
 @implementation DTSelectionSheet
 @synthesize titleText;
 
-CGFloat const TransitionDuration = .2;
+CGFloat const TransitionDuration = .2f;
 CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
 
 + (id)selectionSheetWithTitle:(NSString *)t
@@ -71,9 +72,21 @@ CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
   [selectionLabel setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
   [self addSubview:selectionLabel];
   
-  UIScrollView *sv = [[UIScrollView alloc] init];
-  [sv setBackgroundColor:[UIColor purpleColor]];
-  sv.translatesAutoresizingMaskIntoConstraints = NO;
+  NSMutableArray *viewsArray = [[NSMutableArray alloc] init];
+  
+  for (int i=0; i<30; i++) {
+    DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 100.f)
+                                              andColorGroup:[DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup]
+                                                  andNumber:[NSNumber numberWithInt:(i+1)]];
+    dot.tag = i;
+    [viewsArray addObject:dot];
+  }
+  
+  DTInfiniteScrollView *sv = [[DTInfiniteScrollView alloc] initWithFrame:CGRectMake(0.,
+                                                                                    selectionLabel.frame.origin.y + selectionLabel.frame.size.height + 5.f,
+                                                                                    320.f,
+                                                                                    140.f)
+                                                                   views:viewsArray];
   [self addSubview:sv];
   
   UIView *bottomLine = [[UIView alloc] init];
@@ -92,7 +105,7 @@ CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
   [self addSubview:cancelButton];
   
   //these are the constraints for drawing purposes
-  NSDictionary *views = NSDictionaryOfVariableBindings(topLine,selectionLabel,sv,bottomLine,cancelButton);
+  NSDictionary *views = NSDictionaryOfVariableBindings(topLine,selectionLabel,bottomLine,cancelButton);
   
   self.translatesAutoresizingMaskIntoConstraints = NO;
   
@@ -106,10 +119,10 @@ CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
                                                                metrics:nil
                                                                  views:views]];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[sv]|"
-                                                               options:0
-                                                               metrics:nil
-                                                                 views:views]];
+//  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[sv]|"
+//                                                               options:0
+//                                                               metrics:nil
+//                                                                 views:views]];
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomLine]|"
                                                                options:0
@@ -121,7 +134,7 @@ CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
                                                                metrics:nil
                                                                  views:views]];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLine(2)]-2-[selectionLabel(30)]-[sv(140)]-[bottomLine(2)]"
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLine(2)]-2-[selectionLabel(30)]-140-[bottomLine(2)]"
                                                                options:0
                                                                metrics:nil
                                                                  views:views]];
@@ -134,44 +147,44 @@ CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
   //scrollview layout constraints
   /*****************************************************************************/
   
-  DTDotElement* prevDot = nil;
-  NSDictionary *svMetrics = @{ @"svheight": @120 , @"svwidth": @120};
-  
-  for (int i=0; i<30; i++) {
-    DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 100.f)
-                                              andColorGroup:[DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup]
-                                                  andNumber:[NSNumber numberWithInt:(i+1)]];
-    dot.translatesAutoresizingMaskIntoConstraints = NO;
-    dot.backgroundColor = [UIColor randomColor];
-    [sv addSubview:dot];
-    
-    [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(10)-[dot(svheight)]"
-                                                               options:0
-                                                               metrics:svMetrics
-                                                                 views:@{@"dot":dot}]];
-    if (!prevDot) { // first one, pin to top
-      [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[dot(svwidth)]"
-                                                                 options:0
-                                                                 metrics:svMetrics
-                                                                   views:@{@"dot":dot}]];
-    } else { // all others, pin to previous
-      [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[prevDot]-(10)-[dot(svwidth)]"
-                                                                 options:0
-                                                                 metrics:svMetrics
-                                                                   views:@{@"dot":dot, @"prevDot":prevDot}]];
-    }
-    prevDot = dot;
-  }
-  // last one, pin to bottom and right, this dictates content size height
-  [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[dot(svwidth)]-(10)-|"
-                                                             options:0
-                                                             metrics:svMetrics
-                                                               views:@{@"dot":prevDot}]];
-  
-  [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[dot(svheight)]-(10)-|"
-                                                             options:0
-                                                             metrics:svMetrics
-                                                               views:@{@"dot":prevDot}]];
+//  DTDotElement* prevDot = nil;
+//  NSDictionary *svMetrics = @{ @"svheight": @120 , @"svwidth": @120};
+//  
+//  for (int i=0; i<30; i++) {
+//    DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 100.f)
+//                                              andColorGroup:[DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup]
+//                                                  andNumber:[NSNumber numberWithInt:(i+1)]];
+//    dot.translatesAutoresizingMaskIntoConstraints = NO;
+//    dot.backgroundColor = [UIColor randomColor];
+//    [sv addSubview:dot];
+//    
+//    [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(10)-[dot(svheight)]"
+//                                                               options:0
+//                                                               metrics:svMetrics
+//                                                                 views:@{@"dot":dot}]];
+//    if (!prevDot) { // first one, pin to top
+//      [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[dot(svwidth)]"
+//                                                                 options:0
+//                                                                 metrics:svMetrics
+//                                                                   views:@{@"dot":dot}]];
+//    } else { // all others, pin to previous
+//      [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[prevDot]-(10)-[dot(svwidth)]"
+//                                                                 options:0
+//                                                                 metrics:svMetrics
+//                                                                   views:@{@"dot":dot, @"prevDot":prevDot}]];
+//    }
+//    prevDot = dot;
+//  }
+//  // last one, pin to bottom and right, this dictates content size height
+//  [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[dot(svwidth)]-(10)-|"
+//                                                             options:0
+//                                                             metrics:svMetrics
+//                                                               views:@{@"dot":prevDot}]];
+//  
+//  [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[dot(svheight)]-(10)-|"
+//                                                             options:0
+//                                                             metrics:svMetrics
+//                                                               views:@{@"dot":prevDot}]];
   
   /*****************************************************************************/
   

@@ -10,4 +10,6 @@
 
 @interface DTInfiniteScrollView : UIScrollView <UIScrollViewDelegate>
 
+- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views;
+
 @end

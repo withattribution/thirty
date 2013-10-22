@@ -7,47 +7,44 @@
 //
 
 #import "DTInfiniteScrollView.h"
+#import "UIColor+SR.h"
 
 @interface DTInfiniteScrollView ()
 
-@property (nonatomic, strong) NSMutableArray *visibleLabels;
-@property (nonatomic, strong) UIView *labelContainerView;
+@property (nonatomic, strong) NSArray *views;
+
+@property (nonatomic, strong) NSMutableArray *visibleViews;
+@property (nonatomic, strong) UIView *viewContainerView;
+
+@property (nonatomic, retain) NSMutableArray *visibleIndices;
 
 @end
 
 @implementation DTInfiniteScrollView
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame views:(NSArray *)views
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-      
-      [self setShowsHorizontalScrollIndicator:NO];
-    }
-    return self;
-}
+  self = [super initWithFrame:frame];
+  if (self) {
+    self.views = [views copy];
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-  if ((self = [super initWithCoder:aDecoder]))
-  {
-    self.contentSize = CGSizeMake(5000, self.frame.size.height);
+    self.contentSize = CGSizeMake(1500, self.frame.size.height);
+    self.visibleIndices = [[NSMutableArray alloc] init];
+    _visibleViews = [[NSMutableArray alloc] init];
     
-    _visibleLabels = [[NSMutableArray alloc] init];
+    _viewContainerView = [[UIView alloc] init];
+//    self.viewContainerView.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
+    self.viewContainerView.frame = CGRectMake(0, 0, 100, 100.);
+
+    [self addSubview:self.viewContainerView];
     
-    _labelContainerView = [[UIView alloc] init];
-    self.labelContainerView.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height/2);
-    [self addSubview:self.labelContainerView];
-    
-    [self.labelContainerView setUserInteractionEnabled:NO];
+    [self.viewContainerView setUserInteractionEnabled:NO];
     
     // hide horizontal scroll indicator so our recentering trick is not revealed
     [self setShowsHorizontalScrollIndicator:NO];
   }
   return self;
 }
-
 
 #pragma mark - Layout
 
@@ -56,6 +53,8 @@
 {
   CGPoint currentOffset = [self contentOffset];
   CGFloat contentWidth = [self contentSize].width;
+
+
   CGFloat centerOffsetX = (contentWidth - [self bounds].size.width) / 2.0;
   CGFloat distanceFromCenter = fabs(currentOffset.x - centerOffsetX);
   
@@ -64,10 +63,11 @@
     self.contentOffset = CGPointMake(centerOffsetX, currentOffset.y);
     
     // move content by the same amount so it appears to stay still
-    for (UILabel *label in self.visibleLabels) {
-      CGPoint center = [self.labelContainerView convertPoint:label.center toView:self];
+    for (UIView *v in self.visibleViews) {
+      NSLog(@"count of visible views :%d", [self.visibleViews count]);
+      CGPoint center = [self.viewContainerView convertPoint:v.center toView:self];
       center.x += (centerOffsetX - currentOffset.x);
-      label.center = [self convertPoint:center toView:self.labelContainerView];
+      v.center = [self convertPoint:center toView:self.viewContainerView];
     }
   }
 }
@@ -79,94 +79,129 @@
   [self recenterIfNecessary];
   
   // tile content in visible bounds
-  CGRect visibleBounds = [self convertRect:[self bounds] toView:self.labelContainerView];
+  CGRect visibleBounds = [self convertRect:[self bounds] toView:self.viewContainerView];
   CGFloat minimumVisibleX = CGRectGetMinX(visibleBounds);
   CGFloat maximumVisibleX = CGRectGetMaxX(visibleBounds);
   
-  [self tileLabelsFromMinX:minimumVisibleX toMaxX:maximumVisibleX];
+  [self tileViewsFromMinX:minimumVisibleX toMaxX:maximumVisibleX];
 }
 
 
 #pragma mark - Label Tiling
 
-- (UILabel *)insertLabel
-{
-  UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 500, 80)];
-  [label setNumberOfLines:3];
-  [label setText:@"1024 Block Street\nShaffer, CA\n95014"];
-  [self.labelContainerView addSubview:label];
-  
-  return label;
-}
+//- (UILabel *)insertLabel
+//{
+//  UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+//  [label setNumberOfLines:3];
+//  [label setText:@"1024 Block Street\nShaffer, CA\n95014"];
+//  [label setBackgroundColor:[UIColor randomColor]];
+//  [self.viewContainerView addSubview:label];
+//  
+//  return label;
+//}
 
 - (CGFloat)placeNewLabelOnRight:(CGFloat)rightEdge
 {
-  UILabel *label = [self insertLabel];
-  [self.visibleLabels addObject:label]; // add rightmost label at the end of the array
   
-  CGRect frame = [label frame];
+//  UILabel *label = [self insertLabel];
+  
+  NSUInteger viewTag = ((UIView *)[self.visibleViews lastObject]).tag;
+  
+  NSLog(@"the tag inserted on the right: %d",viewTag);
+  
+  if (viewTag == ([self.views count] - 1) ) {
+    viewTag = 0;
+  }else {
+    viewTag += 1;
+  }
+  
+  UIView *insertView = (UIView *)[self.views objectAtIndex:viewTag];
+//  [self.visibleViews addObject:label]; // add rightmost label at the end of the array
+  [self.visibleViews addObject:insertView]; // add rightmost label at the end of the array
+  
+  [self.viewContainerView addSubview:insertView];
+
+  
+  CGRect frame = [insertView frame];
   frame.origin.x = rightEdge;
-  frame.origin.y = [self.labelContainerView bounds].size.height - frame.size.height;
-  [label setFrame:frame];
+  frame.origin.y = [self.viewContainerView bounds].size.height - frame.size.height;
+  [insertView setFrame:frame];
   
   return CGRectGetMaxX(frame);
 }
 
 - (CGFloat)placeNewLabelOnLeft:(CGFloat)leftEdge
 {
-  UILabel *label = [self insertLabel];
-  [self.visibleLabels insertObject:label atIndex:0]; // add leftmost label at the beginning of the array
+//  UILabel *label = [self insertLabel];
   
-  CGRect frame = [label frame];
+  NSUInteger viewTag = ((UIView *)[self.visibleViews firstObject]).tag;
+  if (viewTag == 0) {
+    viewTag = ([self.views count] - 1);
+  }else {
+    viewTag -= 1;
+  }
+  
+  NSLog(@"the tag inserted on the left: %d",viewTag);
+
+  UIView *insertView = (UIView *)[self.views objectAtIndex:viewTag];
+
+//  [self.visibleViews insertObject:label atIndex:0]; // add leftmost label at the beginning of the array
+  [self.visibleViews insertObject:insertView atIndex:0]; // add leftmost label at the beginning of the array
+  [self.viewContainerView addSubview:insertView];
+
+  CGRect frame = [insertView frame];
   frame.origin.x = leftEdge - frame.size.width;
-  frame.origin.y = [self.labelContainerView bounds].size.height - frame.size.height;
-  [label setFrame:frame];
+  frame.origin.y = [self.viewContainerView bounds].size.height - frame.size.height;
+  [insertView setFrame:frame];
   
   return CGRectGetMinX(frame);
 }
 
-- (void)tileLabelsFromMinX:(CGFloat)minimumVisibleX toMaxX:(CGFloat)maximumVisibleX
+- (void)tileViewsFromMinX:(CGFloat)minimumVisibleX toMaxX:(CGFloat)maximumVisibleX
 {
   // the upcoming tiling logic depends on there already being at least one label in the visibleLabels array, so
   // to kick off the tiling we need to make sure there's at least one label
-  if ([self.visibleLabels count] == 0)
+  if ([self.visibleViews count] == 0)
   {
     [self placeNewLabelOnRight:minimumVisibleX];
   }
   
   // add labels that are missing on right side
-  UILabel *lastLabel = [self.visibleLabels lastObject];
-  CGFloat rightEdge = CGRectGetMaxX([lastLabel frame]);
+  UIView *lastView = [self.visibleViews lastObject];
+  CGFloat rightEdge = CGRectGetMaxX([lastView frame]);
   while (rightEdge < maximumVisibleX)
   {
     rightEdge = [self placeNewLabelOnRight:rightEdge];
   }
   
   // add labels that are missing on left side
-  UILabel *firstLabel = self.visibleLabels[0];
-  CGFloat leftEdge = CGRectGetMinX([firstLabel frame]);
+  UIView *firstView = self.visibleViews[0];
+  CGFloat leftEdge = CGRectGetMinX([firstView frame]);
   while (leftEdge > minimumVisibleX)
   {
     leftEdge = [self placeNewLabelOnLeft:leftEdge];
   }
   
   // remove labels that have fallen off right edge
-  lastLabel = [self.visibleLabels lastObject];
-  while ([lastLabel frame].origin.x > maximumVisibleX)
+  lastView = [self.visibleViews lastObject];
+  while ([lastView frame].origin.x > maximumVisibleX)
   {
-    [lastLabel removeFromSuperview];
-    [self.visibleLabels removeLastObject];
-    lastLabel = [self.visibleLabels lastObject];
+//    NSLog(@"max fall off: %f",maximumVisibleX);
+    [lastView removeFromSuperview];
+    [self.visibleViews removeLastObject];
+    lastView = [self.visibleViews lastObject];
   }
   
   // remove labels that have fallen off left edge
-  firstLabel = self.visibleLabels[0];
-  while (CGRectGetMaxX([firstLabel frame]) < minimumVisibleX)
+  firstView = self.visibleViews[0];
+  while (CGRectGetMaxX([firstView frame]) < minimumVisibleX)
   {
-    [firstLabel removeFromSuperview];
-    [self.visibleLabels removeObjectAtIndex:0];
-    firstLabel = self.visibleLabels[0];
+//    NSLog(@"min fall off: %f",minimumVisibleX);
+    [firstView removeFromSuperview];
+    [self.visibleViews removeObjectAtIndex:0];
+    firstView = self.visibleViews[0];
   }
 }
+
 
 @end

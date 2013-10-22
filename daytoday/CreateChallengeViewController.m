@@ -29,7 +29,7 @@
 {
   [super viewDidLoad];
   self.title = NSLocalizedString(@"Create Challenge", @"create challenge (title)");
-  [[DTSelectionSheet selectionSheetWithTitle:@"select duration"] performSelector:@selector(showInView:) withObject:self.view afterDelay:2.0];
+  [[DTSelectionSheet selectionSheetWithTitle:@"select duration"] performSelector:@selector(showInView:) withObject:self.view afterDelay:0.0];
 }
 
 

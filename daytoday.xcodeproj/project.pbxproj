@@ -514,14 +514,14 @@
 		A1275C081806EB7A00019A91 /* ui elements */ = {
 			isa = PBXGroup;
 			children = (
+				A1AC68B81816D8A1004A1F5D /* DTInfiniteScrollView.h */,
+				A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */,
 				A1AC68AF18163D38004A1F5D /* DTSelectionSheet.h */,
 				A1AC68B018163D38004A1F5D /* DTSelectionSheet.m */,
 				A1275C091806EB8C00019A91 /* DTDotElement.h */,
 				A1275C0A1806EB8C00019A91 /* DTDotElement.m */,
 				A1275C0D1806EB8C00019A91 /* DTProgressElement.h */,
 				A1275C0E1806EB8C00019A91 /* DTProgressElement.m */,
-				A1AC68B81816D8A1004A1F5D /* DTInfiniteScrollView.h */,
-				A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */,
 			);
 			name = "ui elements";
 			sourceTree = "<group>";
