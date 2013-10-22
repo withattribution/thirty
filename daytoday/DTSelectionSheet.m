@@ -19,6 +19,7 @@
 
 #import "DTSelectionSheet.h"
 #import "UIColor+SR.m"
+#import "DTDotElement.h"
 
 @implementation DTSelectionSheet
 @synthesize titleText;
@@ -133,42 +134,44 @@ CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
   //scrollview layout constraints
   /*****************************************************************************/
   
-  UIView* previousLab = nil;
+  DTDotElement* prevDot = nil;
   NSDictionary *svMetrics = @{ @"svheight": @120 , @"svwidth": @120};
   
   for (int i=0; i<30; i++) {
-    UIView *lab = [UIView new];
-    lab.translatesAutoresizingMaskIntoConstraints = NO;
-    lab.backgroundColor = [UIColor randomColor];
-    [sv addSubview:lab];
+    DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 100.f)
+                                              andColorGroup:[DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup]
+                                                  andNumber:[NSNumber numberWithInt:(i+1)]];
+    dot.translatesAutoresizingMaskIntoConstraints = NO;
+    dot.backgroundColor = [UIColor randomColor];
+    [sv addSubview:dot];
     
-    [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(10)-[lab(svheight)]"
+    [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(10)-[dot(svheight)]"
                                                                options:0
                                                                metrics:svMetrics
-                                                                 views:@{@"lab":lab}]];
-    if (!previousLab) { // first one, pin to top
-      [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[lab(svwidth)]"
+                                                                 views:@{@"dot":dot}]];
+    if (!prevDot) { // first one, pin to top
+      [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[dot(svwidth)]"
                                                                  options:0
                                                                  metrics:svMetrics
-                                                                   views:@{@"lab":lab}]];
+                                                                   views:@{@"dot":dot}]];
     } else { // all others, pin to previous
-      [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[prev]-(10)-[lab(svwidth)]"
+      [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[prevDot]-(10)-[dot(svwidth)]"
                                                                  options:0
                                                                  metrics:svMetrics
-                                                                   views:@{@"lab":lab, @"prev":previousLab}]];
+                                                                   views:@{@"dot":dot, @"prevDot":prevDot}]];
     }
-    previousLab = lab;
+    prevDot = dot;
   }
   // last one, pin to bottom and right, this dictates content size height
-  [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[lab(svwidth)]-(10)-|"
+  [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[dot(svwidth)]-(10)-|"
                                                              options:0
                                                              metrics:svMetrics
-                                                               views:@{@"lab":previousLab}]];
+                                                               views:@{@"dot":prevDot}]];
   
-  [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[lab(svheight)]-(10)-|"
+  [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[dot(svheight)]-(10)-|"
                                                              options:0
                                                              metrics:svMetrics
-                                                               views:@{@"lab":previousLab}]];
+                                                               views:@{@"dot":prevDot}]];
   
   /*****************************************************************************/
   
