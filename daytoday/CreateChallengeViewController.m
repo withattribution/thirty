@@ -7,6 +7,8 @@
 //
 
 #import "CreateChallengeViewController.h"
+#import "DTSelectionSheet.h"
+
 #import <UIColor+SR.h>
 @interface CreateChallengeViewController ()
 
@@ -25,9 +27,9 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    self.title = NSLocalizedString(@"Create Challenge", @"create challenge (title)");
-	// Do any additional setup after loading the view.
+  [super viewDidLoad];
+  self.title = NSLocalizedString(@"Create Challenge", @"create challenge (title)");
+  [[DTSelectionSheet selectionSheetWithTitle:@"select duration"] performSelector:@selector(showInView:) withObject:self.view afterDelay:2.0];
 }
 
 
