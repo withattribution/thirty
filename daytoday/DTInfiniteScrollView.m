@@ -21,6 +21,8 @@
 @end
 
 @implementation DTInfiniteScrollView
+//TODO put visible view indicies in an array and deal with them like a grown up
+//TODO center scrollview page in the center of the sheet
 
 - (id)initWithFrame:(CGRect)frame views:(NSArray *)views
 {
@@ -28,18 +30,17 @@
   if (self) {
     self.views = [views copy];
 
-    self.contentSize = CGSizeMake(1500, self.frame.size.height);
+    self.contentSize = CGSizeMake(520, self.frame.size.height);
     self.visibleIndices = [[NSMutableArray alloc] init];
     _visibleViews = [[NSMutableArray alloc] init];
     
     _viewContainerView = [[UIView alloc] init];
-//    self.viewContainerView.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
-    self.viewContainerView.frame = CGRectMake(0, 0, 100, 100.);
+//    self.viewContainerView.frame = CGRectMake(0.f, 0.f, self.contentSize.width, self.contentSize.height);
+    self.viewContainerView.frame = CGRectMake(0.f, 0.f, 100., 100.);
 
     [self addSubview:self.viewContainerView];
-    
     [self.viewContainerView setUserInteractionEnabled:NO];
-    
+    self.pagingEnabled = YES;
     // hide horizontal scroll indicator so our recentering trick is not revealed
     [self setShowsHorizontalScrollIndicator:NO];
   }
@@ -58,13 +59,12 @@
   CGFloat centerOffsetX = (contentWidth - [self bounds].size.width) / 2.0;
   CGFloat distanceFromCenter = fabs(currentOffset.x - centerOffsetX);
   
-  if (distanceFromCenter > (contentWidth / 4.0))
+  if (distanceFromCenter > (contentWidth / 8.0))
   {
     self.contentOffset = CGPointMake(centerOffsetX, currentOffset.y);
-    
     // move content by the same amount so it appears to stay still
     for (UIView *v in self.visibleViews) {
-      NSLog(@"count of visible views :%d", [self.visibleViews count]);
+//      NSLog(@"count of visible views :%d", [self.visibleViews count]);
       CGPoint center = [self.viewContainerView convertPoint:v.center toView:self];
       center.x += (centerOffsetX - currentOffset.x);
       v.center = [self convertPoint:center toView:self.viewContainerView];
@@ -88,26 +88,11 @@
 
 
 #pragma mark - Label Tiling
-
-//- (UILabel *)insertLabel
-//{
-//  UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-//  [label setNumberOfLines:3];
-//  [label setText:@"1024 Block Street\nShaffer, CA\n95014"];
-//  [label setBackgroundColor:[UIColor randomColor]];
-//  [self.viewContainerView addSubview:label];
-//  
-//  return label;
-//}
-
 - (CGFloat)placeNewLabelOnRight:(CGFloat)rightEdge
 {
-  
-//  UILabel *label = [self insertLabel];
-  
   NSUInteger viewTag = ((UIView *)[self.visibleViews lastObject]).tag;
   
-  NSLog(@"the tag inserted on the right: %d",viewTag);
+//  NSLog(@"the tag inserted on the right: %d",viewTag);
   
   if (viewTag == ([self.views count] - 1) ) {
     viewTag = 0;
@@ -116,11 +101,8 @@
   }
   
   UIView *insertView = (UIView *)[self.views objectAtIndex:viewTag];
-//  [self.visibleViews addObject:label]; // add rightmost label at the end of the array
   [self.visibleViews addObject:insertView]; // add rightmost label at the end of the array
-  
   [self.viewContainerView addSubview:insertView];
-
   
   CGRect frame = [insertView frame];
   frame.origin.x = rightEdge;
@@ -132,8 +114,6 @@
 
 - (CGFloat)placeNewLabelOnLeft:(CGFloat)leftEdge
 {
-//  UILabel *label = [self insertLabel];
-  
   NSUInteger viewTag = ((UIView *)[self.visibleViews firstObject]).tag;
   if (viewTag == 0) {
     viewTag = ([self.views count] - 1);
@@ -141,11 +121,9 @@
     viewTag -= 1;
   }
   
-  NSLog(@"the tag inserted on the left: %d",viewTag);
+//  NSLog(@"the tag inserted on the left: %d",viewTag);
 
   UIView *insertView = (UIView *)[self.views objectAtIndex:viewTag];
-
-//  [self.visibleViews insertObject:label atIndex:0]; // add leftmost label at the beginning of the array
   [self.visibleViews insertObject:insertView atIndex:0]; // add leftmost label at the beginning of the array
   [self.viewContainerView addSubview:insertView];
 
@@ -186,7 +164,6 @@
   lastView = [self.visibleViews lastObject];
   while ([lastView frame].origin.x > maximumVisibleX)
   {
-//    NSLog(@"max fall off: %f",maximumVisibleX);
     [lastView removeFromSuperview];
     [self.visibleViews removeLastObject];
     lastView = [self.visibleViews lastObject];
@@ -196,7 +173,6 @@
   firstView = self.visibleViews[0];
   while (CGRectGetMaxX([firstView frame]) < minimumVisibleX)
   {
-//    NSLog(@"min fall off: %f",minimumVisibleX);
     [firstView removeFromSuperview];
     [self.visibleViews removeObjectAtIndex:0];
     firstView = self.visibleViews[0];

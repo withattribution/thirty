@@ -23,7 +23,6 @@
 #import "DTInfiniteScrollView.h"
 
 @implementation DTSelectionSheet
-@synthesize titleText;
 
 CGFloat const TransitionDuration = .2f;
 CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
@@ -119,11 +118,6 @@ CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
                                                                metrics:nil
                                                                  views:views]];
   
-//  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[sv]|"
-//                                                               options:0
-//                                                               metrics:nil
-//                                                                 views:views]];
-  
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomLine]|"
                                                                options:0
                                                                metrics:nil
@@ -143,51 +137,6 @@ CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
                                                                options:0
                                                                metrics:nil
                                                                  views:views]];
-  
-  //scrollview layout constraints
-  /*****************************************************************************/
-  
-//  DTDotElement* prevDot = nil;
-//  NSDictionary *svMetrics = @{ @"svheight": @120 , @"svwidth": @120};
-//  
-//  for (int i=0; i<30; i++) {
-//    DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 100.f)
-//                                              andColorGroup:[DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup]
-//                                                  andNumber:[NSNumber numberWithInt:(i+1)]];
-//    dot.translatesAutoresizingMaskIntoConstraints = NO;
-//    dot.backgroundColor = [UIColor randomColor];
-//    [sv addSubview:dot];
-//    
-//    [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(10)-[dot(svheight)]"
-//                                                               options:0
-//                                                               metrics:svMetrics
-//                                                                 views:@{@"dot":dot}]];
-//    if (!prevDot) { // first one, pin to top
-//      [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[dot(svwidth)]"
-//                                                                 options:0
-//                                                                 metrics:svMetrics
-//                                                                   views:@{@"dot":dot}]];
-//    } else { // all others, pin to previous
-//      [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[prevDot]-(10)-[dot(svwidth)]"
-//                                                                 options:0
-//                                                                 metrics:svMetrics
-//                                                                   views:@{@"dot":dot, @"prevDot":prevDot}]];
-//    }
-//    prevDot = dot;
-//  }
-//  // last one, pin to bottom and right, this dictates content size height
-//  [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[dot(svwidth)]-(10)-|"
-//                                                             options:0
-//                                                             metrics:svMetrics
-//                                                               views:@{@"dot":prevDot}]];
-//  
-//  [sv addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[dot(svheight)]-(10)-|"
-//                                                             options:0
-//                                                             metrics:svMetrics
-//                                                               views:@{@"dot":prevDot}]];
-  
-  /*****************************************************************************/
-  
 }
 
 #pragma mark - Showing and dismissing methods
@@ -199,37 +148,39 @@ CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
   
   //layout Selection Sheet in superview
   NSDictionary *metrics = @{ @"height": @(view.frame.size.height*VIEW_HEIGHT_PERCENT)};
-  NSDictionary *views = NSDictionaryOfVariableBindings(self);
-  
   NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[self(height)]|"
                                                                          options:0
                                                                          metrics:metrics
-                                                                           views:views];
+                                                                           views:@{@"self": self}];
   [view addConstraints:verticalConstraints];
   NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|[self]|"
                                                                            options:0
                                                                            metrics:nil
-                                                                             views:views];
+                                                                             views:@{@"self": self}];
   [view addConstraints:horizontalConstraints];
   
 	// slide from bottom
   self.transform = CGAffineTransformMakeTranslation(0, self.bounds.size.height);
-  [UIView animateWithDuration:TransitionDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-    self.transform = CGAffineTransformMakeTranslation(0, 0);
-  } completion:NULL];
+  [UIView animateWithDuration:TransitionDuration
+                        delay:0
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     self.transform = CGAffineTransformMakeTranslation(0, 0);
+                   }
+                   completion:NULL];
 }
 
 - (void)dismiss {
 	if (!self.superview) return;
   
   __block CGRect f = self.frame;
-	[UIView animateWithDuration:TransitionDuration animations:^{
-    f.origin.y += f.size.height;
-    self.frame = f;
-	} completion:^(BOOL finished) {
-    //		[self removeFromSuperview];
-    
-    [self performSelector:@selector(showInView:) withObject:self.superview afterDelay:2.0];
+	[UIView animateWithDuration:TransitionDuration
+                   animations:^{
+                     f.origin.y += f.size.height;
+                     self.frame = f;
+                   }
+                   completion:^(BOOL finished) {
+                    [self removeFromSuperview];
 	}];
 }
 
