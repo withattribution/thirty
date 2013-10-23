@@ -23,6 +23,8 @@
 		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
 		A1AC68B118163D38004A1F5D /* DTSelectionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68B018163D38004A1F5D /* DTSelectionSheet.m */; };
 		A1AC68BA1816D8A1004A1F5D /* DTInfiniteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */; };
+		A1AC68BE18181C67004A1F5D /* DescribeChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68BD18181C67004A1F5D /* DescribeChallenge.m */; };
+		A1AC68C118182057004A1F5D /* ChallengeName.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68C018182057004A1F5D /* ChallengeName.m */; };
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B017FB1C8800B9C9BB /* D2NavController.m */; };
@@ -241,6 +243,10 @@
 		A1AC68B018163D38004A1F5D /* DTSelectionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTSelectionSheet.m; sourceTree = "<group>"; };
 		A1AC68B81816D8A1004A1F5D /* DTInfiniteScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTInfiniteScrollView.h; sourceTree = "<group>"; };
 		A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTInfiniteScrollView.m; sourceTree = "<group>"; };
+		A1AC68BC18181C67004A1F5D /* DescribeChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DescribeChallenge.h; sourceTree = "<group>"; };
+		A1AC68BD18181C67004A1F5D /* DescribeChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DescribeChallenge.m; sourceTree = "<group>"; };
+		A1AC68BF18182057004A1F5D /* ChallengeName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeName.h; sourceTree = "<group>"; };
+		A1AC68C018182057004A1F5D /* ChallengeName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeName.m; sourceTree = "<group>"; };
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
 		B73903AF17FB1C8800B9C9BB /* D2NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D2NavController.h; sourceTree = "<group>"; };
@@ -483,6 +489,7 @@
 		A1275BEB1806EA8E00019A91 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				A1AC68BB18181C3F004A1F5D /* challenge creation */,
 				A1275C1E1806EC5400019A91 /* extensions */,
 				A1275C081806EB7A00019A91 /* ui elements */,
 				A1275BEC1806EB4200019A91 /* profile */,
@@ -543,6 +550,17 @@
 				A1275C261806F97200019A91 /* anotherCrop.jpg */,
 			);
 			name = assets;
+			sourceTree = "<group>";
+		};
+		A1AC68BB18181C3F004A1F5D /* challenge creation */ = {
+			isa = PBXGroup;
+			children = (
+				A1AC68BC18181C67004A1F5D /* DescribeChallenge.h */,
+				A1AC68BD18181C67004A1F5D /* DescribeChallenge.m */,
+				A1AC68BF18182057004A1F5D /* ChallengeName.h */,
+				A1AC68C018182057004A1F5D /* ChallengeName.m */,
+			);
+			name = "challenge creation";
 			sourceTree = "<group>";
 		};
 		B73903AD17FB1B5A00B9C9BB /* dependencies */ = {
@@ -1030,6 +1048,7 @@
 				A1275C021806EB5B00019A91 /* UserInfoHeader.m in Sources */,
 				B7E61D5B17BD6AA5002B681B /* ViewController.m in Sources */,
 				B7E61DEE17C273C4002B681B /* NSDate+SR.m in Sources */,
+				A1AC68BE18181C67004A1F5D /* DescribeChallenge.m in Sources */,
 				B7E61DF017C273C4002B681B /* NSManagedObject+SR.m in Sources */,
 				B7E61DF217C273C4002B681B /* NSManagedObjectContext+SR.m in Sources */,
 				B7E61DF417C273C4002B681B /* UIColor+SR.m in Sources */,
@@ -1079,6 +1098,7 @@
 				B7E61E7D17C284C9002B681B /* DayTodayModels.xcdatamodeld in Sources */,
 				B7E61E8117C28674002B681B /* D2Request.m in Sources */,
 				B7E61E8517C2984F002B681B /* AuthenticationRequest.m in Sources */,
+				A1AC68C118182057004A1F5D /* ChallengeName.m in Sources */,
 				B7E61E8917C29924002B681B /* UserRequest.m in Sources */,
 				B7E61E9117C40464002B681B /* User+D2D.m in Sources */,
 				B7E61E9517C511AD002B681B /* NSDictionary+SR.m in Sources */,
