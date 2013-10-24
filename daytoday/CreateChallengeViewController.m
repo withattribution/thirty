@@ -9,7 +9,6 @@
 #import "CreateChallengeViewController.h"
 #import "DTSelectionSheet.h"
 #import "ChallengeName.h"
-
 #import <UIColor+SR.h>
 
 @interface CreateChallengeViewController () {
@@ -28,6 +27,7 @@ CGFloat static TRANSITION_SCALE = 0.767857f;
 CGFloat static TRANSITION_ALPHA = 0.241071f;
 CGFloat static WIDTH_FACTOR = 0.85f;
 CGFloat static MARGIN_FACTOR = 0.25f;
+CGFloat static NAME_VIEW_HEIGHT = 44.f;
 
 - (void)viewDidLoad
 {
@@ -44,7 +44,7 @@ CGFloat static MARGIN_FACTOR = 0.25f;
   self.currentChildViewController = viewController;
   
   self.title = NSLocalizedString(@"Create Challenge", @"create challenge (title)");
-
+  
   UIButton *startCreationFlow = [UIButton buttonWithType:UIButtonTypeCustom];
   [startCreationFlow.titleLabel setTextColor:[UIColor colorWithWhite:0.8f alpha:1.f]];
   [startCreationFlow setBackgroundColor:[UIColor lightGrayColor]];
@@ -81,20 +81,18 @@ CGFloat static MARGIN_FACTOR = 0.25f;
   UIViewController *nextViewController = [self nextViewController];
   
   ChallengeName *nameFieldView = [[ChallengeName alloc] initWithFrame:CGRectZero];
-  [nameFieldView.nameField setDelegate:self];
+  [nameFieldView.textField setDelegate:self];
   [nameFieldView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [nameFieldView sizeToFit];
-  
   [nextViewController.view addSubview:nameFieldView];
   
-  NSDictionary *metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)};
+  NSDictionary *metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR),@"nameViewHeight":@(NAME_VIEW_HEIGHT)};
   
   [nextViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameFieldView(fieldWidth)]"
                                                                               options:NSLayoutFormatAlignAllCenterY
                                                                               metrics:metrics
                                                                                 views:@{@"nameFieldView":nameFieldView}]];
   
-  [nextViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameFieldView(40)]"
+  [nextViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameFieldView(nameViewHeight)]"
                                                                               options:NSLayoutFormatAlignAllCenterY
                                                                               metrics:metrics
                                                                                 views:@{@"nameFieldView":nameFieldView}]];
@@ -117,11 +115,6 @@ CGFloat static MARGIN_FACTOR = 0.25f;
   
   [nextViewController.view addConstraint:top];
   
-  [nextViewController.view layoutIfNeeded];
-  
-  NSLog(@"where is this frame: %@",CGRectCreateDictionaryRepresentation(nameFieldView.frame));
-  
-  
   // Containment
   [self addChildViewController:nextViewController];
   [self.currentChildViewController willMoveToParentViewController:nil];
@@ -143,7 +136,7 @@ CGFloat static MARGIN_FACTOR = 0.25f;
                             [nextViewController didMoveToParentViewController:self];
                             [self.currentChildViewController removeFromParentViewController];
                             self.currentChildViewController = nextViewController;
-//                            [nameFieldView.nameField becomeFirstResponder];
+                            [nameFieldView.textField becomeFirstResponder];
                           }];
 }
 
@@ -152,7 +145,7 @@ CGFloat static MARGIN_FACTOR = 0.25f;
   [textField resignFirstResponder];
   [UIView animateWithDuration:0.4F
                    animations:^{
-                     top.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR - MARGIN_FACTOR);
+                     top.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR-.2f);
                      [self.currentChildViewController.view layoutIfNeeded];
                    }
                    completion:^(BOOL finished) {
@@ -165,7 +158,6 @@ CGFloat static MARGIN_FACTOR = 0.25f;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-//  [textField becomeFirstResponder];
   [UIView animateWithDuration:0.4F
                    animations:^{
                      top.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR);

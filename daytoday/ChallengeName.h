@@ -10,9 +10,10 @@
 
 @interface ChallengeName : UIView <UITextFieldDelegate>
 
-@property (nonatomic, strong) UITextField *nameField;
-
+@property (nonatomic, strong) UITextField *textField;
 @property (strong, nonatomic) NSString *challengeName;
-//add external methods to animate the view into editing mode and "resting" mode
+
+
+//TODO make methods to change this view from a disabled looking color scheme to a enabled look one 
 
 @end
