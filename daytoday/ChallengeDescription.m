@@ -13,6 +13,7 @@
 }
 
 @property (strong, nonatomic) UITextView *textView;
+@property (strong, nonatomic) UILabel *placeholderLabel;
 @property (nonatomic) NSInteger charCount;
 @property (strong, nonatomic) UILabel *charCountLabel;
 
@@ -20,7 +21,7 @@
 
 @implementation ChallengeDescription
 
-#define DESCRIBE_PLACE_HOLDER  @"Let's describe this challenge shall we?"
+#define DESCRIBE_PLACE_HOLDER  @"Describe the challenge"
 CGFloat static INPUT_VIEW_HEIGHT = 35.f;
 CGFloat static TEXT_PADDING = 5.f;
 CGFloat static BUTTON_TEXT_ALIGN = 2.f;
@@ -33,17 +34,15 @@ NSInteger static MAX_CHARS = 140;
       _textView = [[UITextView alloc] init];
       [_textView setDelegate:self];
       [_textView setTextColor:[UIColor whiteColor]];
-      [_textView setFont:[UIFont fontWithName:@"HelveticaNeue" size:18.0] ];
+      [_textView setFont:[UIFont fontWithName:@"HelveticaNeue" size:18] ];
       [_textView setBackgroundColor:[UIColor colorWithWhite:.8f alpha:.4f]];
       [_textView setScrollEnabled:NO];
 
 //      [[_textView layer] setBorderWidth:2.0f];
-      
-      [_textView setText:DESCRIBE_PLACE_HOLDER];
+//      [_textView setText:DESCRIBE_PLACE_HOLDER];
 
       [_textView setReturnKeyType:UIReturnKeyDefault];
       [_textView setKeyboardType:UIKeyboardTypeDefault];
-      
       [_textView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
       [self addSubview:_textView];
@@ -51,6 +50,17 @@ NSInteger static MAX_CHARS = 140;
       _charCount = MAX_CHARS;
       [_textView setInputAccessoryView:[self descriptionInputView]];
 
+      _placeholderLabel = [[UILabel alloc] init];
+      [_placeholderLabel setTextColor:[UIColor whiteColor]];
+      [_placeholderLabel setBackgroundColor:[UIColor clearColor]];
+      [_placeholderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:18]];
+      [_placeholderLabel setText:DESCRIBE_PLACE_HOLDER];
+      [_placeholderLabel setNumberOfLines:1];
+      [_placeholderLabel setTextAlignment:NSTextAlignmentLeft];
+      [_placeholderLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+      [_placeholderLabel sizeToFit];
+      [self addSubview:_placeholderLabel];
+      
     }
     return self;
 }
@@ -179,15 +189,20 @@ NSInteger static MAX_CHARS = 140;
                                                                metrics:metrics
                                                                  views:@{@"textView": _textView}]];
   
-//  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[underline]|"
-//                                                               options:NSLayoutFormatDirectionLeadingToTrailing
-//                                                               metrics:metrics
-//                                                                 views:@{@"underline":_underline}]];
-  
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textView(textViewHeight)]"
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:metrics
                                                                  views:@{@"textView": _textView}]];
+  
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[placeHolder]"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:metrics
+                                                                 views:@{@"placeHolder":_placeholderLabel}]];
+  
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[placeHolder]"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:metrics
+                                                                 views:@{@"placeHolder":_placeholderLabel}]];
   
   [self.superview addConstraint:[NSLayoutConstraint constraintWithItem:self
                                                              attribute:NSLayoutAttributeCenterX
@@ -211,6 +226,26 @@ NSInteger static MAX_CHARS = 140;
 
 #pragma mark UITextView Delegate Methods
 
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+{
+  if (textView.text.length > 0) {
+    [UIView animateWithDuration:.2f
+                          delay:0.f
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                       _placeholderLabel.alpha = 0.0f; //(textView.hasText) ? 0.f : 1.f;
+                     }
+                     completion:^(BOOL finished) {
+                       if (finished) {
+                       }
+                     }];
+  }else {
+    _placeholderLabel.alpha = 1.f;
+  }
+
+  return YES;
+}
+
 - (void)textViewDidChange:(UITextView *)textView
 {
   _charCount = [textView.text length];
@@ -220,6 +255,6 @@ NSInteger static MAX_CHARS = 140;
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-  if([textView.text isEqualToString:DESCRIBE_PLACE_HOLDER]) textView.text = @"";
+  
 }
 @end
