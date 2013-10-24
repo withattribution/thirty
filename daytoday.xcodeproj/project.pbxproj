@@ -25,6 +25,7 @@
 		A1AC68BA1816D8A1004A1F5D /* DTInfiniteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */; };
 		A1AC68BE18181C67004A1F5D /* DescribeChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68BD18181C67004A1F5D /* DescribeChallenge.m */; };
 		A1AC68C118182057004A1F5D /* ChallengeName.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68C018182057004A1F5D /* ChallengeName.m */; };
+		A1AC68C718198E6F004A1F5D /* ChallengeDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68C618198E6F004A1F5D /* ChallengeDescription.m */; };
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B017FB1C8800B9C9BB /* D2NavController.m */; };
@@ -247,6 +248,8 @@
 		A1AC68BD18181C67004A1F5D /* DescribeChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DescribeChallenge.m; sourceTree = "<group>"; };
 		A1AC68BF18182057004A1F5D /* ChallengeName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeName.h; sourceTree = "<group>"; };
 		A1AC68C018182057004A1F5D /* ChallengeName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeName.m; sourceTree = "<group>"; };
+		A1AC68C518198E6F004A1F5D /* ChallengeDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDescription.h; sourceTree = "<group>"; };
+		A1AC68C618198E6F004A1F5D /* ChallengeDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDescription.m; sourceTree = "<group>"; };
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
 		B73903AF17FB1C8800B9C9BB /* D2NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D2NavController.h; sourceTree = "<group>"; };
@@ -557,6 +560,8 @@
 			children = (
 				A1AC68BC18181C67004A1F5D /* DescribeChallenge.h */,
 				A1AC68BD18181C67004A1F5D /* DescribeChallenge.m */,
+				A1AC68C518198E6F004A1F5D /* ChallengeDescription.h */,
+				A1AC68C618198E6F004A1F5D /* ChallengeDescription.m */,
 				A1AC68BF18182057004A1F5D /* ChallengeName.h */,
 				A1AC68C018182057004A1F5D /* ChallengeName.m */,
 			);
@@ -1128,6 +1133,7 @@
 				B73366B117CA8B87002524E4 /* TickRequest.m in Sources */,
 				B76D56251806DB1D003DDD36 /* Like.m in Sources */,
 				A1AC68B118163D38004A1F5D /* DTSelectionSheet.m in Sources */,
+				A1AC68C718198E6F004A1F5D /* ChallengeDescription.m in Sources */,
 				B76D56191806DB1D003DDD36 /* Intent.m in Sources */,
 				B75D59A017CBAC9700160592 /* ResetPasswordRequest.m in Sources */,
 				B740072C17D286210004460C /* Image+D2D.m in Sources */,

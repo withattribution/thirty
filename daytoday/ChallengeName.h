@@ -10,10 +10,8 @@
 
 @interface ChallengeName : UIView <UITextFieldDelegate>
 
-@property (nonatomic, strong) UITextField *textField;
 @property (strong, nonatomic) NSString *challengeName;
 
-
-//TODO make methods to change this view from a disabled looking color scheme to a enabled look one 
+- (void)shouldBeFirstResponder;
 
 @end

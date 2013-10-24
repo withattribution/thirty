@@ -10,9 +10,13 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-@interface ChallengeName ()
+@interface ChallengeName () {
+    NSLayoutConstraint *nameTop;
+}
 
+@property (nonatomic, strong) UITextField *textField;
 @property (strong, nonatomic) UIView *underline;
+//TODO make methods to change this view from a disabled looking color scheme to a enabled look one
 
 @end
 
@@ -22,6 +26,7 @@
 
 CGFloat static LINE_HEIGHT = 2.f;
 CGFloat static TEXT_PADDING = 10.f;
+CGFloat static MARGIN_FACTOR = 0.25f;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -29,6 +34,7 @@ CGFloat static TEXT_PADDING = 10.f;
   if (self) {
     
     _textField = [[UITextField alloc] init];
+    [_textField setDelegate:self];
     [_textField setTextColor:[UIColor whiteColor]];
     [_textField setFont:[UIFont fontWithName:@"HelveticaNeue" size:18.0]];
     [_textField setBackgroundColor:[UIColor colorWithWhite:0.8f alpha:.4f]];
@@ -55,7 +61,6 @@ CGFloat static TEXT_PADDING = 10.f;
 
 - (void) updateConstraints
 {
-
   [super updateConstraints];
 
   NSDictionary *metrics = @{@"textFieldHeight":@(_textField.frame.size.height+TEXT_PADDING),@"lineHeight":@(LINE_HEIGHT)};
@@ -74,6 +79,63 @@ CGFloat static TEXT_PADDING = 10.f;
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:metrics
                                                                  views:@{@"textField": _textField,@"underline":_underline}]];
+  
+  [self.superview addConstraint:[NSLayoutConstraint constraintWithItem:_textField
+                                                                      attribute:NSLayoutAttributeCenterX
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.superview
+                                                                      attribute:NSLayoutAttributeCenterX
+                                                                     multiplier:1.f
+                                                                       constant:0]];
+  
+  nameTop = [NSLayoutConstraint constraintWithItem:_textField
+                                         attribute:NSLayoutAttributeTop
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self.superview
+                                         attribute:NSLayoutAttributeTop
+                                        multiplier:1.f
+                                          constant:[[UIScreen mainScreen] applicationFrame].size.height*MARGIN_FACTOR];
+  
+  [self.superview addConstraint:nameTop];
+  
+}
+
+- (void)shouldBeFirstResponder
+{
+  if (![_textField isFirstResponder]) {
+    [_textField becomeFirstResponder];
+  }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+  [textField resignFirstResponder];
+  [UIView animateWithDuration:0.4F
+                   animations:^{
+                     nameTop.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR-.2f);
+                     [self.superview layoutIfNeeded];
+                   }
+                   completion:^(BOOL finished) {
+                     if (finished) {
+                     }
+                   }];
+  return YES;
+}
+
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+  [UIView animateWithDuration:0.4F
+                   animations:^{
+                     nameTop.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR);
+                     [self.superview layoutIfNeeded];
+                   }
+                   completion:^(BOOL finished) {
+                     if (finished) {
+                     }
+                   }];
+  
+  return YES;
 }
 
 @end

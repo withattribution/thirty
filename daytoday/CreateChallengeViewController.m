@@ -8,11 +8,14 @@
 
 #import "CreateChallengeViewController.h"
 #import "DTSelectionSheet.h"
+
 #import "ChallengeName.h"
+#import "ChallengeDescription.h"
+
 #import <UIColor+SR.h>
 
 @interface CreateChallengeViewController () {
-  NSLayoutConstraint *top;
+
 }
 
 @property (nonatomic, weak) UIViewController *currentChildViewController;
@@ -26,7 +29,6 @@ CGFloat static TRANSITION_DURATION = 0.559821f;
 CGFloat static TRANSITION_SCALE = 0.767857f;
 CGFloat static TRANSITION_ALPHA = 0.241071f;
 CGFloat static WIDTH_FACTOR = 0.85f;
-CGFloat static MARGIN_FACTOR = 0.25f;
 CGFloat static NAME_VIEW_HEIGHT = 44.f;
 
 - (void)viewDidLoad
@@ -67,6 +69,23 @@ CGFloat static NAME_VIEW_HEIGHT = 44.f;
                                                                     metrics:nil
                                                                       views:@{@"startCreationFlow":startCreationFlow}]];
   
+//  ChallengeDescription *cd = [[ChallengeDescription alloc] init];
+//  [cd setBackgroundColor:[UIColor redColor]];
+//  [cd setTranslatesAutoresizingMaskIntoConstraints:NO];
+//  [viewController.view addSubview:cd];
+//  
+//  NSDictionary *cd_metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)};
+//  
+//  [viewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cd(fieldWidth)]"
+//                                                                              options:0
+//                                                                              metrics:cd_metrics
+//                                                                                views:@{@"cd":cd}]];
+//  
+//  [viewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[cd(150)]"
+//                                                                              options:0
+//                                                                              metrics:cd_metrics
+//                                                                                views:@{@"cd":cd}]];
+  
 //  [[DTSelectionSheet selectionSheetWithTitle:@"select duration"] performSelector:@selector(showInView:) withObject:self.view afterDelay:0.0];
 }
 
@@ -81,7 +100,6 @@ CGFloat static NAME_VIEW_HEIGHT = 44.f;
   UIViewController *nextViewController = [self nextViewController];
   
   ChallengeName *nameFieldView = [[ChallengeName alloc] initWithFrame:CGRectZero];
-  [nameFieldView.textField setDelegate:self];
   [nameFieldView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [nextViewController.view addSubview:nameFieldView];
   
@@ -96,24 +114,6 @@ CGFloat static NAME_VIEW_HEIGHT = 44.f;
                                                                               options:NSLayoutFormatAlignAllCenterY
                                                                               metrics:metrics
                                                                                 views:@{@"nameFieldView":nameFieldView}]];
-  
-  [nextViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:nameFieldView
-                                                                  attribute:NSLayoutAttributeCenterX
-                                                                  relatedBy:NSLayoutRelationEqual
-                                                                     toItem:nextViewController.view
-                                                                  attribute:NSLayoutAttributeCenterX
-                                                                 multiplier:1.f
-                                                                   constant:0]];
-  
-  top = [NSLayoutConstraint constraintWithItem:nameFieldView
-                                     attribute:NSLayoutAttributeTop
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:nextViewController.view
-                                     attribute:NSLayoutAttributeTop
-                                    multiplier:1.f
-                                      constant:[[UIScreen mainScreen] applicationFrame].size.height*MARGIN_FACTOR];
-  
-  [nextViewController.view addConstraint:top];
   
   // Containment
   [self addChildViewController:nextViewController];
@@ -136,42 +136,9 @@ CGFloat static NAME_VIEW_HEIGHT = 44.f;
                             [nextViewController didMoveToParentViewController:self];
                             [self.currentChildViewController removeFromParentViewController];
                             self.currentChildViewController = nextViewController;
-                            [nameFieldView.textField becomeFirstResponder];
+                            [nameFieldView shouldBeFirstResponder];
                           }];
 }
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-  [textField resignFirstResponder];
-  [UIView animateWithDuration:0.4F
-                   animations:^{
-                     top.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR-.2f);
-                     [self.currentChildViewController.view layoutIfNeeded];
-                   }
-                   completion:^(BOOL finished) {
-                     if (finished) {
-                     }
-                   }];
-  return YES;
-}
-
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-  [UIView animateWithDuration:0.4F
-                   animations:^{
-                     top.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR);
-                     [self.currentChildViewController.view layoutIfNeeded];
-                   }
-                   completion:^(BOOL finished) {
-                     if (finished) {
-                     }
-                   }];
-
-  return YES;
-}
-
-
 
 - (UIViewController *)nextViewController
 {
