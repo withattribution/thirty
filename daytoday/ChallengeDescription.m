@@ -15,7 +15,6 @@
 @property (strong, nonatomic) UITextView *textView;
 @property (nonatomic) NSInteger charCount;
 @property (strong, nonatomic) UILabel *charCountLabel;
-@property (strong, nonatomic) NSString *challengeDescription;
 
 @end
 
@@ -62,6 +61,27 @@
     return self;
 }
 
+#pragma mark ChallengeDescription Methods
+
+- (void)animateIntoViewForHeight:(CGFloat)offset
+{
+  
+  descriptionTop.constant = offset;
+
+  [UIView animateWithDuration:.37f
+                        delay:0.f
+                      options:UIViewAnimationOptionCurveEaseOut
+                   animations:^{
+                     [self.superview layoutIfNeeded];
+                   }
+                   completion:^(BOOL finished) {
+                     if (finished) {
+                       [self shouldBeFirstResponder];
+                     }
+                   }];
+}
+
+
 - (void)shouldBeFirstResponder
 {
   if (_textView && ![_textView isFirstResponder]) {
@@ -104,10 +124,13 @@
                                                    toItem:self.superview
                                                 attribute:NSLayoutAttributeTop
                                                multiplier:1.f
-                                                 constant:self.superview.frame.size.height*.20];
+                                                 constant:self.superview.frame.size.height];
 
   [self.superview addConstraint:descriptionTop];
 
 }
+
+#pragma mark UITextView Delegate Methods
+
 
 @end

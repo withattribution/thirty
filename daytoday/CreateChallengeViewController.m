@@ -15,8 +15,12 @@
 #import <UIColor+SR.h>
 
 @interface CreateChallengeViewController () {
-
+  ChallengeName *nameView;
+  ChallengeDescription *descriptionView;
 }
+
+- (void)transitionToChallengeFLow;
+- (void)shouldEnterDescription;
 
 @property (nonatomic, weak) UIViewController *currentChildViewController;
 
@@ -24,12 +28,14 @@
 
 @implementation CreateChallengeViewController
 
-CGFloat static TRANSITION_VELOCITY = 0.428571f;
-CGFloat static TRANSITION_DURATION = 0.559821f;
-CGFloat static TRANSITION_SCALE = 0.767857f;
-CGFloat static TRANSITION_ALPHA = 0.241071f;
-CGFloat static WIDTH_FACTOR = 0.85f;
-CGFloat static NAME_VIEW_HEIGHT = 44.f;
+CGFloat static TRANSITION_VELOCITY = 0.428571f; //Used for transition to child view controllers
+CGFloat static TRANSITION_DURATION = 0.559821f; // --
+CGFloat static TRANSITION_SCALE = 0.767857f;    // --
+CGFloat static TRANSITION_ALPHA = 0.241071f;    //Used for transition to child view controllers
+
+CGFloat static WIDTH_FACTOR = 0.85f;            //Common width for all text input views
+CGFloat static NAME_VIEW_HEIGHT = 44.f;         //Hardcoded nameview height
+CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containing views
 
 - (void)viewDidLoad
 {
@@ -72,7 +78,7 @@ CGFloat static NAME_VIEW_HEIGHT = 44.f;
 //  [[DTSelectionSheet selectionSheetWithTitle:@"select duration"] performSelector:@selector(showInView:) withObject:self.view afterDelay:0.0];
 }
 
-- (void) transitionToChallengeFLow
+- (void)transitionToChallengeFLow
 {
   CGFloat width = CGRectGetWidth(self.view.bounds);
   CGFloat height = CGRectGetHeight(self.view.bounds);
@@ -82,23 +88,23 @@ CGFloat static NAME_VIEW_HEIGHT = 44.f;
   
   UIViewController *nextViewController = [self nextViewController];
   
-  ChallengeName *nameFieldView = [[ChallengeName alloc] initWithFrame:CGRectZero];
-  [nameFieldView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [nextViewController.view addSubview:nameFieldView];
+  nameView = [[ChallengeName alloc] initWithFrame:CGRectZero];
+  [nameView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [nextViewController.view addSubview:nameView];
   
   NSDictionary *metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR),@"nameViewHeight":@(NAME_VIEW_HEIGHT)};
   
-  [nextViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameFieldView(fieldWidth)]"
+  [nextViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameView(fieldWidth)]"
                                                                               options:NSLayoutFormatAlignAllCenterY
                                                                               metrics:metrics
-                                                                                views:@{@"nameFieldView":nameFieldView}]];
+                                                                                views:@{@"nameView":nameView}]];
   
-  [nextViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameFieldView(nameViewHeight)]"
+  [nextViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameView(nameViewHeight)]"
                                                                               options:NSLayoutFormatAlignAllCenterY
                                                                               metrics:metrics
-                                                                                views:@{@"nameFieldView":nameFieldView}]];
+                                                                                views:@{@"nameView":nameView}]];
   
-  [nameFieldView namingDidComplete:^{
+  [nameView namingDidComplete:^{
     [self shouldEnterDescription];
   }];
   
@@ -123,7 +129,7 @@ CGFloat static NAME_VIEW_HEIGHT = 44.f;
                             [nextViewController didMoveToParentViewController:self];
                             [self.currentChildViewController removeFromParentViewController];
                             self.currentChildViewController = nextViewController;
-                            [nameFieldView shouldBeFirstResponder];
+                            [nameView shouldBeFirstResponder];
                           }];
 }
 
@@ -138,34 +144,26 @@ CGFloat static NAME_VIEW_HEIGHT = 44.f;
 
 - (void)shouldEnterDescription
 {
-  NSLog(@"THIS COMPLETED AND YOU MAYBE UNDERSTAND BLOX");
-  ChallengeDescription *cd = [[ChallengeDescription alloc] init];
-  [cd setBackgroundColor:[UIColor redColor]];
-  [cd setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self.currentChildViewController.view addSubview:cd];
+  descriptionView = [[ChallengeDescription alloc] init];
+  [descriptionView setBackgroundColor:[UIColor redColor]];
+  [descriptionView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.currentChildViewController.view addSubview:descriptionView];
 
-  NSDictionary *cd_metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)};
+  NSDictionary *descriptionView_metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)};
 
-  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cd(fieldWidth)]"
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[descriptionView(fieldWidth)]"
                                                                               options:0
-                                                                              metrics:cd_metrics
-                                                                                views:@{@"cd":cd}]];
-
-  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[cd(150)]"
+                                                                              metrics:descriptionView_metrics
+                                                                                views:@{@"descriptionView":descriptionView}]];
+  
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[descriptionView(150)]"
                                                                               options:0
-                                                                              metrics:cd_metrics
-                                                                                views:@{@"cd":cd}]];
-//  [UIView animateWithDuration:0.4F
-//                   animations:^{
-//                     [self.currentChildViewController.view layoutIfNeeded];
-//                   }
-//                   completion:^(BOOL finished) {
-//                     if (finished) {
-//                       [cd shouldBeFirstResponder];
-//                     }
-//                   }];
-  [cd shouldBeFirstResponder];
+                                                                              metrics:descriptionView_metrics
+                                                                                views:@{@"descriptionView":descriptionView}]];
+  
+  [self.currentChildViewController.view layoutIfNeeded];
 
+  [descriptionView animateIntoViewForHeight:(nameView.frame.origin.y + nameView.frame.size.height + INPUT_VIEW_PADDING)];
 }
 
 //- (CGAffineTransform)startingTransformForViewControllerTransition:(ViewControllerTransition)transition

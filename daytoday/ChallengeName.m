@@ -67,7 +67,7 @@ CGFloat static MARGIN_FACTOR = 0.25f;
   [super updateConstraints];
 
   NSDictionary *metrics = @{@"textFieldHeight":@(_textField.frame.size.height+TEXT_PADDING),@"lineHeight":@(LINE_HEIGHT)};
-  
+
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textField]|"
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:metrics
@@ -77,12 +77,12 @@ CGFloat static MARGIN_FACTOR = 0.25f;
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:metrics
                                                                  views:@{@"underline":_underline}]];
-  
+
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textField(textFieldHeight)][underline(lineHeight)]"
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:metrics
                                                                  views:@{@"textField": _textField,@"underline":_underline}]];
-  
+
   [self.superview addConstraint:[NSLayoutConstraint constraintWithItem:_textField
                                                                       attribute:NSLayoutAttributeCenterX
                                                                       relatedBy:NSLayoutRelationEqual
@@ -90,7 +90,7 @@ CGFloat static MARGIN_FACTOR = 0.25f;
                                                                       attribute:NSLayoutAttributeCenterX
                                                                      multiplier:1.f
                                                                        constant:0]];
-  
+
   nameTop = [NSLayoutConstraint constraintWithItem:_textField
                                          attribute:NSLayoutAttributeTop
                                          relatedBy:NSLayoutRelationEqual
@@ -98,9 +98,9 @@ CGFloat static MARGIN_FACTOR = 0.25f;
                                          attribute:NSLayoutAttributeTop
                                         multiplier:1.f
                                           constant:[[UIScreen mainScreen] applicationFrame].size.height*MARGIN_FACTOR];
-  
+
   [self.superview addConstraint:nameTop];
-  
+
 }
 
 #pragma mark - ChallengeName Methods
@@ -135,7 +135,6 @@ CGFloat static MARGIN_FACTOR = 0.25f;
                    }];
   return YES;
 }
-
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
