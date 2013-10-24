@@ -69,23 +69,6 @@ CGFloat static NAME_VIEW_HEIGHT = 44.f;
                                                                     metrics:nil
                                                                       views:@{@"startCreationFlow":startCreationFlow}]];
   
-//  ChallengeDescription *cd = [[ChallengeDescription alloc] init];
-//  [cd setBackgroundColor:[UIColor redColor]];
-//  [cd setTranslatesAutoresizingMaskIntoConstraints:NO];
-//  [viewController.view addSubview:cd];
-//  
-//  NSDictionary *cd_metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)};
-//  
-//  [viewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cd(fieldWidth)]"
-//                                                                              options:0
-//                                                                              metrics:cd_metrics
-//                                                                                views:@{@"cd":cd}]];
-//  
-//  [viewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[cd(150)]"
-//                                                                              options:0
-//                                                                              metrics:cd_metrics
-//                                                                                views:@{@"cd":cd}]];
-  
 //  [[DTSelectionSheet selectionSheetWithTitle:@"select duration"] performSelector:@selector(showInView:) withObject:self.view afterDelay:0.0];
 }
 
@@ -114,6 +97,10 @@ CGFloat static NAME_VIEW_HEIGHT = 44.f;
                                                                               options:NSLayoutFormatAlignAllCenterY
                                                                               metrics:metrics
                                                                                 views:@{@"nameFieldView":nameFieldView}]];
+  
+  [nameFieldView namingDidComplete:^{
+    [self shouldEnterDescription];
+  }];
   
   // Containment
   [self addChildViewController:nextViewController];
@@ -147,6 +134,38 @@ CGFloat static NAME_VIEW_HEIGHT = 44.f;
   viewController.view.backgroundColor = [UIColor randomColor];
   
   return viewController;
+}
+
+- (void)shouldEnterDescription
+{
+  NSLog(@"THIS COMPLETED AND YOU MAYBE UNDERSTAND BLOX");
+  ChallengeDescription *cd = [[ChallengeDescription alloc] init];
+  [cd setBackgroundColor:[UIColor redColor]];
+  [cd setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.currentChildViewController.view addSubview:cd];
+
+  NSDictionary *cd_metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)};
+
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cd(fieldWidth)]"
+                                                                              options:0
+                                                                              metrics:cd_metrics
+                                                                                views:@{@"cd":cd}]];
+
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[cd(150)]"
+                                                                              options:0
+                                                                              metrics:cd_metrics
+                                                                                views:@{@"cd":cd}]];
+//  [UIView animateWithDuration:0.4F
+//                   animations:^{
+//                     [self.currentChildViewController.view layoutIfNeeded];
+//                   }
+//                   completion:^(BOOL finished) {
+//                     if (finished) {
+//                       [cd shouldBeFirstResponder];
+//                     }
+//                   }];
+  [cd shouldBeFirstResponder];
+
 }
 
 //- (CGAffineTransform)startingTransformForViewControllerTransition:(ViewControllerTransition)transition

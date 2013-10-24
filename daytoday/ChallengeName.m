@@ -16,6 +16,9 @@
 
 @property (nonatomic, strong) UITextField *textField;
 @property (strong, nonatomic) UIView *underline;
+
+@property (copy) void (^completionBlock)();
+
 //TODO make methods to change this view from a disabled looking color scheme to a enabled look one
 
 @end
@@ -100,23 +103,34 @@ CGFloat static MARGIN_FACTOR = 0.25f;
   
 }
 
+#pragma mark - ChallengeName Methods
+
+- (void)namingDidComplete:(void (^)())block
+{
+  self.completionBlock = [block copy];
+}
+
 - (void)shouldBeFirstResponder
 {
-  if (![_textField isFirstResponder]) {
+  if (_textField && ![_textField isFirstResponder]) {
     [_textField becomeFirstResponder];
   }
 }
 
+#pragma mark - TextField Delegate Methods 
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-  [textField resignFirstResponder];
-  [UIView animateWithDuration:0.4F
+  
+  nameTop.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR-.2f);
+  
+  [UIView animateWithDuration:0.27F
                    animations:^{
-                     nameTop.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR-.2f);
                      [self.superview layoutIfNeeded];
                    }
                    completion:^(BOOL finished) {
-                     if (finished) {
+                     if (finished && self.completionBlock) {
+                       self.completionBlock();
                      }
                    }];
   return YES;
@@ -125,9 +139,10 @@ CGFloat static MARGIN_FACTOR = 0.25f;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+  nameTop.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR);
+  
   [UIView animateWithDuration:0.4F
                    animations:^{
-                     nameTop.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR);
                      [self.superview layoutIfNeeded];
                    }
                    completion:^(BOOL finished) {

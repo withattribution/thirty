@@ -62,6 +62,13 @@
     return self;
 }
 
+- (void)shouldBeFirstResponder
+{
+  if (_textView && ![_textView isFirstResponder]) {
+    [_textView becomeFirstResponder];
+  }
+}
+
 - (void)updateConstraints
 {
   [super updateConstraints];

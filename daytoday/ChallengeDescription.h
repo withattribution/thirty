@@ -10,5 +10,7 @@
 
 @interface ChallengeDescription : UIView <UITextViewDelegate>
 
+- (void)shouldBeFirstResponder;
+- (void)animateIntoView;
 
 @end

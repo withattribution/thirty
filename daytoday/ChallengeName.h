@@ -13,5 +13,6 @@
 @property (strong, nonatomic) NSString *challengeName;
 
 - (void)shouldBeFirstResponder;
+- (void)namingDidComplete:(void (^)())block;
 
 @end
