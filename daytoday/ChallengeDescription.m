@@ -226,7 +226,7 @@ NSInteger static MAX_CHARS = 140;
 
 #pragma mark UITextView Delegate Methods
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+- (void)textViewDidChange:(UITextView *)textView
 {
   if (textView.text.length > 0) {
     [UIView animateWithDuration:.2f
@@ -242,12 +242,7 @@ NSInteger static MAX_CHARS = 140;
   }else {
     _placeholderLabel.alpha = 1.f;
   }
-
-  return YES;
-}
-
-- (void)textViewDidChange:(UITextView *)textView
-{
+  
   _charCount = [textView.text length];
   _charCountLabel.text = [NSString stringWithFormat:@"%d",(MAX_CHARS - _charCount)];
 }
