@@ -21,6 +21,10 @@
 @implementation ChallengeDescription
 
 #define DESCRIBE_PLACE_HOLDER  @"Let's describe this challenge shall we?"
+CGFloat static INPUT_VIEW_HEIGHT = 35.f;
+CGFloat static TEXT_PADDING = 5.f;
+CGFloat static BUTTON_TEXT_ALIGN = 2.f;
+NSInteger static MAX_CHARS = 140;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -31,8 +35,9 @@
       [_textView setTextColor:[UIColor whiteColor]];
       [_textView setFont:[UIFont fontWithName:@"HelveticaNeue" size:18.0] ];
       [_textView setBackgroundColor:[UIColor colorWithWhite:.8f alpha:.4f]];
+      [_textView setScrollEnabled:NO];
 
-      [[_textView layer] setBorderWidth:2.0f];
+//      [[_textView layer] setBorderWidth:2.0f];
       
       [_textView setText:DESCRIBE_PLACE_HOLDER];
 
@@ -40,28 +45,102 @@
       [_textView setKeyboardType:UIKeyboardTypeDefault];
       
       [_textView setTranslatesAutoresizingMaskIntoConstraints:NO];
-      [_textView setScrollEnabled:NO];
-      
-      [self addSubview:_textView];
 
-//      self.charCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(220.0f,180.0f,150.0f,50.0f)];
-//      self.charCountLabel.textColor = [UIColor whiteColor];
-//      self.charCountLabel.backgroundColor = [UIColor clearColor];
-//      self.charCountLabel.textAlignment = NSTextAlignmentLeft;
-//      self.charCountLabel.font = [UIFont systemFontOfSize:16.0f];
-//      
-//      //initialize to zero
-//      self.charCount = 0;
-//      
-//      self.charCountLabel.text = [NSString stringWithFormat:@"%d",self.charCount];
-//      [self.charCountLabel setHidden:YES];
-//      
-//      [self addSubview:self.charCountLabel];
+      [self addSubview:_textView];
+      
+      _charCount = MAX_CHARS;
+      [_textView setInputAccessoryView:[self descriptionInputView]];
+
     }
     return self;
 }
 
 #pragma mark ChallengeDescription Methods
+
+- (UIView *)descriptionInputView
+{
+  
+  UIView *input = [[UIView alloc] initWithFrame:CGRectMake(0.f,
+                                                           0.f,
+                                                           [[UIScreen mainScreen] bounds].size.width,
+                                                           INPUT_VIEW_HEIGHT)];
+  [input setBackgroundColor:[UIColor colorWithWhite:.8f alpha:.6f]];
+
+  UIButton *okButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [okButton setFrame:CGRectMake([[UIScreen mainScreen] bounds].size.width - 60.f,
+                                0.0f,
+                                60.f,
+                                INPUT_VIEW_HEIGHT)];
+  [okButton setBackgroundColor:[UIColor colorWithWhite:0.7 alpha:.4f]];
+  [okButton addTarget:self action:@selector(shouldDismissTextView:) forControlEvents:UIControlEventTouchUpInside];
+  [okButton setTitle:NSLocalizedString(@"OK", @"OK for button") forState:UIControlStateNormal];
+
+  [input addSubview:okButton];
+  
+  CGRect countRect = [[NSString stringWithFormat:@"%d",_charCount] boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width/2.f,FLT_MAX)
+                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                    attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:18]}
+                                                       context:nil];
+  
+  NSString *charactersText = ( _charCount == 1 ) ? NSLocalizedString(@"CHARACTER LEFT", @"charactersLeft-singular")
+  : NSLocalizedString(@"CHARACTERS LEFT", @"charactersLeft-plural");
+  
+  CGRect charactersRect = [charactersText boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width/2.f,FLT_MAX)
+                                                    options:NSStringDrawingUsesLineFragmentOrigin
+                                                 attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:13]}
+                                                    context:nil];
+  
+  UIView *viewToCenter = [[UIView alloc] initWithFrame:CGRectMake(0.f,
+                                                                  0.f,
+                                                                  (4*TEXT_PADDING) + countRect.size.width + charactersRect.size.width,
+                                                                  INPUT_VIEW_HEIGHT-BUTTON_TEXT_ALIGN)];
+  
+  UIView *underline = [[UIView alloc] initWithFrame:CGRectMake((2*TEXT_PADDING) + countRect.size.width,
+                                                               25.f,
+                                                               charactersRect.size.width,
+                                                               1.5f)];
+  [underline setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1.0]];
+  [viewToCenter addSubview:underline];
+  
+  UILabel *charsLabel = [[UILabel alloc] initWithFrame:CGRectMake((2*TEXT_PADDING) + countRect.size.width,
+                                                                 underline.frame.origin.y - charactersRect.size.height,
+                                                                 charactersRect.size.width,
+                                                                 charactersRect.size.height)];
+  charsLabel.textColor = [UIColor whiteColor];
+  charsLabel.backgroundColor = [UIColor clearColor];
+  charsLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13];
+  charsLabel.text = charactersText;
+  charsLabel.numberOfLines = 1;
+  charsLabel.textAlignment = NSTextAlignmentLeft;
+  [viewToCenter addSubview:charsLabel];
+  
+  _charCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(TEXT_PADDING,
+                                                              0.f,
+                                                              countRect.size.width,
+                                                              INPUT_VIEW_HEIGHT)];
+  _charCountLabel.textColor = [UIColor whiteColor];
+  _charCountLabel.backgroundColor = [UIColor clearColor];
+  _charCountLabel.textAlignment = NSTextAlignmentRight;
+  _charCountLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
+  _charCountLabel.text = [NSString stringWithFormat:@"%d",_charCount];
+  [viewToCenter addSubview:_charCountLabel];
+  
+  viewToCenter.center = CGPointMake(input.center.x, viewToCenter.center.y - BUTTON_TEXT_ALIGN);
+  [input addSubview:viewToCenter];
+  
+  return input;
+}
+
+- (void)shouldDismissTextView:(UIButton *)b
+{
+  //save stuff here
+  
+  if ([_textView isFirstResponder]) {
+    [_textView resignFirstResponder];
+  }
+}
+
+
 
 - (void)animateIntoViewForHeight:(CGFloat)offset
 {
@@ -93,7 +172,7 @@
 {
   [super updateConstraints];
   
-  NSDictionary *metrics = @{@"textViewHeight":@(150)};
+  NSDictionary *metrics = @{@"textViewHeight":@(110)};
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textView]|"
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
@@ -132,5 +211,15 @@
 
 #pragma mark UITextView Delegate Methods
 
+- (void)textViewDidChange:(UITextView *)textView
+{
+  _charCount = [textView.text length];
+  _charCountLabel.text = [NSString stringWithFormat:@"%d",(MAX_CHARS - _charCount)];
+}
 
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+  if([textView.text isEqualToString:DESCRIBE_PLACE_HOLDER]) textView.text = @"";
+}
 @end

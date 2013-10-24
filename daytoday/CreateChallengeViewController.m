@@ -145,7 +145,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 - (void)shouldEnterDescription
 {
   descriptionView = [[ChallengeDescription alloc] init];
-  [descriptionView setBackgroundColor:[UIColor redColor]];
+//  [descriptionView setBackgroundColor:[UIColor redColor]];
   [descriptionView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.currentChildViewController.view addSubview:descriptionView];
 
@@ -156,7 +156,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                                               metrics:descriptionView_metrics
                                                                                 views:@{@"descriptionView":descriptionView}]];
   
-  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[descriptionView(150)]"
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[descriptionView(110)]"
                                                                               options:0
                                                                               metrics:descriptionView_metrics
                                                                                 views:@{@"descriptionView":descriptionView}]];
