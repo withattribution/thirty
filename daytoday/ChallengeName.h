@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChallengeName : UIView
+@interface ChallengeName : UIView <UITextFieldDelegate>
 
-//add external calls to animate the view into editing mode and "resting" mode
+@property (nonatomic, strong) UITextField *nameField;
+
+@property (strong, nonatomic) NSString *challengeName;
+//add external methods to animate the view into editing mode and "resting" mode
 
 @end
