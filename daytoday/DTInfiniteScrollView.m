@@ -35,13 +35,15 @@
     _visibleViews = [[NSMutableArray alloc] init];
     
     _viewContainerView = [[UIView alloc] init];
-//    self.viewContainerView.frame = CGRectMake(0.f, 0.f, self.contentSize.width, self.contentSize.height);
-    self.viewContainerView.frame = CGRectMake(0.f, 0.f, 100., 100.);
+    self.viewContainerView.frame = CGRectMake(0.f, 0.f, self.contentSize.width, self.contentSize.height);
+//    self.viewContainerView.frame = CGRectMake(0.f, 0.f, 100., 100.);
 
     [self addSubview:self.viewContainerView];
     [self.viewContainerView setUserInteractionEnabled:NO];
     self.pagingEnabled = YES;
     // hide horizontal scroll indicator so our recentering trick is not revealed
+    
+
     [self setShowsHorizontalScrollIndicator:NO];
   }
   return self;

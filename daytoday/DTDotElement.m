@@ -59,6 +59,16 @@
     return dcg;
 }
 
++(DTDotColorGroup *) durationSelectionColorGroup
+{
+  DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
+  dcg.strokeColor = [UIColor colorWithWhite:.8f alpha:1.f];
+  dcg.fillColor   = [UIColor colorWithWhite:.4f alpha:.8f];
+  dcg.textColor  = [UIColor lightGrayColor];
+  return dcg;
+}
+
+
 +(DTDotColorGroup *) failedDayColorGroup
 {
     DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];

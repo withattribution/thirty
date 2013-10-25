@@ -14,5 +14,6 @@
 
 - (void)shouldBeFirstResponder;
 - (void)animateIntoViewForHeight:(CGFloat)offset;
+- (void)descriptionDidComplete:(void (^)())block;
 
 @end

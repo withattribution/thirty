@@ -17,6 +17,8 @@
 @property (nonatomic) NSInteger charCount;
 @property (strong, nonatomic) UILabel *charCountLabel;
 
+@property (copy) void (^completionBlock)();
+
 @end
 
 @implementation ChallengeDescription
@@ -37,10 +39,6 @@ NSInteger static MAX_CHARS = 140;
       [_textView setFont:[UIFont fontWithName:@"HelveticaNeue" size:18] ];
       [_textView setBackgroundColor:[UIColor colorWithWhite:.8f alpha:.4f]];
       [_textView setScrollEnabled:NO];
-
-//      [[_textView layer] setBorderWidth:2.0f];
-//      [_textView setText:DESCRIBE_PLACE_HOLDER];
-
       [_textView setReturnKeyType:UIReturnKeyDefault];
       [_textView setKeyboardType:UIKeyboardTypeDefault];
       [_textView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -61,6 +59,7 @@ NSInteger static MAX_CHARS = 140;
       [_placeholderLabel sizeToFit];
       [self addSubview:_placeholderLabel];
       
+      [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     }
     return self;
 }
@@ -141,16 +140,24 @@ NSInteger static MAX_CHARS = 140;
   return input;
 }
 
+- (void)descriptionDidComplete:(void (^)())block
+{
+  self.completionBlock = [block copy];
+}
+
 - (void)shouldDismissTextView:(UIButton *)b
 {
   //save stuff here
-  
+
   if ([_textView isFirstResponder]) {
     [_textView resignFirstResponder];
   }
+
+  if (self.completionBlock) {
+    self.completionBlock();
+  }
+
 }
-
-
 
 - (void)animateIntoViewForHeight:(CGFloat)offset
 {
@@ -193,12 +200,12 @@ NSInteger static MAX_CHARS = 140;
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:metrics
                                                                  views:@{@"textView": _textView}]];
-  
+  // 5 point offset to simulate uitextview margins
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[placeHolder]"
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:metrics
                                                                  views:@{@"placeHolder":_placeholderLabel}]];
-  
+  // 8 point offset to simulate uitextview margins
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[placeHolder]"
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:metrics

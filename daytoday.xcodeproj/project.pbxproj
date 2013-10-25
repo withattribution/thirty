@@ -23,7 +23,6 @@
 		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
 		A1AC68B118163D38004A1F5D /* DTSelectionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68B018163D38004A1F5D /* DTSelectionSheet.m */; };
 		A1AC68BA1816D8A1004A1F5D /* DTInfiniteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */; };
-		A1AC68BE18181C67004A1F5D /* DescribeChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68BD18181C67004A1F5D /* DescribeChallenge.m */; };
 		A1AC68C118182057004A1F5D /* ChallengeName.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68C018182057004A1F5D /* ChallengeName.m */; };
 		A1AC68C718198E6F004A1F5D /* ChallengeDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68C618198E6F004A1F5D /* ChallengeDescription.m */; };
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
@@ -244,8 +243,6 @@
 		A1AC68B018163D38004A1F5D /* DTSelectionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTSelectionSheet.m; sourceTree = "<group>"; };
 		A1AC68B81816D8A1004A1F5D /* DTInfiniteScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTInfiniteScrollView.h; sourceTree = "<group>"; };
 		A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTInfiniteScrollView.m; sourceTree = "<group>"; };
-		A1AC68BC18181C67004A1F5D /* DescribeChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DescribeChallenge.h; sourceTree = "<group>"; };
-		A1AC68BD18181C67004A1F5D /* DescribeChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DescribeChallenge.m; sourceTree = "<group>"; };
 		A1AC68BF18182057004A1F5D /* ChallengeName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeName.h; sourceTree = "<group>"; };
 		A1AC68C018182057004A1F5D /* ChallengeName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeName.m; sourceTree = "<group>"; };
 		A1AC68C518198E6F004A1F5D /* ChallengeDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDescription.h; sourceTree = "<group>"; };
@@ -558,8 +555,6 @@
 		A1AC68BB18181C3F004A1F5D /* challenge creation */ = {
 			isa = PBXGroup;
 			children = (
-				A1AC68BC18181C67004A1F5D /* DescribeChallenge.h */,
-				A1AC68BD18181C67004A1F5D /* DescribeChallenge.m */,
 				A1AC68C518198E6F004A1F5D /* ChallengeDescription.h */,
 				A1AC68C618198E6F004A1F5D /* ChallengeDescription.m */,
 				A1AC68BF18182057004A1F5D /* ChallengeName.h */,
@@ -1053,7 +1048,6 @@
 				A1275C021806EB5B00019A91 /* UserInfoHeader.m in Sources */,
 				B7E61D5B17BD6AA5002B681B /* ViewController.m in Sources */,
 				B7E61DEE17C273C4002B681B /* NSDate+SR.m in Sources */,
-				A1AC68BE18181C67004A1F5D /* DescribeChallenge.m in Sources */,
 				B7E61DF017C273C4002B681B /* NSManagedObject+SR.m in Sources */,
 				B7E61DF217C273C4002B681B /* NSManagedObjectContext+SR.m in Sources */,
 				B7E61DF417C273C4002B681B /* UIColor+SR.m in Sources */,

@@ -35,7 +35,6 @@ CGFloat static MARGIN_FACTOR = 0.25f;
 {
   self = [super initWithFrame:frame];
   if (self) {
-    
     _textField = [[UITextField alloc] init];
     [_textField setDelegate:self];
     [_textField setTextColor:[UIColor whiteColor]];
@@ -49,15 +48,13 @@ CGFloat static MARGIN_FACTOR = 0.25f;
     [_textField sizeToFit];
     
     [self addSubview:_textField];
-
-//    UIView *toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0., 0., 320., 50.f)];
-//    [toolBarView setBackgroundColor:[UIColor redColor]];
-//    [_textField setInputAccessoryView:toolBarView];
     
     _underline = [[UIView alloc] init];
     [_underline setBackgroundColor:[UIColor colorWithWhite:.4f alpha:1.f]];
     [_underline setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addSubview:_underline];
+    
+    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
   return self;
 }

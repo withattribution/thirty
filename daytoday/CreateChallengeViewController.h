@@ -8,6 +8,6 @@
 
 #import "D2ViewController.h"
 
-@interface CreateChallengeViewController : D2ViewController<UITextFieldDelegate,UITextViewDelegate>
+@interface CreateChallengeViewController : D2ViewController 
 
 @end

@@ -13,6 +13,7 @@
 #import "ChallengeDescription.h"
 
 #import <UIColor+SR.h>
+#import "DTDotElement.h"
 
 @interface CreateChallengeViewController () {
   ChallengeName *nameView;
@@ -21,6 +22,7 @@
 
 - (void)transitionToChallengeFLow;
 - (void)shouldEnterDescription;
+- (void)selectCategory;
 
 @property (nonatomic, weak) UIViewController *currentChildViewController;
 
@@ -40,42 +42,58 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+
+//  NSArray *array = @[@"A", @"B", @"C", @"A", @"B", @"Z", @"G", @"are", @"Q"];
+//  NSSet *filterSet = [NSSet setWithObjects: @"A", @"Z", @"Q", nil];
+//  
+//  BOOL (^test)(id obj, NSUInteger idx, BOOL *stop);
+//  
+//  test = ^(id obj, NSUInteger idx, BOOL *stop) {
+//    
+//    if (idx < 5) {
+//      if ([filterSet containsObject: [array objectAtIndex:idx]]) {
+//        NSLog(@"is this ever true?");
+//        return YES;
+//      }
+//    }
+//    return NO;
+//  };
+  
+//  [collection addObject:selectionButton];
   
   // Add an initial contained viewController
   UIViewController *viewController = [self nextViewController];
-  
+
   // Contain the view controller
   [self addChildViewController:viewController];
   [self.view addSubview:viewController.view];
-  
+
   [viewController didMoveToParentViewController:self];
   self.currentChildViewController = viewController;
   
   self.title = NSLocalizedString(@"Create Challenge", @"create challenge (title)");
-  
+
   UIButton *startCreationFlow = [UIButton buttonWithType:UIButtonTypeCustom];
   [startCreationFlow.titleLabel setTextColor:[UIColor colorWithWhite:0.8f alpha:1.f]];
   [startCreationFlow setBackgroundColor:[UIColor lightGrayColor]];
-  
+
   [startCreationFlow setTitle:@"Create Challenge" forState:UIControlStateNormal];
   [startCreationFlow addTarget:self
                         action:@selector(transitionToChallengeFLow)
               forControlEvents:UIControlEventTouchUpInside];
-  
+
   startCreationFlow.translatesAutoresizingMaskIntoConstraints = NO;
   [viewController.view addSubview:startCreationFlow];
-  
+
   [viewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[startCreationFlow]|"
                                                                     options:0
                                                                     metrics:nil
                                                                       views:@{@"startCreationFlow":startCreationFlow}]];
-  
+
   [viewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-150-[startCreationFlow(50)]"
                                                                     options:0
                                                                     metrics:nil
                                                                       views:@{@"startCreationFlow":startCreationFlow}]];
-  
-//  [[DTSelectionSheet selectionSheetWithTitle:@"select duration"] performSelector:@selector(showInView:) withObject:self.view afterDelay:0.0];
 }
 
 - (void)transitionToChallengeFLow
@@ -89,7 +107,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   UIViewController *nextViewController = [self nextViewController];
   
   nameView = [[ChallengeName alloc] initWithFrame:CGRectZero];
-  [nameView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [nextViewController.view addSubview:nameView];
   
   NSDictionary *metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR),@"nameViewHeight":@(NAME_VIEW_HEIGHT)};
@@ -142,11 +159,59 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   return viewController;
 }
 
+
+#pragma mark Challenge Creation Flow Methods
+
+- (void)selectCategory
+{
+  DTSelectionSheet *selectSheet = [DTSelectionSheet selectionSheetWithTitle:@"select duration" type:DTSelectionSheetDuration];
+  [selectSheet showInView:self.currentChildViewController.view];
+  
+//  NSIndexSet *current = [row indexesOfObjectsPassingTest:^BOOL(DTDotElement *obj, NSUInteger idx, BOOL *stop) {
+//    return ([layoutCalendar ojf_isDate:obj.dotDate equalToDate:today withGranularity:NSDayCalendarUnit]);
+//  }];
+  
+//  __block Image *profileImage = nil;
+//  [user.image enumerateObjectsUsingBlock:^(Image *obj, BOOL *stop){
+//    if ([obj.tag isEqualToString:@"SMALL"]) {
+//      profileImage = obj;
+//      *stop = YES;
+//    }
+//  } ];
+  
+  [self makeAmessAndTest:selectSheet];
+  
+//BOOL (^test)(id obj, NSUInteger idx, BOOL *stop);
+//  - (id)didCompleteWithSelectedObject:(id (^)(id obj))block;
+  
+//  - (void)didCompleteWithSelectedObject:(void (^)(id obj))block
+
+  
+
+//  [selectSheet didCompleteWithSelectedObject:^{
+//    
+//  }];
+}
+
+- (void)makeAmessAndTest:(DTSelectionSheet *)sheet
+{
+  [sheet didCompleteWithSelectedObject:^void(id obj){
+    
+    NSLog(@"what is in this obj: %@",obj);
+    [self updateSelectedObject];
+    
+  }];
+}
+
+- (void) updateSelectedObject
+{
+  NSLog(@"this is how it's done in the hood");
+}
+
+
 - (void)shouldEnterDescription
 {
   descriptionView = [[ChallengeDescription alloc] init];
-//  [descriptionView setBackgroundColor:[UIColor redColor]];
-  [descriptionView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.currentChildViewController.view addSubview:descriptionView];
 
   NSDictionary *descriptionView_metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)};
@@ -164,6 +229,10 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [self.currentChildViewController.view layoutIfNeeded];
 
   [descriptionView animateIntoViewForHeight:(nameView.frame.origin.y + nameView.frame.size.height + INPUT_VIEW_PADDING)];
+  
+  [descriptionView descriptionDidComplete:^{
+    [self selectCategory];
+  }];
 }
 
 //- (CGAffineTransform)startingTransformForViewControllerTransition:(ViewControllerTransition)transition

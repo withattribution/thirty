@@ -16,6 +16,7 @@
 +(DTDotColorGroup *) someParticipationButFailedColorGroup;
 +(DTDotColorGroup *) failedDayColorGroup;
 +(DTDotColorGroup *) futuresSoBrightYouGottaWearShadesColorGroup;
++(DTDotColorGroup *) durationSelectionColorGroup;
 +(DTDotColorGroup *) repetitionCountColorGroup;
 +(DTDotColorGroup *) challengersCountColorGroup;
 +(DTDotColorGroup *) summaryDayColorGroup;
