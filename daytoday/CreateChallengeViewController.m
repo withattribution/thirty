@@ -42,24 +42,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-
-//  NSArray *array = @[@"A", @"B", @"C", @"A", @"B", @"Z", @"G", @"are", @"Q"];
-//  NSSet *filterSet = [NSSet setWithObjects: @"A", @"Z", @"Q", nil];
-//  
-//  BOOL (^test)(id obj, NSUInteger idx, BOOL *stop);
-//  
-//  test = ^(id obj, NSUInteger idx, BOOL *stop) {
-//    
-//    if (idx < 5) {
-//      if ([filterSet containsObject: [array objectAtIndex:idx]]) {
-//        NSLog(@"is this ever true?");
-//        return YES;
-//      }
-//    }
-//    return NO;
-//  };
-  
-//  [collection addObject:selectionButton];
   
   // Add an initial contained viewController
   UIViewController *viewController = [self nextViewController];
@@ -159,58 +141,22 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   return viewController;
 }
 
-
 #pragma mark Challenge Creation Flow Methods
 
 - (void)selectCategory
 {
 
   DTSelectionSheet *selectSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetDuration];
-
   [selectSheet showInView:self.currentChildViewController.view];
   
+  __block id theSelected = nil;
   
-//  NSIndexSet *current = [row indexesOfObjectsPassingTest:^BOOL(DTDotElement *obj, NSUInteger idx, BOOL *stop) {
-//    return ([layoutCalendar ojf_isDate:obj.dotDate equalToDate:today withGranularity:NSDayCalendarUnit]);
-//  }];
-  
-//  __block Image *profileImage = nil;
-//  [user.image enumerateObjectsUsingBlock:^(Image *obj, BOOL *stop){
-//    if ([obj.tag isEqualToString:@"SMALL"]) {
-//      profileImage = obj;
-//      *stop = YES;
-//    }
-//  } ];
-  
-  [self makeAmessAndTest:selectSheet];
-  
-//BOOL (^test)(id obj, NSUInteger idx, BOOL *stop);
-//  - (id)didCompleteWithSelectedObject:(id (^)(id obj))block;
-  
-//  - (void)didCompleteWithSelectedObject:(void (^)(id obj))block
-
-  
-
-//  [selectSheet didCompleteWithSelectedObject:^{
-//    
-//  }];
-}
-
-- (void)makeAmessAndTest:(DTSelectionSheet *)sheet
-{
-  [sheet didCompleteWithSelectedObject:^void(id obj){
-    
-    NSLog(@"what is in this obj: %@",obj);
-    [self updateSelectedObject];
-    
+  [selectSheet didCompleteWithSelectedObject:^(id obj){
+    theSelected = obj;
+    NSLog(@"the selected :%@",theSelected);
   }];
+  
 }
-
-- (void) updateSelectedObject
-{
-  NSLog(@"this is how it's done in the hood");
-}
-
 
 - (void)shouldEnterDescription
 {
@@ -236,6 +182,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [descriptionView descriptionDidComplete:^{
     [self selectCategory];
   }];
+  
 }
 
 //- (CGAffineTransform)startingTransformForViewControllerTransition:(ViewControllerTransition)transition

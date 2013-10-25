@@ -18,7 +18,7 @@
 //6) may blur the background view depending on how fly i'm feeling
 
 #import "DTSelectionSheet.h"
-#import "UIColor+SR.m"
+
 #import "DTDotElement.h"
 #import "DTInfiniteScrollView.h"
 
@@ -109,7 +109,7 @@ NSInteger static MAX_REPETITION = 8;
 
         UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectionButton setFrame:dot.bounds];
-        [selectionButton setTag:i+1];
+        [selectionButton setTag:i];
         [selectionButton setBackgroundColor:[UIColor clearColor]];
         [selectionButton addTarget:self action:@selector(selectionForButton:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -130,7 +130,7 @@ NSInteger static MAX_REPETITION = 8;
 
         UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectionButton setFrame:dot.bounds];
-        [selectionButton setTag:i+1];
+        [selectionButton setTag:i];
         [selectionButton setBackgroundColor:[UIColor clearColor]];
         [selectionButton addTarget:self action:@selector(didMakeSelection:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -148,11 +148,6 @@ NSInteger static MAX_REPETITION = 8;
     self.selectionArray = [NSArray arrayWithArray:collection];
   else self.selectionArray = nil; //TODO should this be nil or should this error out?
   
-}
-
-- (void)selectionForButton:(UIButton *)b
-{
-  NSLog(@"this is the button tag that was selected: %d",b.tag);
 }
 
 #pragma mark - Preparation before showing view
@@ -234,59 +229,21 @@ NSInteger static MAX_REPETITION = 8;
                                                                options:0
                                                                metrics:nil
                                                                  views:views]];
-
 }
 
 #pragma mark - Return Selected Object Method
 
-//this block should say -- hey my button was clicked and it contains an index
-//use this index in the globally available objects array to return to check to see if the object is valid
-//and if so then return it -- it does not need the user to pass variables in but it needs to return vars
-// then execute the completion block?
-
-- (void)didCompleteWithSelectedObject:(void (^)(id obj))block 
+- (void)didCompleteWithSelectedObject:(void (^)(id obj))block
 {
-  NSArray *array = @[@"1",@"2",@"3"];
-  block([array firstObject]);
-//  self.completionBlock = [block copy];
-//  id *obj = NSLog(@"is this even possible");
-//  return obj;
-
+  self.completionBlock = [block copy];
 }
 
-//- (void)yourMethod:(return_type (^)(var_type))blockName;
-
-//return_type (^blockName)(var_type) = ^return_type (var_type varName)
-//{
-//  // ...
-//};
-
-- (id)returnABool:(BOOL (^)(id obj, NSUInteger idx))block
+- (void)selectionForButton:(UIButton *)b
 {
-  id (^selectedObject)(NSInteger) = ^id (NSInteger idx){
-    return [_selectionArray objectAtIndex:idx];
-  };
-  
-//  id (^test)(id obj, NSUInteger idx, BOOL *stop);
-//
-//  if (<#condition#>) {
-//    return YES;
-//  }
-  
-  
-  return selectedObject;
+  NSLog(@"yo i just dunked the selected index into this block");
+  self.completionBlock([self.selectionArray objectAtIndex:b.tag]);
+  [self dismiss];
 }
-
-//
-//test = ^(id obj, NSUInteger idx, BOOL *stop) {
-//  
-//  if (idx < 5) {
-//    if ([filterSet containsObject: obj]) {
-//      return YES;
-//    }
-//  }
-//  return NO;
-//};
 
 #pragma mark - Showing and dismissing methods
 
@@ -314,8 +271,6 @@ NSInteger static MAX_REPETITION = 8;
 
 - (void)animateIntoView
 {
-  NSLog(@"pre: %f", self.bounds.size.height);
-
   self.transform = CGAffineTransformMakeTranslation(0, self.bounds.size.height);
   [UIView animateWithDuration:TRANSITION_DURATION
                         delay:0.f

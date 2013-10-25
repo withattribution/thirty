@@ -27,7 +27,6 @@ typedef NS_ENUM(NSInteger, DTSelectionSheetType) {
 - (id)initWithFrame:(CGRect)frame withType:(DTSelectionSheetType)type;
 - (id)initWithFrame:(CGRect)frame withTitle:(NSString *)t objects:(NSArray *)objs;
 
-//- (id)didCompleteWithSelectedObject:(id (^)(id obj))block;
 - (void)didCompleteWithSelectedObject:(void (^)(id obj))block;
 
 - (void)showInView:(UIView *)view;
