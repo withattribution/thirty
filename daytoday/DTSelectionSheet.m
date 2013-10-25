@@ -82,7 +82,7 @@ NSInteger static MAX_REPETITION = 8;
         [selectionButton setFrame:dot.bounds];
         [selectionButton setTag:i+1];
         [selectionButton setBackgroundColor:[UIColor clearColor]];
-        [selectionButton addTarget:self action:@selector(didMakeSelection:) forControlEvents:UIControlEventTouchUpInside];
+        [selectionButton addTarget:self action:@selector(selectionForButton:) forControlEvents:UIControlEventTouchUpInside];
         
         [dot addSubview:selectionButton];
         
@@ -93,7 +93,21 @@ NSInteger static MAX_REPETITION = 8;
       
       break;
     case DTSelectionSheetRepetition:
-      
+      for (int i = 0; i < MAX_REPETITION; i++) {
+        DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 80.f, 80.f)
+                                                  andColorGroup:[DTDotColorGroup durationSelectionColorGroup]
+                                                      andNumber:[NSNumber numberWithInt:i+1]];
+        
+        UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [selectionButton setFrame:dot.bounds];
+        [selectionButton setTag:i+1];
+        [selectionButton setBackgroundColor:[UIColor clearColor]];
+        [selectionButton addTarget:self action:@selector(didMakeSelection:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [dot addSubview:selectionButton];
+        
+        [collection addObject:dot];
+      }
       break;
     default://noop
       break;
@@ -105,7 +119,7 @@ NSInteger static MAX_REPETITION = 8;
   
 }
 
-- (void)didMakeSelection:(UIButton *)b
+- (void)selectionForButton:(UIButton *)b
 {
   NSLog(@"this is the button tag that was selected: %d",b.tag);
 }
@@ -143,7 +157,7 @@ NSInteger static MAX_REPETITION = 8;
     [selectionButton setFrame:dot.bounds];
     [selectionButton setTag:i+1];
     [selectionButton setBackgroundColor:[UIColor clearColor]];
-    [selectionButton addTarget:self action:@selector(didMakeSelection:) forControlEvents:UIControlEventTouchUpInside];
+    [selectionButton addTarget:self action:@selector(selectionForButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [dot addSubview:selectionButton];
     
