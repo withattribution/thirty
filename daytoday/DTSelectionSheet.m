@@ -46,13 +46,13 @@ NSInteger static MAX_REPETITION = 8;
   self = [super initWithFrame:frame];
   if (self) {
     self.titleText = [NSString stringWithString:t];
-    [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
+    [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:.7f]];
     [self collectionForType:type];
   }
   return self;
 }
 
-+ (id)selectionSheetWithTitle:(NSString *)t withObjects:(NSArray *)objs
++ (id)selectionSheetWithTitle:(NSString *)t objects:(NSArray *)objs
 {
   return [[DTSelectionSheet alloc] initWithFrame:CGRectZero withTitle:t objects:objs];
 }
@@ -62,7 +62,7 @@ NSInteger static MAX_REPETITION = 8;
   self = [super initWithFrame:frame];
   if (self) {
     self.titleText = [NSString stringWithString:t];
-    [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
+    [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:.7f]];
   }
   return self;
 }
@@ -153,9 +153,9 @@ NSInteger static MAX_REPETITION = 8;
   NSLog(@"made a fool: %f",selectionLabel.frame.origin.y);
   
   DTInfiniteScrollView *sv = [[DTInfiniteScrollView alloc] initWithFrame:CGRectMake(0.,
-                                                                                    35.f,
+                                                                                    selectionLabel.frame.origin.y + selectionLabel.frame.size.height + 15.f,
                                                                                     320.f,
-                                                                                    80.)
+                                                                                    80.f)
                                                                    views:viewsArray];
   [self addSubview:sv];
   
@@ -199,7 +199,7 @@ NSInteger static MAX_REPETITION = 8;
                                                                metrics:nil
                                                                  views:views]];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLine(2)]-2-[selectionLabel(30)]-82-[bottomLine(2)]"
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLine(2)]-2-[selectionLabel(30)]-85-[bottomLine(2)]"
                                                                options:0
                                                                metrics:nil
                                                                  views:views]];
