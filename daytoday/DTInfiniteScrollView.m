@@ -30,8 +30,7 @@
     self.views = [views copy];
 
     self.contentSize = CGSizeMake(520, self.frame.size.height);
-
-//TODO put visible view indicies in an array and deal with them like a grown up
+    //TODO put visible view indicies in an array and deal with them like a grown up
 //    _visibleIndices = [[NSMutableArray alloc] init];
     _visibleViews = [[NSMutableArray alloc] init];
 

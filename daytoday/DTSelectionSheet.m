@@ -35,8 +35,8 @@ static NSString *VERIFICATION_TITLE = @"SELECT VERIFICATION";
 static NSString *REPETITION_TITLE = @"SELECT NUMBER OF REPETIONS PER DAY";
 static NSString *CATEGORY_TITLE = @"SELECT CATEGORY";
 
-const  CGFloat TransitionDuration = .2f;
-const  CGFloat VIEW_HEIGHT_PERCENT = 0.65f;
+const  CGFloat TRANSITION_DURATION = .42f;
+const  CGFloat VIEW_HEIGHT_PERCENT = .65f;
 
 NSInteger static MAX_DURATION = 60;
 NSInteger static MAX_REPETITION = 8;
@@ -53,6 +53,8 @@ NSInteger static MAX_REPETITION = 8;
     [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:.7f]];
     self.titleText = [self titleForType:type];
     [self collectionForType:type];
+    
+    NSLog(@"init method of selection sheet called");
   }
   return self;
 }
@@ -103,7 +105,7 @@ NSInteger static MAX_REPETITION = 8;
         DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 80.f, 80.f)
                                                   andColorGroup:[DTDotColorGroup durationSelectionColorGroup]
                                                       andNumber:[NSNumber numberWithInt:i+1]];
-        dot.tag = i;
+        dot.tag = i;  //critical for dtinfinitescroll
 
         UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectionButton setFrame:dot.bounds];
@@ -124,7 +126,8 @@ NSInteger static MAX_REPETITION = 8;
         DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 80.f, 80.f)
                                                   andColorGroup:[DTDotColorGroup durationSelectionColorGroup]
                                                       andNumber:[NSNumber numberWithInt:i+1]];
-        
+        dot.tag = i; //critical for dtinfinitescroll
+
         UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectionButton setFrame:dot.bounds];
         [selectionButton setTag:i+1];
@@ -288,28 +291,34 @@ NSInteger static MAX_REPETITION = 8;
 #pragma mark - Showing and dismissing methods
 
 - (void)showInView:(UIView *)view {
-  //	[self prepare:view.frame];
+
   [self viewPreparation];
+  
 	[view addSubview:self];
   
   //layout Selection Sheet in superview
   NSDictionary *metrics = @{ @"height": @(view.frame.size.height*VIEW_HEIGHT_PERCENT)};
-  NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[self(height)]|"
+
+  [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[self(height)]|"
                                                                          options:0
                                                                          metrics:metrics
-                                                                           views:@{@"self": self}];
-  [view addConstraints:verticalConstraints];
+                                                                           views:@{@"self": self}] ];
 
-  NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|[self]|"
+  [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[self]|"
                                                                            options:0
                                                                            metrics:nil
-                                                                             views:@{@"self": self}];
-  [view addConstraints:horizontalConstraints];
+                                                                             views:@{@"self": self}]];
+  [self.superview layoutIfNeeded];
+  [self animateIntoView];
+}
 
-	// slide from bottom
+- (void)animateIntoView
+{
+  NSLog(@"pre: %f", self.bounds.size.height);
+
   self.transform = CGAffineTransformMakeTranslation(0, self.bounds.size.height);
-  [UIView animateWithDuration:TransitionDuration
-                        delay:.1f
+  [UIView animateWithDuration:TRANSITION_DURATION
+                        delay:0.f
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
                      self.transform = CGAffineTransformMakeTranslation(0, 0);
@@ -321,14 +330,14 @@ NSInteger static MAX_REPETITION = 8;
 	if (!self.superview) return;
 
   __block CGRect f = self.frame;
-	[UIView animateWithDuration:TransitionDuration
+	[UIView animateWithDuration:TRANSITION_DURATION
                    animations:^{
                      f.origin.y += f.size.height;
                      self.frame = f;
                    }
                    completion:^(BOOL finished) {
                     [self removeFromSuperview];
-	}];
+                   }];
 }
 
 @end
