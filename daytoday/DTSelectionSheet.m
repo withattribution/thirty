@@ -30,23 +30,28 @@
 
 @implementation DTSelectionSheet
 
-CGFloat const TransitionDuration = .2f;
-CGFloat const VIEW_HEIGHT_PERCENT = 0.65f;
+static NSString *DURATION_TITLE = @"SELECT DURATION";
+static NSString *VERIFICATION_TITLE = @"SELECT VERIFICATION";
+static NSString *REPETITION_TITLE = @"SELECT NUMBER OF REPETIONS PER DAY";
+static NSString *CATEGORY_TITLE = @"SELECT CATEGORY";
+
+const  CGFloat TransitionDuration = .2f;
+const  CGFloat VIEW_HEIGHT_PERCENT = 0.65f;
 
 NSInteger static MAX_DURATION = 60;
 NSInteger static MAX_REPETITION = 8;
 
-+ (id)selectionSheetWithTitle:(NSString *)t type:(DTSelectionSheetType)type
++ (id)selectionSheetWithType:(DTSelectionSheetType)type
 {
-  return [[DTSelectionSheet alloc] initWithFrame:CGRectZero withTitle:t type:type];
+  return [[DTSelectionSheet alloc] initWithFrame:CGRectZero withType:type];
 }
 
-- (id)initWithFrame:(CGRect)frame withTitle:(NSString *)t type:(DTSelectionSheetType)type
+- (id)initWithFrame:(CGRect)frame withType:(DTSelectionSheetType)type
 {
   self = [super initWithFrame:frame];
   if (self) {
-    self.titleText = [NSString stringWithString:t];
     [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:.7f]];
+    self.titleText = [self titleForType:type];
     [self collectionForType:type];
   }
   return self;
@@ -61,10 +66,32 @@ NSInteger static MAX_REPETITION = 8;
 {
   self = [super initWithFrame:frame];
   if (self) {
-    self.titleText = [NSString stringWithString:t];
     [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:.7f]];
+    self.titleText = [NSString stringWithString:t];
+    //do something objs -- but they should contain views with tags if using the infinite scroll view -- so...yeah check them?
   }
   return self;
+}
+
+- (NSString *)titleForType:(DTSelectionSheetType)type
+{
+  NSString *title = @"";
+  switch (type) {
+    case DTSelectionSheetDuration:
+      return DURATION_TITLE;
+      break;
+    case DTSelectionSheetVerification:
+      return VERIFICATION_TITLE;
+      break;
+    case DTSelectionSheetRepetition:
+      return REPETITION_TITLE;
+      break;
+    default:
+      return @"TITLE NOT SET";
+      break;
+  }
+  
+  return title;
 }
 
 - (void)collectionForType:(DTSelectionSheetType)type

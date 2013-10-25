@@ -164,7 +164,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 
 - (void)selectCategory
 {
-  DTSelectionSheet *selectSheet = [DTSelectionSheet selectionSheetWithTitle:@"select duration" type:DTSelectionSheetDuration];
+  DTSelectionSheet *selectSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetDuration];
   [selectSheet showInView:self.currentChildViewController.view];
   
 //  NSIndexSet *current = [row indexesOfObjectsPassingTest:^BOOL(DTDotElement *obj, NSUInteger idx, BOOL *stop) {
