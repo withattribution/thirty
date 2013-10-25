@@ -70,13 +70,13 @@ NSInteger static MAX_REPETITION = 8;
 - (void)collectionForType:(DTSelectionSheetType)type
 {
   NSMutableArray *collection = [[NSMutableArray alloc] init];
-  
   switch (type) {
     case DTSelectionSheetDuration:
       for (int i = 0; i < MAX_DURATION; i++) {
         DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 80.f, 80.f)
                                                   andColorGroup:[DTDotColorGroup durationSelectionColorGroup]
                                                       andNumber:[NSNumber numberWithInt:i+1]];
+        dot.tag = i;
 
         UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectionButton setFrame:dot.bounds];
@@ -113,9 +113,10 @@ NSInteger static MAX_REPETITION = 8;
       break;
   }
 
+  self.selectionArray = [NSArray arrayWithArray:collection];
   if ([collection count] > 0)
-    self.selectionArray = [NSMutableArray arrayWithArray:collection];
-  else self.selectionArray = nil;
+    self.selectionArray = [NSArray arrayWithArray:collection];
+  else self.selectionArray = nil; //TODO should this be nil or should this error out?
   
 }
 
@@ -145,32 +146,13 @@ NSInteger static MAX_REPETITION = 8;
   [selectionLabel setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
   [self addSubview:selectionLabel];
   
-  NSMutableArray *viewsArray = [[NSMutableArray alloc] init];
-  
-  for (int i=0; i<30; i++) {
-    DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 80.f, 80.f)
-                                              andColorGroup:[DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup]
-                                                  andNumber:[NSNumber numberWithInt:(i+1)]];
-    dot.tag = i;
-    
-    UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [selectionButton setFrame:dot.bounds];
-    [selectionButton setTag:i+1];
-    [selectionButton setBackgroundColor:[UIColor clearColor]];
-    [selectionButton addTarget:self action:@selector(selectionForButton:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [dot addSubview:selectionButton];
-    
-    [viewsArray addObject:dot];
-  }
-  
-  NSLog(@"made a fool: %f",selectionLabel.frame.origin.y);
-  
+  //cannot include infinite scroll views in a constraint based layout because inherent
+  //view tileing has a non-trivial contentsize (larger than the contained visible objects)
   DTInfiniteScrollView *sv = [[DTInfiniteScrollView alloc] initWithFrame:CGRectMake(0.,
                                                                                     selectionLabel.frame.origin.y + selectionLabel.frame.size.height + 15.f,
                                                                                     320.f,
                                                                                     80.f)
-                                                                   views:viewsArray];
+                                                                   views:self.selectionArray];
   [self addSubview:sv];
   
   UIView *bottomLine = [[UIView alloc] init];

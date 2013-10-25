@@ -14,14 +14,13 @@
 @property (nonatomic, strong) NSArray *views;
 
 @property (nonatomic, strong) NSMutableArray *visibleViews;
-@property (nonatomic, strong) UIView *viewContainerView;
-
 @property (nonatomic, retain) NSMutableArray *visibleIndices;
+
+@property (nonatomic, strong) UIView *viewContainerView;
 
 @end
 
 @implementation DTInfiniteScrollView
-//TODO put visible view indicies in an array and deal with them like a grown up
 //TODO center scrollview page in the center of the sheet
 
 - (id)initWithFrame:(CGRect)frame views:(NSArray *)views
@@ -31,19 +30,16 @@
     self.views = [views copy];
 
     self.contentSize = CGSizeMake(520, self.frame.size.height);
-    self.visibleIndices = [[NSMutableArray alloc] init];
+
+//TODO put visible view indicies in an array and deal with them like a grown up
+//    _visibleIndices = [[NSMutableArray alloc] init];
     _visibleViews = [[NSMutableArray alloc] init];
-    
+
     _viewContainerView = [[UIView alloc] init];
     self.viewContainerView.frame = CGRectMake(0.f, 0.f, self.contentSize.width, self.contentSize.height);
-//    self.viewContainerView.frame = CGRectMake(0.f, 0.f, 100., 100.);
-
     [self addSubview:self.viewContainerView];
-    [self.viewContainerView setUserInteractionEnabled:NO];
-    self.pagingEnabled = YES;
-    // hide horizontal scroll indicator so our recentering trick is not revealed
     
-
+    self.pagingEnabled = NO;
     [self setShowsHorizontalScrollIndicator:NO];
   }
   return self;

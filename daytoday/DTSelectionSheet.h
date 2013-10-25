@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, DTSelectionSheetType) {
 @interface DTSelectionSheet : UIView
 
 @property (nonatomic,retain) NSString *titleText;
-@property (nonatomic,strong) NSMutableArray *selectionArray;
+@property (nonatomic,strong) NSArray *selectionArray;
 
 //+ (id)selectionSheetWithTitle:(NSString *)t;
 
