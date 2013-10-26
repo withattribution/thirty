@@ -16,7 +16,9 @@ typedef NS_ENUM(NSInteger, DTSelectionSheetType) {
 //  DTSelectionSheetGeneric    //pass in an array of generic objects to select from
 };
 
-@interface DTSelectionSheet : UIView
+@interface DTSelectionSheet : UIView <UIScrollViewDelegate>{
+  DTSelectionSheetType sheetType;
+}
 
 @property (nonatomic,retain) NSString *titleText;
 @property (nonatomic,strong) NSArray *selectionArray;

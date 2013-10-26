@@ -82,7 +82,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 {
   CGFloat width = CGRectGetWidth(self.view.bounds);
   CGFloat height = CGRectGetHeight(self.view.bounds);
-  
+
   CGAffineTransform transform = CGAffineTransformIdentity;
   transform = CGAffineTransformMakeTranslation(width, 0);
   
@@ -137,7 +137,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   UIViewController *viewController = [UIViewController new];
   viewController.view.frame = self.view.bounds;
   viewController.view.backgroundColor = [UIColor randomColor];
-  
+
   return viewController;
 }
 
@@ -145,8 +145,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 
 - (void)selectCategory
 {
-
-  DTSelectionSheet *selectSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetDuration];
+  DTSelectionSheet *selectSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetCategory];
   [selectSheet showInView:self.currentChildViewController.view];
   
   __block id theSelected = nil;
@@ -174,15 +173,15 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                                               options:0
                                                                               metrics:descriptionView_metrics
                                                                                 views:@{@"descriptionView":descriptionView}]];
-  
+
   [self.currentChildViewController.view layoutIfNeeded];
 
   [descriptionView animateIntoViewForHeight:(nameView.frame.origin.y + nameView.frame.size.height + INPUT_VIEW_PADDING)];
-  
+
   [descriptionView descriptionDidComplete:^{
     [self selectCategory];
   }];
-  
+
 }
 
 //- (CGAffineTransform)startingTransformForViewControllerTransition:(ViewControllerTransition)transition

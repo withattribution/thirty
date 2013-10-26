@@ -37,7 +37,7 @@
     _viewContainerView = [[UIView alloc] init];
     self.viewContainerView.frame = CGRectMake(0.f, 0.f, self.contentSize.width, self.contentSize.height);
     [self addSubview:self.viewContainerView];
-    
+
     self.pagingEnabled = NO;
     [self setShowsHorizontalScrollIndicator:NO];
   }
@@ -51,7 +51,6 @@
 {
   CGPoint currentOffset = [self contentOffset];
   CGFloat contentWidth = [self contentSize].width;
-
 
   CGFloat centerOffsetX = (contentWidth - [self bounds].size.width) / 2.0;
   CGFloat distanceFromCenter = fabs(currentOffset.x - centerOffsetX);

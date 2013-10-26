@@ -18,11 +18,16 @@
 //6) may blur the background view depending on how fly i'm feeling
 
 #import "DTSelectionSheet.h"
-
-#import "DTDotElement.h"
 #import "DTInfiniteScrollView.h"
+#import "DTDotElement.h"
+#import "UIColor+SR.h"
 
 @interface DTSelectionSheet ()
+
+//possibly temp vars for category scrollview templating
+@property (nonatomic,retain) UIScrollView *categoryImagesScroll;
+@property (nonatomic,retain) UIScrollView *selectionScroll;
+@property (nonatomic,retain) NSArray *categoryImages;
 
 @property (copy) void (^completionBlock)();
 
@@ -30,13 +35,13 @@
 
 @implementation DTSelectionSheet
 
-static NSString *DURATION_TITLE = @"SELECT DURATION";
-static NSString *VERIFICATION_TITLE = @"SELECT VERIFICATION";
-static NSString *REPETITION_TITLE = @"SELECT NUMBER OF REPETIONS PER DAY";
-static NSString *CATEGORY_TITLE = @"SELECT CATEGORY";
+NSString static *DURATION_TITLE = @"SELECT DURATION";
+NSString static *VERIFICATION_TITLE = @"SELECT VERIFICATION";
+NSString static *REPETITION_TITLE = @"SELECT NUMBER OF REPETIONS PER DAY";
+NSString static *CATEGORY_TITLE = @"SELECT CATEGORY";
 
-const  CGFloat TRANSITION_DURATION = .42f;
-const  CGFloat VIEW_HEIGHT_PERCENT = .65f;
+CGFloat const TRANSITION_DURATION = .42f;
+CGFloat const VIEW_HEIGHT_PERCENT = .65f;
 
 NSInteger static MAX_DURATION = 60;
 NSInteger static MAX_REPETITION = 8;
@@ -51,10 +56,9 @@ NSInteger static MAX_REPETITION = 8;
   self = [super initWithFrame:frame];
   if (self) {
     [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:.7f]];
-    self.titleText = [self titleForType:type];
-    [self collectionForType:type];
-    
-    NSLog(@"init method of selection sheet called");
+    sheetType = type;
+    self.titleText = [self titleForType];
+    [self collectionForType];
   }
   return self;
 }
@@ -75,10 +79,10 @@ NSInteger static MAX_REPETITION = 8;
   return self;
 }
 
-- (NSString *)titleForType:(DTSelectionSheetType)type
+- (NSString *)titleForType
 {
   NSString *title = @"";
-  switch (type) {
+  switch (sheetType) {
     case DTSelectionSheetDuration:
       return DURATION_TITLE;
       break;
@@ -88,6 +92,9 @@ NSInteger static MAX_REPETITION = 8;
     case DTSelectionSheetRepetition:
       return REPETITION_TITLE;
       break;
+    case DTSelectionSheetCategory:
+      return CATEGORY_TITLE;
+      break;
     default:
       return @"TITLE NOT SET";
       break;
@@ -96,10 +103,13 @@ NSInteger static MAX_REPETITION = 8;
   return title;
 }
 
-- (void)collectionForType:(DTSelectionSheetType)type
+- (void)collectionForType
 {
   NSMutableArray *collection = [[NSMutableArray alloc] init];
-  switch (type) {
+  //TODO clean up this -- getting messy
+  NSMutableArray *images = [[NSMutableArray alloc] init];
+
+  switch (sheetType) {
     case DTSelectionSheetDuration:
       for (int i = 0; i < MAX_DURATION; i++) {
         DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 80.f, 80.f)
@@ -139,15 +149,40 @@ NSInteger static MAX_REPETITION = 8;
         [collection addObject:dot];
       }
       break;
+      case DTSelectionSheetCategory:
+      for (int i = 0; i < 10; i++) {
+        UIView *image = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 320.f)];
+        [image setBackgroundColor:[UIColor randomColor]];
+        image.tag = i;
+
+        [images addObject:image];
+
+        UIView *dot = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 40.f)];
+        [dot setBackgroundColor:[UIColor randomColor]];
+        dot.tag = i;
+
+        UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [selectionButton setFrame:dot.bounds];
+        [selectionButton setTag:i];
+        [selectionButton setBackgroundColor:[UIColor clearColor]];
+//        [selectionButton addTarget:self action:@selector(didMakeSelection:) forControlEvents:UIControlEventTouchUpInside];
+
+        [dot addSubview:selectionButton];
+
+        [collection addObject:dot];
+      }
     default://noop
       break;
   }
 
-  self.selectionArray = [NSArray arrayWithArray:collection];
+  if ([images count] > 0)
+    self.categoryImages = [NSArray arrayWithArray:images];
+
   if ([collection count] > 0)
     self.selectionArray = [NSArray arrayWithArray:collection];
-  else self.selectionArray = nil; //TODO should this be nil or should this error out?
-  
+  else
+    self.selectionArray = nil; //TODO should this be nil or should this error out?
+
 }
 
 #pragma mark - Preparation before showing view
@@ -158,7 +193,7 @@ NSInteger static MAX_REPETITION = 8;
   topLine.translatesAutoresizingMaskIntoConstraints = NO;
   [topLine setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
   [self addSubview:topLine];
-  
+
   UILabel *selectionLabel = [[UILabel alloc] init];
   selectionLabel.textColor = [UIColor colorWithWhite:.9 alpha:1.f];
   selectionLabel.backgroundColor = [UIColor clearColor];
@@ -170,7 +205,45 @@ NSInteger static MAX_REPETITION = 8;
   selectionLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [selectionLabel setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
   [self addSubview:selectionLabel];
-  
+
+  if (sheetType == DTSelectionSheetCategory) {
+    self.categoryImagesScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0.,
+                                                                               selectionLabel.frame.origin.y + selectionLabel.frame.size.height + 15.f,
+                                                                               320.f,
+                                                                               320.f)];
+    [self.categoryImagesScroll setPagingEnabled:YES];
+    [self.categoryImagesScroll setDelegate:self];
+
+    self.categoryImagesScroll.contentSize = CGSizeMake(320.*[self.categoryImages count], 320.);
+    
+    for (int i = 0; i < [self.categoryImages count]; i++) {
+      [((UIView*)[self.categoryImages objectAtIndex:i]) setFrame:CGRectMake(320*i,
+                                                                            0,
+                                                                            320.f,
+                                                                            320.f)];
+      [self.categoryImagesScroll addSubview:[self.categoryImages objectAtIndex:i]];
+    }
+    
+    self.selectionScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0.,
+                                                                          self.categoryImagesScroll.frame.origin.y + self.categoryImagesScroll.frame.size.height + 15.f,
+                                                                          320.f,
+                                                                          40.f)];
+    [self.selectionScroll setPagingEnabled:YES];
+    [self.selectionScroll setDelegate:self];
+    self.selectionScroll.contentSize = CGSizeMake(100.f*[self.selectionArray count], 40.f);
+    
+    for (int i = 0; i < [self.selectionArray count]; i++) {
+      [((UIView*)[self.selectionArray objectAtIndex:i]) setFrame:CGRectMake(100.f*i,
+                                                                            0.f,
+                                                                            100.f,
+                                                                            40.f)];
+      [self.selectionScroll addSubview:[self.selectionArray objectAtIndex:i]];
+    }
+    
+    [self addSubview:self.categoryImagesScroll];
+    [self addSubview:self.selectionScroll];
+  }
+  else {
   //cannot include infinite scroll views in a constraint based layout because inherent
   //view tileing has a non-trivial contentsize (larger than the contained visible objects)
   DTInfiniteScrollView *sv = [[DTInfiniteScrollView alloc] initWithFrame:CGRectMake(0.,
@@ -179,6 +252,7 @@ NSInteger static MAX_REPETITION = 8;
                                                                                     80.f)
                                                                    views:self.selectionArray];
   [self addSubview:sv];
+  }
   
   UIView *bottomLine = [[UIView alloc] init];
   bottomLine.translatesAutoresizingMaskIntoConstraints = NO;
@@ -197,34 +271,41 @@ NSInteger static MAX_REPETITION = 8;
   
   //these are the constraints for drawing purposes
   NSDictionary *views = NSDictionaryOfVariableBindings(topLine,selectionLabel,bottomLine,cancelButton);
-  
+
   self.translatesAutoresizingMaskIntoConstraints = NO;
-  
+
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[topLine]|"
                                                                options:0
                                                                metrics:nil
                                                                  views:views]];
-  
+
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[selectionLabel]|"
                                                                options:0
                                                                metrics:nil
                                                                  views:views]];
-  
+
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomLine]|"
                                                                options:0
                                                                metrics:nil
                                                                  views:views]];
-  
+
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[cancelButton]|"
                                                                options:0
                                                                metrics:nil
                                                                  views:views]];
-  
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLine(2)]-2-[selectionLabel(30)]-85-[bottomLine(2)]"
+  if (sheetType == DTSelectionSheetCategory) {
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLine(2)]-2-[selectionLabel(30)]-460-[bottomLine(2)]"
                                                                options:0
                                                                metrics:nil
                                                                  views:views]];
-  
+  }
+  else {
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLine(2)]-2-[selectionLabel(30)]-85-[bottomLine(2)]"
+                                                                 options:0
+                                                                 metrics:nil
+                                                                   views:views]];
+  }
+
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[cancelButton]-10-|"
                                                                options:0
                                                                metrics:nil
@@ -240,31 +321,44 @@ NSInteger static MAX_REPETITION = 8;
 
 - (void)selectionForButton:(UIButton *)b
 {
-  NSLog(@"yo i just dunked the selected index into this block");
-  self.completionBlock([self.selectionArray objectAtIndex:b.tag]);
-  [self dismiss];
+//  self.completionBlock([self.selectionArray objectAtIndex:b.tag]);
+//  [self dismiss];
 }
 
 #pragma mark - Showing and dismissing methods
 
-- (void)showInView:(UIView *)view {
-
+- (void)showInView:(UIView *)view
+{
   [self viewPreparation];
-  
-	[view addSubview:self];
-  
-  //layout Selection Sheet in superview
-  NSDictionary *metrics = @{ @"height": @(view.frame.size.height*VIEW_HEIGHT_PERCENT)};
 
-  [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[self(height)]|"
-                                                                         options:0
-                                                                         metrics:metrics
-                                                                           views:@{@"self": self}] ];
+	[view addSubview:self];
+
+  //layout Selection Sheet in superview
+  if (sheetType == DTSelectionSheetCategory) {
+    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[self(height)]|"
+                                                                 options:0
+                                                                 metrics:@{ @"height": @(view.frame.size.height)}
+                                                                   views:@{@"self": self}] ];
+  }
+  
+  else {
+    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[self(height)]|"
+                                                                 options:0
+                                                                 metrics:@{ @"height": @(view.frame.size.height*VIEW_HEIGHT_PERCENT)}
+                                                                   views:@{@"self": self}] ];
+  }
+  
+//  NSDictionary *metrics = @{ @"height": @(view.frame.size.height*VIEW_HEIGHT_PERCENT)};
+//  [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[self(height)]|"
+//                                                                         options:0
+//                                                                         metrics:metrics
+//                                                                           views:@{@"self": self}] ];
 
   [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[self]|"
                                                                            options:0
                                                                            metrics:nil
                                                                              views:@{@"self": self}]];
+
   [self.superview layoutIfNeeded];
   [self animateIntoView];
 }
