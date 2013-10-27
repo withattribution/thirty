@@ -54,7 +54,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   self.currentChildViewController = viewController;
   
   self.title = NSLocalizedString(@"Create Challenge", @"create challenge (title)");
-
+  
   UIButton *startCreationFlow = [UIButton buttonWithType:UIButtonTypeCustom];
   [startCreationFlow.titleLabel setTextColor:[UIColor colorWithWhite:0.8f alpha:1.f]];
   [startCreationFlow setBackgroundColor:[UIColor lightGrayColor]];
