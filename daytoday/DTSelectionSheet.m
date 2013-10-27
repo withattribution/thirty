@@ -159,7 +159,7 @@ NSInteger static MAX_REPETITION = 8;
 
         [images addObject:image];
 
-        UIView *dot = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f/2.f, 40.f)];
+        UIView *dot = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 120.f, 40.f)];
         [dot setBackgroundColor:[UIColor randomColor]];
         dot.tag = i;
 
@@ -215,7 +215,9 @@ NSInteger static MAX_REPETITION = 8;
                                                                                320.f)];
     [self.categoryImagesScroll setDelegate:self];
     [self.categoryImagesScroll setPagingEnabled:YES];
-    [self.categoryImagesScroll setBounces:NO];
+    [self.categoryImagesScroll setShowsHorizontalScrollIndicator:NO];
+    [self.categoryImagesScroll setShowsVerticalScrollIndicator:NO];
+    
     self.categoryImagesScroll.contentSize = CGSizeMake(320.*[self.categoryImages count], 320.);
     
     for (int i = 0; i < [self.categoryImages count]; i++) {
@@ -232,30 +234,36 @@ NSInteger static MAX_REPETITION = 8;
     }
     ///////////////*********************************************************//////////////////////////////
     CGFloat static SCROLL_PADDING = 20.f;
-
+    
+    CGFloat contentFrameWidth = ((UIView*)[self.selectionArray firstObject]).frame.size.width;
+    CGFloat contentFrameHeight = ((UIView*)[self.selectionArray firstObject]).frame.size.height;
+    
     self.selectionScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0.f,
-                                                                          self.categoryImagesScroll.frame.origin.y + self.categoryImagesScroll.frame.size.height + 15.f,
+                                                                          self.categoryImagesScroll.frame.origin.y + self.categoryImagesScroll.frame.size.height - contentFrameHeight,
                                                                           320.f,
                                                                           40.f)];
     [self.selectionScroll setDelegate:self];
     [self.selectionScroll setPagingEnabled:NO];
-    self.selectionScroll.contentSize = CGSizeMake((160.f)*([self.selectionArray count]+1), 40.f);
+    [self.selectionScroll setShowsHorizontalScrollIndicator:NO];
+    [self.selectionScroll setShowsVerticalScrollIndicator:NO];
+    
+    self.selectionScroll.contentSize = CGSizeMake((contentFrameWidth+2*SCROLL_PADDING)*([self.selectionArray count]+1), contentFrameHeight);
     
     for (int i = 0; i < [self.selectionArray count]; i++) {
       [((UIView*)[self.selectionArray objectAtIndex:i]) setFrame:CGRectMake(SCROLL_PADDING,
                                                                             0.f,
-                                                                            120.f,
-                                                                            40.f)];
+                                                                            contentFrameWidth,
+                                                                            contentFrameHeight)];
       
       UILabel *label = [[UILabel alloc] initWithFrame:((UIView*)[self.selectionArray objectAtIndex:i]).bounds];
       [label setNumberOfLines:1];
       [label setText:[NSString stringWithFormat:@"%d",i]];
       [((UIView*)[self.selectionArray objectAtIndex:i]) addSubview:label];
       
-      UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(i*(120.f+(2*SCROLL_PADDING)) + (4*SCROLL_PADDING),
+      UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(i*(contentFrameWidth+2*SCROLL_PADDING) + (4*SCROLL_PADDING),
                                                                        0,
-                                                                       120.f+(2*SCROLL_PADDING)+(0*SCROLL_PADDING),
-                                                                       40)];
+                                                                       (contentFrameWidth+2*SCROLL_PADDING),
+                                                                       contentFrameHeight)];
       [containerView setBackgroundColor:[UIColor randomColor]];
       [containerView setAlpha:.5];
       
@@ -373,12 +381,6 @@ NSInteger static MAX_REPETITION = 8;
                                                                    views:@{@"self": self}] ];
   }
   
-//  NSDictionary *metrics = @{ @"height": @(view.frame.size.height*VIEW_HEIGHT_PERCENT)};
-//  [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[self(height)]|"
-//                                                                         options:0
-//                                                                         metrics:metrics
-//                                                                           views:@{@"self": self}] ];
-
   [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[self]|"
                                                                            options:0
                                                                            metrics:nil
