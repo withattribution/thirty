@@ -215,7 +215,7 @@ NSInteger static MAX_REPETITION = 8;
                                                                                320.f)];
     [self.categoryImagesScroll setDelegate:self];
     [self.categoryImagesScroll setPagingEnabled:YES];
-
+    [self.categoryImagesScroll setBounces:NO];
     self.categoryImagesScroll.contentSize = CGSizeMake(320.*[self.categoryImages count], 320.);
     
     for (int i = 0; i < [self.categoryImages count]; i++) {
@@ -223,6 +223,11 @@ NSInteger static MAX_REPETITION = 8;
                                                                             0,
                                                                             320.f,
                                                                             320.f)];
+      UILabel *label = [[UILabel alloc] initWithFrame:((UIView*)[self.categoryImages objectAtIndex:i]).bounds];
+      [label setNumberOfLines:1];
+      [label setText:[NSString stringWithFormat:@"%d",i]];
+      [((UIView*)[self.categoryImages objectAtIndex:i]) addSubview:label];
+      
       [self.categoryImagesScroll addSubview:[self.categoryImages objectAtIndex:i]];
     }
     ///////////////*********************************************************//////////////////////////////
@@ -230,36 +235,32 @@ NSInteger static MAX_REPETITION = 8;
 
     self.selectionScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0.f,
                                                                           self.categoryImagesScroll.frame.origin.y + self.categoryImagesScroll.frame.size.height + 15.f,
-                                                                          320.f/1.f,
+                                                                          320.f,
                                                                           40.f)];
     [self.selectionScroll setDelegate:self];
     [self.selectionScroll setPagingEnabled:NO];
-//    [self.selectionScroll setClipsToBounds:NO];
-
-    self.selectionScroll.contentSize = CGSizeMake((320.f)*[self.selectionArray count], 40.f);
-//    self.selectionScroll.contentOffset = CGPointMake(SCROLL_PADDING+(160.f*.80)/2.f, 0.f);
-//    self.selectionScroll.contentInset = UIEdgeInsetsMake(0.,
-//                                                         160.,//SCROLL_PADDING+(160.f*.80)/2.f,
-//                                                         0,
-//                                                         160.f);//SCROLL_PADDING+(160.f*.80)/2.f);
-    
+    self.selectionScroll.contentSize = CGSizeMake((160.f)*([self.selectionArray count]+1), 40.f);
     
     for (int i = 0; i < [self.selectionArray count]; i++) {
-      [((UIView*)[self.selectionArray objectAtIndex:i]) setFrame:CGRectMake((120.f+(2*SCROLL_PADDING)-(120.f*1.f))/2.f,
+      [((UIView*)[self.selectionArray objectAtIndex:i]) setFrame:CGRectMake(SCROLL_PADDING,
                                                                             0.f,
-                                                                            (120.f*1.f),
+                                                                            120.f,
                                                                             40.f)];
+      
+      UILabel *label = [[UILabel alloc] initWithFrame:((UIView*)[self.selectionArray objectAtIndex:i]).bounds];
+      [label setNumberOfLines:1];
+      [label setText:[NSString stringWithFormat:@"%d",i]];
+      [((UIView*)[self.selectionArray objectAtIndex:i]) addSubview:label];
       
       UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(i*(120.f+(2*SCROLL_PADDING)) + (4*SCROLL_PADDING),
                                                                        0,
-                                                                       120.f+(2*SCROLL_PADDING),
+                                                                       120.f+(2*SCROLL_PADDING)+(0*SCROLL_PADDING),
                                                                        40)];
       [containerView setBackgroundColor:[UIColor randomColor]];
       [containerView setAlpha:.5];
       
       [containerView addSubview:[self.selectionArray objectAtIndex:i]];
       
-//      [((UIView *)[self.selectionArray objectAtIndex:i]) setClipsToBounds:NO];
       [self.selectionScroll addSubview:containerView];
     }
     
@@ -387,67 +388,7 @@ NSInteger static MAX_REPETITION = 8;
   [self animateIntoView];
 }
 
-#pragma mark UIScrollView Delegate Methods
-
-//categoryImagesScroll
-//selectionScroll
-
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//  if([scrollView isEqual:scrollViewA]) {
-//    CGPoint offset = scrollViewB.contentOffset;
-//    offset.y = scrollViewA.contentOffset.y;
-//    [scrollViewB setContentOffset:offset];
-//  } else {
-//    CGPoint offset = scrollViewA.contentOffset;
-//    offset.y = scrollViewB.contentOffset.y;
-//    [scrollViewA setContentOffset:offset];
-//  }
-//}
-
-
-- (void) scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-  
-  CGFloat pageWidth = (self.selectionScroll.frame.size.width)/2.f + 0 /* Optional Photo app like gap between images */;
-  
-  _currentPage = floor((self.selectionScroll.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-  
-  NSLog(@"Dragging - You are now on page %i", _currentPage);
-}
-
--(void) scrollViewWillEndDragging:(UIScrollView*)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint*)targetContentOffset {
-  
-  CGFloat pageWidth = (self.selectionScroll.frame.size.width)/2.f + 0;
-  
-  int newPage = _currentPage;
-  
-  if (velocity.x == 0) // slow dragging not lifting finger
-  {
-    newPage = floor((targetContentOffset->x - pageWidth / 2) / pageWidth) + 1;
-  }
-  else
-  {
-    newPage = velocity.x > 0 ? _currentPage + 1 : _currentPage - 1;
-    
-    if (newPage < 0)
-      newPage = 0;
-    if (newPage > self.selectionScroll.contentSize.width / pageWidth)
-      newPage = ceil(self.selectionScroll.contentSize.width / pageWidth) - 1.0;
-  }
-  
-  NSLog(@"Dragging - You will be on %i page (from page %i)", newPage, _currentPage);
-  
-  *targetContentOffset = CGPointMake(newPage * pageWidth, targetContentOffset->y);
-}
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//  if (scrollView == self.selectionScroll) {
-//
-////    [self.categoryImagesScroll setContentOffset:[scrollView contentOffset]];
-//  }
-////  else {
-////    [self.categoryImagesScroll setContentOffset:[scrollView contentOffset]];
-////  }
-//}
-
+#pragma mark DTSelectionSHeet Display Methods
 
 - (void)animateIntoView
 {
@@ -463,7 +404,7 @@ NSInteger static MAX_REPETITION = 8;
 
 - (void)dismiss {
 	if (!self.superview) return;
-
+  
   __block CGRect f = self.frame;
 	[UIView animateWithDuration:TRANSITION_DURATION
                    animations:^{
@@ -471,8 +412,59 @@ NSInteger static MAX_REPETITION = 8;
                      self.frame = f;
                    }
                    completion:^(BOOL finished) {
-                    [self removeFromSuperview];
+                     [self removeFromSuperview];
                    }];
+}
+
+#pragma mark UIScrollView Delegate Methods
+
+-(void) scrollViewWillEndDragging:(UIScrollView*)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint*)targetContentOffset
+{
+    CGFloat pageWidth = (self.selectionScroll.frame.size.width)/2.f + 0;
+    
+    int newPage = _currentPage;
+    
+    if (velocity.x == 0) // slow dragging not lifting finger
+    {
+      newPage = floor((targetContentOffset->x - pageWidth / 2.f) / pageWidth) + 1;
+    }
+    else
+    {
+      newPage = velocity.x > 0 ? _currentPage + 1 : _currentPage - 1;
+      
+      if (newPage < 0)
+        newPage = 0;
+      if (newPage > self.selectionScroll.contentSize.width / pageWidth)
+        newPage = ceil(self.selectionScroll.contentSize.width / pageWidth) - 1.0;
+    }
+//    NSLog(@"Dragging - You will be on %i page (from page %i)", newPage, _currentPage);
+  if([scrollView isEqual:self.selectionScroll]) {
+    *targetContentOffset = CGPointMake(newPage * pageWidth, targetContentOffset->y);
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView;
+{
+  if (scrollView == self.selectionScroll) {
+    [self.categoryImagesScroll setContentOffset:CGPointMake(320.f*_currentPage, 0) animated:YES];
+  }
+  if (scrollView == self.categoryImagesScroll) {
+    [self.selectionScroll setContentOffset:CGPointMake(160.f*_currentPage, 0) animated:YES];
+  }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+  if([scrollView isEqual:self.selectionScroll]) {
+    CGFloat pageWidth = (self.selectionScroll.frame.size.width)/2.f + 0 /* Optional Photo app like gap between images */;
+    _currentPage = floor( (self.selectionScroll.contentOffset.x - pageWidth / 2.f) / pageWidth) + 1;
+  }
+  if (scrollView == self.categoryImagesScroll) {
+    CGFloat pageWidth = (self.categoryImagesScroll.frame.size.width) + 0 /* Optional Photo app like gap between images */;
+    _currentPage = floor( (self.categoryImagesScroll.contentOffset.x - pageWidth / 2.f) / pageWidth) + 1;
+  }
 }
 
 @end
