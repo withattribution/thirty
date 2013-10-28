@@ -18,6 +18,9 @@
 @interface CreateChallengeViewController () {
   ChallengeName *nameView;
   ChallengeDescription *descriptionView;
+  UIImageView *categoryImage;
+  
+  
 }
 
 - (void)transitionToChallengeFLow;
@@ -29,6 +32,10 @@
 @end
 
 @implementation CreateChallengeViewController
+
+#define PRESET_DURATION 30
+#define PRESET_VERIFICATION 0
+#define PRESET_REPETITION 1
 
 CGFloat static TRANSITION_VELOCITY = 0.428571f; //Used for transition to child view controllers
 CGFloat static TRANSITION_DURATION = 0.559821f; // --
@@ -189,30 +196,124 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 - (void)placeSelectedCategoryImage:(UIImageView *)catImage
 {
   NSLog(@"adding cat image");
-  [catImage setAlpha:0.2];
-  [catImage setUserInteractionEnabled:NO];
-  [catImage setTranslatesAutoresizingMaskIntoConstraints:NO];
+  if (categoryImage) {
+    //if another image has already been set update the displayed version
+    [categoryImage removeFromSuperview];
+  }
   
-  [self.currentChildViewController.view insertSubview:catImage atIndex:0];
+  categoryImage = catImage;
   
-  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[catImage]|"
+  [categoryImage setAlpha:0.2];
+  [categoryImage setUserInteractionEnabled:NO];
+  [categoryImage setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
+  [self.currentChildViewController.view insertSubview:categoryImage atIndex:0];
+  
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[categoryImage]|"
                                                                                                options:0
                                                                                                metrics:nil
-                                                                                                 views:@{@"catImage":catImage}]];
+                                                                                                 views:@{@"categoryImage":categoryImage}]];
   
-  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[catImage(320)]"
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[categoryImage]"
                                                                                                options:0
                                                                                                metrics:nil
-                                                                                                 views:@{@"catImage":catImage}]];
+                                                                                                 views:@{@"categoryImage":categoryImage}]];
   [self.currentChildViewController.view layoutIfNeeded];
 
   [UIView animateWithDuration:0.6f
                    animations:^{
-                     [catImage setAlpha:1.f];
+                     [categoryImage setAlpha:1.f];
                    }
                    completion:^(BOOL finished) {
+                     [self placeOptionalChallengeCreationSelections];
                    }];
 }
+
+- (void)placeOptionalChallengeCreationSelections
+{
+  CGSize buttonSize = CGSizeMake(80., 80.);
+  CGFloat buttonContainerWidth = descriptionView.frame.size.width;
+  CGFloat buttonSpacing = (buttonContainerWidth - (3*buttonSize.width)) /2.f;
+  
+  NSLog(@"the spacing : %f",buttonSpacing);
+  
+  CGFloat buttonY = descriptionView.frame.origin.y + descriptionView.frame.size.height + 10.f;
+  
+  DTDotElement *durationDot = [[DTDotElement alloc] initWithFrame:CGRectMake(descriptionView.frame.origin.x,
+                                                                             buttonY,
+                                                                             buttonSize.width,
+                                                                             buttonSize.height)
+                                                    andColorGroup:[DTDotColorGroup summaryDayColorGroup]
+                                                        andNumber:[NSNumber numberWithInt:PRESET_DURATION]];
+  UIButton *durationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [durationButton setFrame:durationDot.bounds];
+//  [selectionButton setTag:i];
+  [durationButton setBackgroundColor:[UIColor clearColor]];
+  [durationButton addTarget:self action:@selector(selectDuration:) forControlEvents:UIControlEventTouchUpInside];
+  
+  [durationDot addSubview:durationButton];
+  
+  [self.currentChildViewController.view addSubview:durationDot];
+  
+  DTDotElement *verifyDot = [[DTDotElement alloc] initWithFrame:CGRectMake(durationDot.frame.origin.x + durationDot.frame.size.width + buttonSpacing,
+                                                                           buttonY,
+                                                                           buttonSize.width,
+                                                                           buttonSize.height)
+                                                  andColorGroup:[DTDotColorGroup summaryDayColorGroup]
+                                                       andImage:[UIImage imageNamed:@"anotherCrop.jpg"]];
+  UIButton *verifyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [verifyButton setFrame:verifyDot.bounds];
+  //  [selectionButton setTag:i];
+  [verifyButton setBackgroundColor:[UIColor clearColor]];
+  [verifyButton addTarget:self action:@selector(selectVerification:) forControlEvents:UIControlEventTouchUpInside];
+  
+  [verifyDot addSubview:verifyButton];
+  
+  [self.currentChildViewController.view addSubview:verifyDot];
+  
+  DTDotElement *repititionDot = [[DTDotElement alloc] initWithFrame:CGRectMake(verifyDot.frame.origin.x + verifyDot.frame.size.width + buttonSpacing,
+                                                                             buttonY,
+                                                                             buttonSize.width,
+                                                                             buttonSize.height)
+                                                    andColorGroup:[DTDotColorGroup summaryDayColorGroup]
+                                                        andNumber:[NSNumber numberWithInt:PRESET_REPETITION]];
+  UIButton *repeatButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [repeatButton setFrame:repititionDot.bounds];
+  //  [selectionButton setTag:i];
+  [repeatButton setBackgroundColor:[UIColor clearColor]];
+  [repeatButton addTarget:self action:@selector(selectRepetition:) forControlEvents:UIControlEventTouchUpInside];
+  
+  [repititionDot addSubview:repeatButton];
+  
+  [self.currentChildViewController.view addSubview:repititionDot];
+}
+
+- (void)selectDuration:(UIButton *)button
+{
+  DTSelectionSheet *durationSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetDuration];
+  [durationSheet showInView:self.currentChildViewController.view];
+  [durationSheet didCompleteWithSelectedObject:^(id obj){
+    NSLog(@"this is durationl: %@", obj);
+  }];
+  
+}
+
+- (void)selectVerification:(UIButton *)button
+{
+  DTSelectionSheet *verifySheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetVerification];
+  [verifySheet showInView:self.currentChildViewController.view];
+  [verifySheet didCompleteWithSelectedObject:^(id obj){
+    NSLog(@"this is verification: %@", obj);
+  }];}
+
+- (void)selectRepetition:(UIButton *)button
+{
+  DTSelectionSheet *repititionSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetRepetition];
+  [repititionSheet showInView:self.currentChildViewController.view];
+  [repititionSheet didCompleteWithSelectedObject:^(id obj){
+    NSLog(@"this is repitition: %@",obj);
+  }];}
+
 
 //- (CGAffineTransform)startingTransformForViewControllerTransition:(ViewControllerTransition)transition
 //{
