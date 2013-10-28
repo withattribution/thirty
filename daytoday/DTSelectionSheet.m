@@ -382,7 +382,6 @@ NSInteger static MAX_VERIFICATION_TYPES = 4;
 
 - (void)selectionForButton:(UIButton *)b
 {
-  NSLog(@"this is here");
   if (sheetType == DTSelectionSheetCategory)
     self.completionBlock([self.categoryImages objectAtIndex:b.tag]);
   else
