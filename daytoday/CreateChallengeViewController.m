@@ -355,8 +355,68 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 {
   //step through challenge data and verify that the minimum necessary data is included
   
+//  [self.currentChildViewController mod]
+//  if (successful do share screen) {
+  [self transitionShareChallengeController];
+//  }
+//  else{
+//    display the sv progress view for failed creation and status message
+//  }
   
 }
+
+#pragma mark END OF CHALLENGE CREATION LOOP BACK TO BEGINNING
+
+- (void)transitionShareChallengeController
+{
+  CGFloat width = CGRectGetWidth(self.view.bounds);
+  CGFloat height = CGRectGetHeight(self.view.bounds);
+  
+  CGAffineTransform transform = CGAffineTransformIdentity;
+  transform = CGAffineTransformMakeTranslation(0, height);
+  
+  UIViewController *nextViewController = [self nextViewController];
+  
+  // Containment
+  [self addChildViewController:nextViewController];
+  [self.currentChildViewController willMoveToParentViewController:nil];
+  
+  nextViewController.view.transform = transform;
+
+  UIAlertView *broughtToYouBy = [[UIAlertView alloc] initWithTitle:@"THAT SURE WAS FUN!" message:@"Unfortunately this is as far as challenge creation goes for now. Sharing and other stuff should be on this screen don't you think? Suggestions welcome!" delegate:self cancelButtonTitle:@"RYAN GOSLING AND LIV TYLER THINK YOU'RE FLY" otherButtonTitles:nil];
+
+  [self transitionFromViewController:self.currentChildViewController
+                    toViewController:nextViewController
+                            duration:TRANSITION_DURATION
+                             options:0
+                          animations:^{
+                            self.currentChildViewController.view.alpha = TRANSITION_ALPHA;
+                            CGAffineTransform transform = CGAffineTransformMakeTranslation(-nextViewController.view.transform.tx * TRANSITION_VELOCITY,
+                                                                                           -nextViewController.view.transform.ty * TRANSITION_VELOCITY);
+                            transform = CGAffineTransformRotate(transform, acosf(nextViewController.view.transform.a));
+                            self.currentChildViewController.view.transform = CGAffineTransformScale(transform, TRANSITION_SCALE, TRANSITION_SCALE);
+                            nextViewController.view.transform = CGAffineTransformIdentity;
+                          } completion:^(BOOL finished) {
+                            [nextViewController didMoveToParentViewController:self];
+                            [self.currentChildViewController removeFromParentViewController];
+                            self.currentChildViewController = nextViewController;
+                            [broughtToYouBy show];
+                          }];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+  
+  UIViewController *newChallengeCreation = [[CreateChallengeViewController alloc] init];
+  [self presentViewController:newChallengeCreation animated:YES completion:^{
+    [newChallengeCreation didMoveToParentViewController:self];
+    [self.currentChildViewController removeFromParentViewController];
+    self.currentChildViewController = newChallengeCreation;
+    
+    NSLog(@"take it from the top");
+  }];
+}
+
 
 //- (CGAffineTransform)startingTransformForViewControllerTransition:(ViewControllerTransition)transition
 //{
