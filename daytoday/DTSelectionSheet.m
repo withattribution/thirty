@@ -144,7 +144,7 @@ NSInteger static MAX_REPETITION = 8;
         [selectionButton setFrame:dot.bounds];
         [selectionButton setTag:i];
         [selectionButton setBackgroundColor:[UIColor clearColor]];
-        [selectionButton addTarget:self action:@selector(didMakeSelection:) forControlEvents:UIControlEventTouchUpInside];
+        [selectionButton addTarget:self action:@selector(selectionForButton:) forControlEvents:UIControlEventTouchUpInside];
         
         [dot addSubview:selectionButton];
         
@@ -153,25 +153,34 @@ NSInteger static MAX_REPETITION = 8;
       break;
       case DTSelectionSheetCategory:
       for (int i = 0; i < 10; i++) {
-        UIView *image = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 320.f)];
-        [image setBackgroundColor:[UIColor randomColor]];
+        UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 320.f)];
+        [image setBackgroundColor:[UIColor blackColor]];
+        [image setUserInteractionEnabled:YES];
         image.tag = i;
+        
+        UIButton *imageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [imageButton setFrame:image.bounds];
+        [imageButton setTag:i];
+        [imageButton setBackgroundColor:[UIColor randomColor]];
+        [imageButton addTarget:self action:@selector(selectionForButton:) forControlEvents:UIControlEventTouchUpInside];
+
+        [image addSubview:imageButton];
 
         [images addObject:image];
 
-        UIView *dot = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 120.f, 40.f)];
-        [dot setBackgroundColor:[UIColor randomColor]];
-        dot.tag = i;
+        UIView *cat = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 120.f, 40.f)];
+        [cat setBackgroundColor:[UIColor randomColor]];
+        cat.tag = i;
 
         UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [selectionButton setFrame:dot.bounds];
+        [selectionButton setFrame:cat.bounds];
         [selectionButton setTag:i];
         [selectionButton setBackgroundColor:[UIColor clearColor]];
-//        [selectionButton addTarget:self action:@selector(didMakeSelection:) forControlEvents:UIControlEventTouchUpInside];
+        [selectionButton addTarget:self action:@selector(selectionForButton:) forControlEvents:UIControlEventTouchUpInside];
 
-        [dot addSubview:selectionButton];
+        [cat addSubview:selectionButton];
 
-        [collection addObject:dot];
+        [collection addObject:cat];
       }
     default://noop
       break;
@@ -217,27 +226,27 @@ NSInteger static MAX_REPETITION = 8;
     [self.categoryImagesScroll setPagingEnabled:YES];
     [self.categoryImagesScroll setShowsHorizontalScrollIndicator:NO];
     [self.categoryImagesScroll setShowsVerticalScrollIndicator:NO];
-    
+
     self.categoryImagesScroll.contentSize = CGSizeMake(320.*[self.categoryImages count], 320.);
-    
+
     for (int i = 0; i < [self.categoryImages count]; i++) {
-      [((UIView*)[self.categoryImages objectAtIndex:i]) setFrame:CGRectMake(320*i,
+      [((UIImageView*)[self.categoryImages objectAtIndex:i]) setFrame:CGRectMake(320*i,
                                                                             0,
                                                                             320.f,
                                                                             320.f)];
-      UILabel *label = [[UILabel alloc] initWithFrame:((UIView*)[self.categoryImages objectAtIndex:i]).bounds];
+      UILabel *label = [[UILabel alloc] initWithFrame:((UIImageView*)[self.categoryImages objectAtIndex:i]).bounds];
       [label setNumberOfLines:1];
       [label setText:[NSString stringWithFormat:@"%d",i]];
-      [((UIView*)[self.categoryImages objectAtIndex:i]) addSubview:label];
-      
+      [((UIImageView*)[self.categoryImages objectAtIndex:i]) addSubview:label];
+
       [self.categoryImagesScroll addSubview:[self.categoryImages objectAtIndex:i]];
     }
     ///////////////*********************************************************//////////////////////////////
     CGFloat static SCROLL_PADDING = 20.f;
-    
+
     CGFloat contentFrameWidth = ((UIView*)[self.selectionArray firstObject]).frame.size.width;
     CGFloat contentFrameHeight = ((UIView*)[self.selectionArray firstObject]).frame.size.height;
-    
+
     self.selectionScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0.f,
                                                                           self.categoryImagesScroll.frame.origin.y + self.categoryImagesScroll.frame.size.height - contentFrameHeight,
                                                                           320.f,
@@ -247,7 +256,8 @@ NSInteger static MAX_REPETITION = 8;
     [self.selectionScroll setShowsHorizontalScrollIndicator:NO];
     [self.selectionScroll setShowsVerticalScrollIndicator:NO];
     
-    self.selectionScroll.contentSize = CGSizeMake((contentFrameWidth+2*SCROLL_PADDING)*([self.selectionArray count]+1), contentFrameHeight);
+    self.selectionScroll.contentSize = CGSizeMake((contentFrameWidth+2*SCROLL_PADDING)*([self.selectionArray count]+1),
+                                                  contentFrameHeight);
     
     for (int i = 0; i < [self.selectionArray count]; i++) {
       [((UIView*)[self.selectionArray objectAtIndex:i]) setFrame:CGRectMake(SCROLL_PADDING,
@@ -291,7 +301,7 @@ NSInteger static MAX_REPETITION = 8;
   bottomLine.translatesAutoresizingMaskIntoConstraints = NO;
   [bottomLine setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
   [self addSubview:bottomLine];
-  
+
   UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
   NSString *cancelTitle = NSLocalizedString(@"Cancel", @"Cancel as a button field");
   [cancelButton setTitle:cancelTitle forState:UIControlStateNormal];
@@ -301,7 +311,7 @@ NSInteger static MAX_REPETITION = 8;
   cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
   [cancelButton setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
   [self addSubview:cancelButton];
-  
+
   //these are the constraints for drawing purposes
   NSDictionary *views = NSDictionaryOfVariableBindings(topLine,selectionLabel,bottomLine,cancelButton);
 
@@ -354,8 +364,13 @@ NSInteger static MAX_REPETITION = 8;
 
 - (void)selectionForButton:(UIButton *)b
 {
-//  self.completionBlock([self.selectionArray objectAtIndex:b.tag]);
-//  [self dismiss];
+  NSLog(@"this is here");
+  if (sheetType == DTSelectionSheetCategory)
+    self.completionBlock([self.categoryImages objectAtIndex:b.tag]);
+  else
+    self.completionBlock([self.selectionArray objectAtIndex:b.tag]);
+  
+  [self dismiss];
 }
 
 #pragma mark - Showing and dismissing methods
@@ -385,7 +400,6 @@ NSInteger static MAX_REPETITION = 8;
                                                                            options:0
                                                                            metrics:nil
                                                                              views:@{@"self": self}]];
-
   [self.superview layoutIfNeeded];
   [self animateIntoView];
 }

@@ -102,17 +102,16 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                                               options:NSLayoutFormatAlignAllCenterY
                                                                               metrics:metrics
                                                                                 views:@{@"nameView":nameView}]];
-  
   [nameView namingDidComplete:^{
     [self shouldEnterDescription];
   }];
-  
+
   // Containment
   [self addChildViewController:nextViewController];
   [self.currentChildViewController willMoveToParentViewController:nil];
-  
+
   nextViewController.view.transform = transform;
-  
+
   [self transitionFromViewController:self.currentChildViewController
                     toViewController:nextViewController
                             duration:TRANSITION_DURATION
@@ -143,20 +142,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 
 #pragma mark Challenge Creation Flow Methods
 
-- (void)selectCategory
-{
-  DTSelectionSheet *selectSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetCategory];
-  [selectSheet showInView:self.currentChildViewController.view];
-  
-  __block id theSelected = nil;
-  
-  [selectSheet didCompleteWithSelectedObject:^(id obj){
-    theSelected = obj;
-    NSLog(@"the selected :%@",theSelected);
-  }];
-  
-}
-
 - (void)shouldEnterDescription
 {
   descriptionView = [[ChallengeDescription alloc] init];
@@ -168,7 +153,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                                               options:0
                                                                               metrics:descriptionView_metrics
                                                                                 views:@{@"descriptionView":descriptionView}]];
-  
+
   [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[descriptionView(110)]"
                                                                               options:0
                                                                               metrics:descriptionView_metrics
@@ -181,7 +166,52 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [descriptionView descriptionDidComplete:^{
     [self selectCategory];
   }];
+}
 
+- (void)selectCategory
+{
+  DTSelectionSheet *selectSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetCategory];
+  [selectSheet showInView:self.currentChildViewController.view];
+
+  __block id theSelected = nil;
+
+  [selectSheet didCompleteWithSelectedObject:^(id obj){
+    theSelected = obj;
+    NSLog(@"the selected :%@",theSelected);
+    if (obj && [obj isKindOfClass:[UIImageView class]]) {
+      [self placeSelectedCategoryImage:obj];
+    }
+    
+  }];
+}
+
+//TODO replace with a uiimageview with an image
+- (void)placeSelectedCategoryImage:(UIImageView *)catImage
+{
+  NSLog(@"adding cat image");
+  [catImage setAlpha:0.2];
+  [catImage setUserInteractionEnabled:NO];
+  [catImage setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
+  [self.currentChildViewController.view insertSubview:catImage atIndex:0];
+  
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[catImage]|"
+                                                                                               options:0
+                                                                                               metrics:nil
+                                                                                                 views:@{@"catImage":catImage}]];
+  
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[catImage(320)]"
+                                                                                               options:0
+                                                                                               metrics:nil
+                                                                                                 views:@{@"catImage":catImage}]];
+  [self.currentChildViewController.view layoutIfNeeded];
+
+  [UIView animateWithDuration:0.6f
+                   animations:^{
+                     [catImage setAlpha:1.f];
+                   }
+                   completion:^(BOOL finished) {
+                   }];
 }
 
 //- (CGAffineTransform)startingTransformForViewControllerTransition:(ViewControllerTransition)transition
@@ -211,7 +241,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 //    default:
 //      break;
 //  }
-//  
+//
 //  return transform;
 //}
 
