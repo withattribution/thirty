@@ -118,6 +118,9 @@ CGFloat static MARGIN_FACTOR = 0.25f;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+  if (textField.hasText) {
+    self.name = [NSString stringWithString:textField.text];
+  }
   
   nameTop.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR-.2f);
   

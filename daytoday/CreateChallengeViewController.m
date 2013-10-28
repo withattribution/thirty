@@ -6,7 +6,9 @@
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "CreateChallengeViewController.h"
+
 #import "DTSelectionSheet.h"
 #import "VerificationType.h"
 
@@ -19,13 +21,26 @@
 @interface CreateChallengeViewController () {
   ChallengeName *nameView;
   ChallengeDescription *descriptionView;
+  
   UIImageView *categoryImage;
+
+  DTDotElement *durationDot;
+  DTDotElement *verificationDot;
+  DTDotElement *frequencyDot;
+  
+  NSNumber *duration;
+  NSNumber *verificationType;
+  NSNumber *repititionCount;
+  NSNumber *category;
 }
 
 - (void)transitionToChallengeFLow;
 - (void)shouldEnterDescription;
 - (void)selectCategory;
+- (void)setChallengeCreationDefaultValues;
 
+
+@property (nonatomic,retain) NSMutableDictionary *creationDictionary;
 @property (nonatomic, weak) UIViewController *currentChildViewController;
 
 @end
@@ -48,6 +63,9 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  
+  
+  _creationDictionary = [[NSMutableDictionary alloc] init];
   
   // Add an initial contained viewController
   UIViewController *viewController = [self nextViewController];
@@ -82,6 +100,24 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                                     options:0
                                                                     metrics:nil
                                                                       views:@{@"startCreationFlow":startCreationFlow}]];
+  [self setChallengeCreationDefaultValues];
+}
+
+- (void)setChallengeCreationDefaultValues
+{
+  duration = [NSNumber numberWithInt:30];
+  verificationType = [NSNumber numberWithInt:DTVerificationTickMark];
+  repititionCount = [NSNumber numberWithInt:1];
+}
+
+- (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
+{
+  
+  [self.creationDictionary  setObject:[change objectForKey:NSKeyValueChangeNewKey] forKey:keyPath];
+  
+//  for (NSString *thekey in self.creationDictionary) {
+//    NSLog(@"the keys :%@ and object: %@",thekey, [self.creationDictionary objectForKey:thekey]);
+//  }
 }
 
 - (void)transitionToChallengeFLow
@@ -96,6 +132,11 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   
   nameView = [[ChallengeName alloc] initWithFrame:CGRectZero];
   [nextViewController.view addSubview:nameView];
+  
+  [nameView addObserver:self
+             forKeyPath:@"name"
+                options:NSKeyValueObservingOptionNew
+                context:NULL];
   
   NSDictionary *metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR),@"nameViewHeight":@(NAME_VIEW_HEIGHT)};
   
@@ -135,6 +176,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                             self.currentChildViewController = nextViewController;
                             [nameView shouldBeFirstResponder];
                           }];
+
 }
 
 - (UIViewController *)nextViewController
@@ -142,6 +184,8 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   UIViewController *viewController = [UIViewController new];
   viewController.view.frame = self.view.bounds;
   viewController.view.backgroundColor = [UIColor randomColor];
+
+  [nameView addObserver:viewController forKeyPath:@"challengeName" options:NSKeyValueObservingOptionNew context:NULL];
 
   return viewController;
 }
@@ -152,6 +196,11 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 {
   descriptionView = [[ChallengeDescription alloc] init];
   [self.currentChildViewController.view addSubview:descriptionView];
+  
+  [descriptionView addObserver:self
+             forKeyPath:@"description"
+                options:NSKeyValueObservingOptionNew
+                context:NULL];
 
   NSDictionary *descriptionView_metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)};
 
@@ -185,6 +234,8 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
     theSelected = obj;
     NSLog(@"the selected :%@",theSelected);
     if (obj && [obj isKindOfClass:[UIImageView class]]) {
+      #warning this is missing an actual category type -- currently using the selected tag -- gonna break
+      category = [NSNumber numberWithInt:((UIImageView*)obj).tag];
       [self placeSelectedCategoryImage:obj];
     }
     
@@ -223,18 +274,18 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                      [categoryImage setAlpha:1.f];
                    }
                    completion:^(BOOL finished) {
-                     [self placeOptionalChallengeCreationSelections];
+                     [self placeDefaultChallengeCreationSelections];
                    }];
 }
 
-- (void)placeOptionalChallengeCreationSelections
+- (void)placeDefaultChallengeCreationSelections
 {
   CGSize buttonSize = CGSizeMake(80., 80.);
   CGFloat buttonContainerWidth = descriptionView.frame.size.width;
   CGFloat buttonSpacing = (buttonContainerWidth - (3*buttonSize.width)) /2.f;
   CGFloat buttonYOffset = descriptionView.frame.origin.y + descriptionView.frame.size.height + 10.f;
   
-  DTDotElement *durationDot = [[DTDotElement alloc] initWithFrame:CGRectMake(descriptionView.frame.origin.x,
+  durationDot = [[DTDotElement alloc] initWithFrame:CGRectMake(descriptionView.frame.origin.x,
                                                                              buttonYOffset,
                                                                              buttonSize.width,
                                                                              buttonSize.height)
@@ -242,7 +293,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                         andNumber:[NSNumber numberWithInt:PRESET_DURATION]];
   UIButton *durationButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [durationButton setFrame:durationDot.bounds];
-//  [selectionButton setTag:i];
   [durationButton setBackgroundColor:[UIColor clearColor]];
   [durationButton addTarget:self action:@selector(selectDuration:) forControlEvents:UIControlEventTouchUpInside];
   
@@ -250,37 +300,36 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   
   [self.currentChildViewController.view addSubview:durationDot];
   
-  DTDotElement *verifyDot = [[DTDotElement alloc] initWithFrame:CGRectMake(durationDot.frame.origin.x + durationDot.frame.size.width + buttonSpacing,
+  verificationDot = [[DTDotElement alloc] initWithFrame:CGRectMake(durationDot.frame.origin.x + durationDot.frame.size.width + buttonSpacing,
                                                                            buttonYOffset,
                                                                            buttonSize.width,
                                                                            buttonSize.height)
                                                   andColorGroup:[DTDotColorGroup summaryDayColorGroup]
                                                        andImage:[[VerificationType verficationWithType:DTVerificationTickMark] displayImage]];
   UIButton *verifyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [verifyButton setFrame:verifyDot.bounds];
-  //  [selectionButton setTag:i];
+  [verifyButton setFrame:verificationDot.bounds];
   [verifyButton setBackgroundColor:[UIColor clearColor]];
   [verifyButton addTarget:self action:@selector(selectVerification:) forControlEvents:UIControlEventTouchUpInside];
   
-  [verifyDot addSubview:verifyButton];
+  [verificationDot addSubview:verifyButton];
   
-  [self.currentChildViewController.view addSubview:verifyDot];
+  [self.currentChildViewController.view addSubview:verificationDot];
   
-  DTDotElement *repititionDot = [[DTDotElement alloc] initWithFrame:CGRectMake(verifyDot.frame.origin.x + verifyDot.frame.size.width + buttonSpacing,
+  frequencyDot = [[DTDotElement alloc] initWithFrame:CGRectMake(verificationDot.frame.origin.x + verificationDot.frame.size.width + buttonSpacing,
                                                                              buttonYOffset,
                                                                              buttonSize.width,
                                                                              buttonSize.height)
                                                     andColorGroup:[DTDotColorGroup summaryDayColorGroup]
                                                         andNumber:[NSNumber numberWithInt:PRESET_REPETITION]];
   UIButton *repeatButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [repeatButton setFrame:repititionDot.bounds];
+  [repeatButton setFrame:frequencyDot.bounds];
   //  [selectionButton setTag:i];
   [repeatButton setBackgroundColor:[UIColor clearColor]];
   [repeatButton addTarget:self action:@selector(selectRepetition:) forControlEvents:UIControlEventTouchUpInside];
   
-  [repititionDot addSubview:repeatButton];
+  [frequencyDot addSubview:repeatButton];
   
-  [self.currentChildViewController.view addSubview:repititionDot];
+  [self.currentChildViewController.view addSubview:frequencyDot];
   
   NSString *startText = NSLocalizedString(@"START!", @"text for start button");
   
@@ -321,7 +370,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                      startButton.transform = CGAffineTransformMakeTranslation(0, 0);
                    }
                    completion:NULL];
-  
 }
 
 - (void)selectDuration:(UIButton *)button
@@ -329,7 +377,13 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   DTSelectionSheet *durationSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetDuration];
   [durationSheet showInView:self.currentChildViewController.view];
   [durationSheet didCompleteWithSelectedObject:^(id obj){
+    
     NSLog(@"this is durationl: %@", obj);
+    if ([obj isKindOfClass:[DTDotElement class]]){
+      duration = ((DTDotElement*)obj).dotNumber;
+      [_creationDictionary setObject:[duration stringValue] forKey:@"duration"];
+      [durationDot setDotNumber:((DTDotElement*)obj).dotNumber];
+    }
   }];
 }
 
@@ -338,7 +392,14 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   DTSelectionSheet *verifySheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetVerification];
   [verifySheet showInView:self.currentChildViewController.view];
   [verifySheet didCompleteWithSelectedObject:^(id obj){
+    
     NSLog(@"this is verification: %@", obj);
+    if ([obj isKindOfClass:[DTDotElement class]]){
+      #warning it's gonna come up that the verification type is weakly tied to this element -- shouldn't always rely on the tag being the correct type :/
+      verificationType = [NSNumber numberWithInt:((DTDotElement*)obj).tag];
+      [_creationDictionary setObject:[verificationType stringValue] forKey:@"verification"];
+      [verificationDot setDotImage:[[VerificationType verficationWithType:((DTDotElement*)obj).tag] displayImage]];
+    }
   }];
 }
 
@@ -347,29 +408,57 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   DTSelectionSheet *repititionSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetRepetition];
   [repititionSheet showInView:self.currentChildViewController.view];
   [repititionSheet didCompleteWithSelectedObject:^(id obj){
-    NSLog(@"this is repitition: %@",obj);
+    
+    NSLog(@"this is the frequency count: %@", obj);
+    if ([obj isKindOfClass:[DTDotElement class]]){
+      repititionCount = ((DTDotElement*)obj).dotNumber;
+      [_creationDictionary setObject:[repititionCount stringValue] forKey:@"frequency"];
+      [frequencyDot setDotNumber:((DTDotElement*)obj).dotNumber];
+    }
   }];
 }
 
 - (void)attemptChallengeCreation:(UIButton *)b
 {
-  //step through challenge data and verify that the minimum necessary data is included
+  __block BOOL failedTest = YES;
   
-//  [self.currentChildViewController mod]
-//  if (successful do share screen) {
+  [_creationDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop){
+    if (obj && [obj isKindOfClass:[NSString class]]) {
+      if (((NSString*)obj).length > 0) {
+        failedTest = NO;
+      }
+    }else {
+      failedTest =YES;
+      *stop = YES;
+    }
+  }];
+  
+  if (!failedTest) {
+    ChallengeRequest *challengeRequest = [[ChallengeRequest alloc] initWithContext:((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext];
+    [challengeRequest setDelegate:self];
+    [challengeRequest createChallenge:_creationDictionary];
+  }
+  else{
+    UIAlertView *nope = [[UIAlertView alloc] initWithTitle:@"Nope!" message:@"Try again, you're just missing like maybe even just one thing -- you can do it!" delegate:nil cancelButtonTitle:@"PUT CHIPS IN A SANDWICH!" otherButtonTitles:nil];
+    [nope show];
+  }
+}
+
+- (void) challengeSuccessfullyCreated:(Challenge*)challenge
+{
   [self transitionShareChallengeController];
-//  }
-//  else{
-//    display the sv progress view for failed creation and status message
-//  }
-  
+}
+
+- (void) requestDidError:(NSError*)err
+{
+  NIDINFO(@"Challenge Creation failed  :( with error: %@",err);
 }
 
 #pragma mark END OF CHALLENGE CREATION LOOP BACK TO BEGINNING
 
 - (void)transitionShareChallengeController
 {
-  CGFloat width = CGRectGetWidth(self.view.bounds);
+//  CGFloat width = CGRectGetWidth(self.view.bounds);
   CGFloat height = CGRectGetHeight(self.view.bounds);
   
   CGAffineTransform transform = CGAffineTransformIdentity;
@@ -416,7 +505,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
     NSLog(@"take it from the top");
   }];
 }
-
 
 //- (CGAffineTransform)startingTransformForViewControllerTransition:(ViewControllerTransition)transition
 //{

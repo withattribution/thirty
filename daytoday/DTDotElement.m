@@ -98,8 +98,8 @@
 +(DTDotColorGroup *) summaryDayColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor clearColor];
-  dcg.fillColor   = [UIColor lightGrayColor];
+  dcg.strokeColor = [UIColor whiteColor];
+  dcg.fillColor   = [UIColor colorWithRed:230.f/255.f green:230.f/255.f blue:230.f/255.f alpha:1.f];
   dcg.textColor  = [UIColor grayColor];
   return dcg;
 }
@@ -126,6 +126,8 @@
 
 @interface DTDotElement () {
   DTDotColorGroup *dotColorGroup;
+  UILabel *_dotLabel;
+  UIImageView *_dotImageView;
 }
 
 - (void)dotRadius;
@@ -140,7 +142,6 @@
 @end
 
 @implementation DTDotElement
-@synthesize radius,dotNumber,dotDate;
 
 static CGFloat DOT_PADDING = 3.f;
 static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentage of frame height
@@ -173,13 +174,18 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
   self = [super initWithFrame:f];
   if (self) {
       dotColorGroup = dg;
-      self.dotNumber = num;
+      _dotNumber = num;
       
       [self dotRadius];
       [self drawDTDotElement];
       [self drawLabelWithNumber:num];
   }
   return self;
+}
+
+- (void)redrawNumber:(NSNumber *)num
+{
+  [self drawLabelWithNumber:num];
 }
 
 - (id)initWithFrame:(CGRect)f
@@ -189,8 +195,8 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
   self = [super initWithFrame:f];
   if (self) {
       dotColorGroup = dg;
-      self.dotDate = date;
-      self.dotNumber = [self numberFromDate:self.dotDate];
+      _dotDate = date;
+      _dotNumber = [self numberFromDate:self.dotDate];
 
       [self dotRadius];
       [self drawDTDotElement];
@@ -211,6 +217,33 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
     [self placeInscribedImage:img];
   }
   return self;
+}
+
+#pragma mark CUSTOM DTDotElement Setters 
+
+- (void)setDotNumber:(NSNumber *)dotNumber
+{
+  if (_dotLabel) {
+    [_dotLabel removeFromSuperview];
+  }
+  _dotNumber = dotNumber;
+  [self drawLabelWithNumber:dotNumber];
+}
+
+- (void)setDotImage:(UIImage *)dotImage
+{
+  if (_dotImageView) {
+    [_dotImageView removeFromSuperview];
+  }
+  [self placeInscribedImage:dotImage];
+}
+
+- (void)setDotDate:(NSDate *)dotDate {
+  if (_dotLabel) {
+    [_dotLabel removeFromSuperview];
+  }
+  _dotNumber = [self numberFromDate:self.dotDate];
+  [self drawLabelWithNumber:self.dotNumber];
 }
 
 - (NSNumber*)numberFromDate:(NSDate *)d
@@ -273,16 +306,16 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
 
 - (void)placeInscribedImage:(UIImage *)img
 {
-  UIImageView *imgView = [[UIImageView alloc] initWithImage:img];
-  [imgView setFrame:[self rectForInscribedImage]];
+  _dotImageView = [[UIImageView alloc] initWithImage:img];
+  [_dotImageView setFrame:[self rectForInscribedImage]];
   
-  CALayer *roundedMaskLayer = imgView.layer;
+  CALayer *roundedMaskLayer = _dotImageView.layer;
   [roundedMaskLayer setCornerRadius:self.radius];
   [roundedMaskLayer setBorderWidth:0];
   [roundedMaskLayer setMasksToBounds:YES];
   
-  [self addSubview:imgView];
-  [imgView setCenter:CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2)];
+  [self addSubview:_dotImageView];
+  [_dotImageView setCenter:CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2)];
 }
 
 - (CGRect) rectForInscribedLabel
@@ -296,18 +329,18 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
 
 -(void) drawLabelWithNumber:(NSNumber *)number
 {
-  UILabel *numberLabel = [[UILabel alloc] initWithFrame:[self rectForInscribedLabel]];
-  numberLabel.textColor = dotColorGroup.textColor;
-  numberLabel.backgroundColor = [UIColor clearColor];
-  numberLabel.alpha = 1.0;
-  numberLabel.numberOfLines = 0;
-  numberLabel.textAlignment = NSTextAlignmentCenter;
-  numberLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:22];;
-  numberLabel.text = [number stringValue];
-  numberLabel.adjustsFontSizeToFitWidth = YES;
-  numberLabel.minimumScaleFactor = .25;
-  [self addSubview:numberLabel];
-  [numberLabel setCenter:CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2)];
+  _dotLabel= [[UILabel alloc] initWithFrame:[self rectForInscribedLabel]];
+  _dotLabel.textColor = dotColorGroup.textColor;
+  _dotLabel.backgroundColor = [UIColor clearColor];
+  _dotLabel.alpha = 1.0;
+  _dotLabel.numberOfLines = 0;
+  _dotLabel.textAlignment = NSTextAlignmentCenter;
+  _dotLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:22];;
+  _dotLabel.text = [number stringValue];
+  _dotLabel.adjustsFontSizeToFitWidth = YES;
+  _dotLabel.minimumScaleFactor = .25;
+  [self addSubview:_dotLabel];
+  [_dotLabel setCenter:CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2)];
 }
 
 - (CGPoint) pointOnCircleWithCenter:(CGPoint)center radius:(double)r angleInDegrees:(double)angleInDegrees

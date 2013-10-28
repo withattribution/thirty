@@ -10,7 +10,7 @@
 
 @interface ChallengeName : UIView <UITextFieldDelegate>
 
-@property (strong, nonatomic) NSString *challengeName;
+@property (strong, nonatomic) NSString *name;
 
 - (void)shouldBeFirstResponder;
 - (void)namingDidComplete:(void (^)())block;

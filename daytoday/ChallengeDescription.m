@@ -148,6 +148,10 @@ NSInteger static MAX_CHARS = 140;
 - (void)shouldDismissTextView:(UIButton *)b
 {
   //save stuff here
+  
+  if ([_textView hasText]) {
+    self.description = [NSString stringWithString:_textView.text];
+  }
 
   if ([_textView isFirstResponder]) {
     [_textView resignFirstResponder];

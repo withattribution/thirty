@@ -285,6 +285,8 @@ NSInteger static MAX_VERIFICATION_TYPES = 4;
       UILabel *label = [[UILabel alloc] initWithFrame:((UIView*)[self.selectionArray objectAtIndex:i]).bounds];
       [label setNumberOfLines:1];
       [label setText:[NSString stringWithFormat:@"%d",i]];
+      [label setCenter:CGPointMake(115.f,20.f)];
+      
       [((UIView*)[self.selectionArray objectAtIndex:i]) addSubview:label];
       
       UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(i*(contentFrameWidth+2*SCROLL_PADDING) + (4*SCROLL_PADDING),

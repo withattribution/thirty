@@ -10,7 +10,7 @@
 
 @interface ChallengeDescription : UIView <UITextViewDelegate>
 
-@property (strong, nonatomic) NSString *challengeDescription;
+@property (strong, nonatomic) NSString *description;
 
 - (void)shouldBeFirstResponder;
 - (void)animateIntoViewForHeight:(CGFloat)offset;

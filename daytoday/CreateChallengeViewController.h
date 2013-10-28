@@ -7,7 +7,8 @@
 //
 
 #import "D2ViewController.h"
+#import "ChallengeRequest.h"
 
-@interface CreateChallengeViewController : D2ViewController 
+@interface CreateChallengeViewController : D2ViewController <ChallengeRequestDelegate>
 
 @end
