@@ -123,7 +123,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 - (void)transitionToChallengeFLow
 {
   CGFloat width = CGRectGetWidth(self.view.bounds);
-  CGFloat height = CGRectGetHeight(self.view.bounds);
+//  CGFloat height = CGRectGetHeight(self.view.bounds);
 
   CGAffineTransform transform = CGAffineTransformIdentity;
   transform = CGAffineTransformMakeTranslation(width, 0);
@@ -342,6 +342,87 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [startButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.currentChildViewController.view addSubview:startButton];
   
+  NSString *durationText = NSLocalizedString(@"DURATION", @"duration label");
+
+  UILabel *durationLabel = [[UILabel alloc] init];
+  durationLabel.textColor = [UIColor colorWithWhite:.9 alpha:1.f];
+  durationLabel.backgroundColor = [UIColor clearColor];
+  durationLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+  durationLabel.text = durationText;
+  durationLabel.numberOfLines = 1;
+  durationLabel.textAlignment = NSTextAlignmentCenter;
+  [durationLabel sizeToFit];
+  durationLabel.translatesAutoresizingMaskIntoConstraints = NO;
+//  [durationLabel setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
+  [self.currentChildViewController.view addSubview:durationLabel];
+  
+  NSString *verificationText = NSLocalizedString(@"VERIFICATION", @"verification label");
+  
+  UILabel *verificationLabel = [[UILabel alloc] init];
+  verificationLabel.textColor = [UIColor colorWithWhite:.9 alpha:1.f];
+  verificationLabel.backgroundColor = [UIColor clearColor];
+  verificationLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+  verificationLabel.text = verificationText;
+  verificationLabel.numberOfLines = 1;
+  verificationLabel.textAlignment = NSTextAlignmentCenter;
+  [verificationLabel sizeToFit];
+  verificationLabel.translatesAutoresizingMaskIntoConstraints = NO;
+//  [verificationLabel setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
+  [self.currentChildViewController.view addSubview:verificationLabel];
+  
+  NSString *freqText = NSLocalizedString(@"FREQUENCY", @"frequency label");
+  
+  UILabel *freqLabel = [[UILabel alloc] init];
+  freqLabel.textColor = [UIColor colorWithWhite:.9 alpha:1.f];
+  freqLabel.backgroundColor = [UIColor clearColor];
+  freqLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+  freqLabel.text = freqText;
+  freqLabel.numberOfLines = 1;
+  freqLabel.textAlignment = NSTextAlignmentCenter;
+  [freqLabel sizeToFit];
+  freqLabel.translatesAutoresizingMaskIntoConstraints = NO;
+//  [freqLabel setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
+  [self.currentChildViewController.view addSubview:freqLabel];
+  
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-labelYOffset-[durationLabel]"
+                                                                                               options:0
+                                                                                               metrics:@{@"labelYOffset":@(buttonYOffset + buttonSize.height + 5)}
+                                                                                                 views:@{@"durationLabel":durationLabel}]];
+  
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-labelYOffset-[verificationLabel]"
+                                                                                               options:0
+                                                                                               metrics:@{@"labelYOffset":@(buttonYOffset + buttonSize.height + 5)}
+                                                                                                 views:@{@"verificationLabel":verificationLabel}]];
+  
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-labelYOffset-[freqLabel]"
+                                                                                               options:0
+                                                                                               metrics:@{@"labelYOffset":@(buttonYOffset + buttonSize.height + 5)}
+                                                                                                 views:@{@"freqLabel":freqLabel}]];
+  
+  [self.currentChildViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:durationLabel
+                                                                                   attribute:NSLayoutAttributeCenterX
+                                                                                   relatedBy:NSLayoutRelationEqual
+                                                                                      toItem:durationDot
+                                                                                   attribute:NSLayoutAttributeCenterX
+                                                                                  multiplier:1.f
+                                                                                    constant:0]];
+  
+  [self.currentChildViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:verificationLabel
+                                                                                   attribute:NSLayoutAttributeCenterX
+                                                                                   relatedBy:NSLayoutRelationEqual
+                                                                                      toItem:verificationDot
+                                                                                   attribute:NSLayoutAttributeCenterX
+                                                                                  multiplier:1.f
+                                                                                    constant:0]];
+
+  [self.currentChildViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:freqLabel
+                                                                                   attribute:NSLayoutAttributeCenterX
+                                                                                   relatedBy:NSLayoutRelationEqual
+                                                                                      toItem:frequencyDot
+                                                                                   attribute:NSLayoutAttributeCenterX
+                                                                                  multiplier:1.f
+                                                                                    constant:0]];
+  
   [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[startButton(startWidth)]"
                                                                                                options:0
                                                                                                metrics:@{@"startWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)}
@@ -359,7 +440,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                                                    attribute:NSLayoutAttributeCenterX
                                                                                   multiplier:1.f
                                                                                     constant:0]];
-  
   [self.currentChildViewController.view layoutIfNeeded];
   
   startButton.transform = CGAffineTransformMakeTranslation(0, startButton.bounds.size.height);
