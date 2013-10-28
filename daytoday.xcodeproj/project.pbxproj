@@ -21,6 +21,11 @@
 		A1275C431809EEEA00019A91 /* ProgressSnapShotTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C421809EEEA00019A91 /* ProgressSnapShotTableCell.m */; };
 		A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C451809F66600019A91 /* ParticipantsTableCell.m */; };
 		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
+		A13DB5E1181ED65A00378901 /* VerificationType.m in Sources */ = {isa = PBXBuildFile; fileRef = A13DB5E0181ED65A00378901 /* VerificationType.m */; };
+		A13DB5E7181EDB1500378901 /* checkIn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E3181EDB1500378901 /* checkIn.jpg */; };
+		A13DB5E8181EDB1500378901 /* photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E4181EDB1500378901 /* photo.jpg */; };
+		A13DB5E9181EDB1500378901 /* timer.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E5181EDB1500378901 /* timer.jpg */; };
+		A13DB5EA181EDB1500378901 /* tickMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E6181EDB1500378901 /* tickMark.jpg */; };
 		A1AC68B118163D38004A1F5D /* DTSelectionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68B018163D38004A1F5D /* DTSelectionSheet.m */; };
 		A1AC68BA1816D8A1004A1F5D /* DTInfiniteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */; };
 		A1AC68C118182057004A1F5D /* ChallengeName.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68C018182057004A1F5D /* ChallengeName.m */; };
@@ -239,6 +244,12 @@
 		A1275C451809F66600019A91 /* ParticipantsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsTableCell.m; sourceTree = "<group>"; };
 		A1275C4A180B8BBF00019A91 /* NSCalendar+equalWithGranularity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+equalWithGranularity.h"; sourceTree = "<group>"; };
 		A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+equalWithGranularity.m"; sourceTree = "<group>"; };
+		A13DB5DF181ED65A00378901 /* VerificationType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationType.h; sourceTree = "<group>"; };
+		A13DB5E0181ED65A00378901 /* VerificationType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationType.m; sourceTree = "<group>"; };
+		A13DB5E3181EDB1500378901 /* checkIn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkIn.jpg; sourceTree = "<group>"; };
+		A13DB5E4181EDB1500378901 /* photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo.jpg; sourceTree = "<group>"; };
+		A13DB5E5181EDB1500378901 /* timer.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = timer.jpg; sourceTree = "<group>"; };
+		A13DB5E6181EDB1500378901 /* tickMark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tickMark.jpg; sourceTree = "<group>"; };
 		A1AC68AF18163D38004A1F5D /* DTSelectionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTSelectionSheet.h; sourceTree = "<group>"; };
 		A1AC68B018163D38004A1F5D /* DTSelectionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTSelectionSheet.m; sourceTree = "<group>"; };
 		A1AC68B81816D8A1004A1F5D /* DTInfiniteScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTInfiniteScrollView.h; sourceTree = "<group>"; };
@@ -545,11 +556,23 @@
 		A1275C241806F95F00019A91 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				A13DB5E2181EDAE700378901 /* verficationImages */,
 				A1275C251806F97200019A91 /* profileBlank.png */,
 				A1275C3C1808FD6B00019A91 /* sectionImageHolder.jpg */,
 				A1275C261806F97200019A91 /* anotherCrop.jpg */,
 			);
 			name = assets;
+			sourceTree = "<group>";
+		};
+		A13DB5E2181EDAE700378901 /* verficationImages */ = {
+			isa = PBXGroup;
+			children = (
+				A13DB5E3181EDB1500378901 /* checkIn.jpg */,
+				A13DB5E4181EDB1500378901 /* photo.jpg */,
+				A13DB5E5181EDB1500378901 /* timer.jpg */,
+				A13DB5E6181EDB1500378901 /* tickMark.jpg */,
+			);
+			name = verficationImages;
 			sourceTree = "<group>";
 		};
 		A1AC68BB18181C3F004A1F5D /* challenge creation */ = {
@@ -559,6 +582,8 @@
 				A1AC68C618198E6F004A1F5D /* ChallengeDescription.m */,
 				A1AC68BF18182057004A1F5D /* ChallengeName.h */,
 				A1AC68C018182057004A1F5D /* ChallengeName.m */,
+				A13DB5DF181ED65A00378901 /* VerificationType.h */,
+				A13DB5E0181ED65A00378901 /* VerificationType.m */,
 			);
 			name = "challenge creation";
 			sourceTree = "<group>";
@@ -993,13 +1018,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1275C271806F97200019A91 /* profileBlank.png in Resources */,
+				A13DB5EA181EDB1500378901 /* tickMark.jpg in Resources */,
 				B7E61D4C17BD6AA5002B681B /* InfoPlist.strings in Resources */,
+				A13DB5E8181EDB1500378901 /* photo.jpg in Resources */,
 				B77F7F07180C63BF0072954E /* AirshipConfig.plist in Resources */,
 				B7E61D5417BD6AA5002B681B /* Default.png in Resources */,
 				A1275C281806F97200019A91 /* anotherCrop.jpg in Resources */,
 				A1275C3D1808FD6B00019A91 /* sectionImageHolder.jpg in Resources */,
 				B73903C117FB4B2700B9C9BB /* deps in Resources */,
+				A13DB5E7181EDB1500378901 /* checkIn.jpg in Resources */,
 				B7E61D5617BD6AA5002B681B /* Default@2x.png in Resources */,
+				A13DB5E9181EDB1500378901 /* timer.jpg in Resources */,
 				B7E61D5817BD6AA5002B681B /* Default-568h@2x.png in Resources */,
 				B7E61D5E17BD6AA5002B681B /* ViewController.xib in Resources */,
 			);
@@ -1058,6 +1087,7 @@
 				A1275C191806EB8C00019A91 /* DTProgressElement.m in Sources */,
 				B7E61E2B17C27F32002B681B /* NIDebuggingTools.m in Sources */,
 				B7E61E2D17C27F32002B681B /* NIDeviceOrientation.m in Sources */,
+				A13DB5E1181ED65A00378901 /* VerificationType.m in Sources */,
 				B76D561D1806DB1D003DDD36 /* Verification.m in Sources */,
 				B7E61E2F17C27F32002B681B /* NIError.m in Sources */,
 				B7E61E3117C27F32002B681B /* NIFoundationMethods.m in Sources */,

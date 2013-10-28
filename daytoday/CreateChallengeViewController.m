@@ -8,6 +8,7 @@
 
 #import "CreateChallengeViewController.h"
 #import "DTSelectionSheet.h"
+#import "VerificationType.h"
 
 #import "ChallengeName.h"
 #import "ChallengeDescription.h"
@@ -19,8 +20,6 @@
   ChallengeName *nameView;
   ChallengeDescription *descriptionView;
   UIImageView *categoryImage;
-  
-  
 }
 
 - (void)transitionToChallengeFLow;
@@ -195,7 +194,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 //TODO replace with a uiimageview with an image
 - (void)placeSelectedCategoryImage:(UIImageView *)catImage
 {
-  NSLog(@"adding cat image");
   if (categoryImage) {
     //if another image has already been set update the displayed version
     [categoryImage removeFromSuperview];
@@ -234,13 +232,10 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   CGSize buttonSize = CGSizeMake(80., 80.);
   CGFloat buttonContainerWidth = descriptionView.frame.size.width;
   CGFloat buttonSpacing = (buttonContainerWidth - (3*buttonSize.width)) /2.f;
-  
-  NSLog(@"the spacing : %f",buttonSpacing);
-  
-  CGFloat buttonY = descriptionView.frame.origin.y + descriptionView.frame.size.height + 10.f;
+  CGFloat buttonYOffset = descriptionView.frame.origin.y + descriptionView.frame.size.height + 10.f;
   
   DTDotElement *durationDot = [[DTDotElement alloc] initWithFrame:CGRectMake(descriptionView.frame.origin.x,
-                                                                             buttonY,
+                                                                             buttonYOffset,
                                                                              buttonSize.width,
                                                                              buttonSize.height)
                                                     andColorGroup:[DTDotColorGroup summaryDayColorGroup]
@@ -256,11 +251,11 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [self.currentChildViewController.view addSubview:durationDot];
   
   DTDotElement *verifyDot = [[DTDotElement alloc] initWithFrame:CGRectMake(durationDot.frame.origin.x + durationDot.frame.size.width + buttonSpacing,
-                                                                           buttonY,
+                                                                           buttonYOffset,
                                                                            buttonSize.width,
                                                                            buttonSize.height)
                                                   andColorGroup:[DTDotColorGroup summaryDayColorGroup]
-                                                       andImage:[UIImage imageNamed:@"anotherCrop.jpg"]];
+                                                       andImage:[[VerificationType verficationWithType:DTVerificationTickMark] displayImage]];
   UIButton *verifyButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [verifyButton setFrame:verifyDot.bounds];
   //  [selectionButton setTag:i];
@@ -272,7 +267,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [self.currentChildViewController.view addSubview:verifyDot];
   
   DTDotElement *repititionDot = [[DTDotElement alloc] initWithFrame:CGRectMake(verifyDot.frame.origin.x + verifyDot.frame.size.width + buttonSpacing,
-                                                                             buttonY,
+                                                                             buttonYOffset,
                                                                              buttonSize.width,
                                                                              buttonSize.height)
                                                     andColorGroup:[DTDotColorGroup summaryDayColorGroup]
@@ -286,6 +281,47 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [repititionDot addSubview:repeatButton];
   
   [self.currentChildViewController.view addSubview:repititionDot];
+  
+  NSString *startText = NSLocalizedString(@"START!", @"text for start button");
+  
+  UIButton *startButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [startButton setTitle:startText forState:UIControlStateNormal];
+  [startButton setBackgroundColor:[UIColor randomColor]];
+  [startButton addTarget:self action:@selector(attemptChallengeCreation:) forControlEvents:UIControlEventTouchUpInside];
+  
+  [startButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.currentChildViewController.view addSubview:startButton];
+  
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[startButton(startWidth)]"
+                                                                                               options:0
+                                                                                               metrics:@{@"startWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)}
+                                                                                                 views:@{@"startButton":startButton}]];
+  
+  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-startYOffset-[startButton(40)]"
+                                                                                               options:0
+                                                                                               metrics:@{@"startYOffset":@(self.currentChildViewController.view.frame.size.height*.75)}
+                                                                                                 views:@{@"startButton":startButton}]];
+  
+  [self.currentChildViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:startButton
+                                                                                   attribute:NSLayoutAttributeCenterX
+                                                                                   relatedBy:NSLayoutRelationEqual
+                                                                                      toItem:startButton.superview
+                                                                                   attribute:NSLayoutAttributeCenterX
+                                                                                  multiplier:1.f
+                                                                                    constant:0]];
+  
+  [self.currentChildViewController.view layoutIfNeeded];
+  
+  startButton.transform = CGAffineTransformMakeTranslation(0, startButton.bounds.size.height);
+  [UIView animateWithDuration:TRANSITION_DURATION
+                        delay:0.f
+                      options:UIViewAnimationOptionCurveEaseOut
+                   animations:^{
+                     startButton.transform = CGAffineTransformMakeTranslation(0, 0);
+                   }
+                   completion:NULL];
+  
 }
 
 - (void)selectDuration:(UIButton *)button
@@ -295,7 +331,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [durationSheet didCompleteWithSelectedObject:^(id obj){
     NSLog(@"this is durationl: %@", obj);
   }];
-  
 }
 
 - (void)selectVerification:(UIButton *)button
@@ -304,7 +339,8 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [verifySheet showInView:self.currentChildViewController.view];
   [verifySheet didCompleteWithSelectedObject:^(id obj){
     NSLog(@"this is verification: %@", obj);
-  }];}
+  }];
+}
 
 - (void)selectRepetition:(UIButton *)button
 {
@@ -312,8 +348,15 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [repititionSheet showInView:self.currentChildViewController.view];
   [repititionSheet didCompleteWithSelectedObject:^(id obj){
     NSLog(@"this is repitition: %@",obj);
-  }];}
+  }];
+}
 
+- (void)attemptChallengeCreation:(UIButton *)b
+{
+  //step through challenge data and verify that the minimum necessary data is included
+  
+  
+}
 
 //- (CGAffineTransform)startingTransformForViewControllerTransition:(ViewControllerTransition)transition
 //{

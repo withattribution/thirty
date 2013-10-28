@@ -20,6 +20,8 @@
 #import "DTSelectionSheet.h"
 #import "DTInfiniteScrollView.h"
 #import "DTDotElement.h"
+#import "VerificationType.h"
+
 #import "UIColor+SR.h"
 
 @interface DTSelectionSheet () {
@@ -47,6 +49,7 @@ CGFloat const VIEW_HEIGHT_PERCENT = .65f;
 
 NSInteger static MAX_DURATION = 60;
 NSInteger static MAX_REPETITION = 8;
+NSInteger static MAX_VERIFICATION_TYPES = 4;
 
 + (id)selectionSheetWithType:(DTSelectionSheetType)type
 {
@@ -131,7 +134,22 @@ NSInteger static MAX_REPETITION = 8;
       }
       break;
     case DTSelectionSheetVerification:
-      
+      for (int i = 0; i < MAX_VERIFICATION_TYPES; i++) {
+        DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 80.f, 80.f)
+                                                  andColorGroup:[DTDotColorGroup durationSelectionColorGroup]
+                                                      andImage:[[VerificationType verficationWithType:i] displayImage]];
+        dot.tag = i; //critical for dtinfinitescroll
+        
+        UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [selectionButton setFrame:dot.bounds];
+        [selectionButton setTag:i];
+        [selectionButton setBackgroundColor:[UIColor clearColor]];
+        [selectionButton addTarget:self action:@selector(selectionForButton:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [dot addSubview:selectionButton];
+        
+        [collection addObject:dot];
+      }
       break;
     case DTSelectionSheetRepetition:
       for (int i = 0; i < MAX_REPETITION; i++) {
@@ -234,16 +252,15 @@ NSInteger static MAX_REPETITION = 8;
                                                                             0,
                                                                             320.f,
                                                                             320.f)];
-      UILabel *label = [[UILabel alloc] initWithFrame:((UIImageView*)[self.categoryImages objectAtIndex:i]).bounds];
-      [label setNumberOfLines:1];
-      [label setText:[NSString stringWithFormat:@"%d",i]];
-      [((UIImageView*)[self.categoryImages objectAtIndex:i]) addSubview:label];
+//      UILabel *label = [[UILabel alloc] initWithFrame:((UIImageView*)[self.categoryImages objectAtIndex:i]).bounds];
+//      [label setNumberOfLines:1];
+//      [label setText:[NSString stringWithFormat:@"%d",i]];
+//      [((UIImageView*)[self.categoryImages objectAtIndex:i]) addSubview:label];
 
       [self.categoryImagesScroll addSubview:[self.categoryImages objectAtIndex:i]];
     }
-    ///////////////*********************************************************//////////////////////////////
-    CGFloat static SCROLL_PADDING = 20.f;
 
+    CGFloat static SCROLL_PADDING = 20.f;
     CGFloat contentFrameWidth = ((UIView*)[self.selectionArray firstObject]).frame.size.width;
     CGFloat contentFrameHeight = ((UIView*)[self.selectionArray firstObject]).frame.size.height;
 
@@ -282,7 +299,6 @@ NSInteger static MAX_REPETITION = 8;
       [self.selectionScroll addSubview:containerView];
     }
     
-    ///////////////*********************************************************//////////////////////////////
     [self addSubview:self.categoryImagesScroll];
     [self addSubview:self.selectionScroll];
   }
