@@ -108,13 +108,18 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   duration = [NSNumber numberWithInt:30];
   verificationType = [NSNumber numberWithInt:DTVerificationTickMark];
   repititionCount = [NSNumber numberWithInt:1];
+  
+  [self.creationDictionary setObject:[NSNull null] forKey:@"name"];
+  [self.creationDictionary setObject:[NSNull null] forKey:@"description"];
+  [self.creationDictionary setObject:[NSNull null] forKey:@"category"];
+  [self.creationDictionary setObject:[duration stringValue] forKey:@"duration"];
+  [self.creationDictionary setObject:[verificationType stringValue] forKey:@"verification"];
+  [self.creationDictionary setObject:[repititionCount stringValue] forKey:@"frequency"];
 }
 
 - (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
 {
-  
   [self.creationDictionary  setObject:[change objectForKey:NSKeyValueChangeNewKey] forKey:keyPath];
-  
 //  for (NSString *thekey in self.creationDictionary) {
 //    NSLog(@"the keys :%@ and object: %@",thekey, [self.creationDictionary objectForKey:thekey]);
 //  }
@@ -236,6 +241,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
     if (obj && [obj isKindOfClass:[UIImageView class]]) {
       #warning this is missing an actual category type -- currently using the selected tag -- gonna break
       category = [NSNumber numberWithInt:((UIImageView*)obj).tag];
+      [self.creationDictionary setObject:[category stringValue] forKey:@"category"];
       [self placeSelectedCategoryImage:obj];
     }
     
@@ -323,7 +329,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                         andNumber:[NSNumber numberWithInt:PRESET_REPETITION]];
   UIButton *repeatButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [repeatButton setFrame:frequencyDot.bounds];
-  //  [selectionButton setTag:i];
   [repeatButton setBackgroundColor:[UIColor clearColor]];
   [repeatButton addTarget:self action:@selector(selectRepetition:) forControlEvents:UIControlEventTouchUpInside];
   
@@ -353,7 +358,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   durationLabel.textAlignment = NSTextAlignmentCenter;
   [durationLabel sizeToFit];
   durationLabel.translatesAutoresizingMaskIntoConstraints = NO;
-//  [durationLabel setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
   [self.currentChildViewController.view addSubview:durationLabel];
   
   NSString *verificationText = NSLocalizedString(@"VERIFICATION", @"verification label");
@@ -367,7 +371,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   verificationLabel.textAlignment = NSTextAlignmentCenter;
   [verificationLabel sizeToFit];
   verificationLabel.translatesAutoresizingMaskIntoConstraints = NO;
-//  [verificationLabel setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
   [self.currentChildViewController.view addSubview:verificationLabel];
   
   NSString *freqText = NSLocalizedString(@"FREQUENCY", @"frequency label");
@@ -381,7 +384,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   freqLabel.textAlignment = NSTextAlignmentCenter;
   [freqLabel sizeToFit];
   freqLabel.translatesAutoresizingMaskIntoConstraints = NO;
-//  [freqLabel setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];
+
   [self.currentChildViewController.view addSubview:freqLabel];
   
   [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-labelYOffset-[durationLabel]"
@@ -503,9 +506,12 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   __block BOOL failedTest = YES;
   
   [_creationDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop){
-    if (obj && [obj isKindOfClass:[NSString class]]) {
+    if (obj && [obj isKindOfClass:[NSString class]] && ![obj isEqual:[NSNull null]]) {
       if (((NSString*)obj).length > 0) {
         failedTest = NO;
+      }else {
+        failedTest = YES;
+        *stop = YES;
       }
     }else {
       failedTest =YES;
@@ -532,6 +538,8 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 - (void) requestDidError:(NSError*)err
 {
   NIDINFO(@"Challenge Creation failed  :( with error: %@",err);
+  UIAlertView *chFail = [[UIAlertView alloc] initWithTitle:@"Challenge Creation Failed with Error description" message:[[err userInfo] objectForKey:NSLocalizedDescriptionKey] delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+  [chFail show];
 }
 
 #pragma mark END OF CHALLENGE CREATION LOOP BACK TO BEGINNING
