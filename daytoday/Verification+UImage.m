@@ -33,6 +33,29 @@
   return image;
 }
 
++ (NSString *)stringForType:(DTVerificationType)type
+{
+  NSString *name = @"UNDEFINED VERIFICATION TYPE"; //NOT FOR DISPLAY PURPOSES
+  
+  switch (type) {
+    case DTVerificationTickMark:
+      name = NSLocalizedString(@"Tick Mark", @"tick mark verification type");
+      break;
+    case DTVerificationCheckIn:
+      name = NSLocalizedString(@"Check In", @"check in verification type");
+      break;
+    case DTVerificationPhoto:
+      name = NSLocalizedString(@"Photo", @"photo verification type");
+      break;
+    case DTVerificationTimer:
+      name = NSLocalizedString(@"Timer", @"timer verification type");
+      break;
+    default:
+      break;
+  }
+  return name;
+}
+
 + (NSArray *)verficationImages
 {
   NSMutableArray *images = [NSMutableArray arrayWithObjects:

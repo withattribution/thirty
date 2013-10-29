@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, DTVerificationType) {
 @interface Verification (UImage)
 
 + (UIImage *)imageForType:(DTVerificationType)type;
++ (NSString *)stringForType:(DTVerificationType)type;
 + (NSArray *)verficationImages;
 
 @end

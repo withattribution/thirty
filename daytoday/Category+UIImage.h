@@ -27,7 +27,6 @@ typedef NS_ENUM(NSInteger, DTCategoryType) {
 
 + (UIImage *)imageForType:(DTCategoryType)type;
 + (NSString *)stringForType:(DTCategoryType)type;
-
 + (NSArray *)categoryImages;
 
 @end
