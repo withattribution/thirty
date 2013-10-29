@@ -177,7 +177,9 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                                      multiplier:1.f
                                                                        constant:0]];
   [nameView namingDidComplete:^{
-    [self shouldEnterDescription];
+    if ([[self.creationDictionary objectForKey:@"description"] isEqual:[NSNull null]]) {
+      [self shouldEnterDescription];
+    }
   }];
 
   // Containment
@@ -519,7 +521,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   
   [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-startYOffset-[startButton(40)]"
                                                                                                options:0
-                                                                                               metrics:@{@"startYOffset":@(self.currentChildViewController.view.frame.size.height*.80)}
+                                                                                               metrics:@{@"startYOffset":@(self.currentChildViewController.view.frame.size.height*.78)}
                                                                                                  views:@{@"startButton":startButton}]];
   
   [self.currentChildViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:startButton

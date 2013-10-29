@@ -47,7 +47,7 @@ NSInteger static MAX_CHARS = 140;
       [_textView setInputAccessoryView:[self descriptionInputView]];
 
       _placeholderLabel = [[UILabel alloc] init];
-      [_placeholderLabel setTextColor:[UIColor whiteColor]];
+      [_placeholderLabel setTextColor:[UIColor colorWithWhite:.2f alpha:.4f]];
       [_placeholderLabel setBackgroundColor:[UIColor clearColor]];
       [_placeholderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:18]];
       [_placeholderLabel setText:DESCRIBE_PLACE_HOLDER];

@@ -255,11 +255,7 @@ NSInteger static MAX_CATEGORIES = 8;
                                                                             0,
                                                                             320.f,
                                                                             320.f)];
-//      UILabel *label = [[UILabel alloc] initWithFrame:((UIImageView*)[self.categoryImages objectAtIndex:i]).bounds];
-//      [label setNumberOfLines:1];
-//      [label setText:[NSString stringWithFormat:@"%d",i]];
-//      [((UIImageView*)[self.categoryImages objectAtIndex:i]) addSubview:label];
-
+      
       [self.categoryImagesScroll addSubview:[self.categoryImages objectAtIndex:i]];
     }
 
@@ -318,6 +314,9 @@ NSInteger static MAX_CATEGORIES = 8;
                                                                                     320.f,
                                                                                     80.f)
                                                                    views:self.selectionArray];
+    if (sheetType == DTSelectionSheetVerification){
+      sv.scrollEnabled = NO; //disabling verification infinite scrolling until it's fixed #TODO
+    }
   [self addSubview:sv];
   }
 

@@ -40,7 +40,7 @@ CGFloat static MARGIN_FACTOR = 0.25f;
     [_textField setTextColor:[UIColor whiteColor]];
     [_textField setFont:[UIFont fontWithName:@"HelveticaNeue" size:18.0]];
     [_textField setBackgroundColor:[UIColor colorWithWhite:0.8f alpha:.4f]];
-    [_textField setTextAlignment:NSTextAlignmentCenter];
+    [_textField setTextAlignment:NSTextAlignmentLeft];
     [_textField setReturnKeyType:UIReturnKeyDefault];
     [_textField setKeyboardType:UIKeyboardTypeDefault];
     [_textField setPlaceholder:DESCRIBE_PLACE_HOLDER];
@@ -126,6 +126,7 @@ CGFloat static MARGIN_FACTOR = 0.25f;
                    completion:^(BOOL finished) {
                      if (finished && self.completionBlock) {
                        self.isEditing = [NSString stringWithFormat:@"%d",textField.isEditing];
+                       [textField resignFirstResponder];
                        self.completionBlock();
                      }
                    }];
