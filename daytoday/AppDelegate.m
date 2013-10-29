@@ -23,67 +23,65 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    NIMaxLogLevel = NILOGLEVEL_INFO;
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  // Override point for customization after application launch.
+  NIMaxLogLevel = NILOGLEVEL_INFO;
 
-    
-    self.loginController = [[LoginRegistrationViewController alloc] init];
-    self.profileController = [[ProfileViewController alloc] init];
-    
-    if(![[NSUserDefaults standardUserDefaults] valueForKey:kDeviceIdentifier])
-        self.navController = [[D2NavController alloc] initWithRootViewController:self.loginController];
-    else
-        self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
-    
-    #define PROFILE_VIEWCONTROLLER_DEV 0
-        
-    #ifdef PROFILE_VIEWCONTROLLER_DEV
-        self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
-        [self.navController.navigationBar setHidden:YES];
-    #endif
+  self.loginController = [[LoginRegistrationViewController alloc] init];
+  self.profileController = [[ProfileViewController alloc] init];
   
-    #define CREATE_CHALLENGE_VIEWCONTROLLER_DEV 1
+  if(![[NSUserDefaults standardUserDefaults] valueForKey:kDeviceIdentifier])
+      self.navController = [[D2NavController alloc] initWithRootViewController:self.loginController];
+  else
+      self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
+  
+  #define PROFILE_VIEWCONTROLLER_DEV 0
       
-    #ifdef CREATE_CHALLENGE_VIEWCONTROLLER_DEV
-      self.createChallengeController = [[CreateChallengeViewController alloc] init];
-      self.navController = [[D2NavController alloc] initWithRootViewController:self.createChallengeController];
+  #ifdef PROFILE_VIEWCONTROLLER_DEV
+      self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
       [self.navController.navigationBar setHidden:YES];
-    #endif
+  #endif
 
-    self.window.rootViewController = self.navController;
-    [self.window makeKeyAndVisible];
+  #define CREATE_CHALLENGE_VIEWCONTROLLER_DEV 1
     
-    // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
-    // or set runtime properties here.
-    UAConfig *config = [UAConfig defaultConfig];
-    
-    // You can also programmatically override the plist values:
-    // config.developmentAppKey = @"YourKey";
-    // etc.
-    
-    // Call takeOff (which creates the UAirship singleton)
-    [UAirship takeOff:config];
-    return YES;
+  #ifdef CREATE_CHALLENGE_VIEWCONTROLLER_DEV
+    self.createChallengeController = [[CreateChallengeViewController alloc] init];
+    self.navController = [[D2NavController alloc] initWithRootViewController:self.createChallengeController];
+    [self.navController.navigationBar setHidden:YES];
+  #endif
+
+  self.window.rootViewController = self.navController;
+  [self.window makeKeyAndVisible];
+  
+  // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
+  // or set runtime properties here.
+  UAConfig *config = [UAConfig defaultConfig];
+  
+  // You can also programmatically override the plist values:
+  // config.developmentAppKey = @"YourKey";
+  // etc.
+  
+  // Call takeOff (which creates the UAirship singleton)
+  [UAirship takeOff:config];
+  return YES;
 }
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    
-    
-    NIDINFO(@"APN device token: %@", deviceToken);
+  NIDINFO(@"APN device token: %@", deviceToken);
 
-    NSString *k = @"kUADeviceToken";
-    if( [[NSUserDefaults standardUserDefaults] valueForKey:k] == nil ){
-        NSString * dToken = [NSString stringWithFormat:@"%@",deviceToken];
-        [[NSUserDefaults standardUserDefaults] setValue:dToken forKey:k];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
-    // Updates the device token and registers the token with UA
-    
-    [[UAPush shared] registerDeviceToken:deviceToken];
-    
+  NSString *k = @"kUADeviceToken";
+  if( [[NSUserDefaults standardUserDefaults] valueForKey:k] == nil ){
+      NSString * dToken = [NSString stringWithFormat:@"%@",deviceToken];
+      [[NSUserDefaults standardUserDefaults] setValue:dToken forKey:k];
+      [[NSUserDefaults standardUserDefaults] synchronize];
+  }
+  
+  // Updates the device token and registers the token with UA
+  
+  [[UAPush shared] registerDeviceToken:deviceToken];
 }
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

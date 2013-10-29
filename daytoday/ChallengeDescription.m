@@ -262,7 +262,6 @@ NSInteger static MAX_CHARS = 140;
   _charCountLabel.text = [NSString stringWithFormat:@"%d",(MAX_CHARS - _charCount)];
 }
 
-
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
   

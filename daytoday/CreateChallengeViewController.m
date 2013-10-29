@@ -119,9 +119,12 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 
 - (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
 {
+  //observing the isEditing state of the ChallengeName object's uitextfield rather
+  //than setting up nsnotifications for just one ui element.
+  //when the uitextfield is the first responder -- all other text containing elements
+  //should be removed or made less distracting to the user.
   if ([keyPath isEqualToString:@"isEditing"]) {
     NSLog(@"the changed object %@",[change objectForKey:NSKeyValueChangeNewKey]);
-    
     [descriptionView setAlpha:([[change objectForKey:NSKeyValueChangeNewKey] integerValue])];
   }
   

@@ -155,4 +155,15 @@ CGFloat static MARGIN_FACTOR = 0.25f;
   return YES;
 }
 
+- (BOOL)textField:(UITextField *)textField
+shouldChangeCharactersInRange:(NSRange)range
+replacementString:(NSString *)string
+{
+  if (textField.hasText) {
+    self.name = [NSString stringWithString:textField.text];
+  }
+  return YES;
+}
+
+
 @end

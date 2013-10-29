@@ -556,7 +556,8 @@
 		A1275C241806F95F00019A91 /* assets */ = {
 			isa = PBXGroup;
 			children = (
-				A13DB5E2181EDAE700378901 /* verficationImages */,
+				A13DB5E2181EDAE700378901 /* verfication images */,
+				A16AC9BA181FFAB400074AB8 /* category images */,
 				A1275C251806F97200019A91 /* profileBlank.png */,
 				A1275C3C1808FD6B00019A91 /* sectionImageHolder.jpg */,
 				A1275C261806F97200019A91 /* anotherCrop.jpg */,
@@ -564,7 +565,7 @@
 			name = assets;
 			sourceTree = "<group>";
 		};
-		A13DB5E2181EDAE700378901 /* verficationImages */ = {
+		A13DB5E2181EDAE700378901 /* verfication images */ = {
 			isa = PBXGroup;
 			children = (
 				A13DB5E3181EDB1500378901 /* checkIn.jpg */,
@@ -572,7 +573,14 @@
 				A13DB5E5181EDB1500378901 /* timer.jpg */,
 				A13DB5E6181EDB1500378901 /* tickMark.jpg */,
 			);
-			name = verficationImages;
+			name = "verfication images";
+			sourceTree = "<group>";
+		};
+		A16AC9BA181FFAB400074AB8 /* category images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "category images";
 			sourceTree = "<group>";
 		};
 		A1AC68BB18181C3F004A1F5D /* challenge creation */ = {
