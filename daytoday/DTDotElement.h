@@ -16,6 +16,7 @@
 +(DTDotColorGroup *) someParticipationButFailedColorGroup;
 +(DTDotColorGroup *) failedDayColorGroup;
 +(DTDotColorGroup *) futuresSoBrightYouGottaWearShadesColorGroup;
++(DTDotColorGroup *) durationSelectionColorGroup;
 +(DTDotColorGroup *) repetitionCountColorGroup;
 +(DTDotColorGroup *) challengersCountColorGroup;
 +(DTDotColorGroup *) summaryDayColorGroup;
@@ -32,6 +33,7 @@
 @property (nonatomic) CGFloat radius;
 @property (nonatomic,retain) NSNumber *dotNumber;
 @property (nonatomic,retain) NSDate *dotDate;
+@property (nonatomic,retain) UIImage *dotImage;
 
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg;
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg andNumber:(NSNumber *)num;

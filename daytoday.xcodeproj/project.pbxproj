@@ -21,6 +21,16 @@
 		A1275C431809EEEA00019A91 /* ProgressSnapShotTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C421809EEEA00019A91 /* ProgressSnapShotTableCell.m */; };
 		A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C451809F66600019A91 /* ParticipantsTableCell.m */; };
 		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
+		A13DB5E7181EDB1500378901 /* checkIn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E3181EDB1500378901 /* checkIn.jpg */; };
+		A13DB5E8181EDB1500378901 /* photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E4181EDB1500378901 /* photo.jpg */; };
+		A13DB5E9181EDB1500378901 /* timer.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E5181EDB1500378901 /* timer.jpg */; };
+		A13DB5EA181EDB1500378901 /* tickMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E6181EDB1500378901 /* tickMark.jpg */; };
+		A16AC9BD182001C600074AB8 /* Verification+UImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9BC182001C600074AB8 /* Verification+UImage.m */; };
+		A16AC9C01820058D00074AB8 /* Category+UIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9BF1820058D00074AB8 /* Category+UIImage.m */; };
+		A1AC68B118163D38004A1F5D /* DTSelectionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68B018163D38004A1F5D /* DTSelectionSheet.m */; };
+		A1AC68BA1816D8A1004A1F5D /* DTInfiniteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */; };
+		A1AC68C118182057004A1F5D /* ChallengeName.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68C018182057004A1F5D /* ChallengeName.m */; };
+		A1AC68C718198E6F004A1F5D /* ChallengeDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AC68C618198E6F004A1F5D /* ChallengeDescription.m */; };
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B017FB1C8800B9C9BB /* D2NavController.m */; };
@@ -235,6 +245,22 @@
 		A1275C451809F66600019A91 /* ParticipantsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsTableCell.m; sourceTree = "<group>"; };
 		A1275C4A180B8BBF00019A91 /* NSCalendar+equalWithGranularity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+equalWithGranularity.h"; sourceTree = "<group>"; };
 		A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+equalWithGranularity.m"; sourceTree = "<group>"; };
+		A13DB5E3181EDB1500378901 /* checkIn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkIn.jpg; sourceTree = "<group>"; };
+		A13DB5E4181EDB1500378901 /* photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo.jpg; sourceTree = "<group>"; };
+		A13DB5E5181EDB1500378901 /* timer.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = timer.jpg; sourceTree = "<group>"; };
+		A13DB5E6181EDB1500378901 /* tickMark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tickMark.jpg; sourceTree = "<group>"; };
+		A16AC9BB182001C600074AB8 /* Verification+UImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Verification+UImage.h"; sourceTree = "<group>"; };
+		A16AC9BC182001C600074AB8 /* Verification+UImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Verification+UImage.m"; sourceTree = "<group>"; };
+		A16AC9BE1820058D00074AB8 /* Category+UIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Category+UIImage.h"; sourceTree = "<group>"; };
+		A16AC9BF1820058D00074AB8 /* Category+UIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Category+UIImage.m"; sourceTree = "<group>"; };
+		A1AC68AF18163D38004A1F5D /* DTSelectionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTSelectionSheet.h; sourceTree = "<group>"; };
+		A1AC68B018163D38004A1F5D /* DTSelectionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTSelectionSheet.m; sourceTree = "<group>"; };
+		A1AC68B81816D8A1004A1F5D /* DTInfiniteScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTInfiniteScrollView.h; sourceTree = "<group>"; };
+		A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTInfiniteScrollView.m; sourceTree = "<group>"; };
+		A1AC68BF18182057004A1F5D /* ChallengeName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeName.h; sourceTree = "<group>"; };
+		A1AC68C018182057004A1F5D /* ChallengeName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeName.m; sourceTree = "<group>"; };
+		A1AC68C518198E6F004A1F5D /* ChallengeDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDescription.h; sourceTree = "<group>"; };
+		A1AC68C618198E6F004A1F5D /* ChallengeDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDescription.m; sourceTree = "<group>"; };
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
 		B73903AF17FB1C8800B9C9BB /* D2NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D2NavController.h; sourceTree = "<group>"; };
@@ -477,6 +503,7 @@
 		A1275BEB1806EA8E00019A91 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				A1AC68BB18181C3F004A1F5D /* challenge creation */,
 				A1275C1E1806EC5400019A91 /* extensions */,
 				A1275C081806EB7A00019A91 /* ui elements */,
 				A1275BEC1806EB4200019A91 /* profile */,
@@ -508,6 +535,10 @@
 		A1275C081806EB7A00019A91 /* ui elements */ = {
 			isa = PBXGroup;
 			children = (
+				A1AC68B81816D8A1004A1F5D /* DTInfiniteScrollView.h */,
+				A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */,
+				A1AC68AF18163D38004A1F5D /* DTSelectionSheet.h */,
+				A1AC68B018163D38004A1F5D /* DTSelectionSheet.m */,
 				A1275C091806EB8C00019A91 /* DTDotElement.h */,
 				A1275C0A1806EB8C00019A91 /* DTDotElement.m */,
 				A1275C0D1806EB8C00019A91 /* DTProgressElement.h */,
@@ -519,6 +550,10 @@
 		A1275C1E1806EC5400019A91 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A16AC9BB182001C600074AB8 /* Verification+UImage.h */,
+				A16AC9BC182001C600074AB8 /* Verification+UImage.m */,
+				A16AC9BE1820058D00074AB8 /* Category+UIImage.h */,
+				A16AC9BF1820058D00074AB8 /* Category+UIImage.m */,
 				A1275C4A180B8BBF00019A91 /* NSCalendar+equalWithGranularity.h */,
 				A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */,
 			);
@@ -528,11 +563,42 @@
 		A1275C241806F95F00019A91 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				A13DB5E2181EDAE700378901 /* verfication images */,
+				A16AC9BA181FFAB400074AB8 /* category images */,
 				A1275C251806F97200019A91 /* profileBlank.png */,
 				A1275C3C1808FD6B00019A91 /* sectionImageHolder.jpg */,
 				A1275C261806F97200019A91 /* anotherCrop.jpg */,
 			);
 			name = assets;
+			sourceTree = "<group>";
+		};
+		A13DB5E2181EDAE700378901 /* verfication images */ = {
+			isa = PBXGroup;
+			children = (
+				A13DB5E3181EDB1500378901 /* checkIn.jpg */,
+				A13DB5E4181EDB1500378901 /* photo.jpg */,
+				A13DB5E5181EDB1500378901 /* timer.jpg */,
+				A13DB5E6181EDB1500378901 /* tickMark.jpg */,
+			);
+			name = "verfication images";
+			sourceTree = "<group>";
+		};
+		A16AC9BA181FFAB400074AB8 /* category images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "category images";
+			sourceTree = "<group>";
+		};
+		A1AC68BB18181C3F004A1F5D /* challenge creation */ = {
+			isa = PBXGroup;
+			children = (
+				A1AC68C518198E6F004A1F5D /* ChallengeDescription.h */,
+				A1AC68C618198E6F004A1F5D /* ChallengeDescription.m */,
+				A1AC68BF18182057004A1F5D /* ChallengeName.h */,
+				A1AC68C018182057004A1F5D /* ChallengeName.m */,
+			);
+			name = "challenge creation";
 			sourceTree = "<group>";
 		};
 		B73903AD17FB1B5A00B9C9BB /* dependencies */ = {
@@ -965,13 +1031,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1275C271806F97200019A91 /* profileBlank.png in Resources */,
+				A13DB5EA181EDB1500378901 /* tickMark.jpg in Resources */,
 				B7E61D4C17BD6AA5002B681B /* InfoPlist.strings in Resources */,
+				A13DB5E8181EDB1500378901 /* photo.jpg in Resources */,
 				B77F7F07180C63BF0072954E /* AirshipConfig.plist in Resources */,
 				B7E61D5417BD6AA5002B681B /* Default.png in Resources */,
 				A1275C281806F97200019A91 /* anotherCrop.jpg in Resources */,
 				A1275C3D1808FD6B00019A91 /* sectionImageHolder.jpg in Resources */,
 				B73903C117FB4B2700B9C9BB /* deps in Resources */,
+				A13DB5E7181EDB1500378901 /* checkIn.jpg in Resources */,
 				B7E61D5617BD6AA5002B681B /* Default@2x.png in Resources */,
+				A13DB5E9181EDB1500378901 /* timer.jpg in Resources */,
 				B7E61D5817BD6AA5002B681B /* Default-568h@2x.png in Resources */,
 				B7E61D5E17BD6AA5002B681B /* ViewController.xib in Resources */,
 			);
@@ -1016,6 +1086,7 @@
 				A116E60918106F5200F9248F /* ProgressSummaryCell.m in Sources */,
 				A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */,
 				B7E61D4E17BD6AA5002B681B /* main.m in Sources */,
+				A16AC9C01820058D00074AB8 /* Category+UIImage.m in Sources */,
 				B7E61D5217BD6AA5002B681B /* AppDelegate.m in Sources */,
 				A1275C021806EB5B00019A91 /* UserInfoHeader.m in Sources */,
 				B7E61D5B17BD6AA5002B681B /* ViewController.m in Sources */,
@@ -1060,6 +1131,7 @@
 				B7E61E6717C27F5A002B681B /* AFJSONRequestOperation.m in Sources */,
 				B7E61E6917C27F5A002B681B /* AFNetworkActivityIndicatorManager.m in Sources */,
 				B7E61E6B17C27F5A002B681B /* AFPropertyListRequestOperation.m in Sources */,
+				A1AC68BA1816D8A1004A1F5D /* DTInfiniteScrollView.m in Sources */,
 				B7E61E6D17C27F5A002B681B /* AFURLConnectionOperation.m in Sources */,
 				B7E61E6F17C27F5A002B681B /* AFXMLRequestOperation.m in Sources */,
 				B76D560D1806DB02003DDD36 /* Challenge.m in Sources */,
@@ -1068,6 +1140,7 @@
 				B7E61E7D17C284C9002B681B /* DayTodayModels.xcdatamodeld in Sources */,
 				B7E61E8117C28674002B681B /* D2Request.m in Sources */,
 				B7E61E8517C2984F002B681B /* AuthenticationRequest.m in Sources */,
+				A1AC68C118182057004A1F5D /* ChallengeName.m in Sources */,
 				B7E61E8917C29924002B681B /* UserRequest.m in Sources */,
 				B7E61E9117C40464002B681B /* User+D2D.m in Sources */,
 				B7E61E9517C511AD002B681B /* NSDictionary+SR.m in Sources */,
@@ -1092,10 +1165,13 @@
 				B7E61F2317C97039002B681B /* CommentRequest.m in Sources */,
 				B73903CE17FB6DD800B9C9BB /* CreateChallengeViewController.m in Sources */,
 				B7E61F2717C97082002B681B /* Comment+D2D.m in Sources */,
+				A16AC9BD182001C600074AB8 /* Verification+UImage.m in Sources */,
 				A1275C4018090A2400019A91 /* DaysLeftTableCell.m in Sources */,
 				B76D56291806DB1D003DDD36 /* Image.m in Sources */,
 				B73366B117CA8B87002524E4 /* TickRequest.m in Sources */,
 				B76D56251806DB1D003DDD36 /* Like.m in Sources */,
+				A1AC68B118163D38004A1F5D /* DTSelectionSheet.m in Sources */,
+				A1AC68C718198E6F004A1F5D /* ChallengeDescription.m in Sources */,
 				B76D56191806DB1D003DDD36 /* Intent.m in Sources */,
 				B75D59A017CBAC9700160592 /* ResetPasswordRequest.m in Sources */,
 				B740072C17D286210004460C /* Image+D2D.m in Sources */,
