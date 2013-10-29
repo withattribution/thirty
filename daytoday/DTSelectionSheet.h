@@ -11,7 +11,7 @@
 typedef NS_ENUM(NSInteger, DTSelectionSheetType) {
   DTSelectionSheetDuration,    //dtdot elements for duration
   DTSelectionSheetVerification,//dtdotelements for verification
-  DTSelectionSheetRepetition,  //create dtdotelements for number of times a challenge should be repeated in a day
+  DTSelectionSheetFrequency,  //create dtdotelements for number of times a challenge should be repeated in a day
   DTSelectionSheetCategory     //create category objects to select from
 //  DTSelectionSheetGeneric    //pass in an array of generic objects to select from
 };

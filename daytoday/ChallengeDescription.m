@@ -68,7 +68,6 @@ NSInteger static MAX_CHARS = 140;
 
 - (UIView *)descriptionInputView
 {
-  
   UIView *input = [[UIView alloc] initWithFrame:CGRectMake(0.f,
                                                            0.f,
                                                            [[UIScreen mainScreen] bounds].size.width,
@@ -147,8 +146,7 @@ NSInteger static MAX_CHARS = 140;
 
 - (void)shouldDismissTextView:(UIButton *)b
 {
-  //save stuff here
-  
+  //save text here
   if ([_textView hasText]) {
     self.description = [NSString stringWithString:_textView.text];
   }
@@ -160,12 +158,10 @@ NSInteger static MAX_CHARS = 140;
   if (self.completionBlock) {
     self.completionBlock();
   }
-
 }
 
 - (void)animateIntoViewForHeight:(CGFloat)offset
 {
-  
   descriptionTop.constant = offset;
 
   [UIView animateWithDuration:.37f
@@ -262,8 +258,4 @@ NSInteger static MAX_CHARS = 140;
   _charCountLabel.text = [NSString stringWithFormat:@"%d",(MAX_CHARS - _charCount)];
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-  
-}
 @end

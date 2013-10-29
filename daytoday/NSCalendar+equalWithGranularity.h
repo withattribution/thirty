@@ -17,4 +17,3 @@
 - (NSComparisonResult)ojf_compareDate:(NSDate *)date1 toDate:(NSDate *)date2 toUnitGranularity:(NSCalendarUnit)unit;
 
 @end
- 

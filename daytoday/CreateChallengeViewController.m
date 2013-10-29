@@ -10,7 +10,7 @@
 #import "CreateChallengeViewController.h"
 
 #import "DTSelectionSheet.h"
-#import "VerificationType.h"
+#import "Verification+UImage.h"
 
 #import "ChallengeName.h"
 #import "ChallengeDescription.h"
@@ -30,7 +30,7 @@
   
   NSNumber *duration;
   NSNumber *verificationType;
-  NSNumber *repititionCount;
+  NSNumber *freqCount;
   NSNumber *category;
 }
 
@@ -107,14 +107,14 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 {
   duration = [NSNumber numberWithInt:30];
   verificationType = [NSNumber numberWithInt:DTVerificationTickMark];
-  repititionCount = [NSNumber numberWithInt:1];
+  freqCount = [NSNumber numberWithInt:1];
   
   [self.creationDictionary setObject:[NSNull null] forKey:@"name"];
   [self.creationDictionary setObject:[NSNull null] forKey:@"description"];
   [self.creationDictionary setObject:[NSNull null] forKey:@"category"];
   [self.creationDictionary setObject:[duration stringValue] forKey:@"duration"];
   [self.creationDictionary setObject:[verificationType stringValue] forKey:@"verification"];
-  [self.creationDictionary setObject:[repititionCount stringValue] forKey:@"frequency"];
+  [self.creationDictionary setObject:[freqCount stringValue] forKey:@"frequency"];
 }
 
 - (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
@@ -248,8 +248,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 
 - (void)selectCategory
 {
-  
-  
   DTSelectionSheet *selectSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetCategory];
   [selectSheet showInView:self.currentChildViewController.view];
 
@@ -330,7 +328,8 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                                            buttonSize.width,
                                                                            buttonSize.height)
                                                   andColorGroup:[DTDotColorGroup summaryDayColorGroup]
-                                                       andImage:[[VerificationType verficationWithType:DTVerificationTickMark] displayImage]];
+                                                       andImage:[Verification imageForType:DTVerificationTickMark]];
+  //[[VE verficationWithType:DTVerificationTickMark] displayImage]
   UIButton *verifyButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [verifyButton setFrame:verificationDot.bounds];
   [verifyButton setBackgroundColor:[UIColor clearColor]];
@@ -349,7 +348,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   UIButton *repeatButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [repeatButton setFrame:frequencyDot.bounds];
   [repeatButton setBackgroundColor:[UIColor clearColor]];
-  [repeatButton addTarget:self action:@selector(selectRepetition:) forControlEvents:UIControlEventTouchUpInside];
+  [repeatButton addTarget:self action:@selector(selectFrequency:) forControlEvents:UIControlEventTouchUpInside];
   
   [frequencyDot addSubview:repeatButton];
   
@@ -500,21 +499,21 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
       #warning it's gonna come up that the verification type is weakly tied to this element -- shouldn't always rely on the tag being the correct type :/
       verificationType = [NSNumber numberWithInt:((DTDotElement*)obj).tag];
       [_creationDictionary setObject:[verificationType stringValue] forKey:@"verification"];
-      [verificationDot setDotImage:[[VerificationType verficationWithType:((DTDotElement*)obj).tag] displayImage]];
+      [verificationDot setDotImage:[Verification imageForType:((DTDotElement*)obj).tag]];
     }
   }];
 }
 
-- (void)selectRepetition:(UIButton *)button
+- (void)selectFrequency:(UIButton *)button
 {
-  DTSelectionSheet *repititionSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetRepetition];
-  [repititionSheet showInView:self.currentChildViewController.view];
-  [repititionSheet didCompleteWithSelectedObject:^(id obj){
+  DTSelectionSheet *freqSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetFrequency];
+  [freqSheet showInView:self.currentChildViewController.view];
+  [freqSheet didCompleteWithSelectedObject:^(id obj){
     
     NSLog(@"this is the frequency count: %@", obj);
     if ([obj isKindOfClass:[DTDotElement class]]){
-      repititionCount = ((DTDotElement*)obj).dotNumber;
-      [_creationDictionary setObject:[repititionCount stringValue] forKey:@"frequency"];
+      freqCount = ((DTDotElement*)obj).dotNumber;
+      [_creationDictionary setObject:[freqCount stringValue] forKey:@"frequency"];
       [frequencyDot setDotNumber:((DTDotElement*)obj).dotNumber];
     }
   }];
@@ -523,7 +522,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 - (void)attemptChallengeCreation:(UIButton *)b
 {
   __block BOOL failedTest = YES;
-  
   [_creationDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop){
     if (obj && [obj isKindOfClass:[NSString class]] && ![obj isEqual:[NSNull null]]) {
       if (((NSString*)obj).length > 0) {

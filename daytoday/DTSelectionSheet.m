@@ -20,7 +20,8 @@
 #import "DTSelectionSheet.h"
 #import "DTInfiniteScrollView.h"
 #import "DTDotElement.h"
-#import "VerificationType.h"
+#import "Verification+UImage.h"
+#import "Category+UIImage.h"
 
 #import "UIColor+SR.h"
 
@@ -41,7 +42,7 @@
 
 NSString static *DURATION_TITLE = @"SELECT DURATION";
 NSString static *VERIFICATION_TITLE = @"SELECT VERIFICATION";
-NSString static *REPETITION_TITLE = @"SELECT NUMBER OF REPETIONS PER DAY";
+NSString static *FREQ_TITLE = @"SELECT NUMBER OF REPETIONS PER DAY";
 NSString static *CATEGORY_TITLE = @"SELECT CATEGORY";
 
 CGFloat const TRANSITION_DURATION = .42f;
@@ -94,8 +95,8 @@ NSInteger static MAX_VERIFICATION_TYPES = 4;
     case DTSelectionSheetVerification:
       return VERIFICATION_TITLE;
       break;
-    case DTSelectionSheetRepetition:
-      return REPETITION_TITLE;
+    case DTSelectionSheetFrequency:
+      return FREQ_TITLE;
       break;
     case DTSelectionSheetCategory:
       return CATEGORY_TITLE;
@@ -137,7 +138,7 @@ NSInteger static MAX_VERIFICATION_TYPES = 4;
       for (int i = 0; i < MAX_VERIFICATION_TYPES; i++) {
         DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 80.f, 80.f)
                                                   andColorGroup:[DTDotColorGroup durationSelectionColorGroup]
-                                                      andImage:[[VerificationType verficationWithType:i] displayImage]];
+                                                      andImage:[Verification imageForType:i]];
         dot.tag = i; //critical for dtinfinitescroll
         
         UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -151,7 +152,7 @@ NSInteger static MAX_VERIFICATION_TYPES = 4;
         [collection addObject:dot];
       }
       break;
-    case DTSelectionSheetRepetition:
+    case DTSelectionSheetFrequency:
       for (int i = 0; i < MAX_REPETITION; i++) {
         DTDotElement *dot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 80.f, 80.f)
                                                   andColorGroup:[DTDotColorGroup durationSelectionColorGroup]
@@ -169,7 +170,7 @@ NSInteger static MAX_VERIFICATION_TYPES = 4;
         [collection addObject:dot];
       }
       break;
-      case DTSelectionSheetCategory:
+    case DTSelectionSheetCategory:
       for (int i = 0; i < 10; i++) {
         UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 320.f)];
         [image setBackgroundColor:[UIColor blackColor]];
