@@ -119,6 +119,12 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 
 - (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
 {
+  if ([keyPath isEqualToString:@"isEditing"]) {
+    NSLog(@"the changed object %@",[change objectForKey:NSKeyValueChangeNewKey]);
+    
+    [descriptionView setAlpha:([[change objectForKey:NSKeyValueChangeNewKey] integerValue])];
+  }
+  
   [self.creationDictionary  setObject:[change objectForKey:NSKeyValueChangeNewKey] forKey:keyPath];
 //  for (NSString *thekey in self.creationDictionary) {
 //    NSLog(@"the keys :%@ and object: %@",thekey, [self.creationDictionary objectForKey:thekey]);
@@ -140,6 +146,11 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   
   [nameView addObserver:self
              forKeyPath:@"name"
+                options:NSKeyValueObservingOptionNew
+                context:NULL];
+  
+  [nameView addObserver:self
+             forKeyPath:@"isEditing"
                 options:NSKeyValueObservingOptionNew
                 context:NULL];
   
@@ -199,37 +210,43 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 
 - (void)shouldEnterDescription
 {
-  descriptionView = [[ChallengeDescription alloc] init];
-  [self.currentChildViewController.view addSubview:descriptionView];
+  if (!descriptionView) {
+    descriptionView = [[ChallengeDescription alloc] init];
+    [self.currentChildViewController.view addSubview:descriptionView];
+
+    [descriptionView addObserver:self
+               forKeyPath:@"description"
+                  options:NSKeyValueObservingOptionNew
+                  context:NULL];
+
+    NSDictionary *descriptionView_metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)};
+
+    [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[descriptionView(fieldWidth)]"
+                                                                                options:0
+                                                                                metrics:descriptionView_metrics
+                                                                                  views:@{@"descriptionView":descriptionView}]];
+
+    [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[descriptionView(110)]"
+                                                                                options:0
+                                                                                metrics:descriptionView_metrics
+                                                                                  views:@{@"descriptionView":descriptionView}]];
+
+    [self.currentChildViewController.view layoutIfNeeded];
+  }
   
-  [descriptionView addObserver:self
-             forKeyPath:@"description"
-                options:NSKeyValueObservingOptionNew
-                context:NULL];
-
-  NSDictionary *descriptionView_metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)};
-
-  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[descriptionView(fieldWidth)]"
-                                                                              options:0
-                                                                              metrics:descriptionView_metrics
-                                                                                views:@{@"descriptionView":descriptionView}]];
-
-  [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[descriptionView(110)]"
-                                                                              options:0
-                                                                              metrics:descriptionView_metrics
-                                                                                views:@{@"descriptionView":descriptionView}]];
-
-  [self.currentChildViewController.view layoutIfNeeded];
-
   [descriptionView animateIntoViewForHeight:(nameView.frame.origin.y + nameView.frame.size.height + INPUT_VIEW_PADDING)];
 
   [descriptionView descriptionDidComplete:^{
-    [self selectCategory];
+    if ([[self.creationDictionary objectForKey:@"category"] isEqual:[NSNull null]]) {
+      [self selectCategory];
+    }
   }];
 }
 
 - (void)selectCategory
 {
+  
+  
   DTSelectionSheet *selectSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetCategory];
   [selectSheet showInView:self.currentChildViewController.view];
 
@@ -248,7 +265,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   }];
 }
 
-//TODO replace with a uiimageview with an image
 - (void)placeSelectedCategoryImage:(UIImageView *)catImage
 {
   if (categoryImage) {

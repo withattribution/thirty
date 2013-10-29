@@ -127,9 +127,12 @@ CGFloat static MARGIN_FACTOR = 0.25f;
   [UIView animateWithDuration:0.27F
                    animations:^{
                      [self.superview layoutIfNeeded];
+                     [self.superview setAlpha:1.0];
+
                    }
                    completion:^(BOOL finished) {
                      if (finished && self.completionBlock) {
+                       self.isEditing = [NSString stringWithFormat:@"%d",textField.isEditing];
                        self.completionBlock();
                      }
                    }];
@@ -139,7 +142,7 @@ CGFloat static MARGIN_FACTOR = 0.25f;
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
   nameTop.constant = [[UIScreen mainScreen] applicationFrame].size.height*(MARGIN_FACTOR);
-  
+  self.isEditing = [NSString stringWithFormat:@"%d",textField.isEditing];
   [UIView animateWithDuration:0.4F
                    animations:^{
                      [self.superview layoutIfNeeded];

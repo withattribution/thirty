@@ -60,7 +60,7 @@ NSInteger static MAX_VERIFICATION_TYPES = 4;
 {
   self = [super initWithFrame:frame];
   if (self) {
-    [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:.7f]];
+    [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
     sheetType = type;
     self.titleText = [self titleForType];
     [self collectionForType];

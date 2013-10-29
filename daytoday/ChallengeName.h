@@ -11,6 +11,7 @@
 @interface ChallengeName : UIView <UITextFieldDelegate>
 
 @property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *isEditing;
 
 - (void)shouldBeFirstResponder;
 - (void)namingDidComplete:(void (^)())block;

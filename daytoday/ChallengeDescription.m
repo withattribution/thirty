@@ -239,6 +239,10 @@ NSInteger static MAX_CHARS = 140;
 
 - (void)textViewDidChange:(UITextView *)textView
 {
+  if ([_textView hasText]) {
+    self.description = [NSString stringWithString:_textView.text];
+  }
+  
   if (textView.text.length > 0) {
     [UIView animateWithDuration:.2f
                           delay:0.f
