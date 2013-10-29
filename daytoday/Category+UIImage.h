@@ -26,6 +26,8 @@ typedef NS_ENUM(NSInteger, DTCategoryType) {
 @interface Category_UIImage : NSObject
 
 + (UIImage *)imageForType:(DTCategoryType)type;
++ (NSString *)stringForType:(DTCategoryType)type;
+
 + (NSArray *)categoryImages;
 
 @end

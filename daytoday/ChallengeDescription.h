@@ -13,7 +13,7 @@
 @property (strong, nonatomic) NSString *description;
 
 - (void)shouldBeFirstResponder;
-- (void)animateIntoViewForHeight:(CGFloat)offset;
+- (void)animateIntoView;
 - (void)descriptionDidComplete:(void (^)())block;
 
 @end

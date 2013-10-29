@@ -11,6 +11,7 @@
 
 #import "DTSelectionSheet.h"
 #import "Verification+UImage.h"
+#import "Category+UIImage.h"
 
 #import "ChallengeName.h"
 #import "ChallengeDescription.h"
@@ -22,6 +23,7 @@
   ChallengeName *nameView;
   ChallengeDescription *descriptionView;
   
+  UIButton *categoryEditButton;
   UIImageView *categoryImage;
 
   DTDotElement *durationDot;
@@ -38,7 +40,6 @@
 - (void)shouldEnterDescription;
 - (void)selectCategory;
 - (void)setChallengeCreationDefaultValues;
-
 
 @property (nonatomic,retain) NSMutableDictionary *creationDictionary;
 @property (nonatomic, weak) UIViewController *currentChildViewController;
@@ -57,13 +58,12 @@ CGFloat static TRANSITION_SCALE = 0.767857f;    // --
 CGFloat static TRANSITION_ALPHA = 0.241071f;    //Used for transition to child view controllers
 
 CGFloat static WIDTH_FACTOR = 0.85f;            //Common width for all text input views
-CGFloat static NAME_VIEW_HEIGHT = 44.f;         //Hardcoded nameview height
+CGFloat static NAME_VIEW_HEIGHT = 35.f;         //Hardcoded nameview height
 CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containing views
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
   
   _creationDictionary = [[NSMutableDictionary alloc] init];
   
@@ -141,33 +141,41 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 
   CGAffineTransform transform = CGAffineTransformIdentity;
   transform = CGAffineTransformMakeTranslation(width, 0);
-  
+
   UIViewController *nextViewController = [self nextViewController];
-  
-  nameView = [[ChallengeName alloc] initWithFrame:CGRectZero];
+
+  nameView = [[ChallengeName alloc] init];
   [nextViewController.view addSubview:nameView];
-  
+
   [nameView addObserver:self
              forKeyPath:@"name"
                 options:NSKeyValueObservingOptionNew
                 context:NULL];
-  
+
   [nameView addObserver:self
              forKeyPath:@"isEditing"
                 options:NSKeyValueObservingOptionNew
                 context:NULL];
-  
+
   NSDictionary *metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR),@"nameViewHeight":@(NAME_VIEW_HEIGHT)};
-  
+
   [nextViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameView(fieldWidth)]"
                                                                               options:NSLayoutFormatAlignAllCenterY
                                                                               metrics:metrics
                                                                                 views:@{@"nameView":nameView}]];
-  
+
   [nextViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameView(nameViewHeight)]"
                                                                               options:NSLayoutFormatAlignAllCenterY
                                                                               metrics:metrics
                                                                                 views:@{@"nameView":nameView}]];
+  
+  [nextViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:nameView
+                                                                      attribute:NSLayoutAttributeCenterX
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:nextViewController.view
+                                                                      attribute:NSLayoutAttributeCenterX
+                                                                     multiplier:1.f
+                                                                       constant:0]];
   [nameView namingDidComplete:^{
     [self shouldEnterDescription];
   }];
@@ -195,7 +203,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                             self.currentChildViewController = nextViewController;
                             [nameView shouldBeFirstResponder];
                           }];
-
 }
 
 - (UIViewController *)nextViewController
@@ -228,16 +235,32 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                                                 options:0
                                                                                 metrics:descriptionView_metrics
                                                                                   views:@{@"descriptionView":descriptionView}]];
-
+    
     [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[descriptionView(110)]"
-                                                                                options:0
-                                                                                metrics:descriptionView_metrics
-                                                                                  views:@{@"descriptionView":descriptionView}]];
-
-    [self.currentChildViewController.view layoutIfNeeded];
+                                                                                                 options:0
+                                                                                                 metrics:descriptionView_metrics
+                                                                                                   views:@{@"descriptionView":descriptionView,@"nameView":nameView}]];
+    
+    [self.currentChildViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:descriptionView
+                                                                                     attribute:NSLayoutAttributeCenterX
+                                                                                     relatedBy:NSLayoutRelationEqual
+                                                                                        toItem:self.currentChildViewController.view
+                                                                                     attribute:NSLayoutAttributeCenterX
+                                                                                    multiplier:1.f
+                                                                                      constant:0]];
+    
+    [self.currentChildViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:descriptionView
+                                                                                     attribute:NSLayoutAttributeTop
+                                                                                     relatedBy:NSLayoutRelationEqual
+                                                                                        toItem:nameView
+                                                                                     attribute:NSLayoutAttributeBottom
+                                                                                    multiplier:1.f
+                                                                                      constant:INPUT_VIEW_PADDING]];
   }
   
-  [descriptionView animateIntoViewForHeight:(nameView.frame.origin.y + nameView.frame.size.height + INPUT_VIEW_PADDING)];
+  [self.currentChildViewController.view layoutIfNeeded];
+  
+  [descriptionView animateIntoView];
 
   [descriptionView descriptionDidComplete:^{
     if ([[self.creationDictionary objectForKey:@"category"] isEqual:[NSNull null]]) {
@@ -261,8 +284,42 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
       category = [NSNumber numberWithInt:((UIImageView*)obj).tag];
       [self.creationDictionary setObject:[category stringValue] forKey:@"category"];
       [self placeSelectedCategoryImage:obj];
+
+      NSString *catTitle = [Category_UIImage stringForType:((UIImageView*)obj).tag];
+
+      if (!categoryEditButton) {
+        categoryEditButton = [UIButton buttonWithType:UIButtonTypeCustom];        
+        [categoryEditButton.titleLabel setTextColor:[UIColor colorWithWhite:1.f alpha:1.f]];
+        [categoryEditButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:14]];
+
+        [categoryEditButton setBackgroundColor:[UIColor colorWithWhite:.7f alpha:.6f]];
+        [categoryEditButton addTarget:self action:@selector(selectCategory) forControlEvents:UIControlEventTouchUpInside];
+        [categoryEditButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        
+        [self.currentChildViewController.view addSubview:categoryEditButton];
+      }
+
+        [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[categoryEditButton]"
+                                                                                                     options:0
+                                                                                                     metrics:@{@"editWidth":@([[UIScreen mainScreen] bounds].size.width*.5)}
+                                                                                                       views:@{@"categoryEditButton":categoryEditButton}]];
+        
+        [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-offset-[categoryEditButton]"
+                                                                                                     options:0
+                                                                                                     metrics:@{@"offset":@(descriptionView.frame.origin.y+descriptionView.frame.size.height+6.f)}
+                                                                                                       views:@{@"categoryEditButton":categoryEditButton}]];
+
+        [self.currentChildViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:categoryEditButton
+                                                                                         attribute:NSLayoutAttributeCenterX
+                                                                                         relatedBy:NSLayoutRelationEqual
+                                                                                            toItem:categoryEditButton.superview
+                                                                                         attribute:NSLayoutAttributeCenterX
+                                                                                        multiplier:1.f
+                                                                                          constant:0]];
+      
+      [categoryEditButton setTitle:[NSString stringWithFormat:@" %@ + ",catTitle] forState:UIControlStateNormal];
+      [self.currentChildViewController.view layoutIfNeeded];
     }
-    
   }];
 }
 
@@ -285,7 +342,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                                                                options:0
                                                                                                metrics:nil
                                                                                                  views:@{@"categoryImage":categoryImage}]];
-  
+   
   [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[categoryImage]"
                                                                                                options:0
                                                                                                metrics:nil
@@ -297,7 +354,9 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                      [categoryImage setAlpha:1.f];
                    }
                    completion:^(BOOL finished) {
-                     [self placeDefaultChallengeCreationSelections];
+                     if (!durationDot || !verificationDot || !frequencyDot) {
+                       [self placeDefaultChallengeCreationSelections];
+                     }
                    }];
 }
 
@@ -306,7 +365,9 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   CGSize buttonSize = CGSizeMake(80., 80.);
   CGFloat buttonContainerWidth = descriptionView.frame.size.width;
   CGFloat buttonSpacing = (buttonContainerWidth - (3*buttonSize.width)) /2.f;
-  CGFloat buttonYOffset = descriptionView.frame.origin.y + descriptionView.frame.size.height + 10.f;
+  CGFloat buttonYOffset = categoryEditButton.frame.origin.y + categoryEditButton.frame.size.height + 5.f;
+  
+  NSLog(@"buttonYOffset: %f",descriptionView.frame.size.height);
   
   durationDot = [[DTDotElement alloc] initWithFrame:CGRectMake(descriptionView.frame.origin.x,
                                                                              buttonYOffset,
@@ -318,18 +379,18 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [durationButton setFrame:durationDot.bounds];
   [durationButton setBackgroundColor:[UIColor clearColor]];
   [durationButton addTarget:self action:@selector(selectDuration:) forControlEvents:UIControlEventTouchUpInside];
-  
+
   [durationDot addSubview:durationButton];
-  
+
   [self.currentChildViewController.view addSubview:durationDot];
-  
+
   verificationDot = [[DTDotElement alloc] initWithFrame:CGRectMake(durationDot.frame.origin.x + durationDot.frame.size.width + buttonSpacing,
                                                                            buttonYOffset,
                                                                            buttonSize.width,
                                                                            buttonSize.height)
                                                   andColorGroup:[DTDotColorGroup summaryDayColorGroup]
                                                        andImage:[Verification imageForType:DTVerificationTickMark]];
-  //[[VE verficationWithType:DTVerificationTickMark] displayImage]
+
   UIButton *verifyButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [verifyButton setFrame:verificationDot.bounds];
   [verifyButton setBackgroundColor:[UIColor clearColor]];
@@ -370,7 +431,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   UILabel *durationLabel = [[UILabel alloc] init];
   durationLabel.textColor = [UIColor colorWithWhite:.9 alpha:1.f];
   durationLabel.backgroundColor = [UIColor clearColor];
-  durationLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+  durationLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:11];
   durationLabel.text = durationText;
   durationLabel.numberOfLines = 1;
   durationLabel.textAlignment = NSTextAlignmentCenter;
@@ -383,7 +444,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   UILabel *verificationLabel = [[UILabel alloc] init];
   verificationLabel.textColor = [UIColor colorWithWhite:.9 alpha:1.f];
   verificationLabel.backgroundColor = [UIColor clearColor];
-  verificationLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+  verificationLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:11];
   verificationLabel.text = verificationText;
   verificationLabel.numberOfLines = 1;
   verificationLabel.textAlignment = NSTextAlignmentCenter;
@@ -396,7 +457,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   UILabel *freqLabel = [[UILabel alloc] init];
   freqLabel.textColor = [UIColor colorWithWhite:.9 alpha:1.f];
   freqLabel.backgroundColor = [UIColor clearColor];
-  freqLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+  freqLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:11];
   freqLabel.text = freqText;
   freqLabel.numberOfLines = 1;
   freqLabel.textAlignment = NSTextAlignmentCenter;
@@ -404,6 +465,13 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   freqLabel.translatesAutoresizingMaskIntoConstraints = NO;
 
   [self.currentChildViewController.view addSubview:freqLabel];
+  
+  durationDot.alpha = 0.f;
+  durationLabel.alpha = 0.f;
+  verificationDot.alpha = 0.f;
+  verificationLabel.alpha = 0.f;
+  frequencyDot.alpha = 0.f;
+  freqLabel.alpha = 0.f;
   
   [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-labelYOffset-[durationLabel]"
                                                                                                options:0
@@ -451,7 +519,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   
   [self.currentChildViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-startYOffset-[startButton(40)]"
                                                                                                options:0
-                                                                                               metrics:@{@"startYOffset":@(self.currentChildViewController.view.frame.size.height*.75)}
+                                                                                               metrics:@{@"startYOffset":@(self.currentChildViewController.view.frame.size.height*.80)}
                                                                                                  views:@{@"startButton":startButton}]];
   
   [self.currentChildViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:startButton
@@ -464,10 +532,16 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [self.currentChildViewController.view layoutIfNeeded];
   
   startButton.transform = CGAffineTransformMakeTranslation(0, startButton.bounds.size.height);
-  [UIView animateWithDuration:TRANSITION_DURATION
+  [UIView animateWithDuration:.37f
                         delay:0.f
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
+                     durationDot.alpha = 1.f;
+                     durationLabel.alpha = 1.f;
+                     verificationDot.alpha = 1.f;
+                     verificationLabel.alpha = 1.f;
+                     frequencyDot.alpha = 1.f;
+                     freqLabel.alpha = 1.f;
                      startButton.transform = CGAffineTransformMakeTranslation(0, 0);
                    }
                    completion:NULL];
@@ -482,7 +556,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
     NSLog(@"this is durationl: %@", obj);
     if ([obj isKindOfClass:[DTDotElement class]]){
       duration = ((DTDotElement*)obj).dotNumber;
-      [_creationDictionary setObject:[duration stringValue] forKey:@"duration"];
+      [self.creationDictionary setObject:[duration stringValue] forKey:@"duration"];
       [durationDot setDotNumber:((DTDotElement*)obj).dotNumber];
     }
   }];
@@ -498,7 +572,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
     if ([obj isKindOfClass:[DTDotElement class]]){
       #warning it's gonna come up that the verification type is weakly tied to this element -- shouldn't always rely on the tag being the correct type :/
       verificationType = [NSNumber numberWithInt:((DTDotElement*)obj).tag];
-      [_creationDictionary setObject:[verificationType stringValue] forKey:@"verification"];
+      [self.creationDictionary setObject:[verificationType stringValue] forKey:@"verification"];
       [verificationDot setDotImage:[Verification imageForType:((DTDotElement*)obj).tag]];
     }
   }];
@@ -513,7 +587,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
     NSLog(@"this is the frequency count: %@", obj);
     if ([obj isKindOfClass:[DTDotElement class]]){
       freqCount = ((DTDotElement*)obj).dotNumber;
-      [_creationDictionary setObject:[freqCount stringValue] forKey:@"frequency"];
+      [self.creationDictionary setObject:[freqCount stringValue] forKey:@"frequency"];
       [frequencyDot setDotNumber:((DTDotElement*)obj).dotNumber];
     }
   }];
@@ -522,7 +596,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 - (void)attemptChallengeCreation:(UIButton *)b
 {
   __block BOOL failedTest = YES;
-  [_creationDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop){
+  [self.creationDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop){
     if (obj && [obj isKindOfClass:[NSString class]] && ![obj isEqual:[NSNull null]]) {
       if (((NSString*)obj).length > 0) {
         failedTest = NO;
@@ -539,7 +613,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   if (!failedTest) {
     ChallengeRequest *challengeRequest = [[ChallengeRequest alloc] initWithContext:((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext];
     [challengeRequest setDelegate:self];
-    [challengeRequest createChallenge:_creationDictionary];
+    [challengeRequest createChallenge:self.creationDictionary];
   }
   else{
     UIAlertView *nope = [[UIAlertView alloc] initWithTitle:@"Nope!" message:@"Try again, you're just missing like maybe even just one thing -- you can do it!" delegate:nil cancelButtonTitle:@"PUT CHIPS IN A SANDWICH!" otherButtonTitles:nil];
@@ -641,5 +715,36 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 //
 //  return transform;
 //}
+
+
+// --> in case I should do a fake auth for the fake user and user creation
+
+//Auth *userA = [[Auth alloc] init];
+//Auth *userB = [[Auth alloc] init];
+//Auth *userC = [[Auth alloc] init];
+//UserRequest *req = [[UserRequest alloc] initWithContext:self.managedObjectContext];
+//
+//req.delegate = self;
+//[req createUser:userA.username withPassword:userA.password additionalParameters:nil];
+//[[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+//userA.userId = tempUser.userId;
+//
+//AuthenticationRequest* req1 = [[AuthenticationRequest alloc] initWithContext:self.managedObjectContext];
+//req1.delegate = self;
+//[req1 logoutDevice];
+//
+//[req createUser:userB.username withPassword:userB.password additionalParameters:nil];
+//[[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+//userB.userId = tempUser.userId;
+//[req1 logoutDevice];
+//
+//[req createUser:userC.username withPassword:userC.password additionalParameters:nil];
+//[[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+//userC.userId = tempUser.userId;
+//[req1 logoutDevice];
+//
+//[req1 loginUser:userA.username withPassword:userA.password];
+//[[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
+//STAssertTrue(authSuccess, @"authentication was unusccessful");
 
 @end

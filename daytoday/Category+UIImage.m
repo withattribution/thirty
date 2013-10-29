@@ -45,6 +45,43 @@
   return image;
 }
 
++ (NSString *)stringForType:(DTCategoryType)type
+{
+  NSString *name = @"UNDEFINED CATEGORY"; //NOT FOR DISPLAY PURPOSES
+  
+  switch (type) {
+    case DTCategoryFitness:
+      name = NSLocalizedString(@"FITNESS", @"fitness category type");
+      break;
+    case DTCategoryDiet:
+      name = NSLocalizedString(@"DIET", @"diet category type");
+      
+      break;
+    case DTCategoryProductivity:
+      name = NSLocalizedString(@"PRODUCTIVITY", @"productivity category type");
+      break;
+    case DTCategoryEducation:
+      name = NSLocalizedString(@"EDUCATION", @"education category type");
+      break;
+    case DTCategoryHobby:
+      name = NSLocalizedString(@"HOBBY", @"hobby category type");
+      break;
+    case DTCategoryLove:
+      name = NSLocalizedString(@"LOVE", @"love category type");
+      break;
+    case DTCategoryMoney:
+      name = NSLocalizedString(@"MONEY", @"money category type");
+      break;
+    case DTCategoryWildCard:
+      name = NSLocalizedString(@"USER DEFINED", @"user defined category type");
+      break;
+    default:
+      break;
+  }
+  return name;
+}
+
+
 + (NSArray *)categoryImages
 {
   NSMutableArray *images = [NSMutableArray arrayWithObjects:

@@ -315,7 +315,7 @@ NSInteger static MAX_VERIFICATION_TYPES = 4;
                                                                    views:self.selectionArray];
   [self addSubview:sv];
   }
-  
+
   UIView *bottomLine = [[UIView alloc] init];
   bottomLine.translatesAutoresizingMaskIntoConstraints = NO;
   [bottomLine setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:1.f]];

@@ -8,9 +8,7 @@
 
 #import "ChallengeDescription.h"
 
-@interface ChallengeDescription () {
-  NSLayoutConstraint *descriptionTop;
-}
+@interface ChallengeDescription ()
 
 @property (strong, nonatomic) UITextView *textView;
 @property (strong, nonatomic) UILabel *placeholderLabel;
@@ -160,15 +158,16 @@ NSInteger static MAX_CHARS = 140;
   }
 }
 
-- (void)animateIntoViewForHeight:(CGFloat)offset
+- (void)animateIntoView
 {
-  descriptionTop.constant = offset;
-
-  [UIView animateWithDuration:.37f
+  self.transform = CGAffineTransformMakeTranslation(0, self.bounds.size.height/2.);
+  [self setAlpha:0.2];
+  [UIView animateWithDuration:.17f
                         delay:0.f
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
-                     [self.superview layoutIfNeeded];
+                     self.transform = CGAffineTransformMakeTranslation(0, 0);
+                     [self setAlpha:1.f];
                    }
                    completion:^(BOOL finished) {
                      if (finished) {
@@ -176,7 +175,6 @@ NSInteger static MAX_CHARS = 140;
                      }
                    }];
 }
-
 
 - (void)shouldBeFirstResponder
 {
@@ -210,25 +208,6 @@ NSInteger static MAX_CHARS = 140;
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:metrics
                                                                  views:@{@"placeHolder":_placeholderLabel}]];
-  
-  [self.superview addConstraint:[NSLayoutConstraint constraintWithItem:self
-                                                             attribute:NSLayoutAttributeCenterX
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.superview
-                                                             attribute:NSLayoutAttributeCenterX
-                                                            multiplier:1.f
-                                                              constant:0]];
-  
-  descriptionTop = [NSLayoutConstraint constraintWithItem:self
-                                                attribute:NSLayoutAttributeTop
-                                                relatedBy:NSLayoutRelationEqual
-                                                   toItem:self.superview
-                                                attribute:NSLayoutAttributeTop
-                                               multiplier:1.f
-                                                 constant:self.superview.frame.size.height];
-
-  [self.superview addConstraint:descriptionTop];
-
 }
 
 #pragma mark UITextView Delegate Methods
