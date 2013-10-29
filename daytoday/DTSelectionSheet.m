@@ -51,6 +51,7 @@ CGFloat const VIEW_HEIGHT_PERCENT = .65f;
 NSInteger static MAX_DURATION = 60;
 NSInteger static MAX_REPETITION = 8;
 NSInteger static MAX_VERIFICATION_TYPES = 4;
+NSInteger static MAX_CATEGORIES = 8;
 
 + (id)selectionSheetWithType:(DTSelectionSheetType)type
 {
@@ -171,9 +172,10 @@ NSInteger static MAX_VERIFICATION_TYPES = 4;
       }
       break;
     case DTSelectionSheetCategory:
-      for (int i = 0; i < 10; i++) {
+      for (int i = 0; i < MAX_CATEGORIES; i++) {
         UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 320.f)];
-        [image setBackgroundColor:[UIColor blackColor]];
+        [image setImage:[Category_UIImage imageForType:i]];
+        [image setBackgroundColor:[UIColor clearColor]];
         [image setUserInteractionEnabled:YES];
         image.tag = i;
         
@@ -188,7 +190,7 @@ NSInteger static MAX_VERIFICATION_TYPES = 4;
         [images addObject:image];
 
         UIView *cat = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 120.f, 40.f)];
-        [cat setBackgroundColor:[UIColor randomColor]];
+        [cat setBackgroundColor:imageButton.backgroundColor];
         cat.tag = i;
 
         UIButton *selectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -273,32 +275,35 @@ NSInteger static MAX_VERIFICATION_TYPES = 4;
     [self.selectionScroll setPagingEnabled:NO];
     [self.selectionScroll setShowsHorizontalScrollIndicator:NO];
     [self.selectionScroll setShowsVerticalScrollIndicator:NO];
-    
+
     self.selectionScroll.contentSize = CGSizeMake((contentFrameWidth+2*SCROLL_PADDING)*([self.selectionArray count]+1),
                                                   contentFrameHeight);
-    
+
     for (int i = 0; i < [self.selectionArray count]; i++) {
       [((UIView*)[self.selectionArray objectAtIndex:i]) setFrame:CGRectMake(SCROLL_PADDING,
                                                                             0.f,
                                                                             contentFrameWidth,
                                                                             contentFrameHeight)];
-      
-      UILabel *label = [[UILabel alloc] initWithFrame:((UIView*)[self.selectionArray objectAtIndex:i]).bounds];
-      [label setNumberOfLines:1];
-      [label setText:[NSString stringWithFormat:@"%d",i]];
-      [label setCenter:CGPointMake(115.f,20.f)];
-      
-      [((UIView*)[self.selectionArray objectAtIndex:i]) addSubview:label];
-      
+
       UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(i*(contentFrameWidth+2*SCROLL_PADDING) + (4*SCROLL_PADDING),
                                                                        0,
                                                                        (contentFrameWidth+2*SCROLL_PADDING),
                                                                        contentFrameHeight)];
       [containerView setBackgroundColor:[UIColor randomColor]];
       [containerView setAlpha:.5];
-      
+
+      UILabel *label = [[UILabel alloc] initWithFrame:((UIView*)[self.selectionArray objectAtIndex:i]).bounds];
+      [label setNumberOfLines:1];
+      [label setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
+      [label setTextAlignment:NSTextAlignmentLeft];
+      [label setText:[Category_UIImage stringForType:i]];
+      [label setTextColor:[UIColor whiteColor]];
+      [label sizeToFit];
+      [label setCenter:CGPointMake(containerView.frame.size.width / 2, containerView.frame.size.height / 2)];
+
       [containerView addSubview:[self.selectionArray objectAtIndex:i]];
-      
+      [containerView addSubview:label];
+
       [self.selectionScroll addSubview:containerView];
     }
     

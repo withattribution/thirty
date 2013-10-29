@@ -55,7 +55,6 @@
       break;
     case DTCategoryDiet:
       name = NSLocalizedString(@"DIET", @"diet category type");
-      
       break;
     case DTCategoryProductivity:
       name = NSLocalizedString(@"PRODUCTIVITY", @"productivity category type");
