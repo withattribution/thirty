@@ -17,6 +17,9 @@
 
 @property (copy) void (^completionBlock)();
 
+- (UIView *)descriptionInputView;
+- (void)shouldDismissTextView:(UIButton *)b;
+
 @end
 
 @implementation ChallengeDescription
@@ -62,7 +65,32 @@ NSInteger static MAX_CHARS = 140;
     return self;
 }
 
-#pragma mark ChallengeDescription Methods
+- (void)updateConstraints
+{
+  [super updateConstraints];
+  
+  NSDictionary *metrics = @{@"textViewHeight":@(110)};
+  
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textView]|"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:metrics
+                                                                 views:@{@"textView": _textView}]];
+  
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textView(textViewHeight)]"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:metrics
+                                                                 views:@{@"textView": _textView}]];
+  // 5 point offset to simulate uitextview margins
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[placeHolder]"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:metrics
+                                                                 views:@{@"placeHolder":_placeholderLabel}]];
+  // 8 point offset to simulate uitextview margins
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[placeHolder]"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:metrics
+                                                                 views:@{@"placeHolder":_placeholderLabel}]];
+}
 
 - (UIView *)descriptionInputView
 {
@@ -137,11 +165,6 @@ NSInteger static MAX_CHARS = 140;
   return input;
 }
 
-- (void)descriptionDidComplete:(void (^)())block
-{
-  self.completionBlock = [block copy];
-}
-
 - (void)shouldDismissTextView:(UIButton *)b
 {
   //save text here
@@ -156,6 +179,13 @@ NSInteger static MAX_CHARS = 140;
   if (self.completionBlock) {
     self.completionBlock();
   }
+}
+
+#pragma Public Methods
+
+- (void)descriptionDidComplete:(void (^)())block
+{
+  self.completionBlock = [block copy];
 }
 
 - (void)animateIntoView
@@ -181,33 +211,6 @@ NSInteger static MAX_CHARS = 140;
   if (_textView && ![_textView isFirstResponder]) {
     [_textView becomeFirstResponder];
   }
-}
-
-- (void)updateConstraints
-{
-  [super updateConstraints];
-  
-  NSDictionary *metrics = @{@"textViewHeight":@(110)};
-  
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textView]|"
-                                                               options:NSLayoutFormatDirectionLeadingToTrailing
-                                                               metrics:metrics
-                                                                 views:@{@"textView": _textView}]];
-  
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textView(textViewHeight)]"
-                                                               options:NSLayoutFormatDirectionLeadingToTrailing
-                                                               metrics:metrics
-                                                                 views:@{@"textView": _textView}]];
-  // 5 point offset to simulate uitextview margins
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[placeHolder]"
-                                                               options:NSLayoutFormatDirectionLeadingToTrailing
-                                                               metrics:metrics
-                                                                 views:@{@"placeHolder":_placeholderLabel}]];
-  // 8 point offset to simulate uitextview margins
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[placeHolder]"
-                                                               options:NSLayoutFormatDirectionLeadingToTrailing
-                                                               metrics:metrics
-                                                                 views:@{@"placeHolder":_placeholderLabel}]];
 }
 
 #pragma mark UITextView Delegate Methods

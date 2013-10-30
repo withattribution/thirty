@@ -19,8 +19,6 @@
 
 @property (copy) void (^completionBlock)();
 
-//TODO make methods to change this view from a disabled looking color scheme to a enabled look one
-
 @end
 
 @implementation ChallengeName
@@ -93,7 +91,7 @@ CGFloat static MARGIN_FACTOR = 0.25f;
 
 }
 
-#pragma mark - ChallengeName Methods
+#pragma mark - ChallengeName Public Methods
 
 - (void)namingDidComplete:(void (^)())block
 {
@@ -158,6 +156,5 @@ replacementString:(NSString *)string
   }
   return YES;
 }
-
 
 @end

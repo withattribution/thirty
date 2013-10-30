@@ -378,7 +378,7 @@ NSInteger static MAX_CATEGORIES = 8;
                                                                  views:views]];
 }
 
-#pragma mark - Return Selected Object Method
+#pragma mark - Return Selected Object
 
 - (void)didCompleteWithSelectedObject:(void (^)(id obj))block
 {

@@ -36,10 +36,22 @@
   NSNumber *category;
 }
 
+- (UIViewController *)nextViewController;
+
+//Challenge flow / interaction state
 - (void)transitionToChallengeFLow;
 - (void)shouldEnterDescription;
 - (void)selectCategory;
+
+// Challenge Default methods duration / verification type / challenge frequency
 - (void)setChallengeCreationDefaultValues;
+- (void)placeDefaultChallengeCreationSelections;
+
+- (void)selectDuration:(UIButton *)button;
+- (void)selectVerification:(UIButton *)button;
+- (void)selectFrequency:(UIButton *)button;
+
+- (void)attemptChallengeCreation:(UIButton *)b;
 
 @property (nonatomic,retain) NSMutableDictionary *creationDictionary;
 @property (nonatomic, weak) UIViewController *currentChildViewController;
@@ -103,20 +115,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   [self setChallengeCreationDefaultValues];
 }
 
-- (void)setChallengeCreationDefaultValues
-{
-  duration = [NSNumber numberWithInt:30];
-  verificationType = [NSNumber numberWithInt:DTVerificationTickMark];
-  freqCount = [NSNumber numberWithInt:1];
-  
-  [self.creationDictionary setObject:[NSNull null] forKey:@"name"];
-  [self.creationDictionary setObject:[NSNull null] forKey:@"description"];
-  [self.creationDictionary setObject:[NSNull null] forKey:@"category"];
-  [self.creationDictionary setObject:[duration stringValue] forKey:@"duration"];
-  [self.creationDictionary setObject:[verificationType stringValue] forKey:@"verification"];
-  [self.creationDictionary setObject:[freqCount stringValue] forKey:@"frequency"];
-}
-
 - (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
 {
   //observing the isEditing state of the ChallengeName object's uitextfield rather
@@ -127,47 +125,61 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
     NSLog(@"the changed object %@",[change objectForKey:NSKeyValueChangeNewKey]);
     [descriptionView setAlpha:([[change objectForKey:NSKeyValueChangeNewKey] integerValue])];
   }
-  
+  else {
   [self.creationDictionary  setObject:[change objectForKey:NSKeyValueChangeNewKey] forKey:keyPath];
-//  for (NSString *thekey in self.creationDictionary) {
-//    NSLog(@"the keys :%@ and object: %@",thekey, [self.creationDictionary objectForKey:thekey]);
-//  }
+  //  for (NSString *thekey in self.creationDictionary) {
+  //    NSLog(@"the keys :%@ and object: %@",thekey, [self.creationDictionary objectForKey:thekey]);
+  //  }
+  }
 }
+
+- (UIViewController *)nextViewController
+{
+  UIViewController *viewController = [UIViewController new];
+  viewController.view.frame = self.view.bounds;
+  viewController.view.backgroundColor = [UIColor randomColor];
+
+  [nameView addObserver:viewController forKeyPath:@"challengeName" options:NSKeyValueObservingOptionNew context:NULL];
+
+  return viewController;
+}
+
+#pragma mark Challenge Creation Flow Methods
 
 - (void)transitionToChallengeFLow
 {
   CGFloat width = CGRectGetWidth(self.view.bounds);
-//  CGFloat height = CGRectGetHeight(self.view.bounds);
-
+  //  CGFloat height = CGRectGetHeight(self.view.bounds);
+  
   CGAffineTransform transform = CGAffineTransformIdentity;
   transform = CGAffineTransformMakeTranslation(width, 0);
-
+  
   UIViewController *nextViewController = [self nextViewController];
-
+  
   nameView = [[ChallengeName alloc] init];
   [nextViewController.view addSubview:nameView];
-
+  
   [nameView addObserver:self
              forKeyPath:@"name"
                 options:NSKeyValueObservingOptionNew
                 context:NULL];
-
+  
   [nameView addObserver:self
              forKeyPath:@"isEditing"
                 options:NSKeyValueObservingOptionNew
                 context:NULL];
-
+  
   NSDictionary *metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR),@"nameViewHeight":@(NAME_VIEW_HEIGHT)};
-
+  
   [nextViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameView(fieldWidth)]"
-                                                                              options:NSLayoutFormatAlignAllCenterY
-                                                                              metrics:metrics
-                                                                                views:@{@"nameView":nameView}]];
-
+                                                                                  options:NSLayoutFormatAlignAllCenterY
+                                                                                  metrics:metrics
+                                                                                    views:@{@"nameView":nameView}]];
+  
   [nextViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[nameView(nameViewHeight)]"
-                                                                              options:NSLayoutFormatAlignAllCenterY
-                                                                              metrics:metrics
-                                                                                views:@{@"nameView":nameView}]];
+                                                                                  options:NSLayoutFormatAlignAllCenterY
+                                                                                  metrics:metrics
+                                                                                    views:@{@"nameView":nameView}]];
   
   [nextViewController.view addConstraint:[NSLayoutConstraint constraintWithItem:nameView
                                                                       attribute:NSLayoutAttributeCenterX
@@ -181,13 +193,13 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
       [self shouldEnterDescription];
     }
   }];
-
+  
   // Containment
   [self addChildViewController:nextViewController];
   [self.currentChildViewController willMoveToParentViewController:nil];
-
+  
   nextViewController.view.transform = transform;
-
+  
   [self transitionFromViewController:self.currentChildViewController
                     toViewController:nextViewController
                             duration:TRANSITION_DURATION
@@ -206,19 +218,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                             [nameView shouldBeFirstResponder];
                           }];
 }
-
-- (UIViewController *)nextViewController
-{
-  UIViewController *viewController = [UIViewController new];
-  viewController.view.frame = self.view.bounds;
-  viewController.view.backgroundColor = [UIColor randomColor];
-
-  [nameView addObserver:viewController forKeyPath:@"challengeName" options:NSKeyValueObservingOptionNew context:NULL];
-
-  return viewController;
-}
-
-#pragma mark Challenge Creation Flow Methods
 
 - (void)shouldEnterDescription
 {
@@ -360,6 +359,68 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                        [self placeDefaultChallengeCreationSelections];
                      }
                    }];
+}
+
+#pragma mark Challenge Creation Optional Selections
+
+- (void)setChallengeCreationDefaultValues
+{
+  duration = [NSNumber numberWithInt:30];
+  verificationType = [NSNumber numberWithInt:DTVerificationTickMark];
+  freqCount = [NSNumber numberWithInt:1];
+  
+  [self.creationDictionary setObject:[NSNull null] forKey:@"name"];
+  [self.creationDictionary setObject:[NSNull null] forKey:@"description"];
+  [self.creationDictionary setObject:[NSNull null] forKey:@"category"];
+  [self.creationDictionary setObject:[duration stringValue] forKey:@"duration"];
+  [self.creationDictionary setObject:[verificationType stringValue] forKey:@"verification"];
+  [self.creationDictionary setObject:[freqCount stringValue] forKey:@"frequency"];
+}
+
+- (void)selectDuration:(UIButton *)button
+{
+  DTSelectionSheet *durationSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetDuration];
+  [durationSheet showInView:self.currentChildViewController.view];
+  [durationSheet didCompleteWithSelectedObject:^(id obj){
+    
+    NSLog(@"this is durationl: %@", obj);
+    if ([obj isKindOfClass:[DTDotElement class]]){
+      duration = ((DTDotElement*)obj).dotNumber;
+      [self.creationDictionary setObject:[duration stringValue] forKey:@"duration"];
+      [durationDot setDotNumber:((DTDotElement*)obj).dotNumber];
+    }
+  }];
+}
+
+- (void)selectVerification:(UIButton *)button
+{
+  DTSelectionSheet *verifySheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetVerification];
+  [verifySheet showInView:self.currentChildViewController.view];
+  [verifySheet didCompleteWithSelectedObject:^(id obj){
+    
+    NSLog(@"this is verification: %@", obj);
+    if ([obj isKindOfClass:[DTDotElement class]]){
+#warning it's gonna come up that the verification type is weakly tied to this element -- shouldn't always rely on the tag being the correct type :/
+      verificationType = [NSNumber numberWithInt:((DTDotElement*)obj).tag];
+      [self.creationDictionary setObject:[verificationType stringValue] forKey:@"verification"];
+      [verificationDot setDotImage:[Verification imageForType:((DTDotElement*)obj).tag]];
+    }
+  }];
+}
+
+- (void)selectFrequency:(UIButton *)button
+{
+  DTSelectionSheet *freqSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetFrequency];
+  [freqSheet showInView:self.currentChildViewController.view];
+  [freqSheet didCompleteWithSelectedObject:^(id obj){
+    
+    NSLog(@"this is the frequency count: %@", obj);
+    if ([obj isKindOfClass:[DTDotElement class]]){
+      freqCount = ((DTDotElement*)obj).dotNumber;
+      [self.creationDictionary setObject:[freqCount stringValue] forKey:@"frequency"];
+      [frequencyDot setDotNumber:((DTDotElement*)obj).dotNumber];
+    }
+  }];
 }
 
 - (void)placeDefaultChallengeCreationSelections
@@ -549,52 +610,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                    completion:NULL];
 }
 
-- (void)selectDuration:(UIButton *)button
-{
-  DTSelectionSheet *durationSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetDuration];
-  [durationSheet showInView:self.currentChildViewController.view];
-  [durationSheet didCompleteWithSelectedObject:^(id obj){
-    
-    NSLog(@"this is durationl: %@", obj);
-    if ([obj isKindOfClass:[DTDotElement class]]){
-      duration = ((DTDotElement*)obj).dotNumber;
-      [self.creationDictionary setObject:[duration stringValue] forKey:@"duration"];
-      [durationDot setDotNumber:((DTDotElement*)obj).dotNumber];
-    }
-  }];
-}
-
-- (void)selectVerification:(UIButton *)button
-{
-  DTSelectionSheet *verifySheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetVerification];
-  [verifySheet showInView:self.currentChildViewController.view];
-  [verifySheet didCompleteWithSelectedObject:^(id obj){
-    
-    NSLog(@"this is verification: %@", obj);
-    if ([obj isKindOfClass:[DTDotElement class]]){
-      #warning it's gonna come up that the verification type is weakly tied to this element -- shouldn't always rely on the tag being the correct type :/
-      verificationType = [NSNumber numberWithInt:((DTDotElement*)obj).tag];
-      [self.creationDictionary setObject:[verificationType stringValue] forKey:@"verification"];
-      [verificationDot setDotImage:[Verification imageForType:((DTDotElement*)obj).tag]];
-    }
-  }];
-}
-
-- (void)selectFrequency:(UIButton *)button
-{
-  DTSelectionSheet *freqSheet = [DTSelectionSheet selectionSheetWithType:DTSelectionSheetFrequency];
-  [freqSheet showInView:self.currentChildViewController.view];
-  [freqSheet didCompleteWithSelectedObject:^(id obj){
-    
-    NSLog(@"this is the frequency count: %@", obj);
-    if ([obj isKindOfClass:[DTDotElement class]]){
-      freqCount = ((DTDotElement*)obj).dotNumber;
-      [self.creationDictionary setObject:[freqCount stringValue] forKey:@"frequency"];
-      [frequencyDot setDotNumber:((DTDotElement*)obj).dotNumber];
-    }
-  }];
-}
-
 - (void)attemptChallengeCreation:(UIButton *)b
 {
   __block BOOL failedTest = YES;
@@ -622,6 +637,8 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
     [nope show];
   }
 }
+
+#pragma mark Challenge Creation Request Delegate Methods
 
 - (void) challengeSuccessfullyCreated:(Challenge*)challenge
 {

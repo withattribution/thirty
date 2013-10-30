@@ -10,10 +10,10 @@
 
 @interface ChallengeDescription : UIView <UITextViewDelegate>
 
-@property (strong, nonatomic) NSString *description;
+@property (nonatomic,strong) NSString *description; //observed property
 
-- (void)shouldBeFirstResponder;
 - (void)animateIntoView;
+- (void)shouldBeFirstResponder;
 - (void)descriptionDidComplete:(void (^)())block;
 
 @end

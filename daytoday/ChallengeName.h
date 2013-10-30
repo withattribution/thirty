@@ -10,8 +10,8 @@
 
 @interface ChallengeName : UIView <UITextFieldDelegate>
 
-@property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *isEditing;
+@property (strong, nonatomic) NSString *name; //observed property
+@property (strong, nonatomic) NSString *isEditing; //observed property
 
 - (void)shouldBeFirstResponder;
 - (void)namingDidComplete:(void (^)())block;

@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, DTSelectionSheetType) {
   DTSelectionSheetType sheetType;
 }
 
-@property (nonatomic,retain) NSString *titleText;
+@property (nonatomic,strong) NSString *titleText;
 @property (nonatomic,strong) NSArray *selectionArray;
 
 + (id)selectionSheetWithType:(DTSelectionSheetType)type;
