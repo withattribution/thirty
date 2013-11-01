@@ -11,6 +11,7 @@
 #import "LoginRegistrationViewController.h"
 #import "ProfileViewController.h"
 #import "CreateChallengeViewController.h"
+#import "ChallengeDetailViewController.h"
 #import <CoreData/CoreData.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "UAirship.h"
@@ -30,6 +31,8 @@
 @property (strong,nonatomic) ProfileViewController *profileController;
 
 @property (strong,nonatomic) CreateChallengeViewController *createChallengeController;
+
+@property (strong,nonatomic) ChallengeDetailViewController *challengeDetail;
 
 @property (strong, nonatomic) ViewController *viewController;
 

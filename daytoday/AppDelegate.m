@@ -42,12 +42,20 @@
       [self.navController.navigationBar setHidden:YES];
   #endif
 
-  #define CREATE_CHALLENGE_VIEWCONTROLLER_DEV 1
+  #define CREATE_CHALLENGE_VIEWCONTROLLER_DEV 0
     
   #ifdef CREATE_CHALLENGE_VIEWCONTROLLER_DEV
     self.createChallengeController = [[CreateChallengeViewController alloc] init];
     self.navController = [[D2NavController alloc] initWithRootViewController:self.createChallengeController];
     [self.navController.navigationBar setHidden:YES];
+  #endif
+  
+  #define CHALLENGE_DETAIL_VIEWCONTROLLER_DEV 1
+  
+  #ifdef CHALLENGE_DETAIL_VIEWCONTROLLER_DEV
+      self.challengeDetail = [[ChallengeDetailViewController alloc] init];
+      self.navController = [[D2NavController alloc] initWithRootViewController:self.challengeDetail];
+      [self.navController.navigationBar setHidden:YES];
   #endif
 
   self.window.rootViewController = self.navController;
