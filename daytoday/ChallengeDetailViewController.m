@@ -19,22 +19,44 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+  [super viewDidLoad];
 	// Do any additional setup after loading the view.
   
   [self.view setBackgroundColor:[UIColor randomColor]];
-  DTVerificationElement *el = [[DTVerificationElement alloc] initWithFrame:CGRectMake(150.f,150.f, 150.f, 150.f)];
-  [el setBackgroundColor:[UIColor randomColor]];
-  [self.view addSubview:el];
-  [el drawVerificationSection];
+  
+  self.el = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 150.f, 150.f)];
+  [self.el setDataSource:self];
+  [self.view addSubview:self.el];
+  
+//  UIView *circleMask = [[UIView alloc] initWithFrame:CGRectMake(50., 50., 150., 150.)];
+
   
   
+//  [self.el reloadData];
+
+}
+
+-(NSUInteger)numberOfSectionsInVerificationElement:(DTVerificationElement *)verificationElement
+{
+  return 4;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
   
+  
+  [self.el reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
+  [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 

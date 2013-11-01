@@ -7,7 +7,11 @@
 //
 
 #import "D2ViewController.h"
+#import "DTVerificationElement.h"
 
-@interface ChallengeDetailViewController : D2ViewController
+@interface ChallengeDetailViewController : D2ViewController <DTVerificationElementDataSource>
+
+@property (nonatomic,strong) DTVerificationElement *el;
+
 
 @end
