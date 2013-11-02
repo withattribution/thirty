@@ -24,16 +24,10 @@
   
   [self.view setBackgroundColor:[UIColor randomColor]];
   
-  self.el = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 150.f, 150.f)];
-  [self.el setDataSource:self];
-  [self.view addSubview:self.el];
-  
-//  UIView *circleMask = [[UIView alloc] initWithFrame:CGRectMake(50., 50., 150., 150.)];
-
-  
-  
-//  [self.el reloadData];
-
+  self.eldt = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 150.f, 150.f)];
+  [self.eldt setDataSource:self];
+  [self.eldt setAnimationSpeed:5.0];
+  [self.view addSubview:self.eldt];
 }
 
 -(NSUInteger)numberOfSectionsInVerificationElement:(DTVerificationElement *)verificationElement
@@ -50,8 +44,7 @@
 {
   [super viewDidAppear:animated];
   
-  
-  [self.el reloadData];
+  [self.eldt reloadData];
 }
 
 - (void)didReceiveMemoryWarning

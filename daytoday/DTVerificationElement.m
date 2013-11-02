@@ -12,8 +12,8 @@
 #import "UIColor+SR.h"
 
 @interface SectionLayer : CAShapeLayer
-@property (nonatomic,assign) CGFloat startAngle;
-@property (nonatomic,assign) CGFloat endAngle;
+@property (nonatomic,assign) double startAngle;
+@property (nonatomic,assign) double endAngle;
 - (void)createArcAnimationForKey:(NSString *)key fromValue:(NSNumber *)from toValue:(NSNumber *)to Delegate:(id)delegate;
 @end
 
@@ -84,7 +84,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     if (self) {
       _dotView = [[UIView alloc] initWithFrame:frame];
       [_dotView setBackgroundColor:[UIColor whiteColor]];
-      [self insertSubview:_dotView atIndex:0]; // making sure the dotview is the bottomest
+      [self addSubview:_dotView];
       
       _startSectionAngle = M_PI_2*3;
       _animationSpeed = 13.f;
@@ -96,6 +96,22 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     return self;
 }
 
+- (void)setDotCenter:(CGPoint)dotCenter
+{
+  [_dotView setCenter:dotCenter];
+  _dotCenter = CGPointMake(_dotView.frame.size.width/2.f, _dotView.frame.size.height/2.f);
+}
+
+- (void)setDotRadius:(CGFloat)dotRadius
+{
+  _dotRadius = dotRadius;
+  CGPoint origin = _dotView.frame.origin;
+  CGRect frame = CGRectMake(origin.x+_dotCenter.x-dotRadius, origin.y+_dotCenter.y-dotRadius, dotRadius*2, dotRadius*2);
+  _dotCenter = CGPointMake(frame.size.width/2.f, frame.size.height/2.f);
+  [_dotView setFrame:frame];
+  [_dotView.layer setCornerRadius:_dotRadius];
+}
+
 - (void)reloadData
 {
   if (_dataSource)
@@ -103,8 +119,8 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     CALayer *parentLayer = [_dotView layer];
     NSArray *sectionLayers = [parentLayer sublayers];
     
-    CGFloat startToAngle = 0.0;
-    CGFloat endToAngle = startToAngle;
+    double startToAngle = 0.0;
+    double endToAngle = startToAngle;
     
     NSUInteger sectionCount = [_dataSource numberOfSectionsInVerificationElement:self];
 
@@ -112,18 +128,19 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     
     [CATransaction begin];
     [CATransaction setAnimationDuration:_animationSpeed];
-    
+    NSLog(@"_animationSpeed: %f",_animationSpeed);
+
     [_dotView setUserInteractionEnabled:NO];
     
-    BOOL isFirstStarting = ([sectionLayers count] == 0 && sectionCount == 0);
+    BOOL isFirstStarting = ([sectionLayers count] == 0 && sectionCount);
     for (int index = 0; index < sectionCount; index++)
     {
       SectionLayer *layer;
       
       endToAngle += angle;
       
-      CGFloat startFromAngle = _startSectionAngle + startToAngle;
-      CGFloat endFromAngle = _startSectionAngle + endToAngle;
+      double startFromAngle = _startSectionAngle + startToAngle;
+      double endFromAngle = _startSectionAngle + endToAngle;
       
       if (index >= [sectionLayers count])
       {
@@ -134,19 +151,19 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
       }
       
       [layer createArcAnimationForKey:@"startAngle"
-                            fromValue:[NSNumber numberWithFloat:startFromAngle]
-                              toValue:[NSNumber numberWithFloat:startToAngle+_startSectionAngle]
+                            fromValue:[NSNumber numberWithDouble:startFromAngle]
+                              toValue:[NSNumber numberWithDouble:startToAngle+_startSectionAngle]
                              Delegate:self];
       [layer createArcAnimationForKey:@"endAngle"
-                            fromValue:[NSNumber numberWithFloat:endFromAngle]
-                              toValue:[NSNumber numberWithFloat:endToAngle+_startSectionAngle]
+                            fromValue:[NSNumber numberWithDouble:endFromAngle]
+                              toValue:[NSNumber numberWithDouble:endToAngle+_startSectionAngle]
                              Delegate:self];
       startToAngle = endToAngle;
     }
     
     [_dotView setUserInteractionEnabled:YES];
     
-//    [CATransaction setDisableActions:NO];
+    [CATransaction setDisableActions:NO];
     [CATransaction commit];
     
   }
@@ -155,9 +172,9 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 - (void)updateTimerFired:(NSTimer *)timer
 {
   CALayer *parentLayer = [_dotView layer];
-  NSArray *dotSectionLayers = [parentLayer sublayers];
+  NSArray *sectionLayers = [parentLayer sublayers];
 
-  [dotSectionLayers enumerateObjectsUsingBlock:^(CAShapeLayer *obj, NSUInteger idx, BOOL *stop){
+  [sectionLayers enumerateObjectsUsingBlock:^(CAShapeLayer *obj, NSUInteger idx, BOOL *stop){
   
     NSNumber *presentationLayerStartAngle = [[obj presentationLayer] valueForKey:@"startAngle"];
     CGFloat interpolatedStartAngle = [presentationLayerStartAngle doubleValue];
@@ -188,7 +205,8 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
   [_animations addObject:anim];
 }
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)animationCompleted
 {
   [_animations removeObject:anim];
   
@@ -198,29 +216,13 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
   }
 }
 
-- (void)setDotCenter:(CGPoint)dotCenter
-{
-  [_dotView setCenter:dotCenter];
-  _dotCenter = CGPointMake(_dotView.frame.size.width/2.f, _dotView.frame.size.height/2.f);
-}
-
-- (void)setDotRadius:(CGFloat)dotRadius
-{
-  _dotRadius = dotRadius;
-  CGPoint origin = _dotView.frame.origin;
-  CGRect frame = CGRectMake(origin.x+_dotCenter.x-dotRadius, origin.y+_dotCenter.y-dotRadius, dotRadius*2, dotRadius*2);
-  _dotCenter = CGPointMake(frame.size.width/2.f, frame.size.height/2.f);
-  [_dotView setFrame:frame];
-  [_dotView.layer setCornerRadius:_dotRadius];
-}
-
 - (SectionLayer *)createSectionLayer
 {
   SectionLayer *dotSlice = [SectionLayer layer];
-  [dotSlice setFillColor:[UIColor randomColor].CGColor];
+//  [dotSlice setFillColor:[UIColor randomColor].CGColor];
   [dotSlice setZPosition:0];
   [dotSlice setStrokeColor:[UIColor whiteColor].CGColor];
-  [dotSlice setLineWidth:3.f];
+  [dotSlice setLineWidth:1.f];
 
 //  float radius = 100.f;
 //  CALayer *theDonut = [CALayer layer];
@@ -235,49 +237,5 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 
   return dotSlice;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @end

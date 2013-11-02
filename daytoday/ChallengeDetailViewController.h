@@ -11,7 +11,6 @@
 
 @interface ChallengeDetailViewController : D2ViewController <DTVerificationElementDataSource>
 
-@property (nonatomic,strong) DTVerificationElement *el;
-
+@property (nonatomic,strong) DTVerificationElement *eldt;
 
 @end
