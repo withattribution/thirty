@@ -22,17 +22,31 @@
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
   
-  [self.view setBackgroundColor:[UIColor randomColor]];
+  [self.view setBackgroundColor:[UIColor whiteColor]];
   
-  self.eldt = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 150.f, 150.f)];
+  self.eldt = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 200.f, 200.f)];
+  [self.eldt setCenter:CGPointMake(self.view.center.x,self.eldt.center.y)];
+  
   [self.eldt setDataSource:self];
-  [self.eldt setAnimationSpeed:5.0];
+  [self.eldt setDelegate:self];
+  
+  [self.eldt setAnimationSpeed:1.0];
   [self.view addSubview:self.eldt];
+}
+
+-(void)verificationElement:(DTVerificationElement *)element didVerifySection:(NSUInteger)section
+{
+  NSLog(@"element: %@ and section:%d",element,section);
+}
+
+- (NSUInteger)numberOfCompletedSectionsInVerificationElement:(DTVerificationElement *)element
+{
+  return 0; //numberCompleted
 }
 
 -(NSUInteger)numberOfSectionsInVerificationElement:(DTVerificationElement *)verificationElement
 {
-  return 4;
+  return 3; //numberRequired
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -43,8 +57,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  
-  [self.eldt reloadData];
+  [self.eldt reloadData:YES];
 }
 
 - (void)didReceiveMemoryWarning

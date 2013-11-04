@@ -11,9 +11,11 @@
 
 #import "UIColor+SR.h"
 
-@interface SectionLayer : CAShapeLayer
-@property (nonatomic,assign) double startAngle;
-@property (nonatomic,assign) double endAngle;
+@interface SectionLayer : CAShapeLayer <NSCopying>
+@property (nonatomic,assign) CGFloat startAngle;
+@property (nonatomic,assign) CGFloat endAngle;
+@property (nonatomic,assign) BOOL isVerified;
+
 - (void)createArcAnimationForKey:(NSString *)key fromValue:(NSNumber *)from toValue:(NSNumber *)to Delegate:(id)delegate;
 @end
 
@@ -29,6 +31,13 @@
   }
 }
 
+
+-(void)setIsVerified:(BOOL)isVerified
+{
+  _isVerified = isVerified;
+  [self setFillColor:(isVerified) ? [UIColor blueColor].CGColor : [UIColor lightGrayColor].CGColor];
+}
+
 - (id)initWithLayer:(id)layer
 {
   if (self = [super initWithLayer:layer]) {
@@ -40,6 +49,16 @@
   return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+  SectionLayer *layerCopy = [[SectionLayer allocWithZone:zone] init];
+  [layerCopy setStartAngle:_startAngle];
+  [layerCopy setEndAngle:_endAngle];
+  [layerCopy setIsVerified:_isVerified];
+
+  return layerCopy;
+}
+
 - (void)createArcAnimationForKey:(NSString *)key fromValue:(NSNumber *)from toValue:(NSNumber *)to Delegate:(id)delegate
 {
   CABasicAnimation *arcAnimation = [CABasicAnimation animationWithKeyPath:key];
@@ -48,6 +67,8 @@
   [arcAnimation setFromValue:currentAngle];
   [arcAnimation setToValue:to];
   [arcAnimation setDelegate:delegate];
+  [arcAnimation setValue:to forKey:key];
+  [arcAnimation setValue:key forKey:@"id"];
   [arcAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault]];
   [self addAnimation:arcAnimation forKey:key];
   [self setValue:to forKey:key];
@@ -56,12 +77,16 @@
 
 @interface DTVerificationElement ()
 - (void)updateTimerFired:(NSTimer *)timer;
-- (SectionLayer *)createSectionLayer;
+- (SectionLayer *)createSectionLayer:(BOOL)verificationStatus;
 @end
 
 @implementation DTVerificationElement {
   //dot view contains all the dot slices
-  UIView *_dotView;
+  UIView *_backing;
+  
+  BOOL isSectionProgress;
+  NSUInteger _activeSection;
+  SectionLayer *_section;
   
   NSTimer *_animationTimer;
   NSMutableArray *_animations;
@@ -71,10 +96,10 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 {
   CGMutablePathRef path = CGPathCreateMutable();
   CGPathMoveToPoint(path, NULL, center.x, center.y);
-  
+
   CGPathAddArc(path, NULL, center.x, center.y, radius, startAngle, endAngle, 0);
   CGPathCloseSubpath(path);
-  
+
   return path;
 }
 
@@ -82,111 +107,189 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 {
     self = [super initWithFrame:frame];
     if (self) {
-      _dotView = [[UIView alloc] initWithFrame:frame];
-      [_dotView setBackgroundColor:[UIColor whiteColor]];
-      [self addSubview:_dotView];
+      _backing = [[UIView alloc] initWithFrame:frame];
+      [_backing setBackgroundColor:[UIColor whiteColor]];
+      [self addSubview:_backing];
       
       _startSectionAngle = M_PI_2*3;
-      _animationSpeed = 13.f;
+      _animationSpeed = 1.f;
       _animations = [[NSMutableArray alloc] init];
 
-      self.dotRadius = MIN(frame.size.width/2.f, frame.size.height/2.f) - 2;
+      self.dotRadius = MIN(frame.size.width/2.f, frame.size.height/2.f) - 0;
       self.dotCenter = CGPointMake(frame.size.width/2.f, frame.size.height/2.f);
+      
+      UIView *circle = [[UIView alloc] initWithFrame:CGRectMake(0., 0., self.frame.size.width*.65, self.frame.size.height*.65)];
+      [circle setCenter:self.dotCenter];
+      [circle.layer setBorderColor:[UIColor darkGrayColor].CGColor];
+      [circle.layer setBorderWidth:2.f];
+      [circle setAlpha:0.8f];
+      [circle.layer setCornerRadius:self.dotRadius*.65];
+      [circle setBackgroundColor:[UIColor whiteColor]];
+      [self addSubview:circle];
+      [self bringSubviewToFront:circle];
+      
+      UILongPressGestureRecognizer *press = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(isHoldingSection:)];
+      [press setMinimumPressDuration:.01];
+      [self addGestureRecognizer:press];
+      
+       _activeSection = -1;
+      isSectionProgress = NO;
     }
     return self;
 }
 
+- (void)isHoldingSection:(UIGestureRecognizer *)g
+{
+  
+  if ( [g isKindOfClass:[UILongPressGestureRecognizer class]] && [g state] == UIGestureRecognizerStateBegan )
+  {
+    isSectionProgress = YES;
+
+    CALayer *parentLayer = [_backing layer];
+    NSArray *sectionLayers = [parentLayer sublayers];
+
+    if (!_section) {
+      _section = [[sectionLayers objectAtIndex:_activeSection] copy];
+      [_section setIsVerified:YES];
+      [parentLayer addSublayer:_section];
+    }
+
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:.8];
+    
+    NSNumber *presentationLayerCurrentAngle = [[_section presentationLayer] valueForKey:@"sectionAngle"];
+    [_section createArcAnimationForKey:@"sectionAngle"
+                             fromValue:(presentationLayerCurrentAngle == nil) ? [NSNumber numberWithFloat:_section.startAngle] : presentationLayerCurrentAngle
+                               toValue:[NSNumber numberWithFloat:_section.endAngle]
+                              Delegate:self];
+    [CATransaction commit];
+  }
+  if ( [g isKindOfClass:[UILongPressGestureRecognizer class]] && [g state] == UIGestureRecognizerStateEnded ) {
+  
+    if (isSectionProgress) {
+  
+      NSNumber *presentationLayerCurrentAngle = [[_section presentationLayer] valueForKey:@"sectionAngle"];
+      
+      [CATransaction begin];
+      [CATransaction setAnimationDuration:1.];
+      [_section createArcAnimationForKey:@"sectionAngle"
+                               fromValue:presentationLayerCurrentAngle
+                                 toValue:[NSNumber numberWithFloat:_section.startAngle]
+                                Delegate:self];
+      [CATransaction commit];
+    }
+  }
+}
+
 - (void)setDotCenter:(CGPoint)dotCenter
 {
-  [_dotView setCenter:dotCenter];
-  _dotCenter = CGPointMake(_dotView.frame.size.width/2.f, _dotView.frame.size.height/2.f);
+  [_backing setCenter:dotCenter];
+  _dotCenter = CGPointMake(_backing.frame.size.width/2.f, _backing.frame.size.height/2.f);
 }
 
 - (void)setDotRadius:(CGFloat)dotRadius
 {
   _dotRadius = dotRadius;
-  CGPoint origin = _dotView.frame.origin;
+  CGPoint origin = _backing.frame.origin;
   CGRect frame = CGRectMake(origin.x+_dotCenter.x-dotRadius, origin.y+_dotCenter.y-dotRadius, dotRadius*2, dotRadius*2);
   _dotCenter = CGPointMake(frame.size.width/2.f, frame.size.height/2.f);
-  [_dotView setFrame:frame];
-  [_dotView.layer setCornerRadius:_dotRadius];
+  [_backing setFrame:frame];
+  [_backing.layer setCornerRadius:_dotRadius];
 }
 
-- (void)reloadData
+- (void)reloadData:(BOOL)animated
 {
   if (_dataSource)
   {
-    CALayer *parentLayer = [_dotView layer];
+    CALayer *parentLayer = [_backing layer];
     NSArray *sectionLayers = [parentLayer sublayers];
-    
-    double startToAngle = 0.0;
-    double endToAngle = startToAngle;
-    
-    NSUInteger sectionCount = [_dataSource numberOfSectionsInVerificationElement:self];
 
-    CGFloat angle = (M_PI * 2) / MAX(sectionCount, 1);
+    CGFloat startToAngle = 0.0;
+    CGFloat endToAngle = startToAngle;
+
+    NSUInteger sectionCount = [_dataSource numberOfSectionsInVerificationElement:self];
+    NSUInteger completedCount = [_dataSource numberOfCompletedSectionsInVerificationElement:self];
     
+    _activeSection = (sectionCount > completedCount) ? completedCount : -1;
+    
+    CGFloat angle = (M_PI * 2) / MAX(sectionCount, 1);
+
     [CATransaction begin];
     [CATransaction setAnimationDuration:_animationSpeed];
-    NSLog(@"_animationSpeed: %f",_animationSpeed);
 
-    [_dotView setUserInteractionEnabled:NO];
+    [_backing setUserInteractionEnabled:NO];
+    
+//    NSMutableArray *forSectionAnimations = [[NSMutableArray alloc] initWithCapacity:sectionCount];
     
     BOOL isFirstStarting = ([sectionLayers count] == 0 && sectionCount);
     for (int index = 0; index < sectionCount; index++)
     {
       SectionLayer *layer;
-      
       endToAngle += angle;
-      
-      double startFromAngle = _startSectionAngle + startToAngle;
-      double endFromAngle = _startSectionAngle + endToAngle;
-      
+      CGFloat startFromAngle = _startSectionAngle + startToAngle;
+      CGFloat endFromAngle = _startSectionAngle + endToAngle;
+
       if (index >= [sectionLayers count])
       {
-        layer = [self createSectionLayer];
+        layer = [self createSectionLayer:(index < completedCount)];
         if (isFirstStarting)
           startFromAngle = endFromAngle = _startSectionAngle;
         [parentLayer addSublayer:layer];
       }
       
+      [layer setStartAngle:startToAngle+_startSectionAngle];
+      [layer setEndAngle:endToAngle+_startSectionAngle];
+      
+//      [forSectionAnimations addObject:@{@"startAngle":@[@(startFromAngle),@(startToAngle+_startSectionAngle)],
+//                                        @"endAngle":@[@(endFromAngle),@(endToAngle+_startSectionAngle)]}];
+
       [layer createArcAnimationForKey:@"startAngle"
-                            fromValue:[NSNumber numberWithDouble:startFromAngle]
-                              toValue:[NSNumber numberWithDouble:startToAngle+_startSectionAngle]
+                            fromValue:[NSNumber numberWithFloat:startFromAngle]
+                              toValue:[NSNumber numberWithFloat:startToAngle+_startSectionAngle]
                              Delegate:self];
       [layer createArcAnimationForKey:@"endAngle"
-                            fromValue:[NSNumber numberWithDouble:endFromAngle]
-                              toValue:[NSNumber numberWithDouble:endToAngle+_startSectionAngle]
+                            fromValue:[NSNumber numberWithFloat:endFromAngle]
+                              toValue:[NSNumber numberWithFloat:endToAngle+_startSectionAngle]
                              Delegate:self];
       startToAngle = endToAngle;
     }
+
+//    _sectionAnimations = forSectionAnimations;
     
-    [_dotView setUserInteractionEnabled:YES];
-    
+    [_backing setUserInteractionEnabled:YES];
+
     [CATransaction setDisableActions:NO];
     [CATransaction commit];
-    
   }
 }
 
 - (void)updateTimerFired:(NSTimer *)timer
 {
-  CALayer *parentLayer = [_dotView layer];
+  CALayer *parentLayer = [_backing layer];
   NSArray *sectionLayers = [parentLayer sublayers];
 
-  [sectionLayers enumerateObjectsUsingBlock:^(CAShapeLayer *obj, NSUInteger idx, BOOL *stop){
-  
-    NSNumber *presentationLayerStartAngle = [[obj presentationLayer] valueForKey:@"startAngle"];
-    CGFloat interpolatedStartAngle = [presentationLayerStartAngle doubleValue];
+  if (isSectionProgress) {
+    NSNumber *presentationLayerEndAngle = [[_section presentationLayer] valueForKey:@"sectionAngle"];
+    CGFloat interpolatedEndAngle = [presentationLayerEndAngle floatValue];
     
-    NSNumber *presentationLayerEndAngle = [[obj presentationLayer] valueForKey:@"endAngle"];
-    CGFloat interpolatedEndAngle = [presentationLayerEndAngle doubleValue];
-    
-    CGPathRef path = CGPathCreateArc(_dotCenter, _dotRadius, interpolatedStartAngle, interpolatedEndAngle);
-    [obj setPath:path];
+    CGPathRef path = CGPathCreateArc(_dotCenter, _dotRadius, _section.startAngle, interpolatedEndAngle);
+    [_section setPath:path];
     CFRelease(path);
+  }
+  else {
+    [sectionLayers enumerateObjectsUsingBlock:^(CAShapeLayer *obj, NSUInteger idx, BOOL *stop){
+    
+      NSNumber *presentationLayerStartAngle = [[obj presentationLayer] valueForKey:@"startAngle"];
+      CGFloat interpolatedStartAngle = [presentationLayerStartAngle floatValue];
 
-  }];
+      NSNumber *presentationLayerEndAngle = [[obj presentationLayer] valueForKey:@"endAngle"];
+      CGFloat interpolatedEndAngle = [presentationLayerEndAngle floatValue];
+      
+      CGPathRef path = CGPathCreateArc(_dotCenter, _dotRadius, interpolatedStartAngle, interpolatedEndAngle);
+      [obj setPath:path];
+      CFRelease(path);
+    }];
+  }
 }
 
 - (void)animationDidStart:(CAAnimation *)anim
@@ -201,41 +304,64 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
                                              repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:_animationTimer forMode:NSRunLoopCommonModes];
   }
-
   [_animations addObject:anim];
 }
 
-
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)animationCompleted
 {
-  [_animations removeObject:anim];
+  if (animationCompleted && [[anim valueForKey:@"id"] isEqualToString:@"sectionAngle"])
+  {
+    isSectionProgress = NO;
   
+    if ([[anim valueForKey:@"sectionAngle"] floatValue]== _section.endAngle)
+    {
+      if ([_delegate respondsToSelector:@selector(verificationElement:didVerifySection:)])
+        [_delegate verificationElement:self didVerifySection:_activeSection];
+      
+      CALayer *parentLayer = [_backing layer];
+      NSArray *sectionLayers = [parentLayer sublayers];
+      [[sectionLayers objectAtIndex:_activeSection] setIsVerified:YES];
+      
+      [_section removeAllAnimations];
+      [parentLayer replaceSublayer:[sectionLayers objectAtIndex:_activeSection] with:_section];
+//      [_section setHidden:YES];
+//       [_section removeFromSuperlayer];
+      _section = nil;
+      
+      
+      NSLog(@"section layers count: %d",[sectionLayers count]);
+//      if (sectionLayers <= co) {
+//        <#statements#>
+//      }
+      //- (void)didVerifyAllSectionsForVerificationElement:(DTVerificationElement*)element;
+
+      
+      
+      [self setUserInteractionEnabled:NO];
+    }
+  }
+
+  [_animations removeObject:anim];
+
   if ([_animations count] == 0) {
     [_animationTimer invalidate];
     _animationTimer = nil;
   }
 }
 
-- (SectionLayer *)createSectionLayer
+- (SectionLayer *)createSectionLayer:(BOOL)verificationStatus
 {
-  SectionLayer *dotSlice = [SectionLayer layer];
-//  [dotSlice setFillColor:[UIColor randomColor].CGColor];
-  [dotSlice setZPosition:0];
-  [dotSlice setStrokeColor:[UIColor whiteColor].CGColor];
-  [dotSlice setLineWidth:1.f];
+  SectionLayer *section = [SectionLayer layer];
 
-//  float radius = 100.f;
-//  CALayer *theDonut = [CALayer layer];
-//  theDonut.bounds = CGRectMake(0,0, radius, radius);
-//  theDonut.cornerRadius = radius/2;
-//  theDonut.backgroundColor = [UIColor clearColor].CGColor;
-//  
-//  theDonut.borderWidth = radius/5;
-//  theDonut.borderColor = [UIColor orangeColor].CGColor;
-//  
-//  [self.layer addSublayer:theDonut];
+  [section setIsVerified:verificationStatus];
 
-  return dotSlice;
+  [section setFillColor:(section.isVerified) ? [UIColor blueColor].CGColor : [UIColor lightGrayColor].CGColor];
+  [section setBackgroundColor:[UIColor clearColor].CGColor];
+  [section setZPosition:0];
+  [section setStrokeColor:[UIColor whiteColor].CGColor];
+  [section setLineWidth:2.5f];
+
+  return section;
 }
 
 @end

@@ -35,23 +35,23 @@
   else
       self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
   
-  #define PROFILE_VIEWCONTROLLER_DEV 0
-      
+//  #define PROFILE_VIEWCONTROLLER_DEV 0
+
   #ifdef PROFILE_VIEWCONTROLLER_DEV
       self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
       [self.navController.navigationBar setHidden:YES];
   #endif
 
-  #define CREATE_CHALLENGE_VIEWCONTROLLER_DEV 0
-    
+//  #define CREATE_CHALLENGE_VIEWCONTROLLER_DEV 1
+
   #ifdef CREATE_CHALLENGE_VIEWCONTROLLER_DEV
     self.createChallengeController = [[CreateChallengeViewController alloc] init];
     self.navController = [[D2NavController alloc] initWithRootViewController:self.createChallengeController];
     [self.navController.navigationBar setHidden:YES];
   #endif
-  
-  #define CHALLENGE_DETAIL_VIEWCONTROLLER_DEV 1
-  
+
+  #define CHALLENGE_DETAIL_VIEWCONTROLLER_DEV 0
+
   #ifdef CHALLENGE_DETAIL_VIEWCONTROLLER_DEV
       self.challengeDetail = [[ChallengeDetailViewController alloc] init];
       self.navController = [[D2NavController alloc] initWithRootViewController:self.challengeDetail];
@@ -60,7 +60,7 @@
 
   self.window.rootViewController = self.navController;
   [self.window makeKeyAndVisible];
-  
+
   // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
   // or set runtime properties here.
   UAConfig *config = [UAConfig defaultConfig];
