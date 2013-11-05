@@ -11,7 +11,10 @@
 
 #import "UIColor+SR.h"
 
-@interface ChallengeDetailViewController ()
+@interface ChallengeDetailViewController () {
+  NSInteger _fakeCompleted;
+  NSInteger _fakeRequired;
+}
 
 @end
 
@@ -36,17 +39,25 @@
 
 -(void)verificationElement:(DTVerificationElement *)element didVerifySection:(NSUInteger)section
 {
-  NSLog(@"element: %@ and section:%d",element,section);
+  NIDINFO(@"element: %@ and section:%d",element,section);
+  [self performSelector:@selector(updateFakeCompleted) withObject:nil afterDelay:2.f];
+}
+
+- (void) updateFakeCompleted
+{
+  _fakeCompleted++;
+  [self.eldt reloadData:NO];
 }
 
 - (NSUInteger)numberOfCompletedSectionsInVerificationElement:(DTVerificationElement *)element
 {
-  return 0; //numberCompleted
+  NSLog(@"fake completed: %d",_fakeCompleted);
+  return _fakeCompleted; //numberCompleted
 }
 
 -(NSUInteger)numberOfSectionsInVerificationElement:(DTVerificationElement *)verificationElement
 {
-  return 3; //numberRequired
+  return _fakeRequired; //numberRequired
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -57,6 +68,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
+  _fakeCompleted = 1;
+  _fakeRequired = 3;
   [self.eldt reloadData:YES];
 }
 

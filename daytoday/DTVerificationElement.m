@@ -9,9 +9,8 @@
 #import "DTVerificationElement.h"
 #import <QuartzCore/QuartzCore.h>
 
-#import "UIColor+SR.h"
-
 @interface SectionLayer : CAShapeLayer <NSCopying>
+
 @property (nonatomic,assign) CGFloat startAngle;
 @property (nonatomic,assign) CGFloat endAngle;
 @property (nonatomic,assign) BOOL isVerified;
@@ -30,7 +29,6 @@
     return [super needsDisplayForKey:key];
   }
 }
-
 
 -(void)setIsVerified:(BOOL)isVerified
 {
@@ -55,7 +53,12 @@
   [layerCopy setStartAngle:_startAngle];
   [layerCopy setEndAngle:_endAngle];
   [layerCopy setIsVerified:_isVerified];
-
+  
+  [layerCopy setBackgroundColor:[UIColor clearColor].CGColor];
+  [layerCopy setStrokeColor:[UIColor whiteColor].CGColor];
+  [layerCopy setZPosition:0];
+  [layerCopy setLineWidth:2.5f];
+  
   return layerCopy;
 }
 
@@ -81,13 +84,13 @@
 @end
 
 @implementation DTVerificationElement {
-  //dot view contains all the dot slices
+  //backing view contains all the verification sections
   UIView *_backing;
-  
+
   BOOL isSectionProgress;
   NSUInteger _activeSection;
   SectionLayer *_section;
-  
+
   NSTimer *_animationTimer;
   NSMutableArray *_animations;
 }
@@ -140,7 +143,6 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 
 - (void)isHoldingSection:(UIGestureRecognizer *)g
 {
-  
   if ( [g isKindOfClass:[UILongPressGestureRecognizer class]] && [g state] == UIGestureRecognizerStateBegan )
   {
     isSectionProgress = YES;
@@ -155,7 +157,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     }
 
     [CATransaction begin];
-    [CATransaction setAnimationDuration:.8];
+    [CATransaction setAnimationDuration:_animationSpeed*(.8)]; //slightly faster for forward animation
     
     NSNumber *presentationLayerCurrentAngle = [[_section presentationLayer] valueForKey:@"sectionAngle"];
     [_section createArcAnimationForKey:@"sectionAngle"
@@ -164,14 +166,14 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
                               Delegate:self];
     [CATransaction commit];
   }
-  if ( [g isKindOfClass:[UILongPressGestureRecognizer class]] && [g state] == UIGestureRecognizerStateEnded ) {
-  
-    if (isSectionProgress) {
-  
+  if ( [g isKindOfClass:[UILongPressGestureRecognizer class]] && [g state] == UIGestureRecognizerStateEnded )
+  {
+    if (isSectionProgress)
+    {
       NSNumber *presentationLayerCurrentAngle = [[_section presentationLayer] valueForKey:@"sectionAngle"];
       
       [CATransaction begin];
-      [CATransaction setAnimationDuration:1.];
+      [CATransaction setAnimationDuration:_animationSpeed];
       [_section createArcAnimationForKey:@"sectionAngle"
                                fromValue:presentationLayerCurrentAngle
                                  toValue:[NSNumber numberWithFloat:_section.startAngle]
@@ -217,9 +219,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     [CATransaction begin];
     [CATransaction setAnimationDuration:_animationSpeed];
 
-    [_backing setUserInteractionEnabled:NO];
-    
-//    NSMutableArray *forSectionAnimations = [[NSMutableArray alloc] initWithCapacity:sectionCount];
+    [self setUserInteractionEnabled:NO];
     
     BOOL isFirstStarting = ([sectionLayers count] == 0 && sectionCount);
     for (int index = 0; index < sectionCount; index++)
@@ -240,23 +240,26 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
       [layer setStartAngle:startToAngle+_startSectionAngle];
       [layer setEndAngle:endToAngle+_startSectionAngle];
       
-//      [forSectionAnimations addObject:@{@"startAngle":@[@(startFromAngle),@(startToAngle+_startSectionAngle)],
-//                                        @"endAngle":@[@(endFromAngle),@(endToAngle+_startSectionAngle)]}];
-
-      [layer createArcAnimationForKey:@"startAngle"
-                            fromValue:[NSNumber numberWithFloat:startFromAngle]
-                              toValue:[NSNumber numberWithFloat:startToAngle+_startSectionAngle]
-                             Delegate:self];
-      [layer createArcAnimationForKey:@"endAngle"
-                            fromValue:[NSNumber numberWithFloat:endFromAngle]
-                              toValue:[NSNumber numberWithFloat:endToAngle+_startSectionAngle]
-                             Delegate:self];
+      if (animated)
+      {
+        [layer createArcAnimationForKey:@"startAngle"
+                              fromValue:[NSNumber numberWithFloat:startFromAngle]
+                                toValue:[NSNumber numberWithFloat:startToAngle+_startSectionAngle]
+                               Delegate:self];
+        [layer createArcAnimationForKey:@"endAngle"
+                              fromValue:[NSNumber numberWithFloat:endFromAngle]
+                                toValue:[NSNumber numberWithFloat:endToAngle+_startSectionAngle]
+                               Delegate:self];
+      }else {
+        CGPathRef path = CGPathCreateArc(_dotCenter, _dotRadius, layer.startAngle, layer.endAngle);
+        [layer setPath:path];
+        CFRelease(path);
+      }
       startToAngle = endToAngle;
     }
-
-//    _sectionAnimations = forSectionAnimations;
-    
-    [_backing setUserInteractionEnabled:YES];
+    //if the number of completed and the number required are equal this interface is locked
+    //in the fully completed state
+    if (_activeSection > 0) [self setUserInteractionEnabled:YES];
 
     [CATransaction setDisableActions:NO];
     [CATransaction commit];
@@ -320,23 +323,11 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
       
       CALayer *parentLayer = [_backing layer];
       NSArray *sectionLayers = [parentLayer sublayers];
-      [[sectionLayers objectAtIndex:_activeSection] setIsVerified:YES];
-      
-      [_section removeAllAnimations];
       [parentLayer replaceSublayer:[sectionLayers objectAtIndex:_activeSection] with:_section];
-//      [_section setHidden:YES];
-//       [_section removeFromSuperlayer];
+      [_section removeAllAnimations];
       _section = nil;
       
-      
-      NSLog(@"section layers count: %d",[sectionLayers count]);
-//      if (sectionLayers <= co) {
-//        <#statements#>
-//      }
-      //- (void)didVerifyAllSectionsForVerificationElement:(DTVerificationElement*)element;
-
-      
-      
+      //disable interface until reloaddata is called
       [self setUserInteractionEnabled:NO];
     }
   }
@@ -352,15 +343,13 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 - (SectionLayer *)createSectionLayer:(BOOL)verificationStatus
 {
   SectionLayer *section = [SectionLayer layer];
-
   [section setIsVerified:verificationStatus];
-
-  [section setFillColor:(section.isVerified) ? [UIColor blueColor].CGColor : [UIColor lightGrayColor].CGColor];
+  
   [section setBackgroundColor:[UIColor clearColor].CGColor];
-  [section setZPosition:0];
   [section setStrokeColor:[UIColor whiteColor].CGColor];
+  [section setZPosition:0];
   [section setLineWidth:2.5f];
-
+  
   return section;
 }
 
