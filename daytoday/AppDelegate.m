@@ -8,10 +8,14 @@
 
 #import "AppDelegate.h"
 
-#import "ViewController.h"
 #import <NSManagedObject+SR.h>
 #import <NSManagedObjectContext+SR.h>
 #import "D2Request.h"
+
+//soley for the demo interface mode
+#import "SWRevealViewController.h"
+#import "FrontViewController.h"
+#import "DemoTableViewController.h"
 
 @implementation AppDelegate
 
@@ -35,30 +39,21 @@
   else
       self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
   
-//  #define PROFILE_VIEWCONTROLLER_DEV 0
-
-  #ifdef PROFILE_VIEWCONTROLLER_DEV
-      self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
-      [self.navController.navigationBar setHidden:YES];
-  #endif
-
-//  #define CREATE_CHALLENGE_VIEWCONTROLLER_DEV 1
-
-  #ifdef CREATE_CHALLENGE_VIEWCONTROLLER_DEV
-    self.createChallengeController = [[CreateChallengeViewController alloc] init];
-    self.navController = [[D2NavController alloc] initWithRootViewController:self.createChallengeController];
-    [self.navController.navigationBar setHidden:YES];
-  #endif
-
-  #define CHALLENGE_DETAIL_VIEWCONTROLLER_DEV 0
-
-  #ifdef CHALLENGE_DETAIL_VIEWCONTROLLER_DEV
-      self.challengeDetail = [[ChallengeDetailViewController alloc] init];
-      self.navController = [[D2NavController alloc] initWithRootViewController:self.challengeDetail];
-      [self.navController.navigationBar setHidden:YES];
-  #endif
+  FrontViewController *frontViewController = [[FrontViewController alloc] init];
+	DemoTableViewController *rearViewController = [[DemoTableViewController alloc] init];
+	
+	UINavigationController *frontNavigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
+  UINavigationController *rearNavigationController = [[UINavigationController alloc] initWithRootViewController:rearViewController];
+	
+  self.demoController = [[SWRevealViewController alloc] initWithRearViewController:rearNavigationController frontViewController:frontNavigationController];
 
   self.window.rootViewController = self.navController;
+  
+  //check pch for definition
+  #ifdef INTERFACE_DEMO_MODE
+  self.window.rootViewController = self.demoController;
+  #endif
+
   [self.window makeKeyAndVisible];
 
   // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com

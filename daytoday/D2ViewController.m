@@ -8,6 +8,7 @@
 
 #import "D2ViewController.h"
 #import "AppDelegate.h"
+#import "SWRevealViewController.h"
 
 @interface D2ViewController ()
 
@@ -15,20 +16,16 @@
 
 @implementation D2ViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-//    self.view.backgroundColor = [self randomColor];
-	// Do any additional setup after loading the view.
+  [super viewDidLoad];
+
+#ifdef INTERFACE_DEMO_MODE
+  SWRevealViewController *revealController = [self revealViewController];
+  [self.navigationController.view addGestureRecognizer:revealController.panGestureRecognizer];
+  [self.navigationController.navigationBar setHidden:YES];
+#endif
+
 }
 
 - (CGFloat) padWithStatusBarHeight

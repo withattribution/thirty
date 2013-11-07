@@ -19,6 +19,7 @@
 #import "UAPush.h"
 
 @class ViewController;
+@class SWRevealViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -35,6 +36,8 @@
 @property (strong,nonatomic) ChallengeDetailViewController *challengeDetail;
 
 @property (strong, nonatomic) ViewController *viewController;
+
+@property (strong, nonatomic) SWRevealViewController *demoController;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

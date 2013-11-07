@@ -181,7 +181,7 @@ NSInteger static MAX_CHARS = 140;
   }
 }
 
-#pragma Public Methods
+#pragma mark - Public Methods
 
 - (void)descriptionDidComplete:(void (^)())block
 {
@@ -213,7 +213,8 @@ NSInteger static MAX_CHARS = 140;
   }
 }
 
-#pragma mark UITextView Delegate Methods
+
+#pragma mark - UITextView Delegate Methods
 
 - (void)textViewDidChange:(UITextView *)textView
 {

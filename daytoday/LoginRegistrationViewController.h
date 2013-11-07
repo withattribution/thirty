@@ -10,8 +10,7 @@
 #import "UserRequest.h"
 #import "AuthenticationRequest.h"
 
-@interface LoginRegistrationViewController : D2ViewController <AuthenticationRequestDelegate,UserRequestDelegate, UIAlertViewDelegate>
-{
+@interface LoginRegistrationViewController : D2ViewController {
     UITextField *emailField;
     UITextField *passwordField;
     UIButton *loginButton;
@@ -21,11 +20,14 @@
     UILabel *usernameLabel;
     UILabel *passwordLabel;
     BOOL isLogin;
-    
+  
+
+  
     UserRequest *userRequest;
     AuthenticationRequest *authenticationRequest;
-    
-
-    
 }
+
+
+- (void)displayLoginForm:(UIButton  *)sender;
+
 @end
