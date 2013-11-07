@@ -61,7 +61,52 @@
 
 - (void)displayLoginForm:(UIButton  *)sender
 {
-  NSLog(@"HELPS IF THIS LOGS SOMETHING");
+  _titleLabel.text = @"DAY TODAY";
+  [_titleLabel setNumberOfLines:1];
+  CGSize maxSize = CGSizeMake(280.f, 60.f);
+  CGSize requiredSize = [_titleLabel sizeThatFits:maxSize];
+  [_titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:22]];
+  [_titleLabel sizeToFit];
+  
+  _logInForm = [[LogInForm alloc] init];
+  [_logInForm setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_signUpForm setBackgroundColor:[UIColor redColor]];
+  [self.view addSubview:_logInForm];
+  
+  
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[logIn]-(20)-|"
+                                                                    options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                    metrics:nil
+                                                                      views:@{@"logIn":_logInForm}]];
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(80)-[logIn(240)]"
+                                                                    options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                    metrics:nil
+                                                                      views:@{@"logIn":_logInForm}]];
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_logInForm
+                                                        attribute:NSLayoutAttributeCenterX
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:_logInForm.superview
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.f
+                                                         constant:0]];
+  
+  [self.view layoutIfNeeded];
+  
+  _logInForm.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
+  
+  [UIView animateWithDuration:.42f
+                   animations:^{
+                     //                     [_titleLabel setCenter:CGPointMake(self.view.frame.size.width/2, _titleLabel.center.y + 20)];
+                     [_titleLabel setFrame:CGRectMake(0.f, 20.f, 320.f, requiredSize.height)];
+                     [_userEntry setAlpha:0.0f];
+                     _logInForm.transform = CGAffineTransformMakeTranslation(0, 0);
+                   }
+                   completion:^(BOOL finished){
+                     
+                   }];
 }
 - (void)displaySignUpForm:(UIButton  *)sender
 {

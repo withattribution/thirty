@@ -42,7 +42,7 @@
       [_loginButton setTitle:logInTitle forState:UIControlStateNormal];
       [_loginButton.titleLabel setTextColor:[UIColor whiteColor]];
       [_loginButton setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
-      [_loginButton addTarget:self action:@selector(displayLogin:) forControlEvents:UIControlEventTouchUpInside];
+      [_loginButton addTarget:self.superview action:@selector(displayLoginForm:) forControlEvents:UIControlEventTouchUpInside];
       [_loginButton setTranslatesAutoresizingMaskIntoConstraints:NO];
       [_loginButton.layer setCornerRadius:2.5f];
 
@@ -74,7 +74,7 @@
                                                                  views:@{@"signupButton": _signupButton,
                                                                          @"loginButton": _loginButton}]];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[signupButton]"
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[signupButton(40)]"
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:nil
                                                                  views:@{@"signupButton": _signupButton,
