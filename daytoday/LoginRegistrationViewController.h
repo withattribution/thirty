@@ -10,24 +10,7 @@
 #import "UserRequest.h"
 #import "AuthenticationRequest.h"
 
-@interface LoginRegistrationViewController : D2ViewController {
-    UITextField *emailField;
-    UITextField *passwordField;
-    UIButton *loginButton;
-    UIButton *signupButton;
-    UIButton *switchButton;
-    UIButton *facebookLoginButton;
-    UILabel *usernameLabel;
-    UILabel *passwordLabel;
-    BOOL isLogin;
-  
 
-  
-    UserRequest *userRequest;
-    AuthenticationRequest *authenticationRequest;
-}
-
-
-- (void)displayLoginForm:(UIButton  *)sender;
+@interface LoginRegistrationViewController : D2ViewController
 
 @end

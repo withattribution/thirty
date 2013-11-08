@@ -9,9 +9,8 @@
 #import <UIColor+SR.h>
 @interface D2ViewController : UIViewController
 
--(UIColor*) randomColor;
--(NSManagedObjectContext*) context;
-
-- (CGFloat) padWithStatusBarHeight;
+- (UIColor*)randomColor;
+- (NSManagedObjectContext*)context;
+- (CGFloat)padWithStatusBarHeight;
 
 @end

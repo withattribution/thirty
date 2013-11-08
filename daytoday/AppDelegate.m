@@ -13,9 +13,11 @@
 #import "D2Request.h"
 
 //soley for the demo interface mode
+#ifdef INTERFACE_DEMO_MODE
 #import "SWRevealViewController.h"
 #import "FrontViewController.h"
 #import "DemoTableViewController.h"
+#endif
 
 @implementation AppDelegate
 
@@ -38,7 +40,10 @@
       self.navController = [[D2NavController alloc] initWithRootViewController:self.loginController];
   else
       self.navController = [[D2NavController alloc] initWithRootViewController:self.profileController];
+  self.window.rootViewController = self.navController;
   
+  //check pch for definition
+  #ifdef INTERFACE_DEMO_MODE
   FrontViewController *frontViewController = [[FrontViewController alloc] init];
 	DemoTableViewController *rearViewController = [[DemoTableViewController alloc] init];
 	
@@ -46,11 +51,7 @@
   UINavigationController *rearNavigationController = [[UINavigationController alloc] initWithRootViewController:rearViewController];
 	
   self.demoController = [[SWRevealViewController alloc] initWithRearViewController:rearNavigationController frontViewController:frontNavigationController];
-
-  self.window.rootViewController = self.navController;
   
-  //check pch for definition
-  #ifdef INTERFACE_DEMO_MODE
   self.window.rootViewController = self.demoController;
   #endif
 

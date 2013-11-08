@@ -23,25 +23,20 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (strong,nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) D2NavController *navController;
-
+@property (strong,nonatomic) D2NavController *navController;
 @property (strong,nonatomic) LoginRegistrationViewController *loginController;
-
 @property (strong,nonatomic) ProfileViewController *profileController;
+@property (strong,nonatomic) ViewController *viewController;
 
-@property (strong,nonatomic) CreateChallengeViewController *createChallengeController;
+#ifdef INTERFACE_DEMO_MODE
+@property (strong,nonatomic) SWRevealViewController *demoController;
+#endif
 
-@property (strong,nonatomic) ChallengeDetailViewController *challengeDetail;
-
-@property (strong, nonatomic) ViewController *viewController;
-
-@property (strong, nonatomic) SWRevealViewController *demoController;
-
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readonly,strong,nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly,strong,nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly,strong,nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

@@ -28,7 +28,7 @@
       [_signupButton setTitle:signUpTitle forState:UIControlStateNormal];
       [_signupButton.titleLabel setTextColor:[UIColor whiteColor]];
   
-      [_signupButton addTarget:self.superview action:@selector(displaySignUpForm:) forControlEvents:UIControlEventTouchUpInside];
+      [_signupButton addTarget:self.superview action:@selector(setStateForSignUp:) forControlEvents:UIControlEventTouchUpInside];
 
       [_signupButton setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
       [_signupButton setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -42,10 +42,11 @@
       [_loginButton setTitle:logInTitle forState:UIControlStateNormal];
       [_loginButton.titleLabel setTextColor:[UIColor whiteColor]];
       [_loginButton setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
-      [_loginButton addTarget:self.superview action:@selector(displayLoginForm:) forControlEvents:UIControlEventTouchUpInside];
+      
+      [_loginButton addTarget:self.superview action:@selector(setStateForLogIn:) forControlEvents:UIControlEventTouchUpInside];
+      
       [_loginButton setTranslatesAutoresizingMaskIntoConstraints:NO];
       [_loginButton.layer setCornerRadius:2.5f];
-
 
       [self addSubview:_loginButton];
       
@@ -54,9 +55,10 @@
       [_facebookLoginButton setTranslatesAutoresizingMaskIntoConstraints:NO];
       [_facebookLoginButton setTitle:facebookTitle forState:UIControlStateNormal];
       [_facebookLoginButton setBackgroundColor:[UIColor colorWithRed:(34.f/255.f) green:(247.f/255.f) blue:(255.f/255.f) alpha:1.f]];
-      [_facebookLoginButton addTarget:self action:@selector(facebookLogin:) forControlEvents:UIControlEventTouchUpInside];
+      
+      [_facebookLoginButton addTarget:self.superview action:@selector(facebookLogin:) forControlEvents:UIControlEventTouchUpInside];
+      
       [_facebookLoginButton.layer setCornerRadius:2.5f];
-
 
       [self addSubview:_facebookLoginButton];
       
