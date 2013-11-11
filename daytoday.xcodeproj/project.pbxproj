@@ -34,6 +34,7 @@
 		A16AC9C91822AD2A00074AB8 /* DTVerificationElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9C81822AD2A00074AB8 /* DTVerificationElement.m */; };
 		A16AC9D418298A5E00074AB8 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9D318298A5E00074AB8 /* SWRevealViewController.m */; };
 		A16AC9D718298D6B00074AB8 /* DemoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9D618298D6B00074AB8 /* DemoTableViewController.m */; };
+		A17E39D1183010EB00F75CC6 /* ChallengeDayDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = A17E39D0183010EB00F75CC6 /* ChallengeDayDetail.m */; };
 		A19A00DB182ADACA00EE3B61 /* daytoday.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A19A00D9182ADACA00EE3B61 /* daytoday.jpg */; };
 		A19A00DC182ADACA00EE3B61 /* daytoday@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A19A00DA182ADACA00EE3B61 /* daytoday@2x.jpg */; };
 		A19A00E2182ADD8200EE3B61 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A19A00DF182ADD8200EE3B61 /* SVProgressHUD.bundle */; };
@@ -279,6 +280,8 @@
 		A16AC9D318298A5E00074AB8 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		A16AC9D518298D6B00074AB8 /* DemoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoTableViewController.h; sourceTree = "<group>"; };
 		A16AC9D618298D6B00074AB8 /* DemoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoTableViewController.m; sourceTree = "<group>"; };
+		A17E39CF183010EB00F75CC6 /* ChallengeDayDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDayDetail.h; sourceTree = "<group>"; };
+		A17E39D0183010EB00F75CC6 /* ChallengeDayDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDayDetail.m; sourceTree = "<group>"; };
 		A19A00D9182ADACA00EE3B61 /* daytoday.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = daytoday.jpg; sourceTree = "<group>"; };
 		A19A00DA182ADACA00EE3B61 /* daytoday@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "daytoday@2x.jpg"; sourceTree = "<group>"; };
 		A19A00DE182ADD8200EE3B61 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -549,6 +552,7 @@
 		A1275BEB1806EA8E00019A91 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				A17E39CE18300F7800F75CC6 /* challenge day */,
 				A120943B182B1119005B20F7 /* login & registration */,
 				A16AC9D118298A4800074AB8 /* dependencies */,
 				A1AC68BB18181C3F004A1F5D /* challenge creation */,
@@ -647,6 +651,15 @@
 				A19A00DD182ADD8200EE3B61 /* SVProgressHUD */,
 			);
 			name = dependencies;
+			sourceTree = "<group>";
+		};
+		A17E39CE18300F7800F75CC6 /* challenge day */ = {
+			isa = PBXGroup;
+			children = (
+				A17E39CF183010EB00F75CC6 /* ChallengeDayDetail.h */,
+				A17E39D0183010EB00F75CC6 /* ChallengeDayDetail.m */,
+			);
+			name = "challenge day";
 			sourceTree = "<group>";
 		};
 		A19A00DD182ADD8200EE3B61 /* SVProgressHUD */ = {
@@ -1239,6 +1252,7 @@
 				B7E61E7117C27F5A002B681B /* UIImageView+AFNetworking.m in Sources */,
 				B7E61E7617C27F6E002B681B /* JSONKit.m in Sources */,
 				B7E61E7D17C284C9002B681B /* DayTodayModels.xcdatamodeld in Sources */,
+				A17E39D1183010EB00F75CC6 /* ChallengeDayDetail.m in Sources */,
 				B7E61E8117C28674002B681B /* D2Request.m in Sources */,
 				B7E61E8517C2984F002B681B /* AuthenticationRequest.m in Sources */,
 				A1AC68C118182057004A1F5D /* ChallengeName.m in Sources */,

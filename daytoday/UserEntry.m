@@ -34,7 +34,6 @@
       [_signupButton setTranslatesAutoresizingMaskIntoConstraints:NO];
       [_signupButton.layer setCornerRadius:2.5f];
 
-
       [self addSubview:_signupButton];
       
       NSString *logInTitle = NSLocalizedString(@"Log In", @"Sign Up as a header or button field");

@@ -9,6 +9,8 @@
 #import "ChallengeDetailViewController.h"
 #import "DTVerificationElement.h"
 
+#import "ChallengeDayDetail.h"
+
 #import "UIColor+SR.h"
 
 @interface ChallengeDetailViewController () {
@@ -27,14 +29,20 @@
   
   [self.view setBackgroundColor:[UIColor whiteColor]];
   
-  self.eldt = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 200.f, 200.f)];
-  [self.eldt setCenter:CGPointMake(self.view.center.x,self.eldt.center.y)];
+  self.eldt = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 175.f,175.f)];
+  [self.eldt setCenter:CGPointMake(self.view.center.x,self.eldt.center.y - 20)];
   
   [self.eldt setDataSource:self];
   [self.eldt setDelegate:self];
   
   [self.eldt setAnimationSpeed:1.0];
   [self.view addSubview:self.eldt];
+  
+//    DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
+
+  ChallengeDayDetail *cdd = [[ChallengeDayDetail alloc] initWithFrame:CGRectMake(0., 0., 200., 30)];
+  [cdd setCenter:CGPointMake(self.view.frame.size.width/2.f,self.eldt.frame.origin.y + self.eldt.frame.size.height + 2.5)];
+  [self.view addSubview:cdd];
 }
 
 -(void)verificationElement:(DTVerificationElement *)element didVerifySection:(NSUInteger)section

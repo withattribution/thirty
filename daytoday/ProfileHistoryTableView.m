@@ -64,7 +64,8 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         if (indexPath.row == 0) {
             DaysLeftTableCell *cell = (DaysLeftTableCell *)[tableView dequeueReusableCellWithIdentifier:daysLeftCellReuseIdentifier];
             if (cell == nil) {
-                cell = [[DaysLeftTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:daysLeftCellReuseIdentifier
+                cell = [[DaysLeftTableCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                reuseIdentifier:daysLeftCellReuseIdentifier
                                                      withIntent:(Intent *)[self.intents objectAtIndex:indexPath.section]];
             }
             return cell;
@@ -74,15 +75,17 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
             if (cell == nil) {
                 DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
                 cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                   reuseIdentifier:progressRowCellReuseIdentifier
-                                                withDTProgressRows:[pl progressSnapShotElements]];
+                                                        reuseIdentifier:progressRowCellReuseIdentifier
+                                                     withDTProgressRows:[pl progressSnapShotElements]];
             }
             return cell;
         }
         if (indexPath.row == 2) {
           ParticipantsTableCell *cell = (ParticipantsTableCell *)[tableView dequeueReusableCellWithIdentifier:participantsRowCellReuseIdentifier];
           if (cell == nil) {
-            cell = [[ParticipantsTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:participantsRowCellReuseIdentifier withIntent:(Intent *)[self.intents objectAtIndex:indexPath.section]];
+            cell = [[ParticipantsTableCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                reuseIdentifier:participantsRowCellReuseIdentifier
+                                                     withIntent:(Intent *)[self.intents objectAtIndex:indexPath.section]];
           }
             return cell;
         }
