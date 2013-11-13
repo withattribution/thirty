@@ -58,7 +58,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
     UITableViewCell *cell;
     
     //TODO might be interesting to cache the results of the element layout call for each row
-//    DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
+    //DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
     
     if([((Intent *)[self.intents objectAtIndex:indexPath.section]) daysLeft] > 0){
         if (indexPath.row == 0) {
