@@ -56,7 +56,7 @@
       [_facebookLoginButton setTitle:facebookTitle forState:UIControlStateNormal];
       [_facebookLoginButton setBackgroundColor:[UIColor colorWithRed:(34.f/255.f) green:(247.f/255.f) blue:(255.f/255.f) alpha:1.f]];
       
-      [_facebookLoginButton addTarget:self.superview action:@selector(facebookLogin:) forControlEvents:UIControlEventTouchUpInside];
+//      [_facebookLoginButton addTarget:self.superview action:@selector(facebookLogin:) forControlEvents:UIControlEventTouchUpInside];
       
       [_facebookLoginButton.layer setCornerRadius:2.5f];
 

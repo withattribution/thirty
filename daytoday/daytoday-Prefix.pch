@@ -9,7 +9,7 @@
 #endif
 
 #define INTERFACE_DEMO_MODE 1
-//#define LOCAL 1
+#define LOCAL 1
 
 #ifndef LOCAL
 #define SERVER_HOST @"http://limitless-tundra-3667.herokuapp.com"

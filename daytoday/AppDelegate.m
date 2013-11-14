@@ -59,32 +59,32 @@
 
   // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
   // or set runtime properties here.
-  UAConfig *config = [UAConfig defaultConfig];
+//  UAConfig *config = [UAConfig defaultConfig];
   
   // You can also programmatically override the plist values:
   // config.developmentAppKey = @"YourKey";
   // etc.
   
   // Call takeOff (which creates the UAirship singleton)
-  [UAirship takeOff:config];
+//  [UAirship takeOff:config];
   return YES;
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
-  NIDINFO(@"APN device token: %@", deviceToken);
-
-  NSString *k = @"kUADeviceToken";
-  if( [[NSUserDefaults standardUserDefaults] valueForKey:k] == nil ){
-      NSString * dToken = [NSString stringWithFormat:@"%@",deviceToken];
-      [[NSUserDefaults standardUserDefaults] setValue:dToken forKey:k];
-      [[NSUserDefaults standardUserDefaults] synchronize];
-  }
-  
-  // Updates the device token and registers the token with UA
-  
-  [[UAPush shared] registerDeviceToken:deviceToken];
-}
+//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+//{
+//  NIDINFO(@"APN device token: %@", deviceToken);
+//
+//  NSString *k = @"kUADeviceToken";
+//  if( [[NSUserDefaults standardUserDefaults] valueForKey:k] == nil ){
+//      NSString * dToken = [NSString stringWithFormat:@"%@",deviceToken];
+//      [[NSUserDefaults standardUserDefaults] setValue:dToken forKey:k];
+//      [[NSUserDefaults standardUserDefaults] synchronize];
+//  }
+//  
+//  // Updates the device token and registers the token with UA
+//  
+//  [[UAPush shared] registerDeviceToken:deviceToken];
+//}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
