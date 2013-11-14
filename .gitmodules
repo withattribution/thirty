@@ -1,3 +1,3 @@
 [submodule "sr-ios-library"]
 	path = sr-ios-library
-	url = gitolite@git.submarinerich.com:sr-ios-library.git
+	url = git@github.com:aok-admin/sr-ios-library.git
