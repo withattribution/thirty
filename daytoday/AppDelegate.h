@@ -13,10 +13,6 @@
 #import "CreateChallengeViewController.h"
 #import "ChallengeDetailViewController.h"
 #import <CoreData/CoreData.h>
-#import <FacebookSDK/FacebookSDK.h>
-#import "UAirship.h"
-#import "UAConfig.h"
-#import "UAPush.h"
 
 @class ViewController;
 @class SWRevealViewController;

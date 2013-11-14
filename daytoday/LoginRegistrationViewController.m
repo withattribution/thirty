@@ -9,7 +9,6 @@
 #import "LoginRegistrationViewController.h"
 #import "ProfileViewController.h"
 
-#import <FacebookSDK/FacebookSDK.h>
 
 #import "SignUpForm.h"
 #import "UserEntry.h"
@@ -177,58 +176,58 @@
 //https://developers.facebook.com/docs/ios/ios-sdk-tutorial/
 //https://developers.facebook.com/apps/305208832954290/summary?save=1
 //https://developers.facebook.com/docs/ios/share-appid-across-multiple-apps-ios-sdk/
-- (void)sessionStateChanged:(FBSession *)session
-                      state:(FBSessionState) state
-                      error:(NSError *)error
-{
-  NIDINFO(@"session state changed!");
-  NIDINFO(@"session accesstoken: %@",session.accessTokenData);
-  switch (state) {
-    case FBSessionStateOpen: {
-      NIDINFO(@"session accesstoken: %@",session.accessTokenData);
-      if( [[NSUserDefaults standardUserDefaults] valueForKey:kFacebookAuthToken] == nil ){
-        [[NSUserDefaults standardUserDefaults] setValue:session.accessTokenData forKey:kFacebookAuthToken];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-      }
+//- (void)sessionStateChanged:(FBSession *)session
+//                      state:(FBSessionState) state
+//                      error:(NSError *)error
+//{
+//  NIDINFO(@"session state changed!");
+//  NIDINFO(@"session accesstoken: %@",session.accessTokenData);
+//  switch (state) {
+//    case FBSessionStateOpen: {
+//      NIDINFO(@"session accesstoken: %@",session.accessTokenData);
+//      if( [[NSUserDefaults standardUserDefaults] valueForKey:kFacebookAuthToken] == nil ){
+//        [[NSUserDefaults standardUserDefaults] setValue:session.accessTokenData forKey:kFacebookAuthToken];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//      }
+//
+//      [self.navigationController.topViewController dismissViewControllerAnimated:YES completion:^(void){
+//        NIDINFO(@"fb session looks like: %@",session.accessTokenData);
+//
+//      }];
+//    }
+//      break;
+//    case FBSessionStateClosed:
+//    case FBSessionStateClosedLoginFailed:
+//      // Once the user has logged in, we want them to
+//      // be looking at the root view.
+//      [self.navigationController popToRootViewControllerAnimated:NO];
+//      [FBSession.activeSession closeAndClearTokenInformation];
+//      break;
+//    default:
+//      break;
+//  }
+//
+//  if (error) {
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+//                                                        message:error.localizedDescription
+//                                                       delegate:nil
+//                                              cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//    [alertView show];
+//  }
+//}
 
-      [self.navigationController.topViewController dismissViewControllerAnimated:YES completion:^(void){
-        NIDINFO(@"fb session looks like: %@",session.accessTokenData);
-
-      }];
-    }
-      break;
-    case FBSessionStateClosed:
-    case FBSessionStateClosedLoginFailed:
-      // Once the user has logged in, we want them to
-      // be looking at the root view.
-      [self.navigationController popToRootViewControllerAnimated:NO];
-      [FBSession.activeSession closeAndClearTokenInformation];
-      break;
-    default:
-      break;
-  }
-
-  if (error) {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:error.localizedDescription
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-    [alertView show];
-  }
-}
-
-- (void) facebookLogin:(id)sender
-{
-  NIDINFO(@"facebook login button touched!");
-  [FBSession openActiveSessionWithReadPermissions:nil
-                                     allowLoginUI:YES
-                                completionHandler:
-   ^(FBSession *session,
-     FBSessionState state, NSError *error) {
-     [self sessionStateChanged:session state:state error:error];
-   }];
-}
+//- (void) facebookLogin:(id)sender
+//{
+//  NIDINFO(@"facebook login button touched!");
+//  [FBSession openActiveSessionWithReadPermissions:nil
+//                                     allowLoginUI:YES
+//                                completionHandler:
+//   ^(FBSession *session,
+//     FBSessionState state, NSError *error) {
+//     [self sessionStateChanged:session state:state error:error];
+//   }];
+//}
 
 #pragma mark - UserRequestDelegate
 - (void) userCreatedSuccesfully:(User*)user

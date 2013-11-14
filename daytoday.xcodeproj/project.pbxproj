@@ -87,10 +87,6 @@
 		B76D562E1806DB1D003DDD36 /* Tick.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D562C1806DB1D003DDD36 /* Tick.m */; };
 		B76D56311806DB1D003DDD36 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56301806DB1D003DDD36 /* User.m */; };
 		B76D56321806DB1D003DDD36 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B76D56301806DB1D003DDD36 /* User.m */; };
-		B77F7F07180C63BF0072954E /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = B77F7F06180C63BF0072954E /* AirshipConfig.plist */; };
-		B77F7F08180C63BF0072954E /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = B77F7F06180C63BF0072954E /* AirshipConfig.plist */; };
-		B77F7F0A180C63DD0072954E /* libUAirship-3.0.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F7F09180C63DD0072954E /* libUAirship-3.0.1.a */; };
-		B77F7F0B180C63DD0072954E /* libUAirship-3.0.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F7F09180C63DD0072954E /* libUAirship-3.0.1.a */; };
 		B77F7F0D180C66980072954E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F7F0C180C66980072954E /* CoreLocation.framework */; };
 		B77F7F0F180C66A60072954E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F7F0E180C66A60072954E /* Security.framework */; };
 		B77F7F11180C66AF0072954E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F7F10180C66AF0072954E /* libsqlite3.dylib */; };
@@ -101,7 +97,6 @@
 		B78481CC18020834008F2EB8 /* FakeDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B78481CA18020834008F2EB8 /* FakeDataUtils.m */; };
 		B7B4072C1804465E00A0F049 /* food.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B7B4072A1804465E00A0F049 /* food.jpg */; };
 		B7B4072D1804465E00A0F049 /* turlet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B7B4072B1804465E00A0F049 /* turlet.jpg */; };
-		B7D3633E18102C6800E4DC79 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D3633D18102C6800E4DC79 /* FacebookSDK.framework */; };
 		B7D363411811776500E4DC79 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D363401811776500E4DC79 /* Constants.m */; };
 		B7D363421811776500E4DC79 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D363401811776500E4DC79 /* Constants.m */; };
 		B7E61D4217BD6AA5002B681B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4117BD6AA5002B681B /* UIKit.framework */; };
@@ -353,8 +348,6 @@
 		B76D562C1806DB1D003DDD36 /* Tick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tick.m; path = daytoday/Tick.m; sourceTree = "<group>"; };
 		B76D562F1806DB1D003DDD36 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = daytoday/User.h; sourceTree = "<group>"; };
 		B76D56301806DB1D003DDD36 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = daytoday/User.m; sourceTree = "<group>"; };
-		B77F7F06180C63BF0072954E /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = SOURCE_ROOT; };
-		B77F7F09180C63DD0072954E /* libUAirship-3.0.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libUAirship-3.0.1.a"; path = "airship/libUAirship-3.0.1.a"; sourceTree = "<group>"; };
 		B77F7F0C180C66980072954E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B77F7F0E180C66A60072954E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B77F7F10180C66AF0072954E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -365,7 +358,6 @@
 		B78481CA18020834008F2EB8 /* FakeDataUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FakeDataUtils.m; path = ../FakeDataUtils.m; sourceTree = "<group>"; };
 		B7B4072A1804465E00A0F049 /* food.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = food.jpg; sourceTree = "<group>"; };
 		B7B4072B1804465E00A0F049 /* turlet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = turlet.jpg; sourceTree = "<group>"; };
-		B7D3633D18102C6800E4DC79 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		B7D3633F1811776500E4DC79 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		B7D363401811776500E4DC79 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		B7E61D3E17BD6AA5002B681B /* daytoday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = daytoday.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -513,13 +505,11 @@
 				B77F7F13180C66C60072954E /* SystemConfiguration.framework in Frameworks */,
 				B77F7F11180C66AF0072954E /* libsqlite3.dylib in Frameworks */,
 				B77F7F0F180C66A60072954E /* Security.framework in Frameworks */,
-				B7D3633E18102C6800E4DC79 /* FacebookSDK.framework in Frameworks */,
 				B77F7F0D180C66980072954E /* CoreLocation.framework in Frameworks */,
 				A1275C231806ECE200019A91 /* QuartzCore.framework in Frameworks */,
 				B7E61DFA17C27D2B002B681B /* CoreData.framework in Frameworks */,
 				B7E61D4217BD6AA5002B681B /* UIKit.framework in Frameworks */,
 				B7E61D4417BD6AA5002B681B /* Foundation.framework in Frameworks */,
-				B77F7F0A180C63DD0072954E /* libUAirship-3.0.1.a in Frameworks */,
 				B7E61D4617BD6AA5002B681B /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -531,7 +521,6 @@
 				B7E61DF917C27D24002B681B /* CoreData.framework in Frameworks */,
 				B7E61D6617BD6AA5002B681B /* SenTestingKit.framework in Frameworks */,
 				B7E61D6717BD6AA5002B681B /* UIKit.framework in Frameworks */,
-				B77F7F0B180C63DD0072954E /* libUAirship-3.0.1.a in Frameworks */,
 				B7E61D6817BD6AA5002B681B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -803,8 +792,6 @@
 		B7E61D4017BD6AA5002B681B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B7D3633D18102C6800E4DC79 /* FacebookSDK.framework */,
-				B77F7F09180C63DD0072954E /* libUAirship-3.0.1.a */,
 				B7E61DF817C27D24002B681B /* CoreData.framework */,
 				B77F7F16180C66E40072954E /* CoreTelephony.framework */,
 				B77F7F14180C66D70072954E /* libz.dylib */,
@@ -841,7 +828,6 @@
 		B7E61D4817BD6AA5002B681B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				B77F7F06180C63BF0072954E /* AirshipConfig.plist */,
 				B7E61D4917BD6AA5002B681B /* daytoday-Info.plist */,
 				A1275C241806F95F00019A91 /* assets */,
 				B7E61D4A17BD6AA5002B681B /* InfoPlist.strings */,
@@ -1149,7 +1135,6 @@
 				A19A00DB182ADACA00EE3B61 /* daytoday.jpg in Resources */,
 				A19A00DC182ADACA00EE3B61 /* daytoday@2x.jpg in Resources */,
 				A1B5E61F1829BFA00050A136 /* reveal-icon@2x.png in Resources */,
-				B77F7F07180C63BF0072954E /* AirshipConfig.plist in Resources */,
 				B7E61D5417BD6AA5002B681B /* Default.png in Resources */,
 				A1275C281806F97200019A91 /* anotherCrop.jpg in Resources */,
 				A19A00E2182ADD8200EE3B61 /* SVProgressHUD.bundle in Resources */,
@@ -1170,7 +1155,6 @@
 				B7E61D7017BD6AA5002B681B /* InfoPlist.strings in Resources */,
 				B7B4072D1804465E00A0F049 /* turlet.jpg in Resources */,
 				B7B4072C1804465E00A0F049 /* food.jpg in Resources */,
-				B77F7F08180C63BF0072954E /* AirshipConfig.plist in Resources */,
 				B74006FD17D0E5F80004460C /* Two-Headed-Turtle1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
