@@ -6,30 +6,31 @@
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
-#import "ChallengeDetailViewController.h"
+#import "ChallengeDetailVerificationController.h"
 #import "DTVerificationElement.h"
-
 
 #import "ChallengeDayCommentTableView.h"
 #import "ChallengeDayDetail.h"
 
 #import "UIColor+SR.h"
 
-@interface ChallengeDetailViewController () {
+@interface ChallengeDetailVerificationController () {
   NSInteger _fakeCompleted;
   NSInteger _fakeRequired;
 }
 
 @end
 
-@implementation ChallengeDetailViewController
+@implementation ChallengeDetailVerificationController
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
   
-  [self.view setBackgroundColor:[UIColor whiteColor]];
+//  [self.navigationController.navigationBar setHidden:YES];
+  
+  [self.view setBackgroundColor:[UIColor scrollViewTexturedBackgroundColor]];
   
   self.eldt = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 175.f,175.f)];
   [self.eldt setCenter:CGPointMake(self.view.center.x,self.eldt.center.y - 20)];
@@ -46,14 +47,14 @@
   [cdd setCenter:CGPointMake(self.view.frame.size.width/2.f,self.eldt.frame.origin.y + self.eldt.frame.size.height + 2.5)];
   [self.view addSubview:cdd];
   
-  UIView *panningThresh = [[UIView alloc] initWithFrame:CGRectMake(0., 150., 320., 1.)];
-  [panningThresh setBackgroundColor:[UIColor blackColor]];
-  [self.view addSubview:panningThresh];
+//  UIView *panningThresh = [[UIView alloc] initWithFrame:CGRectMake(0., 150., 320., 1.)];
+//  [panningThresh setBackgroundColor:[UIColor blackColor]];
+//  [self.view addSubview:panningThresh];
   
-  ChallengeDayCommentTableView *comments = [[ChallengeDayCommentTableView alloc] initWithFrame:CGRectMake(0., cdd.frame.origin.y + cdd.frame.size.height + 50.f, 320., 480.)];
-  [self.view addSubview:comments];
-  
-  NSLog(@"comments center: %@",CGPointCreateDictionaryRepresentation(comments.center));
+//  ChallengeDayCommentTableView *comments = [[ChallengeDayCommentTableView alloc] initWithFrame:CGRectMake(0., cdd.frame.origin.y + cdd.frame.size.height + 50.f, 320., 480.)];
+//  [self.view addSubview:comments];
+//  
+//  NSLog(@"comments center: %@",CGPointCreateDictionaryRepresentation(comments.center));
   
 }
 

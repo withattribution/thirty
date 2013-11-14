@@ -11,7 +11,7 @@
 #import "LoginRegistrationViewController.h"
 #import "ProfileViewController.h"
 #import "CreateChallengeViewController.h"
-#import "ChallengeDetailViewController.h"
+#import "ChallengeDetailVerificationController.h"
 #import <CoreData/CoreData.h>
 
 @class ViewController;

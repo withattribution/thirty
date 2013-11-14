@@ -31,7 +31,7 @@
 		A13DB5EA181EDB1500378901 /* tickMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E6181EDB1500378901 /* tickMark.jpg */; };
 		A16AC9BD182001C600074AB8 /* Verification+UImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9BC182001C600074AB8 /* Verification+UImage.m */; };
 		A16AC9C01820058D00074AB8 /* Category+UIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9BF1820058D00074AB8 /* Category+UIImage.m */; };
-		A16AC9C61822ACE700074AB8 /* ChallengeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9C51822ACE700074AB8 /* ChallengeDetailViewController.m */; };
+		A16AC9C61822ACE700074AB8 /* ChallengeDetailVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9C51822ACE700074AB8 /* ChallengeDetailVerificationController.m */; };
 		A16AC9C91822AD2A00074AB8 /* DTVerificationElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9C81822AD2A00074AB8 /* DTVerificationElement.m */; };
 		A16AC9D418298A5E00074AB8 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9D318298A5E00074AB8 /* SWRevealViewController.m */; };
 		A16AC9D718298D6B00074AB8 /* DemoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9D618298D6B00074AB8 /* DemoTableViewController.m */; };
@@ -47,6 +47,8 @@
 		A1B5E61A1829BE960050A136 /* FrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B5E6191829BE960050A136 /* FrontViewController.m */; };
 		A1B5E61E1829BFA00050A136 /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A1B5E61C1829BFA00050A136 /* reveal-icon.png */; };
 		A1B5E61F1829BFA00050A136 /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1B5E61D1829BFA00050A136 /* reveal-icon@2x.png */; };
+		A1F79C46183573E700C3B8A3 /* ChallengeDetailContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */; };
+		A1F79C491835740A00C3B8A3 /* ChallengeDetailCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C481835740A00C3B8A3 /* ChallengeDetailCommentController.m */; };
 		B73366B117CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73366B217CA8B87002524E4 /* TickRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B73366B017CA8B87002524E4 /* TickRequest.m */; };
 		B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73903B017FB1C8800B9C9BB /* D2NavController.m */; };
@@ -270,8 +272,8 @@
 		A16AC9BC182001C600074AB8 /* Verification+UImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Verification+UImage.m"; sourceTree = "<group>"; };
 		A16AC9BE1820058D00074AB8 /* Category+UIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Category+UIImage.h"; sourceTree = "<group>"; };
 		A16AC9BF1820058D00074AB8 /* Category+UIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Category+UIImage.m"; sourceTree = "<group>"; };
-		A16AC9C41822ACE700074AB8 /* ChallengeDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailViewController.h; sourceTree = "<group>"; };
-		A16AC9C51822ACE700074AB8 /* ChallengeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDetailViewController.m; sourceTree = "<group>"; };
+		A16AC9C41822ACE700074AB8 /* ChallengeDetailVerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailVerificationController.h; sourceTree = "<group>"; };
+		A16AC9C51822ACE700074AB8 /* ChallengeDetailVerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDetailVerificationController.m; sourceTree = "<group>"; };
 		A16AC9C71822AD2A00074AB8 /* DTVerificationElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTVerificationElement.h; sourceTree = "<group>"; };
 		A16AC9C81822AD2A00074AB8 /* DTVerificationElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTVerificationElement.m; sourceTree = "<group>"; };
 		A16AC9D218298A5E00074AB8 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -298,6 +300,10 @@
 		A1B5E6191829BE960050A136 /* FrontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FrontViewController.m; sourceTree = "<group>"; };
 		A1B5E61C1829BFA00050A136 /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
 		A1B5E61D1829BFA00050A136 /* reveal-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@2x.png"; sourceTree = "<group>"; };
+		A1F79C44183573E700C3B8A3 /* ChallengeDetailContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailContainer.h; sourceTree = "<group>"; };
+		A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDetailContainer.m; sourceTree = "<group>"; };
+		A1F79C471835740A00C3B8A3 /* ChallengeDetailCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailCommentController.h; sourceTree = "<group>"; };
+		A1F79C481835740A00C3B8A3 /* ChallengeDetailCommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDetailCommentController.m; sourceTree = "<group>"; };
 		B73366AF17CA8B87002524E4 /* TickRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickRequest.h; sourceTree = "<group>"; };
 		B73366B017CA8B87002524E4 /* TickRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickRequest.m; sourceTree = "<group>"; };
 		B73903AF17FB1C8800B9C9BB /* D2NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D2NavController.h; sourceTree = "<group>"; };
@@ -702,6 +708,19 @@
 			name = "demo assets";
 			sourceTree = "<group>";
 		};
+		A1F79C43183573A300C3B8A3 /* ChallengeDetailControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A1F79C44183573E700C3B8A3 /* ChallengeDetailContainer.h */,
+				A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */,
+				A16AC9C41822ACE700074AB8 /* ChallengeDetailVerificationController.h */,
+				A16AC9C51822ACE700074AB8 /* ChallengeDetailVerificationController.m */,
+				A1F79C471835740A00C3B8A3 /* ChallengeDetailCommentController.h */,
+				A1F79C481835740A00C3B8A3 /* ChallengeDetailCommentController.m */,
+			);
+			name = ChallengeDetailControllers;
+			sourceTree = "<group>";
+		};
 		B73903AD17FB1B5A00B9C9BB /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -725,8 +744,7 @@
 				B73903CA17FB6DC700B9C9BB /* SearchChallengesViewController.m */,
 				B73903CC17FB6DD800B9C9BB /* CreateChallengeViewController.h */,
 				B73903CD17FB6DD800B9C9BB /* CreateChallengeViewController.m */,
-				A16AC9C41822ACE700074AB8 /* ChallengeDetailViewController.h */,
-				A16AC9C51822ACE700074AB8 /* ChallengeDetailViewController.m */,
+				A1F79C43183573A300C3B8A3 /* ChallengeDetailControllers */,
 				A1B5E6171829BE770050A136 /* DemoControllers */,
 				B73903C617FB5FED00B9C9BB /* ProfileViewController.h */,
 				B73903C717FB5FED00B9C9BB /* ProfileViewController.m */,
@@ -1211,7 +1229,7 @@
 				B73903CB17FB6DC700B9C9BB /* SearchChallengesViewController.m in Sources */,
 				B7E61E3917C27F32002B681B /* NINonEmptyCollectionTesting.m in Sources */,
 				B7E61E3B17C27F32002B681B /* NINonRetainingCollections.m in Sources */,
-				A16AC9C61822ACE700074AB8 /* ChallengeDetailViewController.m in Sources */,
+				A16AC9C61822ACE700074AB8 /* ChallengeDetailVerificationController.m in Sources */,
 				B73903B117FB1C8800B9C9BB /* D2NavController.m in Sources */,
 				A1275C041806EB5B00019A91 /* ProfileSectionHeaderView.m in Sources */,
 				B7E61E3D17C27F32002B681B /* NIOperations.m in Sources */,
@@ -1252,6 +1270,8 @@
 				B7E61E9E17C55662002B681B /* FollowRequest.m in Sources */,
 				B7E61EA217C56202002B681B /* ChallengeRequest.m in Sources */,
 				B7E61ED217C67F07002B681B /* Follow+D2D.m in Sources */,
+				A1F79C491835740A00C3B8A3 /* ChallengeDetailCommentController.m in Sources */,
+				A1F79C46183573E700C3B8A3 /* ChallengeDetailContainer.m in Sources */,
 				B7E61EDA17C695A6002B681B /* Challenge+D2D.m in Sources */,
 				B76D56151806DB02003DDD36 /* Follow.m in Sources */,
 				B7E61EDE17C6B461002B681B /* Like+D2D.m in Sources */,
