@@ -13,7 +13,6 @@
 * add photo taking flow for custom category
 * add category naming flow for custom category
 * tweak category selection interface scrolling -- shouldn't wait until scrolling decelerates to fire
-* authenticate a fake user so that challenge creation can talk to service
 
 #### USER PROFILE ####
 * DTProgressElement and DTDotElement padding and spacing issues
@@ -21,7 +20,5 @@
 * place image size enumeration in UserInfoHeader.m into image model extension
 
 #### USER LOGIN / REGISTRATION ####
-* clean up as per UX docs
 
 #### GENERAL INTERFACE ####
-* add transition methods to base uiviewcontroller and create a demo table view to cycle through built interfaces
