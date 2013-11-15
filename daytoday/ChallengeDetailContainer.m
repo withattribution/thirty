@@ -14,8 +14,11 @@
 
 @property (nonatomic,strong) ChallengeDetailVerificationController *verficationController;
 @property (nonatomic,strong) ChallengeDetailCommentController *commentController;
+
 @property (nonatomic, assign) BOOL commentsAreFullScreen;
-@property (nonatomic, assign) CGPoint preVelocity;
+@property (nonatomic, assign) NSUInteger panningVelocityYThreshold;
+@property (nonatomic, assign) CGFloat commentControllerAnchor;
+
 
 @end
 
@@ -42,6 +45,9 @@
     [_commentController.view setFrame:CGRectMake(0.f, 240.f, self.view.frame.size.width, self.view.frame.size.height)];
     _commentsAreFullScreen = NO;
     
+    self.commentControllerAnchor = _commentController.view.frame.origin.y - 50.f;
+    self.panningVelocityYThreshold = 500;
+    
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveCommentController:)];
     [panRecognizer setMinimumNumberOfTouches:1];
     [panRecognizer setMaximumNumberOfTouches:1];
@@ -53,83 +59,55 @@
   return self;
 }
 
-- (void)moveCommentController:(UIGestureRecognizer *)sender
+- (void)moveCommentController:(UIPanGestureRecognizer *)recognizer
 {
-  [[[(UITapGestureRecognizer*)sender view] layer] removeAllAnimations];
+  [[[(UITapGestureRecognizer*)recognizer view] layer] removeAllAnimations];
   
-  CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self.view];
-  CGPoint velocity = [(UIPanGestureRecognizer*)sender velocityInView:[sender view]];
+  CGPoint translatedPoint = [recognizer translationInView:self.view];
   
-  if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
-//    UIView *childView = nil;
-//    
-//    if(velocity.x > 0) {
-//      if (!_showingRightPanel) {
-//        childView = [self getLeftView];
-//      }
-//    } else {
-//      if (!_showingLeftPanel) {
-//        childView = [self getRightView];
-//      }
-//
-//    }
-    // Make sure the view you're working with is front and center.
-//    [self.view sendSubviewToBack:childView];
-    [[sender view] bringSubviewToFront:[(UIPanGestureRecognizer*)sender view]];
+  if([recognizer state] == UIGestureRecognizerStateBegan) {
+    [[recognizer view] bringSubviewToFront:[recognizer view]];
   }
   
-  if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
+  if([recognizer state] == UIGestureRecognizerStateEnded) {
+    CGPoint currentVelocityPoint = [recognizer velocityInView:self.view];
     
-    if(velocity.y > 0) {
-      // NSLog(@"gesture went right");
-    } else {
-      // NSLog(@"gesture went left");
-    }
     
-    if (_commentsAreFullScreen) {
-      [self moveControllerToOriginalPosition];
-    } else {
-      [self moveControllerToTop];
+    CGFloat currentVelocityY = currentVelocityPoint.y;
+    BOOL viewIsPastAnchor = ([recognizer locationInView:self.view].y <= self.commentControllerAnchor);
+    
+//    NSLog(@"vel: %f",currentVelocityY);
+    
+    if(viewIsPastAnchor || abs(currentVelocityY) > self.panningVelocityYThreshold) {
       
-//      if (_showingLeftPanel) {
-//        [self movePanelRight];
-//      }  else if (_showingRightPanel) {
-//        [self movePanelLeft];
-//      }
+      if(self.commentsAreFullScreen && currentVelocityY < 0){
+        [self moveControllerToTop];
+      }
+      if(self.commentsAreFullScreen && currentVelocityY > 0) {
+        [self moveControllerToOriginalPosition];
+      }else if(currentVelocityY < 0){
+        [self moveControllerToTop];
+      }else {
+        [self moveControllerToOriginalPosition];
+      }
+    }else {
+      [self moveControllerToOriginalPosition];
     }
+
   }
   
-  if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateChanged) {
-    if(velocity.y > 0) {
-       NSLog(@"gesture went down");
-    } else {
-       NSLog(@"gesture went up");
-    }
-    
-    // Are you more than halfway? If so, show the panel when done dragging by setting this value to YES (1).
-//    _showPanel = abs([sender view].center.x - _verficationController.view.frame.size.width/2) > _verficationController.view.frame.size.width/2;
-    
-    // Allow dragging only in y-coordinates by only updating the x-coordinate with translation position.
-    [sender view].center = CGPointMake([sender view].center.x, [sender view].center.y + translatedPoint.y);
-    [(UIPanGestureRecognizer*)sender setTranslation:CGPointMake(0,0) inView:self.view];
-    
-    // If you needed to check for a change in direction, you could use this code to do so.
-    if(velocity.y*_preVelocity.y + velocity.y*_preVelocity.y > 0) {
-      // NSLog(@"same direction");
-    } else {
-      // NSLog(@"opposite direction");
-    }
-    
-    _preVelocity = velocity;
+  if([recognizer state] == UIGestureRecognizerStateChanged) {
+    [recognizer view].center = CGPointMake([recognizer view].center.x, [recognizer view].center.y + translatedPoint.y);
+    [recognizer setTranslation:CGPointMake(0,0) inView:self.view];
   }
 }
 
 
 - (void)moveControllerToTop
 {
-  [UIView animateWithDuration:.42f
+  [UIView animateWithDuration:.32f
                         delay:0
-                      options:UIViewAnimationOptionBeginFromCurrentState
+                      options:UIViewAnimationOptionBeginFromCurrentState| UIViewAnimationCurveEaseOut
                    animations:^{
                      _commentController.view.frame = CGRectMake(0.f,
                                                                 0.f,
@@ -144,9 +122,9 @@
 }
 
 -(void)moveControllerToOriginalPosition {
-	[UIView animateWithDuration:.42f
+	[UIView animateWithDuration:.32f
                         delay:0
-                      options:UIViewAnimationOptionBeginFromCurrentState
+                      options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationCurveEaseOut
                    animations:^{
                      _commentController.view.frame = CGRectMake(0.f,
                                                                 240.f,

@@ -37,7 +37,7 @@
     NSString *img2small = @"http://daytoday-dev.s3.amazonaws.com/images/369db3f333dd48c181f9aec5abd5613e.jpg";
     NSString *img2med  = @"http://daytoday-dev.s3.amazonaws.com/images/11517c77f110459ba2e2fa7ef473cbcb.jpg";
     NSString *img2large = @"http://daytoday-dev.s3.amazonaws.com/images/5f9d500d33e243e4acca433649f26aa7.jpg";
-    
+  
     ProfileData *pf = [[ProfileData alloc] init];
     Image *i1 = [Image imageWithURL:img1med andContext:pf.context];
     i1.tag = kImageMediumTag;
