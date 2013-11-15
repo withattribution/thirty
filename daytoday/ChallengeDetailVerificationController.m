@@ -26,11 +26,8 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-	// Do any additional setup after loading the view.
   
-//  [self.navigationController.navigationBar setHidden:YES];
-  
-  [self.view setBackgroundColor:[UIColor scrollViewTexturedBackgroundColor]];
+  [self.view setBackgroundColor:[UIColor colorWithWhite:.9f alpha:1.f]];
   
   self.eldt = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 175.f,175.f)];
   [self.eldt setCenter:CGPointMake(self.view.center.x,self.eldt.center.y - 20)];
@@ -46,16 +43,7 @@
   ChallengeDayDetail *cdd = [[ChallengeDayDetail alloc] initWithFrame:CGRectMake(0., 0., 200., 30)];
   [cdd setCenter:CGPointMake(self.view.frame.size.width/2.f,self.eldt.frame.origin.y + self.eldt.frame.size.height + 2.5)];
   [self.view addSubview:cdd];
-  
-//  UIView *panningThresh = [[UIView alloc] initWithFrame:CGRectMake(0., 150., 320., 1.)];
-//  [panningThresh setBackgroundColor:[UIColor blackColor]];
-//  [self.view addSubview:panningThresh];
-  
-//  ChallengeDayCommentTableView *comments = [[ChallengeDayCommentTableView alloc] initWithFrame:CGRectMake(0., cdd.frame.origin.y + cdd.frame.size.height + 50.f, 320., 480.)];
-//  [self.view addSubview:comments];
-//  
-//  NSLog(@"comments center: %@",CGPointCreateDictionaryRepresentation(comments.center));
-  
+    
 }
 
 -(void)verificationElement:(DTVerificationElement *)element didVerifySection:(NSUInteger)section

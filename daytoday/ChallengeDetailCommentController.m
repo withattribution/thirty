@@ -7,6 +7,8 @@
 //
 
 #import "ChallengeDetailCommentController.h"
+#import "DTSocialDashBoard.h"
+#import "ChallengeDayCommentTableView.h"
 
 @interface ChallengeDetailCommentController ()
 
@@ -14,11 +16,11 @@
 
 @implementation ChallengeDetailCommentController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
@@ -26,9 +28,18 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  [self.view setBackgroundColor:[UIColor redColor]];
+  [self.view setBackgroundColor:[UIColor lightGrayColor]];
   
-	// Do any additional setup after loading the view.
+  DTSocialDashBoard *social = [[DTSocialDashBoard alloc] init];
+  [social setFrame:CGRectMake(0.f, 0.f, 320.f, 60.f)];
+  [self.view addSubview:social];
+  
+  ChallengeDayCommentTableView *comments = [[ChallengeDayCommentTableView alloc]
+                                            initWithFrame:CGRectMake(0.,
+                                                                     social.frame.origin.y + social.frame.size.height,
+                                                                     320.f,
+                                                                     480.f - 60.f)];
+  [self.view addSubview:comments];
 }
 
 - (void)didReceiveMemoryWarning
