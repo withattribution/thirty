@@ -10,4 +10,6 @@
 
 @interface ChallengeDayCommentTableView : UITableView <UITableViewDataSource,UITableViewDelegate>
 
+- (void)scrollToLastComment;
+
 @end

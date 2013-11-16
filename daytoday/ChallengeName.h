@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChallengeName : UIView <UITextFieldDelegate>
+@interface ChallengeName : UIView
 
 @property (strong, nonatomic) NSString *name; //observed property
 @property (strong, nonatomic) NSString *isEditing; //observed property

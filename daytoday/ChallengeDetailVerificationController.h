@@ -9,15 +9,8 @@
 #import "D2ViewController.h"
 #import "DTVerificationElement.h"
 
-@protocol ChallengeDetailVerificationControllerDelegate <NSObject>
-@optional
-- (void)moveControllerToTop;
-- (void)moveControllerToOriginalPosition;
-@end
+@interface ChallengeDetailVerificationController : D2ViewController 
 
-@interface ChallengeDetailVerificationController : D2ViewController <DTVerificationElementDataSource,DTVerificationElementDelegate>
-
-@property (nonatomic,weak) id<ChallengeDetailVerificationControllerDelegate> delegate;
 @property (nonatomic,strong) DTVerificationElement *eldt;
 
 @end

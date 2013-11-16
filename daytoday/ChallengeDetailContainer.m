@@ -10,7 +10,7 @@
 #import "ChallengeDetailVerificationController.h"
 #import "ChallengeDetailCommentController.h"
 
-@interface ChallengeDetailContainer () <UIGestureRecognizerDelegate,ChallengeDetailVerificationControllerDelegate>
+@interface ChallengeDetailContainer () <UIGestureRecognizerDelegate,ChallengeDetailCommentControllerDelegate>
 
 @property (nonatomic,strong) ChallengeDetailVerificationController *verficationController;
 @property (nonatomic,strong) ChallengeDetailCommentController *commentController;
@@ -29,14 +29,13 @@
   self = [super init];
   if(self){
     _verficationController = [[ChallengeDetailVerificationController alloc] init];
-    [_verficationController setDelegate:self];
     [self.view addSubview:_verficationController.view];
     [self addChildViewController:_verficationController];
     
     [_verficationController didMoveToParentViewController:self];
     
-    
     _commentController = [[ChallengeDetailCommentController alloc] init];
+    [_commentController setDelegate:self];
     
     [self.view addSubview:_commentController.view];
     [self addChildViewController:_commentController];
@@ -48,7 +47,9 @@
     self.commentControllerAnchor = _commentController.view.frame.origin.y - 50.f;
     self.panningVelocityYThreshold = 500;
     
-    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveCommentController:)];
+    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]
+                                             initWithTarget:self
+                                             action:@selector(moveCommentController:)];
     [panRecognizer setMinimumNumberOfTouches:1];
     [panRecognizer setMaximumNumberOfTouches:1];
     [panRecognizer setDelegate:self];
@@ -58,6 +59,35 @@
   
   return self;
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  [self.navigationController.navigationBar setHidden:YES];
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+}
+
+- (void)didReceiveMemoryWarning
+{
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Challenge Detail Comment Controller Delegate
+- (void)willHandleCommentAddition
+{
+  NSLog(@"gonna handle the slide up part!");
+  if (!self.commentsAreFullScreen) {
+    [self moveControllerToTop];
+  }
+}
+
+
+#pragma mark - Handle Sliding ViewController
 
 - (void)moveCommentController:(UIPanGestureRecognizer *)recognizer
 {
@@ -136,23 +166,6 @@
                        _commentsAreFullScreen = NO;
                      }
                    }];
-}
-
- - (void)viewWillAppear:(BOOL)animated
-{
-  [super viewWillAppear:animated];
-  [self.navigationController.navigationBar setHidden:YES];
-}
-
-- (void)viewDidLoad
-{
-  [super viewDidLoad];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

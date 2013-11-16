@@ -12,6 +12,9 @@
 
 @interface ChallengeDayCommentTableView ()
 
+@property (nonatomic,strong) NSArray *rowData;
+@property (nonatomic,strong) NSArray *sectionData;
+
 @end
 
 
@@ -28,12 +31,18 @@
       [self setDelegate:self];
       [self setDataSource:self];
       
-//      UIView *tableHeader = [[UIView alloc] initWithFrame:CGRectMake(0., 0., 320., 50.)];
-//      [tableHeader setBackgroundColor:[UIColor redColor]];
-//      self.tableHeaderView = tableHeader;
-      
+      self.rowData = [NSArray arrayWithObjects:@"1",@"2",@"3",nil];
+      self.sectionData = [NSArray arrayWithObjects:@"1",@"2",nil];
     }
     return self;
+}
+
+- (void)scrollToLastComment
+{
+  NSIndexPath *bottomIndexPath = [NSIndexPath indexPathForRow:[self.rowData indexOfObject:[self.rowData lastObject]]
+                                                    inSection:[self.sectionData indexOfObject:[self.sectionData lastObject]]];
+  
+  [self scrollToRowAtIndexPath:bottomIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 #pragma mark - Table View Datasource
@@ -48,12 +57,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-  return 1;
+  return [self.sectionData count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return 3;
+  return [self.rowData count];
 }
 
 #pragma mark - Table View Delegate

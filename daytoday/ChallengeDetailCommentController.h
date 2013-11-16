@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ChallengeDetailCommentControllerDelegate <NSObject>
+@optional
+
+- (void)willHandleCommentAddition;
+- (void)resetCommentController;
+
+@end
+
 @interface ChallengeDetailCommentController : UIViewController
+
+@property (nonatomic,weak) id<ChallengeDetailCommentControllerDelegate> delegate;
 
 @end

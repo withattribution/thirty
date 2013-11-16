@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-@interface ChallengeName () {
+@interface ChallengeName () <UITextFieldDelegate> {
     NSLayoutConstraint *nameTop;
 }
 

@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol DTSocialDashBoardDelegate <NSObject>
+
+@optional
+- (void)didSelectHeartButton;
+- (void)didSelectComments;
+- (void)didSelectShareButton;
+@end
+
 @interface DTSocialDashBoard : UIView
+
+@property (nonatomic,weak) id<DTSocialDashBoardDelegate> delegate;
 
 @end

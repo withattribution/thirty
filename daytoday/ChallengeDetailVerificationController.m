@@ -14,7 +14,9 @@
 
 #import "UIColor+SR.h"
 
-@interface ChallengeDetailVerificationController () {
+#import "DTSocialDashBoard.h"
+
+@interface ChallengeDetailVerificationController () <DTVerificationElementDataSource,DTVerificationElementDelegate> {
   NSInteger _fakeCompleted;
   NSInteger _fakeRequired;
 }
@@ -46,29 +48,6 @@
     
 }
 
--(void)verificationElement:(DTVerificationElement *)element didVerifySection:(NSUInteger)section
-{
-  NIDINFO(@"element: %@ and section:%d",element,section);
-  [self performSelector:@selector(updateFakeCompleted) withObject:nil afterDelay:2.f];
-}
-
-- (void) updateFakeCompleted
-{
-  _fakeCompleted++;
-  [self.eldt reloadData:NO];
-}
-
-- (NSUInteger)numberOfCompletedSectionsInVerificationElement:(DTVerificationElement *)element
-{
-  NSLog(@"fake completed: %d",_fakeCompleted);
-  return _fakeCompleted; //numberCompleted
-}
-
--(NSUInteger)numberOfSectionsInVerificationElement:(DTVerificationElement *)verificationElement
-{
-  return _fakeRequired; //numberRequired
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
@@ -85,7 +64,34 @@
 - (void)didReceiveMemoryWarning
 {
   [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - DTVerificationDelegate 
+
+-(void)verificationElement:(DTVerificationElement *)element didVerifySection:(NSUInteger)section
+{
+  NIDINFO(@"element: %@ and section:%d",element,section);
+  [self performSelector:@selector(updateFakeCompleted) withObject:nil afterDelay:2.f];
+}
+
+- (void) updateFakeCompleted
+{
+  _fakeCompleted++;
+  [self.eldt reloadData:NO];
+}
+
+#pragma mark - DTVerificationDataSource
+
+- (NSUInteger)numberOfCompletedSectionsInVerificationElement:(DTVerificationElement *)element
+{
+  NSLog(@"fake completed: %d",_fakeCompleted);
+  return _fakeCompleted; //numberCompleted
+}
+
+-(NSUInteger)numberOfSectionsInVerificationElement:(DTVerificationElement *)verificationElement
+{
+  return _fakeRequired; //numberRequired
 }
 
 @end

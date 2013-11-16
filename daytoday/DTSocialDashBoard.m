@@ -44,11 +44,11 @@
       [_heartButton setImageEdgeInsets:UIEdgeInsetsMake(0.f, 20.f, 0.f, 5.f)];
       [_heartButton setTitleEdgeInsets:UIEdgeInsetsMake(-16.5f, -10.f, 1.f, -36.f)];
 
-      [_heartButton setFrame:CGRectMake(0.f, 0.f, 105.f, 60.f)];
+      [_heartButton setFrame:CGRectMake(0.f, 0.f, 105.f, 50.f)];
       [_heartButton addTarget:self.superview action:@selector(heartSelected:) forControlEvents:UIControlEventTouchUpInside];
 
       [_heartButton setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
-      [_heartButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+//      [_heartButton setTranslatesAutoresizingMaskIntoConstraints:NO];
 
       [self addSubview:_heartButton];
       
@@ -74,11 +74,11 @@
       [_commentButton setImageEdgeInsets:UIEdgeInsetsMake(0.f, 20.f, 0.f, 5.f)];
       [_commentButton setTitleEdgeInsets:UIEdgeInsetsMake(-16.5f, -10.f, 1.f, -36.f)];
       
-      [_commentButton setFrame:CGRectMake(_heartButton.frame.origin.y + _heartButton.frame.size.width + 2.f, 0.f, 105.f, 60.f)];
+      [_commentButton setFrame:CGRectMake(_heartButton.frame.origin.y + _heartButton.frame.size.width + 2.f, 0.f, 105.f, 50.f)];
       [_commentButton addTarget:self.superview action:@selector(commentSelected:) forControlEvents:UIControlEventTouchUpInside];
       
       [_commentButton setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
-      [_commentButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+//      [_commentButton setTranslatesAutoresizingMaskIntoConstraints:NO];
       
       [self addSubview:_commentButton];
       
@@ -102,11 +102,11 @@
 //      [_shareButton setImageEdgeInsets:UIEdgeInsetsMake(0.f, 20.f, 0.f, 5.f)];
 //      [_shareButton setTitleEdgeInsets:UIEdgeInsetsMake(-16.5f, -10.f, 1.f, -36.f)];
       
-      [_shareButton setFrame:CGRectMake(_heartButton.frame.origin.y + _heartButton.frame.size.width + _commentButton.frame.origin.y + _commentButton.frame.size.width + 2.f + 2.f, 0.f, 105.f, 60.f)];
+      [_shareButton setFrame:CGRectMake(_heartButton.frame.origin.y + _heartButton.frame.size.width + _commentButton.frame.origin.y + _commentButton.frame.size.width + 2.f + 2.f, 0.f, 105.f, 50.f)];
       [_shareButton addTarget:self.superview action:@selector(shareSelected:) forControlEvents:UIControlEventTouchUpInside];
       
       [_shareButton setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
-      [_shareButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+//      [_shareButton setTranslatesAutoresizingMaskIntoConstraints:NO];
       
       [self addSubview:_shareButton];
       
@@ -137,6 +137,9 @@
 - (void)commentSelected:(UIButton *)comment
 {
   NSLog(@"this is the comment state: %d",self.commentButton.state);
+  
+  if ([_delegate respondsToSelector:@selector(didSelectComments)])
+    [_delegate didSelectComments];
   
   if (self.commentButton.state == UIControlStateHighlighted ) {
     NSLog(@"i am selected now");
