@@ -41,7 +41,10 @@
     [self addChildViewController:_commentController];
     [_commentController didMoveToParentViewController:self];
     
-    [_commentController.view setFrame:CGRectMake(0.f, 240.f, self.view.frame.size.width, self.view.frame.size.height)];
+    [_commentController.view setFrame:CGRectMake(0.f,
+                                                 240.f,
+                                                 self.view.frame.size.width,
+                                                 self.view.frame.size.height)];
     _commentsAreFullScreen = NO;
     
     self.commentControllerAnchor = _commentController.view.frame.origin.y - 50.f;
@@ -78,14 +81,20 @@
 }
 
 #pragma mark - Challenge Detail Comment Controller Delegate
+
 - (void)willHandleCommentAddition
 {
-  NSLog(@"gonna handle the slide up part!");
   if (!self.commentsAreFullScreen) {
     [self moveControllerToTop];
   }
 }
 
+- (void)resetCommentController
+{
+  if (self.commentsAreFullScreen) {
+    [self moveControllerToOriginalPosition];
+  }
+}
 
 #pragma mark - Handle Sliding ViewController
 
@@ -137,12 +146,13 @@
 {
   [UIView animateWithDuration:.32f
                         delay:0
-                      options:UIViewAnimationOptionBeginFromCurrentState| UIViewAnimationCurveEaseOut
+                      options:(UIViewAnimationOptionBeginFromCurrentState| UIViewAnimationCurveEaseOut)
                    animations:^{
                      _commentController.view.frame = CGRectMake(0.f,
                                                                 0.f,
                                                                 self.view.frame.size.width,
                                                                 self.view.frame.size.height);
+                     [[UIApplication sharedApplication] setStatusBarHidden:YES];
                    }
                    completion:^(BOOL finished) {
                      if (finished) {
@@ -154,12 +164,13 @@
 -(void)moveControllerToOriginalPosition {
 	[UIView animateWithDuration:.32f
                         delay:0
-                      options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationCurveEaseOut
+                      options:(UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationCurveEaseOut)
                    animations:^{
                      _commentController.view.frame = CGRectMake(0.f,
                                                                 240.f,
                                                                 self.view.frame.size.width,
                                                                 self.view.frame.size.height);
+                     [[UIApplication sharedApplication] setStatusBarHidden:NO];
                    }
                    completion:^(BOOL finished) {
                      if (finished) {

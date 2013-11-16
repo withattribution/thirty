@@ -24,6 +24,7 @@
 		A1275C431809EEEA00019A91 /* ProgressSnapShotTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C421809EEEA00019A91 /* ProgressSnapShotTableCell.m */; };
 		A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C451809F66600019A91 /* ParticipantsTableCell.m */; };
 		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
+		A12F8B0F1836FF9700C9F086 /* CommentUtilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = A12F8B0E1836FF9700C9F086 /* CommentUtilityView.m */; };
 		A1351AA2183154B90079550D /* ChallengeDayCommentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1351AA1183154B90079550D /* ChallengeDayCommentTableView.m */; };
 		A13DB5E7181EDB1500378901 /* checkIn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E3181EDB1500378901 /* checkIn.jpg */; };
 		A13DB5E8181EDB1500378901 /* photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E4181EDB1500378901 /* photo.jpg */; };
@@ -268,6 +269,8 @@
 		A1275C451809F66600019A91 /* ParticipantsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsTableCell.m; sourceTree = "<group>"; };
 		A1275C4A180B8BBF00019A91 /* NSCalendar+equalWithGranularity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+equalWithGranularity.h"; sourceTree = "<group>"; };
 		A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+equalWithGranularity.m"; sourceTree = "<group>"; };
+		A12F8B0D1836FF9700C9F086 /* CommentUtilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentUtilityView.h; sourceTree = "<group>"; };
+		A12F8B0E1836FF9700C9F086 /* CommentUtilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentUtilityView.m; sourceTree = "<group>"; };
 		A1351AA0183154B90079550D /* ChallengeDayCommentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDayCommentTableView.h; sourceTree = "<group>"; };
 		A1351AA1183154B90079550D /* ChallengeDayCommentTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDayCommentTableView.m; sourceTree = "<group>"; };
 		A13DB5E3181EDB1500378901 /* checkIn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkIn.jpg; sourceTree = "<group>"; };
@@ -677,6 +680,8 @@
 				A1351AA1183154B90079550D /* ChallengeDayCommentTableView.m */,
 				A1F79C6A1836AC4800C3B8A3 /* CommentInputView.h */,
 				A1F79C6B1836AC4800C3B8A3 /* CommentInputView.m */,
+				A12F8B0D1836FF9700C9F086 /* CommentUtilityView.h */,
+				A12F8B0E1836FF9700C9F086 /* CommentUtilityView.m */,
 			);
 			name = "challenge day";
 			sourceTree = "<group>";
@@ -1283,6 +1288,7 @@
 				A1275C431809EEEA00019A91 /* ProgressSnapShotTableCell.m in Sources */,
 				B7E61E4B17C27F32002B681B /* NSString+NimbusCore.m in Sources */,
 				B7E61E6117C27F5A002B681B /* AFHTTPClient.m in Sources */,
+				A12F8B0F1836FF9700C9F086 /* CommentUtilityView.m in Sources */,
 				B7E61E6317C27F5A002B681B /* AFHTTPRequestOperation.m in Sources */,
 				B7E61E6517C27F5A002B681B /* AFImageRequestOperation.m in Sources */,
 				B7E61E6717C27F5A002B681B /* AFJSONRequestOperation.m in Sources */,

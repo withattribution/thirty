@@ -11,5 +11,6 @@
 @interface CommentInputView : UIView
 
 - (void)shouldBeFirstResponder;
+- (void)shouldResignFirstResponder;
 
 @end

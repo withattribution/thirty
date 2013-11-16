@@ -31,6 +31,7 @@
       [self setDelegate:self];
       [self setDataSource:self];
       
+      //fake data because well that's what we have for now
       self.rowData = [NSArray arrayWithObjects:@"1",@"2",@"3",nil];
       self.sectionData = [NSArray arrayWithObjects:@"1",@"2",nil];
     }
@@ -42,7 +43,8 @@
   NSIndexPath *bottomIndexPath = [NSIndexPath indexPathForRow:[self.rowData indexOfObject:[self.rowData lastObject]]
                                                     inSection:[self.sectionData indexOfObject:[self.sectionData lastObject]]];
   
-  [self scrollToRowAtIndexPath:bottomIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+  [self scrollToRowAtIndexPath:bottomIndexPath
+              atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 #pragma mark - Table View Datasource

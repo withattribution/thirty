@@ -20,4 +20,6 @@
 
 @property (nonatomic,weak) id<DTSocialDashBoardDelegate> delegate;
 
+- (void)resetCommentDisplayState;
+
 @end

@@ -104,6 +104,12 @@
   }
 }
 
+- (void)shouldResignFirstResponder
+{
+  if (_commentTextView && [_commentTextView isFirstResponder]) {
+    [_commentTextView resignFirstResponder];
+  }
+}
 
 #pragma mark - UITextView Delegate Methods
 
@@ -113,7 +119,6 @@
 //    self.description = [NSString stringWithString:_commentTextView.text];
 //  }
 
-  
   if (textView.text.length > 0) {
     [UIView animateWithDuration:.2f
                           delay:0.f

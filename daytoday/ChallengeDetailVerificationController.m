@@ -57,7 +57,7 @@
 {
   [super viewDidAppear:animated];
   _fakeCompleted = 1;
-  _fakeRequired = 3;
+  _fakeRequired = 6;
   [self.eldt reloadData:YES];
 }
 
