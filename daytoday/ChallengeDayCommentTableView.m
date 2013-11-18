@@ -53,7 +53,7 @@
 {
   UITableViewCell *cell;
   cell = [[UITableViewCell alloc] init];
-  cell.backgroundColor = [UIColor blueColor];
+  cell.backgroundColor = [UIColor randomColor];
   return cell;
 }
 

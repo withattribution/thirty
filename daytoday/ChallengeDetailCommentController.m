@@ -13,7 +13,7 @@
 #import "CommentUtilityView.h"
 #import "FDTakeController.h"
 
-@interface ChallengeDetailCommentController () <DTSocialDashBoardDelegate,CommentUtilityViewDelegate,CommentInputViewDelegate,FDTakeDelegate,UIActionSheetDelegate>
+@interface ChallengeDetailCommentController () <DTSocialDashBoardDelegate,CommentUtilityViewDelegate,CommentInputViewDelegate,FDTakeDelegate>
 {
   NSLayoutConstraint * _inputTopConstraint;
 }
@@ -74,9 +74,9 @@
 //    NSLog(@"called to becomre first responder");
 //    [self.commentInput shouldBeFirstResponder];
 //  }
-  if (self.isTakingPhoto) {
-    [self addKeyBoardNotifications];
-  }
+//  if (self.isTakingPhoto) {
+//    [self addKeyBoardNotifications];
+//  }
   
 }
 
@@ -168,13 +168,10 @@
   if (!self.takeController) {
     self.takeController = [[FDTakeController alloc] init];
     self.takeController.delegate = self;
-    NSLog(@"parent controller: %@",self.parentViewController);
-    
     self.takeController.viewControllerForPresentingImagePickerController = self;
   }
   
   [self.takeController takePhotoOrChooseFromLibrary];
-//  [self removeKeyBoardNotifications];
 }
 
 #pragma mark - FDTake Delegate Methods
@@ -299,7 +296,7 @@
                       CGRectMake(0.,
                                  tableOriginHeight,
                                  self.view.frame.size.width,
-                                 self.view.frame.size.height - kBoardFrame.size.height - 40.f - 40.f) :
+                                 self.view.frame.size.height - kBoardFrame.size.height - 40.f - 50.f) :
                       CGRectMake(0.,
                                  40.f,
                                  self.view.frame.size.width,
@@ -340,12 +337,6 @@
                                                       constant:480.f];
   
   [self.view addConstraint:_inputTopConstraint];
-  CGRect theRect = CGRectMake(0.,
-                              _socialDashBoard.frame.origin.y + _socialDashBoard.frame.size.height,
-                              self.view.frame.size.width,
-                              240.f - 40.f);
-  
-  NIDINFO(@"this is what is fucking me right? %@",CGRectCreateDictionaryRepresentation(theRect));
   
   CGFloat tableOriginHeight = self.commentTable.frame.origin.y;
 
@@ -425,11 +416,6 @@
 - (void)keyboardDidHideNotification:(NSNotification *)aNotification
 {
   NSLog(@"KEYBOARD DOWN");
-  
-//  for (NSString *keyz in [aNotification.userInfo allKeys])
-//  {
-//    NIDINFO(@"the key: %@ and the object: %@", keyz, [aNotification.userInfo objectForKey:keyz]);
-//  }
 }
 
 @end
