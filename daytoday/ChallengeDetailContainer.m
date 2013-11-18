@@ -9,6 +9,7 @@
 #import "ChallengeDetailContainer.h"
 #import "ChallengeDetailVerificationController.h"
 #import "ChallengeDetailCommentController.h"
+#import "ChallengeDayCommentTableView.h"
 
 @interface ChallengeDetailContainer () <UIGestureRecognizerDelegate,ChallengeDetailCommentControllerDelegate>
 
@@ -67,6 +68,9 @@
 {
   [super viewWillAppear:animated];
   [self.navigationController.navigationBar setHidden:YES];
+  
+  [[UIApplication sharedApplication] setStatusBarHidden:self.commentsAreFullScreen];
+  NIDINFO(@"CONTAINER WILL APPEAR");
 }
 
 - (void)viewDidLoad
@@ -91,9 +95,7 @@
 
 - (void)resetCommentController
 {
-  if (self.commentsAreFullScreen) {
-    [self moveControllerToOriginalPosition];
-  }
+  [self moveControllerToOriginalPosition];
 }
 
 #pragma mark - Handle Sliding ViewController
@@ -152,6 +154,10 @@
                                                                 0.f,
                                                                 self.view.frame.size.width,
                                                                 self.view.frame.size.height);
+                     _commentController.commentTable.frame = CGRectMake(0.f,
+                                                                        40.f,
+                                                                        self.view.frame.size.width,
+                                                                        self.view.frame.size.height - 40.f);
                      [[UIApplication sharedApplication] setStatusBarHidden:YES];
                    }
                    completion:^(BOOL finished) {
@@ -169,7 +175,11 @@
                      _commentController.view.frame = CGRectMake(0.f,
                                                                 240.f,
                                                                 self.view.frame.size.width,
-                                                                self.view.frame.size.height);
+                                                                self.view.frame.size.height - 240.f);
+                     _commentController.commentTable.frame = CGRectMake(0.f,
+                                                                  40.f,
+                                                                  self.view.frame.size.width,
+                                                                  self.view.frame.size.height - 240.f - 40.f);
                      [[UIApplication sharedApplication] setStatusBarHidden:NO];
                    }
                    completion:^(BOOL finished) {

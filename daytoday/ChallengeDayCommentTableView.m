@@ -24,7 +24,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-      [self setBackgroundColor:[UIColor clearColor]];
+      [self setBackgroundColor:[UIColor redColor]];
       [self setSeparatorStyle:UITableViewCellSeparatorStyleNone];
       [self setShowsVerticalScrollIndicator:NO];
       [self setContentInset:UIEdgeInsetsZero];
@@ -53,7 +53,7 @@
 {
   UITableViewCell *cell;
   cell = [[UITableViewCell alloc] init];
-  cell.backgroundColor = [UIColor randomColor];
+  cell.backgroundColor = [UIColor blueColor];
   return cell;
 }
 

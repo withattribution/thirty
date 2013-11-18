@@ -12,9 +12,7 @@
 
 @optional
 - (void)didCancelCommentAddition;
-- (void)willHandleAttemptToAddComment;
 @end
-
 
 @interface CommentUtilityView : UIView
 

@@ -10,9 +10,12 @@
 
 @interface CommentInputView () <UITextViewDelegate>
 
+@property (nonatomic,strong) UIButton *photoButton;
+
 @property (nonatomic,strong) UITextView *commentTextView;
 @property (nonatomic,strong) UILabel *placeholderLabel;
-@property (nonatomic,strong) UIButton *photoButton;
+
+@property (nonatomic,strong) UIButton *sendComment;
 
 @end
 
@@ -24,6 +27,14 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+      _photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [_photoButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:16.0]];
+      [_photoButton setImage:[UIImage imageNamed:@"takePhoto.png"] forState:UIControlStateNormal];
+      [_photoButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+      [_photoButton addTarget:self action:@selector(addPhoto:) forControlEvents:UIControlEventTouchUpInside];
+      [_photoButton setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
+      [_photoButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+      
       _commentTextView = [[UITextView alloc] init];
       [_commentTextView setDelegate:self];
       [_commentTextView setTextColor:[UIColor whiteColor]];
@@ -46,14 +57,17 @@
       [_placeholderLabel sizeToFit];
       [self addSubview:_placeholderLabel];
       
-      _photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [_photoButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:16.0]];
-//      [_photoButton setImage:[UIImage imageNamed:@"heart-normal.png"] forState:UIControlStateNormal];
-      [_photoButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-      [_photoButton setTitle:@"PHOTO" forState:UIControlStateNormal];
-//      [_photoButton addTarget:self action:@selector(addPhoto:) forControlEvents:UIControlEventTouchUpInside];
-      [_photoButton setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
-      [_photoButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+      _sendComment = [UIButton buttonWithType:UIButtonTypeCustom];
+      [_sendComment.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]];
+      //      [_photoButton setImage:[UIImage imageNamed:@"heart-normal.png"] forState:UIControlStateNormal];
+      [_sendComment setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+      [_sendComment setTitle:@"SEND" forState:UIControlStateNormal];
+      [_sendComment addTarget:self action:@selector(sendComment:) forControlEvents:UIControlEventTouchUpInside];
+      [_sendComment setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
+      [_sendComment setTranslatesAutoresizingMaskIntoConstraints:NO];
+      
+      [self addSubview:_sendComment];
+      
       
       [self addSubview:_photoButton];
       
@@ -64,42 +78,37 @@
     return self;
 }
 
-- (void)updateConstraints
+- (void)sendComment:(UIButton *)sendButton
 {
-  [super updateConstraints];
-  
-//  NSDictionary *metrics = @{@"textViewHeight":@(110)};
-  
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textView]-(2)-[photoButton]|"
-                                                               options:NSLayoutFormatDirectionLeadingToTrailing
-                                                               metrics:nil
-                                                                 views:@{@"textView": _commentTextView,@"photoButton": _photoButton}]];
-  
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(2)-[textView(36)]"
-                                                               options:NSLayoutFormatDirectionLeadingToTrailing
-                                                               metrics:nil
-                                                                 views:@{@"textView": _commentTextView}]];
-  
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(2)-[photoButton(36)]"
-                                                               options:NSLayoutFormatDirectionLeadingToTrailing
-                                                               metrics:nil
-                                                                 views:@{@"photoButton": _photoButton}]];
-  
-  // 5 point offset to simulate uitextview margins
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[placeHolder]"
-                                                               options:NSLayoutFormatDirectionLeadingToTrailing
-                                                               metrics:nil
-                                                                 views:@{@"placeHolder":_placeholderLabel}]];
-  // 8 point offset to simulate uitextview margins
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[placeHolder]"
-                                                               options:NSLayoutFormatDirectionLeadingToTrailing
-                                                               metrics:nil
-                                                                 views:@{@"placeHolder":_placeholderLabel}]];
+  NSLog(@"send");
+  if ([_delegate respondsToSelector:@selector(willHandleAttemptToAddComment)])
+    [_delegate willHandleAttemptToAddComment];
+
+}
+
+- (void)addPhoto:(UIButton *)aButton
+{
+  if([_delegate respondsToSelector:@selector(didSelectPhotoInput)])
+     [_delegate didSelectPhotoInput];
+
+}
+
+- (void)placeImageThumbnailPreview:(UIImage *)previewImage
+{
+  NIDINFO(@"adding image");
+  if (previewImage) {
+    [_photoButton setImage:previewImage forState:UIControlStateNormal];
+  }
+  else {
+    [_photoButton setImage:[UIImage imageNamed:@"takePhoto.png"] forState:UIControlStateNormal];
+  }
 }
 
 - (void)shouldBeFirstResponder
 {
   if (_commentTextView && ![_commentTextView isFirstResponder]) {
+    NSLog(@"this should be the first responder now!");
+    NSLog(@"the text view: %@",_commentTextView);
     [_commentTextView becomeFirstResponder];
   }
 }
@@ -115,10 +124,10 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-//  if ([_commentTextView hasText]) {
-//    self.description = [NSString stringWithString:_commentTextView.text];
-//  }
-
+  //  if ([_commentTextView hasText]) {
+  //    self.description = [NSString stringWithString:_commentTextView.text];
+  //  }
+  
   if (textView.text.length > 0) {
     [UIView animateWithDuration:.2f
                           delay:0.f
@@ -134,6 +143,48 @@
     _placeholderLabel.alpha = 1.f;
   }
   
+}
+
+#pragma mark - Constraint Based Layout
+
+- (void)updateConstraints
+{
+  [super updateConstraints];
+  
+//  NSDictionary *metrics = @{@"textViewHeight":@(110)};
+  
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[photoButton(50)]-(2)-[textView]-(2)-[sendComment(50)]|"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:nil
+                                                                 views:@{@"sendComment": _sendComment,
+                                                                         @"textView": _commentTextView,
+                                                                         @"photoButton": _photoButton}]];
+  
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(2)-[textView(46)]"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:nil
+                                                                 views:@{@"textView": _commentTextView}]];
+  
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(2)-[photoButton(46)]"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:nil
+                                                                 views:@{@"photoButton": _photoButton}]];
+  
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(2)-[sendComment(46)]"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:nil
+                                                                 views:@{@"sendComment": _sendComment}]];
+  
+  // 5 point offset to simulate uitextview margins
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[placeHolder]"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:nil
+                                                                 views:@{@"placeHolder":_placeholderLabel}]];
+  // 8 point offset to simulate uitextview margins
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[placeHolder]"
+                                                               options:NSLayoutFormatDirectionLeadingToTrailing
+                                                               metrics:nil
+                                                                 views:@{@"placeHolder":_placeholderLabel}]];
 }
 
 @end

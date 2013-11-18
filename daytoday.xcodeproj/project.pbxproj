@@ -37,6 +37,9 @@
 		A16AC9D418298A5E00074AB8 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9D318298A5E00074AB8 /* SWRevealViewController.m */; };
 		A16AC9D718298D6B00074AB8 /* DemoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9D618298D6B00074AB8 /* DemoTableViewController.m */; };
 		A17E39D1183010EB00F75CC6 /* ChallengeDayDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = A17E39D0183010EB00F75CC6 /* ChallengeDayDetail.m */; };
+		A19867371837CE3000BC229F /* FDTakeController.m in Sources */ = {isa = PBXBuildFile; fileRef = A19867361837CE3000BC229F /* FDTakeController.m */; };
+		A198673D1837D36900BC229F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A198673C1837D36900BC229F /* MobileCoreServices.framework */; };
+		A198673F183826A400BC229F /* takePhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = A198673E183826A300BC229F /* takePhoto.png */; };
 		A19A00DB182ADACA00EE3B61 /* daytoday.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A19A00D9182ADACA00EE3B61 /* daytoday.jpg */; };
 		A19A00DC182ADACA00EE3B61 /* daytoday@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A19A00DA182ADACA00EE3B61 /* daytoday@2x.jpg */; };
 		A19A00E2182ADD8200EE3B61 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A19A00DF182ADD8200EE3B61 /* SVProgressHUD.bundle */; };
@@ -291,6 +294,10 @@
 		A16AC9D618298D6B00074AB8 /* DemoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoTableViewController.m; sourceTree = "<group>"; };
 		A17E39CF183010EB00F75CC6 /* ChallengeDayDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDayDetail.h; sourceTree = "<group>"; };
 		A17E39D0183010EB00F75CC6 /* ChallengeDayDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDayDetail.m; sourceTree = "<group>"; };
+		A19867351837CE3000BC229F /* FDTakeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDTakeController.h; sourceTree = "<group>"; };
+		A19867361837CE3000BC229F /* FDTakeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDTakeController.m; sourceTree = "<group>"; };
+		A198673C1837D36900BC229F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		A198673E183826A300BC229F /* takePhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = takePhoto.png; sourceTree = "<group>"; };
 		A19A00D9182ADACA00EE3B61 /* daytoday.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = daytoday.jpg; sourceTree = "<group>"; };
 		A19A00DA182ADACA00EE3B61 /* daytoday@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "daytoday@2x.jpg"; sourceTree = "<group>"; };
 		A19A00DE182ADD8200EE3B61 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -523,6 +530,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A198673D1837D36900BC229F /* MobileCoreServices.framework in Frameworks */,
 				B77F7F17180C66E40072954E /* CoreTelephony.framework in Frameworks */,
 				B77F7F15180C66D70072954E /* libz.dylib in Frameworks */,
 				B77F7F13180C66C60072954E /* SystemConfiguration.framework in Frameworks */,
@@ -634,9 +642,8 @@
 		A1275C241806F95F00019A91 /* assets */ = {
 			isa = PBXGroup;
 			children = (
-				A1275C251806F97200019A91 /* profileBlank.png */,
-				A1275C3C1808FD6B00019A91 /* sectionImageHolder.jpg */,
-				A1275C261806F97200019A91 /* anotherCrop.jpg */,
+				A198673E183826A300BC229F /* takePhoto.png */,
+				A19867381837CE6300BC229F /* profile images */,
 				A1F79C4D18366AD200C3B8A3 /* social dashboard buttons */,
 				A13DB5E2181EDAE700378901 /* verfication images */,
 				A16AC9BA181FFAB400074AB8 /* category images */,
@@ -666,6 +673,7 @@
 		A16AC9D118298A4800074AB8 /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				A19867341837CE3000BC229F /* FDTake */,
 				A19A00DD182ADD8200EE3B61 /* SVProgressHUD */,
 			);
 			name = dependencies;
@@ -684,6 +692,25 @@
 				A12F8B0E1836FF9700C9F086 /* CommentUtilityView.m */,
 			);
 			name = "challenge day";
+			sourceTree = "<group>";
+		};
+		A19867341837CE3000BC229F /* FDTake */ = {
+			isa = PBXGroup;
+			children = (
+				A19867351837CE3000BC229F /* FDTakeController.h */,
+				A19867361837CE3000BC229F /* FDTakeController.m */,
+			);
+			path = FDTake;
+			sourceTree = "<group>";
+		};
+		A19867381837CE6300BC229F /* profile images */ = {
+			isa = PBXGroup;
+			children = (
+				A1275C251806F97200019A91 /* profileBlank.png */,
+				A1275C3C1808FD6B00019A91 /* sectionImageHolder.jpg */,
+				A1275C261806F97200019A91 /* anotherCrop.jpg */,
+			);
+			name = "profile images";
 			sourceTree = "<group>";
 		};
 		A19A00DD182ADD8200EE3B61 /* SVProgressHUD */ = {
@@ -845,6 +872,7 @@
 		B7E61D4017BD6AA5002B681B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A198673C1837D36900BC229F /* MobileCoreServices.framework */,
 				B7E61DF817C27D24002B681B /* CoreData.framework */,
 				B77F7F16180C66E40072954E /* CoreTelephony.framework */,
 				B77F7F14180C66D70072954E /* libz.dylib */,
@@ -1186,6 +1214,7 @@
 				B7E61D4C17BD6AA5002B681B /* InfoPlist.strings in Resources */,
 				A13DB5E8181EDB1500378901 /* photo.jpg in Resources */,
 				A1F79C691836731400C3B8A3 /* heart-selected.png in Resources */,
+				A198673F183826A400BC229F /* takePhoto.png in Resources */,
 				A19A00DB182ADACA00EE3B61 /* daytoday.jpg in Resources */,
 				A19A00DC182ADACA00EE3B61 /* daytoday@2x.jpg in Resources */,
 				A1B5E61F1829BFA00050A136 /* reveal-icon@2x.png in Resources */,
@@ -1255,6 +1284,7 @@
 				B7E61E2717C27F32002B681B /* NICommonMetrics.m in Sources */,
 				A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */,
 				B7E61E2917C27F32002B681B /* NIDataStructures.m in Sources */,
+				A19867371837CE3000BC229F /* FDTakeController.m in Sources */,
 				A1275C191806EB8C00019A91 /* DTProgressElement.m in Sources */,
 				B7E61E2B17C27F32002B681B /* NIDebuggingTools.m in Sources */,
 				B7E61E2D17C27F32002B681B /* NIDeviceOrientation.m in Sources */,

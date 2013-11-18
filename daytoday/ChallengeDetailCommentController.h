@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ChallengeDayCommentTableView;
 
 @protocol ChallengeDetailCommentControllerDelegate <NSObject>
 @optional
@@ -18,6 +19,7 @@
 
 @interface ChallengeDetailCommentController : UIViewController
 
+@property (nonatomic,strong) ChallengeDayCommentTableView *commentTable;
 @property (nonatomic,weak) id<ChallengeDetailCommentControllerDelegate> delegate;
 
 @end

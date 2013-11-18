@@ -10,7 +10,6 @@
 
 @interface CommentUtilityView ()
 
-@property (nonatomic,strong) UIButton *sendComment;
 @property (nonatomic,strong) UIButton *cancelComment;
 
 @end
@@ -32,19 +31,8 @@
       [_cancelComment setTranslatesAutoresizingMaskIntoConstraints:NO];
       
       [self addSubview:_cancelComment];
-
-      _sendComment = [UIButton buttonWithType:UIButtonTypeCustom];
-      [_sendComment.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]];
-      //      [_photoButton setImage:[UIImage imageNamed:@"heart-normal.png"] forState:UIControlStateNormal];
-      [_sendComment setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-      [_sendComment setTitle:@"COMMENT" forState:UIControlStateNormal];
-      [_sendComment addTarget:self action:@selector(sendComment:) forControlEvents:UIControlEventTouchUpInside];
-      [_sendComment setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
-      [_sendComment setTranslatesAutoresizingMaskIntoConstraints:NO];
       
-      [self addSubview:_sendComment];
-      
-      [self setBackgroundColor:[UIColor darkGrayColor]];
+      [self setBackgroundColor:[UIColor colorWithWhite:.4f alpha:.9f]];
       
       [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     }
@@ -60,29 +48,20 @@
   
 }
 
-- (void)sendComment:(UIButton *)sendButton
-{
-  NSLog(@"send");
-}
-
 - (void)updateConstraints
 {
   [super updateConstraints];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(2)-[cancelComment]-(200)-[sendComment]-(2)-|"
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(2)-[cancelComment]"
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:nil
-                                                                 views:@{@"cancelComment": _cancelComment,@"sendComment": _sendComment}]];
+                                                                 views:@{@"cancelComment": _cancelComment}]];
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(2)-[cancelComment(36)]"
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:nil
                                                                  views:@{@"cancelComment": _cancelComment}]];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(2)-[sendComment(36)]"
-                                                               options:NSLayoutFormatDirectionLeadingToTrailing
-                                                               metrics:nil
-                                                                 views:@{@"sendComment": _sendComment}]];
   
 }
 

@@ -160,9 +160,7 @@
   if (self.commentButton) {
     [self.commentButton setSelected:NO];
     [self.commentButton setHighlighted:NO];
-    
     //decrement the count as well
-
   }
 }
 

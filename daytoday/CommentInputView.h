@@ -8,7 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CommentInputViewDelegate <NSObject>
+
+- (void)didSelectPhotoInput;
+- (void)willHandleAttemptToAddComment;
+
+@end
+
 @interface CommentInputView : UIView
+
+@property (nonatomic,weak) id<CommentInputViewDelegate> delegate;
+
+- (void)placeImageThumbnailPreview:(UIImage *)previewImage;
 
 - (void)shouldBeFirstResponder;
 - (void)shouldResignFirstResponder;
