@@ -5,6 +5,7 @@
 //  Created by Anderson Miller on 8/15/13.
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
+#import <Parse/Parse.h>
 
 #import "AppDelegate.h"
 
@@ -56,35 +57,18 @@
   #endif
 
   [self.window makeKeyAndVisible];
+  
+  [Parse setApplicationId:@"pMydn1FlUYwUcXeLRRAMFp3zcZPz3lRQ6IITQEe2"
+                clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
 
-  // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
-  // or set runtime properties here.
-//  UAConfig *config = [UAConfig defaultConfig];
+  [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
   
-  // You can also programmatically override the plist values:
-  // config.developmentAppKey = @"YourKey";
-  // etc.
+  PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
+  [testObject setObject:@"bar" forKey:@"foo"];
+  [testObject save];
   
-  // Call takeOff (which creates the UAirship singleton)
-//  [UAirship takeOff:config];
   return YES;
 }
-
-//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-//{
-//  NIDINFO(@"APN device token: %@", deviceToken);
-//
-//  NSString *k = @"kUADeviceToken";
-//  if( [[NSUserDefaults standardUserDefaults] valueForKey:k] == nil ){
-//      NSString * dToken = [NSString stringWithFormat:@"%@",deviceToken];
-//      [[NSUserDefaults standardUserDefaults] setValue:dToken forKey:k];
-//      [[NSUserDefaults standardUserDefaults] synchronize];
-//  }
-//  
-//  // Updates the device token and registers the token with UA
-//  
-//  [[UAPush shared] registerDeviceToken:deviceToken];
-//}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

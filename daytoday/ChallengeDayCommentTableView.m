@@ -52,8 +52,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   UITableViewCell *cell;
-  cell = [[UITableViewCell alloc] init];
-  cell.backgroundColor = [UIColor randomColor];
+  cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+  
+  if (cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    cell.backgroundColor = [UIColor randomColor];
+    return cell;
+  }
+  
   return cell;
 }
 

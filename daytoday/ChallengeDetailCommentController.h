@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ChallengeDayCommentTableView;
+#import "ChallengeDayCommentTableView.h"
 
 @protocol ChallengeDetailCommentControllerDelegate <NSObject>
 @optional

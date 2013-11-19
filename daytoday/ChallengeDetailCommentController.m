@@ -310,7 +310,6 @@
                    }
                    completion:^(BOOL complete){
 //                     [self.commentTable scrollToLastComment];
-                     NIDINFO(@"where did the fucking table go? %@",CGRectCreateDictionaryRepresentation(self.commentTable.frame));
                    }];
 }
 
