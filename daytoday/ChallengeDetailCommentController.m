@@ -27,6 +27,9 @@
 
 @property (nonatomic,strong) FDTakeController *takeController;
 
+@property (nonatomic,strong) PFFile *commentImageFile;
+@property (nonatomic,strong) PFFile *commentThumbnailFile;
+
 @property (nonatomic,assign) BOOL isTakingPhoto;
 @property (nonatomic,assign) BOOL isEnteringComment;
 @property (nonatomic,assign) BOOL shouldLayoutCommentInterface;
@@ -213,13 +216,31 @@
 {
   NIDINFO(@"got the photo here it is: %@, and info: %@",photo,info);
 
-//  -(UIImage*)cropToSize:(CGSize)newSize;
-
-  UIImage *thumbnailImage = [photo cropToSize:CGSizeMake(300., 300.)];
-  NIDINFO(@"the thumbnail image :%@",CGSizeCreateDictionaryRepresentation(thumbnailImage.size));
+  //cancel any pending transfers
+  [self.commentImageFile cancel];
+  [self.commentThumbnailFile cancel];
+  
+  UIImage *croppedImage = [photo cropToSize:CGSizeMake(320.f, 320.f) usingMode:NYXCropModeCenter];
+  UIImage *croppedThumbnail = [croppedImage scaleToFitSize:CGSizeMake(85.f, 85.f)];
+  
+  //construct the image files on selection
+  
+  NSData *imageData = UIImageJPEGRepresentation(croppedImage, 0.8f);
+  NSData *thumbnailData = UIImageJPEGRepresentation(croppedThumbnail, 0.8f);
+  
+  if (imageData && thumbnailData) {
+    self.commentImageFile = [PFFile fileWithData:imageData];
+    self.commentThumbnailFile = [PFFile fileWithData:thumbnailData];
+    
+    [self.commentImageFile saveInBackground];
+    [self.commentThumbnailFile saveInBackground];
+  }
+  
+  NIDINFO(@"the thumbnail image :%@",CGSizeCreateDictionaryRepresentation(croppedThumbnail.size));
   
   self.isTakingPhoto = NO;
-  [self.commentInput placeImageThumbnailPreview:photo];
+  [self.commentInput placeImageThumbnailPreview:croppedThumbnail];
+  
   [self.commentInput shouldBeFirstResponder];
 }
 

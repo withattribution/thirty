@@ -940,15 +940,21 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		B78481CD1802083E008F2EB8 /* utils */ = {
+		B78481CD1802083E008F2EB8 /* common */ = {
 			isa = PBXGroup;
 			children = (
 				B78481C918020834008F2EB8 /* FakeDataUtils.h */,
 				B78481CA18020834008F2EB8 /* FakeDataUtils.m */,
 				B7D3633F1811776500E4DC79 /* Constants.h */,
 				B7D363401811776500E4DC79 /* Constants.m */,
+				A1C60D5B183C183900C98C69 /* DTConstants.h */,
+				A1C60D5C183C183900C98C69 /* DTConstants.m */,
+				A1C60D5E183C184800C98C69 /* DTCache.h */,
+				A1C60D5F183C184800C98C69 /* DTCache.m */,
+				A1C60D61183C185800C98C69 /* DTRequests.h */,
+				A1C60D62183C185800C98C69 /* DTRequests.m */,
 			);
-			name = utils;
+			name = common;
 			sourceTree = "<group>";
 		};
 		B7E61D3517BD6AA5002B681B = {
@@ -1003,19 +1009,13 @@
 		B7E61D4717BD6AA5002B681B /* daytoday */ = {
 			isa = PBXGroup;
 			children = (
-				B78481CD1802083E008F2EB8 /* utils */,
+				B7E61D5017BD6AA5002B681B /* AppDelegate.h */,
+				B7E61D5117BD6AA5002B681B /* AppDelegate.m */,
+				B78481CD1802083E008F2EB8 /* common */,
 				B73903AE17FB1B7400B9C9BB /* controllers */,
 				B73903AD17FB1B5A00B9C9BB /* dependencies */,
 				B7E61F1C17C6C853002B681B /* models */,
 				B7E61E9717C547BE002B681B /* requests */,
-				B7E61D5017BD6AA5002B681B /* AppDelegate.h */,
-				B7E61D5117BD6AA5002B681B /* AppDelegate.m */,
-				A1C60D5B183C183900C98C69 /* DTConstants.h */,
-				A1C60D5C183C183900C98C69 /* DTConstants.m */,
-				A1C60D5E183C184800C98C69 /* DTCache.h */,
-				A1C60D5F183C184800C98C69 /* DTCache.m */,
-				A1C60D61183C185800C98C69 /* DTRequests.h */,
-				A1C60D62183C185800C98C69 /* DTRequests.m */,
 				A1275BEB1806EA8E00019A91 /* views */,
 				B7E61D4817BD6AA5002B681B /* Supporting Files */,
 				B7E61E7B17C284C8002B681B /* DayTodayModels.xcdatamodeld */,
