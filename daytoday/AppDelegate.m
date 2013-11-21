@@ -62,11 +62,7 @@
                 clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
 
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-  
-  PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-  [testObject setObject:@"bar" forKey:@"foo"];
-  [testObject save];
-  
+    
   return YES;
 }
 

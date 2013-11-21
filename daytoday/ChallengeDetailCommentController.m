@@ -13,6 +13,9 @@
 #import "CommentUtilityView.h"
 #import "FDTakeController.h"
 
+#import "UIImage+Resizing.h"
+
+
 @interface ChallengeDetailCommentController () <DTSocialDashBoardDelegate,CommentUtilityViewDelegate,CommentInputViewDelegate,FDTakeDelegate>
 {
   NSLayoutConstraint * _inputTopConstraint;
@@ -31,6 +34,11 @@
 @end
 
 @implementation ChallengeDetailCommentController
+
+- (void)dealloc
+{
+  [self removeKeyBoardNotifications];
+}
 
 - (id)init
 {
@@ -60,24 +68,72 @@
     return self;
 }
 
+- (void)willHandleAttemptToAddComment
+{
+  PFObject *comment = [PFObject objectWithClassName:kDTActivityClassKey];
+  
+  [comment addObject:kDTActivityTypeChallengeCreation forKey:kDTActivityTypeKey];
+  [comment addObject:@"this is another comment again" forKey:kDTActivityContentKey];
+  
+  [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+  
+    if (succeeded) {
+      NIDINFO(@"you know it!");
+      PFQuery *query = [PFQuery queryWithClassName:kDTActivityClassKey];
+      
+      [query whereKey:kDTActivityTypeKey equalTo:kDTActivityTypeComment];
+      [query findObjectsInBackgroundWithBlock:^(NSArray *objs, NSError *error){
+        if (!error) {
+          NSLog(@"object count: %d",[objs count]);
+          for (PFObject *ob in objs) {
+            NIDINFO(@"the comment: %@", [ob objectForKey:kDTActivityContentKey]);
+          }
+        }
+        else {
+          NIDINFO(@"%@",[error localizedDescription]);
+        }
+      }];
+      
+    }
+    else {
+      NIDINFO(@"%@",[error localizedDescription]);
+    }
+  
+  }];
+}
+
+#pragma mark - UIViewController Life Cycle
+
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  NSLog(@"the tableview: %@",self.commentInput);
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
+}
 
-//  if (self.isTakingPhoto) {
-//    NSLog(@"called to becomre first responder");
-//    [self.commentInput shouldBeFirstResponder];
-//  }
-//  if (self.isTakingPhoto) {
-//    [self addKeyBoardNotifications];
-//  }
-  
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [super viewWillDisappear:animated];
+  NIDINFO(@"<><><><> VIEW IS ABOUT TO DISAPPEAR! <><><><>");
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+  [super viewDidDisappear:animated];
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+}
+
+- (void)didReceiveMemoryWarning
+{
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 - (void)addKeyBoardNotifications
@@ -119,28 +175,6 @@
                                                 object:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-  [super viewWillDisappear:animated];
-  NIDINFO(@"<><><><> VIEW IS ABOUT TO DISAPPEAR! <><><><>");
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-  [super viewDidDisappear:animated];
-}
-
-- (void)viewDidLoad
-{
-  [super viewDidLoad];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Comment Utility Delegate Methods
 
 - (void)didCancelCommentAddition
@@ -159,7 +193,6 @@
 
 - (void)didSelectPhotoInput
 {
-  
   //tells the keyboard notifications to just change the keyboard presentation state and dont mess with anything else
   self.isTakingPhoto = YES;
 
@@ -179,6 +212,12 @@
 - (void)takeController:(FDTakeController *)controller gotPhoto:(UIImage *)photo withInfo:(NSDictionary *)info
 {
   NIDINFO(@"got the photo here it is: %@, and info: %@",photo,info);
+
+//  -(UIImage*)cropToSize:(CGSize)newSize;
+
+  UIImage *thumbnailImage = [photo cropToSize:CGSizeMake(300., 300.)];
+  NIDINFO(@"the thumbnail image :%@",CGSizeCreateDictionaryRepresentation(thumbnailImage.size));
+  
   self.isTakingPhoto = NO;
   [self.commentInput placeImageThumbnailPreview:photo];
   [self.commentInput shouldBeFirstResponder];

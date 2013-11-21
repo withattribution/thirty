@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
 //
 
+
 #import "CommentInputView.h"
 
 @interface CommentInputView () <UITextViewDelegate>
@@ -83,7 +84,9 @@
   NSLog(@"send");
   if ([_delegate respondsToSelector:@selector(willHandleAttemptToAddComment)])
     [_delegate willHandleAttemptToAddComment];
-
+  
+  
+  
 }
 
 - (void)addPhoto:(UIButton *)aButton
