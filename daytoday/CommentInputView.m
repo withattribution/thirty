@@ -12,11 +12,12 @@
 @interface CommentInputView () <UITextViewDelegate>
 
 @property (nonatomic,strong) UIButton *photoButton;
+@property (nonatomic,strong) UIButton *sendComment;
 
 @property (nonatomic,strong) UITextView *commentTextView;
 @property (nonatomic,strong) UILabel *placeholderLabel;
 
-@property (nonatomic,strong) UIButton *sendComment;
+@property (nonatomic,assign) BOOL commentImageSet;
 
 @end
 
@@ -29,7 +30,7 @@
     self = [super initWithFrame:frame];
     if (self) {
       _photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [_photoButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:16.0]];
+      [_photoButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0]];
       [_photoButton setImage:[UIImage imageNamed:@"takePhoto.png"] forState:UIControlStateNormal];
       [_photoButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
       [_photoButton addTarget:self action:@selector(addPhoto:) forControlEvents:UIControlEventTouchUpInside];
@@ -59,10 +60,12 @@
       [self addSubview:_placeholderLabel];
       
       _sendComment = [UIButton buttonWithType:UIButtonTypeCustom];
-      [_sendComment.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]];
+      [_sendComment.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0]];
       //      [_photoButton setImage:[UIImage imageNamed:@"heart-normal.png"] forState:UIControlStateNormal];
-      [_sendComment setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+      [_sendComment setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+      [_sendComment setTitleColor:[UIColor darkGrayColor] forState:UIControlStateDisabled];
       [_sendComment setTitle:@"SEND" forState:UIControlStateNormal];
+      [_sendComment setEnabled:([self.commentTextView hasText] || self.commentImageSet) ? YES : NO];
       [_sendComment addTarget:self action:@selector(sendComment:) forControlEvents:UIControlEventTouchUpInside];
       [_sendComment setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
       [_sendComment setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -75,43 +78,39 @@
       [self setBackgroundColor:[UIColor darkGrayColor]];
 
       [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+      
+      self.commentImageSet = NO;
     }
     return self;
 }
 
 - (void)sendComment:(UIButton *)sendButton
 {
-  NSLog(@"send");
-  if ([_delegate respondsToSelector:@selector(willHandleAttemptToAddComment)])
-    [_delegate willHandleAttemptToAddComment];
-  
-  
-  
+  if ([_delegate respondsToSelector:@selector(willHandleAttemptToAddComment:)])
+    [_delegate willHandleAttemptToAddComment:self.commentTextView.text];
 }
 
 - (void)addPhoto:(UIButton *)aButton
 {
   if([_delegate respondsToSelector:@selector(didSelectPhotoInput)])
      [_delegate didSelectPhotoInput];
-
 }
 
 - (void)placeImageThumbnailPreview:(UIImage *)previewImage
 {
-  NIDINFO(@"adding image");
   if (previewImage) {
-    [_photoButton setImage:previewImage forState:UIControlStateNormal];
+    [self.photoButton setImage:previewImage forState:UIControlStateNormal];
+    self.commentImageSet = YES;
   }
   else {
-    [_photoButton setImage:[UIImage imageNamed:@"takePhoto.png"] forState:UIControlStateNormal];
+    [self.photoButton setImage:[UIImage imageNamed:@"takePhoto.png"] forState:UIControlStateNormal];
   }
+  [self.sendComment setEnabled:self.commentImageSet];
 }
 
 - (void)shouldBeFirstResponder
 {
   if (_commentTextView && ![_commentTextView isFirstResponder]) {
-    NSLog(@"this should be the first responder now!");
-    NSLog(@"the text view: %@",_commentTextView);
     [_commentTextView becomeFirstResponder];
   }
 }
@@ -127,10 +126,8 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-  //  if ([_commentTextView hasText]) {
-  //    self.description = [NSString stringWithString:_commentTextView.text];
-  //  }
-  
+  [self.sendComment setEnabled:([self.commentTextView hasText] || self.commentImageSet) ? YES : NO];
+
   if (textView.text.length > 0) {
     [UIView animateWithDuration:.2f
                           delay:0.f
@@ -145,7 +142,6 @@
   }else {
     _placeholderLabel.alpha = 1.f;
   }
-  
 }
 
 #pragma mark - Constraint Based Layout

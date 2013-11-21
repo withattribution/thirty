@@ -8,11 +8,9 @@
 
 #import "DTConstants.h"
 
-//@implementation DTConstants
-
 #pragma mark - Activity Class
 // Class Key
-NSString *const kDTActivityClassKey                  =@"Activity";
+NSString *const kDTActivityClassKey                 =@"Activity";
 
 // Field Keys
 NSString *const kDTActivityFromUserKey              =@"fromUser";
@@ -41,12 +39,12 @@ NSString *const kDTUserProfileImageKey              =@"profileImage";
 NSString *const kDTImageClassKey                    =@"image";
 
 // Field Keys
-NSString *const kDTImageUserKey                     =@"userImage";
-NSString *const kDTImageCommentKey                  =@"commentImage";
-NSString *const kDTImageVerificationKey             =@"verificationImage";
-NSString *const kDTImageUserChallengeKey            =@"challengeImage";
-NSString *const kDTImageSizeSmallKey                   =@"small";
-NSString *const kDTImageSizeMediumKey                  =@"medium";
+NSString *const kDTImageUserKey                     =@"user";
+NSString *const kDTImageSmallKey                    =@"small";
+NSString *const kDTImageMediumKey                   =@"medium";
+NSString *const kDTImageTypeKey                     =@"type";
 
-
-//@end
+// Type Values
+NSString *const kDTImageTypeComment                 =@"commentImage";
+NSString *const kDTImageTypeVerification            =@"verificationImage";
+NSString *const kDTImageTypeUserChallenge           =@"challengeImage";

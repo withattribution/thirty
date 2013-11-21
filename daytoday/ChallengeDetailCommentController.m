@@ -29,6 +29,8 @@
 
 @property (nonatomic,strong) PFFile *commentImageFile;
 @property (nonatomic,strong) PFFile *commentThumbnailFile;
+@property (nonatomic,assign) UIBackgroundTaskIdentifier fileUploadBackgroundTaskId;
+@property (nonatomic,assign) UIBackgroundTaskIdentifier imagePostBackgroundTaskId;
 
 @property (nonatomic,assign) BOOL isTakingPhoto;
 @property (nonatomic,assign) BOOL isEnteringComment;
@@ -71,38 +73,57 @@
     return self;
 }
 
-- (void)willHandleAttemptToAddComment
+
+
+
+- (void)willHandleAttemptToAddComment:(NSString *)commentText
 {
+  NIDINFO(@"handle comment: %@",commentText);
+
+  NSString *trimmedComment = [commentText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+  //build and send the photo object then the activity object because it depends on the activity object
   PFObject *comment = [PFObject objectWithClassName:kDTActivityClassKey];
-  
-  [comment addObject:kDTActivityTypeChallengeCreation forKey:kDTActivityTypeKey];
-  [comment addObject:@"this is another comment again" forKey:kDTActivityContentKey];
-  
-  [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
-  
-    if (succeeded) {
-      NIDINFO(@"you know it!");
-      PFQuery *query = [PFQuery queryWithClassName:kDTActivityClassKey];
-      
-      [query whereKey:kDTActivityTypeKey equalTo:kDTActivityTypeComment];
-      [query findObjectsInBackgroundWithBlock:^(NSArray *objs, NSError *error){
-        if (!error) {
-          NSLog(@"object count: %d",[objs count]);
-          for (PFObject *ob in objs) {
-            NIDINFO(@"the comment: %@", [ob objectForKey:kDTActivityContentKey]);
-          }
+  [comment addObject:kDTActivityTypeComment forKey:kDTActivityTypeKey];
+
+#warning set toUser and FromUser when users exist
+#warning add reference to challenge day when the challenge day model exists
+
+  if(self.commentImageFile && self.commentImageFile){
+    //adding image
+    PFObject *imageObject = [PFObject objectWithClassName:kDTImageClassKey];
+
+#warning should also add user key for image object when we have users
+#warning should add ACL here for accessing and privacy settings
+
+    [imageObject setObject:kDTImageTypeComment forKey:kDTImageTypeKey];
+    [imageObject setObject:self.commentImageFile forKey:kDTImageMediumKey];
+    [imageObject setObject:self.commentThumbnailFile forKey:kDTImageSmallKey];
+
+    self.imagePostBackgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+      [[UIApplication sharedApplication] endBackgroundTask:self.imagePostBackgroundTaskId];
+    }];
+
+    [imageObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+      if (succeeded) {
+        NIDINFO(@"succeeded uploading image object!");
+        //if the comment also has a text field then add that and send
+        if (trimmedComment && trimmedComment.length > 0) {
+          [comment addObject:trimmedComment forKey:kDTActivityContentKey];
         }
-        else {
-          NIDINFO(@"%@",[error localizedDescription]);
-        }
-      }];
-      
+        [comment saveEventually];
+      }else {
+        NIDINFO(@"%@",[error localizedDescription]);
+      }
+
+      [[UIApplication sharedApplication] endBackgroundTask:self.imagePostBackgroundTaskId];
+    }];
+  }else {
+    if (trimmedComment && trimmedComment.length > 0) {
+      [comment addObject:trimmedComment forKey:kDTActivityContentKey];
     }
-    else {
-      NIDINFO(@"%@",[error localizedDescription]);
-    }
-  
-  }];
+    [comment saveEventually];
+  }
 }
 
 #pragma mark - UIViewController Life Cycle
@@ -223,17 +244,30 @@
   UIImage *croppedImage = [photo cropToSize:CGSizeMake(320.f, 320.f) usingMode:NYXCropModeCenter];
   UIImage *croppedThumbnail = [croppedImage scaleToFitSize:CGSizeMake(85.f, 85.f)];
   
-  //construct the image files on selection
-  
   NSData *imageData = UIImageJPEGRepresentation(croppedImage, 0.8f);
   NSData *thumbnailData = UIImageJPEGRepresentation(croppedThumbnail, 0.8f);
-  
+  //construct the image files on user selection
   if (imageData && thumbnailData) {
     self.commentImageFile = [PFFile fileWithData:imageData];
     self.commentThumbnailFile = [PFFile fileWithData:thumbnailData];
     
-    [self.commentImageFile saveInBackground];
-    [self.commentThumbnailFile saveInBackground];
+    self.fileUploadBackgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+      [[UIApplication sharedApplication] endBackgroundTask:self.fileUploadBackgroundTaskId];
+    }];
+    
+    [self.commentImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+      if(succeeded){
+        NIDINFO(@"succeeded uploading medium image file -- attempting thumbnail image upload");
+        [self.commentThumbnailFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+          if (succeeded) {
+            NIDINFO(@"succeeded uploading thumbnail file");
+          }
+          [[UIApplication sharedApplication] endBackgroundTask:self.fileUploadBackgroundTaskId];
+        }];
+      }else {
+        [[UIApplication sharedApplication] endBackgroundTask:self.fileUploadBackgroundTaskId];
+      }
+    }];
   }
   
   NIDINFO(@"the thumbnail image :%@",CGSizeCreateDictionaryRepresentation(croppedThumbnail.size));
@@ -312,7 +346,7 @@
                                                                     metrics:metrics
                                                                       views:@{@"commentInput":_commentInput}]];
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[commentInput(50)]"
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[commentInput(36)]"
                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
                                                                     metrics:metrics
                                                                       views:@{@"commentInput":_commentInput}]];

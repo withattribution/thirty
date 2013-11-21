@@ -11,7 +11,7 @@
 @protocol CommentInputViewDelegate <NSObject>
 
 - (void)didSelectPhotoInput;
-- (void)willHandleAttemptToAddComment;
+- (void)willHandleAttemptToAddComment:(NSString *)commentText;
 
 @end
 

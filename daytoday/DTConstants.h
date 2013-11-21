@@ -38,12 +38,14 @@ extern NSString *const kDTImageClassKey;
 
 // Field Keys
 extern NSString *const kDTImageUserKey;
-extern NSString *const kDTImageCommentKey;
-extern NSString *const kDTImageVerificationKey;
-extern NSString *const kDTImageUserChallengeKey;
 extern NSString *const kDTImageSmallKey;
-extern NSString *const kDTImageSizeMediumKey;
+extern NSString *const kDTImageMediumKey;
+extern NSString *const kDTImageTypeKey;
 
+// Type Values
+extern NSString *const kDTImageTypeComment;
+extern NSString *const kDTImageTypeVerification;
+extern NSString *const kDTImageTypeUserChallenge;
 
 
 

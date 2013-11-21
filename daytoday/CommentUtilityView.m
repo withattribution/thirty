@@ -22,7 +22,7 @@
     if (self) {
       
       _cancelComment = [UIButton buttonWithType:UIButtonTypeCustom];
-      [_cancelComment.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]];
+      [_cancelComment.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0]];
       //      [_photoButton setImage:[UIImage imageNamed:@"heart-normal.png"] forState:UIControlStateNormal];
       [_cancelComment setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
       [_cancelComment setTitle:@"CANCEL" forState:UIControlStateNormal];
