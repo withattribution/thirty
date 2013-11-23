@@ -29,5 +29,5 @@
     #import <Parse/Parse.h>
     #import "DTCache.h"
     #import "DTConstants.h"
-    #import "DTRequests.h"
+    #import "DTCommonRequests.h"
 #endif

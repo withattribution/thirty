@@ -111,46 +111,46 @@ static NSString * const kStringsTableName = @"FDTake";
     [self.actionSheet setTag:kPhotosActionSheetTag];
 }
 
-//- (void)takeVideoOrChooseFromLibrary
-//{
-//    self.sources = nil;
-//    self.buttonTitles = nil;
-//    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-//        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypeCamera]];
-//        [self.buttonTitles addObject:[self textForButtonWithTitle:kTakeVideoKey]];
-//    }
-//    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-//        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypePhotoLibrary]];
-//        [self.buttonTitles addObject:[self textForButtonWithTitle:kChooseFromLibraryKey]];
-//    }
-//    else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
-//        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypeSavedPhotosAlbum]];
-//        [self.buttonTitles addObject:[self textForButtonWithTitle:kChooseFromPhotoRollKey]];
-//    }
-//    [self _setUpActionSheet];
-//    [self.actionSheet setTag:kVideosActionSheetTag];
-//}
-//
-//- (void)takePhotoOrVideoOrChooseFromLibrary
-//{
-//    self.sources = nil;
-//    self.buttonTitles = nil;
-//    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-//        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypeCamera]];
-//        [self.buttonTitles addObject:[self textForButtonWithTitle:kTakePhotoKey]];
-//        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypeCamera]];
-//        [self.buttonTitles addObject:[self textForButtonWithTitle:kTakeVideoKey]];
-//    }
-//    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-//        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypePhotoLibrary]];
-//        [self.buttonTitles addObject:[self textForButtonWithTitle:kChooseFromLibraryKey]];
-//    } else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
-//        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypeSavedPhotosAlbum]];
-//        [self.buttonTitles addObject:[self textForButtonWithTitle:kChooseFromPhotoRollKey]];
-//    }
-//    [self _setUpActionSheet];
-//    [self.actionSheet setTag:kVideosOrPhotosActionSheetTag];
-//}
+- (void)takeVideoOrChooseFromLibrary
+{
+    self.sources = nil;
+    self.buttonTitles = nil;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypeCamera]];
+        [self.buttonTitles addObject:[self textForButtonWithTitle:kTakeVideoKey]];
+    }
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypePhotoLibrary]];
+        [self.buttonTitles addObject:[self textForButtonWithTitle:kChooseFromLibraryKey]];
+    }
+    else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypeSavedPhotosAlbum]];
+        [self.buttonTitles addObject:[self textForButtonWithTitle:kChooseFromPhotoRollKey]];
+    }
+    [self _setUpActionSheet];
+    [self.actionSheet setTag:kVideosActionSheetTag];
+}
+
+- (void)takePhotoOrVideoOrChooseFromLibrary
+{
+    self.sources = nil;
+    self.buttonTitles = nil;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypeCamera]];
+        [self.buttonTitles addObject:[self textForButtonWithTitle:kTakePhotoKey]];
+        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypeCamera]];
+        [self.buttonTitles addObject:[self textForButtonWithTitle:kTakeVideoKey]];
+    }
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypePhotoLibrary]];
+        [self.buttonTitles addObject:[self textForButtonWithTitle:kChooseFromLibraryKey]];
+    } else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+        [self.sources addObject:[NSNumber numberWithInteger:UIImagePickerControllerSourceTypeSavedPhotosAlbum]];
+        [self.buttonTitles addObject:[self textForButtonWithTitle:kChooseFromPhotoRollKey]];
+    }
+    [self _setUpActionSheet];
+    [self.actionSheet setTag:kVideosOrPhotosActionSheetTag];
+}
 
 #pragma mark - UIActionSheetDelegate
 

@@ -3,7 +3,7 @@
 //  daytoday
 //
 //  Created by Anderson Miller on 8/19/13.
-//  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
+//  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
 #import "D2Request.h"

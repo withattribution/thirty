@@ -3,7 +3,7 @@
 //  daytoday
 //
 //  Created by pasmo on 11/19/13.
-//  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
+//  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
 #pragma mark - PFObject Activity Class
@@ -25,7 +25,7 @@ extern NSString *const kDTActivityTypeFollow;
 extern NSString *const kDTActivityTypeChallengeCreation;
 extern NSString *const kDTActivityTypeChallengeJoin;
 extern NSString *const kDTActivityTypeChallengeFinish;
-extern NSString *const kDTActivityVerificationFinish;
+extern NSString *const kDTActivityTypeVerificationFinish;
 
 #pragma mark - User Class
 // Field Keys
@@ -47,8 +47,36 @@ extern NSString *const kDTImageTypeComment;
 extern NSString *const kDTImageTypeVerification;
 extern NSString *const kDTImageTypeUserChallenge;
 
+#pragma mark - Challenge Day Class
+// Class Key
+extern NSString *const kDTChallengeDayClassKey;
 
+// Field Keys
+extern NSString *const kDTChallengeDayTaskRequiredCountKey;
+extern NSString *const kDTChallengeDayTaskCompletedCountKey;
+extern NSString *const kDTChallengeDayAccomplishedKey;
+extern NSString *const kDTChallengeDayOrdinalDayKey;
 
+#pragma mark - Intent Class
+// Class Key
+extern NSString *const kDTIntentClassKey;
+
+// Field Keys
+extern NSString *const kDTIntentStartingKey;
+extern NSString *const kDTIntentEndingKey;
+extern NSString *const kDTIntentActiveKey;
+
+#pragma mark - Challenge Class
+// Class Key
+extern NSString *const kDTChallengeClassKey;
+
+// Field Keys
+extern NSString *const kDTChallengeDescriptionKey;
+extern NSString *const kDTChallengeDurationKey;
+extern NSString *const kDTChallengeFrequencyKey;
+extern NSString *const kDTChallengeCategoryKey;
+extern NSString *const kDTChallengeNameKey;
+extern NSString *const kDTChallengeImageKey;
 
 
 

@@ -3,7 +3,7 @@
 //  daytoday
 //
 //  Created by pasmo on 11/15/13.
-//  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
+//  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -11,7 +11,8 @@
 @protocol DTSocialDashBoardDelegate <NSObject>
 
 @optional
-- (void)didSelectHeartButton;
+- (void)shouldLike;
+- (void)shouldUnLike;
 - (void)didSelectComments;
 - (void)didSelectShareButton;
 @end

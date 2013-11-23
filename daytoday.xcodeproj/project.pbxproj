@@ -25,7 +25,6 @@
 		A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C451809F66600019A91 /* ParticipantsTableCell.m */; };
 		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
 		A12F8B0F1836FF9700C9F086 /* CommentUtilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = A12F8B0E1836FF9700C9F086 /* CommentUtilityView.m */; };
-		A1351AA2183154B90079550D /* ChallengeDayCommentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1351AA1183154B90079550D /* ChallengeDayCommentTableView.m */; };
 		A13DB5E7181EDB1500378901 /* checkIn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E3181EDB1500378901 /* checkIn.jpg */; };
 		A13DB5E8181EDB1500378901 /* photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E4181EDB1500378901 /* photo.jpg */; };
 		A13DB5E9181EDB1500378901 /* timer.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E5181EDB1500378901 /* timer.jpg */; };
@@ -60,7 +59,7 @@
 		A1C60D1F183A7BC200C98C69 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C60D1E183A7BC200C98C69 /* FacebookSDK.framework */; };
 		A1C60D5D183C183900C98C69 /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C60D5C183C183900C98C69 /* DTConstants.m */; };
 		A1C60D60183C184800C98C69 /* DTCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C60D5F183C184800C98C69 /* DTCache.m */; };
-		A1C60D63183C185800C98C69 /* DTRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C60D62183C185800C98C69 /* DTRequests.m */; };
+		A1C60D63183C185800C98C69 /* DTCommonRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C60D62183C185800C98C69 /* DTCommonRequests.m */; };
 		A1C60D80183D543B00C98C69 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C60D7F183D543B00C98C69 /* Accelerate.framework */; };
 		A1C60D82183D544300C98C69 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C60D81183D544300C98C69 /* AssetsLibrary.framework */; };
 		A1C60D84183D544A00C98C69 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C60D83183D544A00C98C69 /* ImageIO.framework */; };
@@ -289,8 +288,6 @@
 		A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+equalWithGranularity.m"; sourceTree = "<group>"; };
 		A12F8B0D1836FF9700C9F086 /* CommentUtilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentUtilityView.h; sourceTree = "<group>"; };
 		A12F8B0E1836FF9700C9F086 /* CommentUtilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentUtilityView.m; sourceTree = "<group>"; };
-		A1351AA0183154B90079550D /* ChallengeDayCommentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDayCommentTableView.h; sourceTree = "<group>"; };
-		A1351AA1183154B90079550D /* ChallengeDayCommentTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDayCommentTableView.m; sourceTree = "<group>"; };
 		A13DB5E3181EDB1500378901 /* checkIn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkIn.jpg; sourceTree = "<group>"; };
 		A13DB5E4181EDB1500378901 /* photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo.jpg; sourceTree = "<group>"; };
 		A13DB5E5181EDB1500378901 /* timer.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = timer.jpg; sourceTree = "<group>"; };
@@ -342,8 +339,8 @@
 		A1C60D5C183C183900C98C69 /* DTConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTConstants.m; sourceTree = "<group>"; };
 		A1C60D5E183C184800C98C69 /* DTCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTCache.h; sourceTree = "<group>"; };
 		A1C60D5F183C184800C98C69 /* DTCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTCache.m; sourceTree = "<group>"; };
-		A1C60D61183C185800C98C69 /* DTRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTRequests.h; sourceTree = "<group>"; };
-		A1C60D62183C185800C98C69 /* DTRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTRequests.m; sourceTree = "<group>"; };
+		A1C60D61183C185800C98C69 /* DTCommonRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTCommonRequests.h; sourceTree = "<group>"; };
+		A1C60D62183C185800C98C69 /* DTCommonRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTCommonRequests.m; sourceTree = "<group>"; };
 		A1C60D7F183D543B00C98C69 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		A1C60D81183D544300C98C69 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		A1C60D83183D544A00C98C69 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -740,8 +737,6 @@
 			children = (
 				A17E39CF183010EB00F75CC6 /* ChallengeDayDetail.h */,
 				A17E39D0183010EB00F75CC6 /* ChallengeDayDetail.m */,
-				A1351AA0183154B90079550D /* ChallengeDayCommentTableView.h */,
-				A1351AA1183154B90079550D /* ChallengeDayCommentTableView.m */,
 				A1F79C6A1836AC4800C3B8A3 /* CommentInputView.h */,
 				A1F79C6B1836AC4800C3B8A3 /* CommentInputView.m */,
 				A12F8B0D1836FF9700C9F086 /* CommentUtilityView.h */,
@@ -951,8 +946,8 @@
 				A1C60D5C183C183900C98C69 /* DTConstants.m */,
 				A1C60D5E183C184800C98C69 /* DTCache.h */,
 				A1C60D5F183C184800C98C69 /* DTCache.m */,
-				A1C60D61183C185800C98C69 /* DTRequests.h */,
-				A1C60D62183C185800C98C69 /* DTRequests.m */,
+				A1C60D61183C185800C98C69 /* DTCommonRequests.h */,
+				A1C60D62183C185800C98C69 /* DTCommonRequests.m */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -1291,7 +1286,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0460;
-				ORGANIZATIONNAME = "Submarine Rich, LLC";
+				ORGANIZATIONNAME = "Studio A-OK, LLC";
 				TargetAttributes = {
 					B7E61D3D17BD6AA5002B681B = {
 						DevelopmentTeam = SQQ2M6776C;
@@ -1396,7 +1391,7 @@
 				B7E61DEE17C273C4002B681B /* NSDate+SR.m in Sources */,
 				B7E61DF017C273C4002B681B /* NSManagedObject+SR.m in Sources */,
 				B7E61DF217C273C4002B681B /* NSManagedObjectContext+SR.m in Sources */,
-				A1C60D63183C185800C98C69 /* DTRequests.m in Sources */,
+				A1C60D63183C185800C98C69 /* DTCommonRequests.m in Sources */,
 				B7E61DF417C273C4002B681B /* UIColor+SR.m in Sources */,
 				B7E61DF617C273C4002B681B /* UIImageView+SR.m in Sources */,
 				B7E61E2717C27F32002B681B /* NICommonMetrics.m in Sources */,
@@ -1440,7 +1435,6 @@
 				B7E61E6317C27F5A002B681B /* AFHTTPRequestOperation.m in Sources */,
 				B7E61E6517C27F5A002B681B /* AFImageRequestOperation.m in Sources */,
 				B7E61E6717C27F5A002B681B /* AFJSONRequestOperation.m in Sources */,
-				A1351AA2183154B90079550D /* ChallengeDayCommentTableView.m in Sources */,
 				B7E61E6917C27F5A002B681B /* AFNetworkActivityIndicatorManager.m in Sources */,
 				B7E61E6B17C27F5A002B681B /* AFPropertyListRequestOperation.m in Sources */,
 				A1AC68BA1816D8A1004A1F5D /* DTInfiniteScrollView.m in Sources */,

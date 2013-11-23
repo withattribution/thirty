@@ -3,7 +3,7 @@
 //  daytoday
 //
 //  Created by pasmo on 10/12/13.
-//  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
+//  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
 #import "Challenge+D2D.h"

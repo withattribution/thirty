@@ -3,7 +3,7 @@
 //  daytoday
 //
 //  Created by pasmo on 11/15/13.
-//  Copyright (c) 2013 Submarine Rich, LLC. All rights reserved.
+//  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
 #import "CommentUtilityView.h"
@@ -27,6 +27,7 @@
       [_cancelComment setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
       [_cancelComment setTitle:@"CANCEL" forState:UIControlStateNormal];
       [_cancelComment addTarget:self action:@selector(cancelComment:) forControlEvents:UIControlEventTouchUpInside];
+      [_cancelComment setContentEdgeInsets:UIEdgeInsetsMake(0.f, 5.f, 0.f, 5.f)];
       [_cancelComment setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
       [_cancelComment setTranslatesAutoresizingMaskIntoConstraints:NO];
       
@@ -41,11 +42,9 @@
 
 - (void)cancelComment:(UIButton *)cancelButton
 {
-  NSLog(@"cancel");
   if ([_delegate respondsToSelector:@selector(didCancelCommentAddition)]) {
     [_delegate didCancelCommentAddition];
   }
-  
 }
 
 - (void)updateConstraints
@@ -57,12 +56,10 @@
                                                                metrics:nil
                                                                  views:@{@"cancelComment": _cancelComment}]];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(2)-[cancelComment(36)]"
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(2)-[cancelComment(32)]"
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:nil
                                                                  views:@{@"cancelComment": _cancelComment}]];
-  
-  
 }
 
 @end
