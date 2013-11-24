@@ -12,19 +12,9 @@
 #import "UIImage+Resizing.h"
 #import "UIColor+SR.h"
 
-
 @interface ChallengeDetailCommentController ()
 
-//@property (nonatomic,strong) FDTakeController *takeController;
-
-@property (nonatomic,strong) PFFile *commentImageFile;
-@property (nonatomic,strong) PFFile *commentThumbnailFile;
-@property (nonatomic,assign) UIBackgroundTaskIdentifier fileUploadBackgroundTaskId;
-@property (nonatomic,assign) UIBackgroundTaskIdentifier imagePostBackgroundTaskId;
-
 @property (nonatomic,strong) NSString *challengeDayId;
-
-@property (nonatomic,assign) BOOL isTakingPhoto;
 
 @end
 
@@ -40,10 +30,7 @@
     self = [super init];
     if (self) {
       _challengeDayId = dayId;
-
 //      self.parseClassName = kDTChallengeDayClassKey;
-      
-      self.isTakingPhoto = NO;
       [self.view setBackgroundColor:[UIColor lightGrayColor]];
     }
     return self;
@@ -90,10 +77,23 @@
 #pragma mark - PFQueryTableViewController
 
 //- (PFQuery *)queryForTable {
-//  PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
+//  PFQuery *query = [PFQuery queryWithClassName:kDTActivityClassKey];
+//  [query whereKey:kDTActivityChallengeDayKey
+//          equalTo:[PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:@"40QlXzWWxZ"]];
+//  [query findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error) {
+//    // comments now contains the comments for myPost
+//    if(!error){
+//      NIDINFO(@"the number of comments: %d",[comments count]);
+//    }else{
+//      NIDINFO(@"%@",[error localizedDescription]);
+//    }
+//  }];
+//
+//  
+//  
 ////  [query whereKey:kDTActivityTypeComment equalTo:kDTActivityTypeKey];
 //  
-//  [query includeKey:kDTActivityClassKey];
+////  [query includeKey:kDTActivityClassKey];
 ////  [query whereKey:kPAPActivityTypeKey equalTo:kPAPActivityTypeComment];
 ////  [query orderByAscending:@"createdAt"];
 ////  
@@ -189,6 +189,18 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  
+  PFQuery *query = [PFQuery queryWithClassName:kDTActivityClassKey];
+  [query whereKey:kDTActivityChallengeDayKey
+          equalTo:[PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:@"40QlXzWWxZ"]];
+  [query findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error) {
+    // comments now contains the comments for myPost
+    if(!error){
+      NIDINFO(@"the number of comments: %d",[comments count]);
+    }else{
+      NIDINFO(@"%@",[error localizedDescription]);
+    }
+  }];
 }
 
 - (void)didReceiveMemoryWarning

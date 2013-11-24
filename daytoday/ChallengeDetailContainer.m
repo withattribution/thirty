@@ -213,15 +213,15 @@
 - (void)willHandleAttemptToAddComment:(NSString *)commentText
 {
   NIDINFO(@"handle comment: %@",commentText);
-  
+
   NSString *trimmedComment = [commentText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-  
+
   //build and send the photo object then the activity object because it depends on the activity object
   PFObject *comment = [PFObject objectWithClassName:kDTActivityClassKey];
   comment[kDTActivityTypeKey] = kDTActivityTypeComment;
-  comment[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:_challengeDayId];
+  comment[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:@"40QlXzWWxZ"];
 #warning set toUser and FromUser when users exist
-  
+
   if(self.commentImageFile && self.commentImageFile){
     //adding image
     PFObject *imageObject = [PFObject objectWithClassName:kDTImageClassKey];
@@ -230,11 +230,11 @@
     imageObject[kDTImageTypeKey] = kDTImageTypeComment;
     imageObject[kDTImageMediumKey] = self.commentImageFile;
     imageObject[kDTImageSmallKey] = self.commentThumbnailFile;
-    
+
     self.imagePostBackgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
       [[UIApplication sharedApplication] endBackgroundTask:self.imagePostBackgroundTaskId];
     }];
-    
+
     [imageObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
       if (succeeded) {
         NIDINFO(@"succeeded uploading image object!");
@@ -246,7 +246,6 @@
       }else {
         NIDINFO(@"%@",[error localizedDescription]);
       }
-      
       [[UIApplication sharedApplication] endBackgroundTask:self.imagePostBackgroundTaskId];
     }];
   }else {

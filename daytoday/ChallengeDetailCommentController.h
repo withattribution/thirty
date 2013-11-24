@@ -8,21 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-//@protocol ChallengeDetailCommentControllerDelegate <NSObject>
-//@optional
-//
-//- (void)willHandleCommentAddition;
-//- (void)resetCommentController;
-//
-//@end
-
 @interface ChallengeDetailCommentController : UITableViewController
 
-//@property (nonatomic,weak) id<ChallengeDetailCommentControllerDelegate> delegate;
-
 - (id)initWithChallengeDayID:(NSString *)challengeDayId;
-
-
 
 //- (void)scrollToLastComment;
 //
