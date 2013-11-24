@@ -12,10 +12,15 @@
 #import "ChallengeDayDetail.h"
 #import "DTSocialDashBoard.h"
 
-@interface ChallengeDetailVerificationController () <DTVerificationElementDataSource,DTVerificationElementDelegate> {
+@interface ChallengeDetailVerificationController () <DTVerificationElementDataSource,DTVerificationElementDelegate>
+{
   NSInteger _fakeCompleted;
   NSInteger _fakeRequired;
 }
+
+@property (nonatomic,strong) PFObject *challengeDay;
+
+@end
 
 //You can use a beforeSave validation in your Cloud Code which rejects the object if it's a duplicate. Let's say that you're storing these in a "BusStop" object and the bus stop identifier is stored as a string in stopId:
 //
@@ -43,9 +48,16 @@
 //  }
 //});
 
-@end
-
 @implementation ChallengeDetailVerificationController
+
+- (id)initWithChallengeDay:(PFObject *)chDay
+{
+  self = [super init];
+  if(self){
+    
+  }
+  return self;
+}
 
 - (void)viewDidLoad
 {
@@ -71,8 +83,6 @@
 
 - (CGFloat)heightForControllerFold
 {
-  
-  
   return 240.f;
 }
 

@@ -137,7 +137,7 @@
   [self.view layoutIfNeeded];
   
   [self.commentController.view setFrame:CGRectMake(0.f,
-                                                   [self.verficationController heightForControllerFold] + 40,
+                                                   [self.verficationController heightForControllerFold] + 40.f,
                                                    self.view.frame.size.width,
                                                    self.view.frame.size.height)];
   self.commentsAreFullScreen = NO;
@@ -190,6 +190,7 @@
 //      NIDINFO(@"%@",[err localizedDescription]);
 //    }
 //  }];
+
 //  One time only make a challenge day object so that we can reuse the challenge day object id to build out the comment interface
   
 //  PFObject *challengeDay = [PFObject objectWithClassName:kDTChallengeDayClassKey];
@@ -242,7 +243,15 @@
         if (trimmedComment && trimmedComment.length > 0) {
           comment[kDTActivityContentKey] = trimmedComment;
         }
-        [comment saveEventually];
+        [comment saveEventually:^(BOOL succeeded, NSError *error){
+          if (succeeded) {
+            [self.commentController loadObjects];
+            
+            [self didCancelCommentAddition];
+          }else {
+            NIDINFO(@"%@",[error localizedDescription]);
+          }
+        }];
       }else {
         NIDINFO(@"%@",[error localizedDescription]);
       }
@@ -252,7 +261,15 @@
     if (trimmedComment && trimmedComment.length > 0) {
       comment[kDTActivityContentKey] = trimmedComment;
     }
-    [comment saveEventually];
+    [comment saveEventually:^(BOOL succeeded, NSError *error){
+      if (succeeded) {
+        [self.commentController loadObjects];
+        
+        [self didCancelCommentAddition];
+      }else {
+        NIDINFO(@"%@",[error localizedDescription]);
+      }
+    }];
   }
 }
 
@@ -339,6 +356,8 @@
 
   [self setHeaderContainerView:self.socialDashBoard];
   [self setFooterContainerView:nil];
+  
+  [self cleanUpCommentSubmissionInterface];
 }
 
 #pragma mark - DTSocialDashBoard Delegate Methods
@@ -455,9 +474,9 @@
     [[recognizer view] bringSubviewToFront:[recognizer view]];
   }
   
-  if([recognizer state] == UIGestureRecognizerStateEnded) {
+  if([recognizer state] == UIGestureRecognizerStateEnded)
+  {
     CGPoint currentVelocityPoint = [recognizer velocityInView:self.view];
-    
     
     CGFloat currentVelocityY = currentVelocityPoint.y;
     BOOL viewIsPastAnchor = ([recognizer locationInView:self.view].y <= self.commentControllerAnchor);
@@ -514,7 +533,7 @@
 
 -(void)moveControllerToOriginalPositionWithOptions:(NSDictionary *)options
 {
-  CGFloat footerContainerHeight = self.footerContainerView.frame.size.height;
+  CGFloat headerContainerHeight = self.headerContainerView.frame.size.height;
 
 	[UIView animateWithDuration:.32f
                         delay:0
@@ -523,7 +542,7 @@
                      [self.view layoutIfNeeded];
                      
                      self.commentController.view.frame = CGRectMake(0.f,
-                                                                [self.verficationController heightForControllerFold] + footerContainerHeight,
+                                                                [self.verficationController heightForControllerFold] + headerContainerHeight,
                                                                 self.view.frame.size.width,
                                                                 self.view.frame.size.height - [self.verficationController heightForControllerFold]);
                      [[UIApplication sharedApplication] setStatusBarHidden:NO];

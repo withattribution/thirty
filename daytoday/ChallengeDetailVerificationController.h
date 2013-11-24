@@ -13,6 +13,8 @@
 
 @property (nonatomic,strong) DTVerificationElement *eldt;
 
+- (id)initWithChallengeDay:(PFObject *)chDay;
+
 - (CGFloat)heightForControllerFold;
 
 @end

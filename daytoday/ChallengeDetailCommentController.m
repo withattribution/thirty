@@ -20,17 +20,15 @@
 
 @implementation ChallengeDetailCommentController
 
-- (void)dealloc
-{
-
-}
-
 - (id)initWithChallengeDayID:(NSString *)dayId
 {
     self = [super init];
     if (self) {
       _challengeDayId = dayId;
+      
       self.parseClassName = kDTActivityClassKey;
+      self.pullToRefreshEnabled = NO;
+      
       [self.view setBackgroundColor:[UIColor lightGrayColor]];
     }
     return self;
