@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChallengeDetailCommentController : UITableViewController
+@interface ChallengeDetailCommentController : PFQueryTableViewController
 
 - (id)initWithChallengeDayID:(NSString *)challengeDayId;
 

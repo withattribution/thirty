@@ -333,10 +333,10 @@
 - (void)didCancelCommentAddition
 {
   self.isAddingComment = NO;
-  
+
   if([self.footerContainerView isKindOfClass:[CommentInputView class]])
     [(CommentInputView *)self.footerContainerView shouldResignFirstResponder];
-  
+
   [self setHeaderContainerView:self.socialDashBoard];
   [self setFooterContainerView:nil];
 }
@@ -346,7 +346,7 @@
 - (void)didSelectComments
 {
   self.isAddingComment = YES;
-  
+
   _commentUtility = [[CommentUtilityView alloc] init];
   [self.commentUtility setDelegate:self];
   [self setHeaderContainerView:self.commentUtility];
@@ -355,21 +355,20 @@
                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
                                                                     metrics:nil
                                                                       views:@{@"commentUtility":self.commentUtility}]];
-  
+
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[commentUtility(36)]"
                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
                                                                     metrics:nil
                                                                       views:@{@"commentUtility":self.commentUtility}]];
-  
   _commentInput = [[CommentInputView alloc] init];
   [self.commentInput setDelegate:self];
   [self setFooterContainerView:self.commentInput];
-  
+
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[commentInput]|"
                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
                                                                     metrics:nil
                                                                       views:@{@"commentInput":self.commentInput}]];
-  
+
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[commentInput(50)]"
                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
                                                                     metrics:nil
@@ -383,7 +382,7 @@
                                                        multiplier:1.f
                                                          constant:0.f]];
   [self.view layoutIfNeeded];
-  
+
   if([self.footerContainerView isKindOfClass:[CommentInputView class]])
     [(CommentInputView *)self.footerContainerView shouldBeFirstResponder];
 }
@@ -394,7 +393,7 @@
 {
   [self.commentUtility removeFromSuperview];
   [self.commentInput removeFromSuperview];
-  self.commentInput  = nil;
+  self.commentInput   = nil;
   self.commentUtility = nil;
 }
 

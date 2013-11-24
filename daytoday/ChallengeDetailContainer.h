@@ -12,3 +12,10 @@
 @interface ChallengeDetailContainer : D2ViewController
 
 @end
+
+//this is how to delete orphaned files if absolutetly necessary (it is)
+//delete orphaned file on parse backend
+//curl -X DELETE \
+//-H "X-Parse-Application-Id: <YOUR_APPLICATION_ID>" \
+//-H "X-Parse-Master-Key: <YOUR_MASTER_KEY>" \
+//https://api.parse.com/1/files/<FILE_NAME>
