@@ -26,14 +26,17 @@
 
       PFObject *likeActivity = [PFObject objectWithClassName:kDTActivityClassKey];
       [likeActivity setObject:kDTActivityTypeLike forKey:kDTActivityTypeKey];
-//      [likeActivity setObject:[PFUser currentUser] forKey:kDTActivityFromUserKey];
-//      [likeActivity setObject:[[challengeDay objectForKey:kDTChallengeDayIntentKey]
-//                               objectForKey:kDTIntentUserKey]
-//                       forKey:kDTActivityToUserKey];
+      [likeActivity setObject:[PFUser currentUser] forKey:kDTActivityFromUserKey];
+      [likeActivity setObject:[[challengeDay objectForKey:kDTChallengeDayIntentKey]
+                               objectForKey:kDTIntentUserKey]
+                       forKey:kDTActivityToUserKey];
       likeActivity[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
                                                                                  objectId:challengeDay.objectId];
-#warning set ACL here
 
+      PFACL *likeACL = [PFACL ACLWithUser:[PFUser currentUser]];
+      [likeACL setPublicReadAccess:YES];
+      likeActivity.ACL = likeACL;
+      
       [likeActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
         if (completionBlock) {
           completionBlock(succeeded,error);
@@ -41,31 +44,31 @@
         PFQuery *query = [DTCommonRequests queryForActivitiesOnChallengeDay:challengeDay cachePolicy:kPFCachePolicyNetworkOnly];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
           if (!error) {
-//            NSMutableArray *likers = [NSMutableArray array];
-//            NSMutableArray *commenters = [NSMutableArray array];
-//            
-//            BOOL isLikedByCurrentUser = NO;
-//
-//            for (PFObject *activity in objects) {
-//              if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeComment]
-//                  && [activity objectForKey:kDTActivityFromUserKey])
-//              {
-//                [commenters addObject:[activity objectForKey:kDTActivityFromUserKey]];
-//              }else if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike]
-//                  && [activity objectForKey:kDTActivityFromUserKey])
-//              {
-//                [likers addObject:[activity objectForKey:kDTActivityFromUserKey]];
-//              }
-//              if ([[[activity objectForKey:kDTActivityFromUserKey] objectId] isEqualToString:[[PFUser currentUser] objectId]]
-//                  && [[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike])
-//              {
-//                isLikedByCurrentUser = YES;
-//              }
-//            }
-//            [[DTCache sharedCache] setAttributesForChallengeDay:challengeDay
-//                                                         likers:likers
-//                                                     commenters:commenters
-//                                           isLikedByCurrentUser:isLikedByCurrentUser];
+            NSMutableArray *likers = [NSMutableArray array];
+            NSMutableArray *commenters = [NSMutableArray array];
+            
+            BOOL isLikedByCurrentUser = NO;
+
+            for (PFObject *activity in objects) {
+              if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeComment]
+                  && [activity objectForKey:kDTActivityFromUserKey])
+              {
+                [commenters addObject:[activity objectForKey:kDTActivityFromUserKey]];
+              }else if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike]
+                  && [activity objectForKey:kDTActivityFromUserKey])
+              {
+                [likers addObject:[activity objectForKey:kDTActivityFromUserKey]];
+              }
+              if ([[[activity objectForKey:kDTActivityFromUserKey] objectId] isEqualToString:[[PFUser currentUser] objectId]]
+                  && [[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike])
+              {
+                isLikedByCurrentUser = YES;
+              }
+            }
+            [[DTCache sharedCache] setAttributesForChallengeDay:challengeDay
+                                                         likers:likers
+                                                     commenters:commenters
+                                           isLikedByCurrentUser:isLikedByCurrentUser];
           }
 
 #warning send push notification here
@@ -85,7 +88,7 @@
   PFQuery *queryExistingLikes = [PFQuery queryWithClassName:kDTActivityClassKey];
   [queryExistingLikes whereKey:kDTActivityChallengeDayKey equalTo:challengeDay];
   [queryExistingLikes whereKey:kDTActivityTypeKey equalTo:kDTActivityTypeLike];
-  //[queryExistingLikes whereKey:kDTActivityToUserKey equalTo:[PFUser currentUser]];
+  [queryExistingLikes whereKey:kDTActivityToUserKey equalTo:[PFUser currentUser]];
   [queryExistingLikes setCachePolicy:kPFCachePolicyNetworkOnly];
   [queryExistingLikes findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error){
     if (!error) {
@@ -100,31 +103,31 @@
       PFQuery *query = [DTCommonRequests queryForActivitiesOnChallengeDay:challengeDay cachePolicy:kPFCachePolicyNetworkOnly];
       [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
         if (!error) {
-          //            NSMutableArray *likers = [NSMutableArray array];
-          //            NSMutableArray *commenters = [NSMutableArray array];
-          //
-          //            BOOL isLikedByCurrentUser = NO;
-          //
-          //            for (PFObject *activity in objects) {
-          //              if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeComment]
-          //                  && [activity objectForKey:kDTActivityFromUserKey])
-          //              {
-          //                [commenters addObject:[activity objectForKey:kDTActivityFromUserKey]];
-          //              }else if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike]
-          //                  && [activity objectForKey:kDTActivityFromUserKey])
-          //              {
-          //                [likers addObject:[activity objectForKey:kDTActivityFromUserKey]];
-          //              }
-          //              if ([[[activity objectForKey:kDTActivityFromUserKey] objectId] isEqualToString:[[PFUser currentUser] objectId]]
-          //                  && [[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike])
-          //              {
-          //                isLikedByCurrentUser = YES;
-          //              }
-          //            }
-          //            [[DTCache sharedCache] setAttributesForChallengeDay:challengeDay
-          //                                                         likers:likers
-          //                                                     commenters:commenters
-          //                                           isLikedByCurrentUser:isLikedByCurrentUser];
+            NSMutableArray *likers = [NSMutableArray array];
+            NSMutableArray *commenters = [NSMutableArray array];
+
+            BOOL isLikedByCurrentUser = NO;
+
+            for (PFObject *activity in objects) {
+              if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeComment]
+                  && [activity objectForKey:kDTActivityFromUserKey])
+              {
+                [commenters addObject:[activity objectForKey:kDTActivityFromUserKey]];
+              }else if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike]
+                  && [activity objectForKey:kDTActivityFromUserKey])
+              {
+                [likers addObject:[activity objectForKey:kDTActivityFromUserKey]];
+              }
+              if ([[[activity objectForKey:kDTActivityFromUserKey] objectId] isEqualToString:[[PFUser currentUser] objectId]]
+                  && [[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike])
+              {
+                isLikedByCurrentUser = YES;
+              }
+            }
+            [[DTCache sharedCache] setAttributesForChallengeDay:challengeDay
+                                                         likers:likers
+                                                     commenters:commenters
+                                           isLikedByCurrentUser:isLikedByCurrentUser];
         }
         
 #warning send push notification here

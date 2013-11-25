@@ -43,7 +43,6 @@
 
 @property (nonatomic,assign) BOOL commentsAreFullScreen;
 @property (nonatomic,assign) BOOL isAddingComment;
-@property (nonatomic,assign) BOOL isTakingPhoto;
 
 @property (nonatomic,assign) NSUInteger panningVelocityYThreshold;
 @property (nonatomic,assign) CGFloat commentControllerAnchor;
@@ -72,7 +71,8 @@
 {
   self = [super init];
   if(self){
-//    [self addChallengeDayInterface];
+    self.commentsAreFullScreen = NO;
+    self.isAddingComment       = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShowNotification:)
@@ -141,9 +141,6 @@
                                                    [self.verficationController heightForControllerFold] + 40.f,
                                                    self.view.frame.size.width,
                                                    self.view.frame.size.height)];
-  self.commentsAreFullScreen = NO;
-  self.isAddingComment       = NO;
-  self.isTakingPhoto         = NO;
 
   self.commentControllerAnchor = _commentController.view.frame.origin.y - 40;
   self.panningVelocityYThreshold = 500;
@@ -162,6 +159,51 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  
+  PFQuery *currentChallengeDay = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
+  [currentChallengeDay includeKey:kDTChallengeDayIntentKey];
+  currentChallengeDay.cachePolicy = kPFCachePolicyCacheElseNetwork;
+  [currentChallengeDay getObjectInBackgroundWithId:@"40QlXzWWxZ" block:^(PFObject *obj, NSError *error){
+    if (!error) {
+      self.challengeDay = obj;
+//      for (NSString *key in [self.challengeDay allKeys]) {
+//        NIDINFO(@"the keys %@ and the objects: %@",key, [self.challengeDay objectForKey:key]);
+//      }
+
+      //create an example intent: save it:
+      //      PFObject *intent = [PFObject objectWithClassName:kDTIntentClassKey];
+      //      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]] forKey:kDTIntentStartingKey];
+      //      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]] forKey:kDTIntentEndingKey];
+      //      [intent setObject:[PFUser currentUser] forKey:kDTIntentUserKey];
+      //
+      //      [intent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
+      //        if(succeeded){
+      //          NIDINFO(@"saved an example intent!");
+      //          self.challengeDay[kDTChallengeDayIntentKey] = [PFObject objectWithoutDataWithClassName:kDTIntentClassKey objectId:intent.objectId];
+      //          [self.challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
+      //            if(succeeded){
+      //              NIDINFO(@"now we have an intent referencing the challenge day which is how we include the user for the challenge day");
+      //            }else {
+      //              NIDINFO(@"%@",[error localizedDescription]);
+      //            }
+      //          }];
+      //
+      //        }
+      //        else {
+      //          NIDINFO(@"%@",[error localizedDescription]);
+      //        }
+      //      }];
+      
+      //      NIDINFO(@"date past: %@",[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]]);
+      //      NIDINFO(@"date NOW: %@",[NSDate date]);
+      //      NIDINFO(@"date future: %@",[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]]);
+      
+      [self addChallengeDayInterface];
+    }
+    else {
+      NIDINFO(@"%@",[error localizedDescription]);
+    }
+  }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -177,19 +219,6 @@
   [self.navigationController.navigationBar setHidden:YES];
   [[UIApplication sharedApplication] setStatusBarHidden:self.commentsAreFullScreen];
   NIDINFO(@"CONTAINER WILL APPEAR");
-  
-  PFQuery *currentChallengeDay = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
-  [currentChallengeDay includeKey:@"ffwef"];
-  currentChallengeDay.cachePolicy = kPFCachePolicyCacheElseNetwork;
-  [currentChallengeDay getObjectInBackgroundWithId:@"40QlXzWWxZ" block:^(PFObject *obj, NSError *error){
-    if (!error) {
-      self.challengeDay = obj;
-      [self addChallengeDayInterface];
-    }
-    else {
-      NIDINFO(@"%@",[error localizedDescription]);
-    }
-  }];
   
 //  PFQuery *currentChallengeDay = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
 //  
@@ -235,17 +264,21 @@
   PFObject *comment = [PFObject objectWithClassName:kDTActivityClassKey];
   comment[kDTActivityTypeKey] = kDTActivityTypeComment;
   comment[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:self.challengeDay.objectId];
-#warning set toUser and FromUser when users exist
+  comment[kDTActivityFromUserKey] = [PFUser currentUser];
+  comment[kDTActivityToUserKey]   = [[self.challengeDay objectForKey:kDTChallengeDayIntentKey] objectForKey:kDTIntentUserKey];
 
   if(self.commentImageFile && self.commentImageFile){
     //adding image
     PFObject *imageObject = [PFObject objectWithClassName:kDTImageClassKey];
-#warning should also add user key for image object when we have users
-#warning should add ACL here for accessing and privacy settings
     imageObject[kDTImageTypeKey] = kDTImageTypeComment;
     imageObject[kDTImageMediumKey] = self.commentImageFile;
     imageObject[kDTImageSmallKey] = self.commentThumbnailFile;
+    imageObject[kDTImageUserKey] = [PFObject objectWithoutDataWithClassName:[PFUser parseClassName] objectId:[[PFUser currentUser] objectId]];
 
+    PFACL *imageACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    [imageACL setPublicReadAccess:YES];
+    imageObject.ACL = imageACL;
+    
     self.imagePostBackgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
       [[UIApplication sharedApplication] endBackgroundTask:self.imagePostBackgroundTaskId];
     }];
@@ -254,6 +287,12 @@
       if (succeeded) {
         NIDINFO(@"succeeded uploading image object!");
         //if the comment also has a text field then add that and send
+        [comment setObject:imageObject forKey:kDTActivityImageKey];
+        
+        PFACL *ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+        [ACL setPublicReadAccess:YES];
+        comment.ACL = ACL;
+        
         if (trimmedComment && trimmedComment.length > 0) {
           comment[kDTActivityContentKey] = trimmedComment;
         }
@@ -272,6 +311,10 @@
       [[UIApplication sharedApplication] endBackgroundTask:self.imagePostBackgroundTaskId];
     }];
   }else {
+    PFACL *ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    [ACL setPublicReadAccess:YES];
+    comment.ACL = ACL;
+    
     if (trimmedComment && trimmedComment.length > 0) {
       comment[kDTActivityContentKey] = trimmedComment;
     }
@@ -289,9 +332,7 @@
 
 - (void)didSelectPhotoInput
 {
-  //tells the keyboard notifications to just change the keyboard presentation state and dont mess with anything else
-  self.isTakingPhoto = YES;
-
+  //since the keyboard is misbehaving...
   [self.commentInput shouldResignFirstResponder];
 
   if (!self.takeController) {
@@ -338,17 +379,13 @@
       }
     }];
   }
-
-  self.isTakingPhoto = NO;
   [self.commentInput placeImageThumbnailPreview:croppedThumbnail];
-
   [self.commentInput shouldBeFirstResponder];
 }
 
 - (void)takeController:(FDTakeController *)controller didCancelAfterAttempting:(BOOL)madeAttempt
 {
   NIDINFO(@"cancelled with attempt? %d",madeAttempt);
-  self.isTakingPhoto = NO;
   [self.commentInput shouldBeFirstResponder];
   //if cancelled the user should still be in the comment entering mode and should cancel that on their own
 }
@@ -356,7 +393,6 @@
 - (void)takeController:(FDTakeController *)controller didFailAfterAttempting:(BOOL)madeAttempt
 {
   NIDINFO(@"failed with attempt? %d",madeAttempt);
-  self.isTakingPhoto = NO;
 }
 
 #pragma mark - Comment Utility Delegates
@@ -587,7 +623,7 @@
                      self.commentController.view.frame = CGRectMake(0.f,
                                                                 [self.verficationController heightForControllerFold] + headerContainerHeight,
                                                                 self.view.frame.size.width,
-                                                                self.view.frame.size.height - [self.verficationController heightForControllerFold]);
+                                                                self.view.frame.size.height - [self.verficationController heightForControllerFold] - headerContainerHeight);
                      [[UIApplication sharedApplication] setStatusBarHidden:NO];
                    }
                    completion:^(BOOL finished) {
