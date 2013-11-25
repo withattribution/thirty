@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class DTSocialDashBoard;
 @protocol DTSocialDashBoardDelegate <NSObject>
 
 @optional
-- (void)shouldLike;
-- (void)shouldUnLike;
+- (void)didTapLikeButtonFromDTSocialDashBoard:(DTSocialDashBoard *)dashBoard shouldLike:(BOOL)like;
 - (void)didSelectComments;
 - (void)didSelectShareButton;
 @end
@@ -21,6 +21,9 @@
 
 @property (nonatomic,weak) id<DTSocialDashBoardDelegate> delegate;
 
-- (void)resetCommentDisplayState;
+@property (nonatomic,strong) NSNumber *likeCount;
+@property (nonatomic,strong) NSNumber *commentCount;
+
+//- (void)resetCommentDisplayState;
 
 @end

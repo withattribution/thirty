@@ -58,6 +58,7 @@ NSString *const kDTChallengeDayTaskRequiredCountKey    =@"required";
 NSString *const kDTChallengeDayTaskCompletedCountKey   =@"completed";
 NSString *const kDTChallengeDayAccomplishedKey         =@"accomplished";
 NSString *const kDTChallengeDayOrdinalDayKey           =@"ordinal";
+NSString *const kDTChallengeDayIntentKey               =@"intent";
 
 #pragma mark - Intent Class
 // Class Key
@@ -66,7 +67,7 @@ NSString *const kDTIntentClassKey                      =@"Intent";
 // Field Keys
 NSString *const kDTIntentStartingKey                   =@"start";
 NSString *const kDTIntentEndingKey                     =@"end";
-NSString *const kDTIntentActiveKey                     =@"active";
+NSString *const kDTIntentUserKey                       =@"user";
 
 #pragma mark - Challenge Class
 // Class Key
@@ -79,6 +80,11 @@ NSString *const kDTChallengeFrequencyKey               =@"freq";
 NSString *const kDTChallengeCategoryKey                =@"cat";
 NSString *const kDTChallengeNameKey                    =@"name";
 NSString *const kDTChallengeImageKey                   =@"image";
+
+#pragma mark - Cached ChallengeDay Attributes
+NSString *const kDTChallengeDayAttributeLikeCountKey            =@"likes";
+NSString *const kDTChallengeDayAttributeCommentCountKey         =@"comments";
+NSString *const kDTChallengeDayAttributeIsLikedByCurrentUserKey =@"liked";
 
 
 

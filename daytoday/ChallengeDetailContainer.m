@@ -39,7 +39,7 @@
 @property (nonatomic,strong) CommentInputView *commentInput;
 @property (nonatomic,strong) CommentUtilityView *commentUtility;
 
-@property (nonatomic,strong) NSString *challengeDayId;
+@property (nonatomic,strong) PFObject *challengeDay;
 
 @property (nonatomic,assign) BOOL commentsAreFullScreen;
 @property (nonatomic,assign) BOOL isAddingComment;
@@ -72,7 +72,7 @@
 {
   self = [super init];
   if(self){
-    [self addChallengeDayInterface];
+//    [self addChallengeDayInterface];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShowNotification:)
@@ -106,7 +106,7 @@
   
   [self.verficationController didMoveToParentViewController:self];
   
-  _commentController = [[ChallengeDetailCommentController alloc] initWithChallengeDayID:self.challengeDayId];
+  _commentController = [[ChallengeDetailCommentController alloc] initWithChallengeDayID:[self.challengeDay objectId]];
   
   [self.view addSubview:self.commentController.view];
   [self addChildViewController:self.commentController];
@@ -114,6 +114,7 @@
   
   _socialDashBoard = [[DTSocialDashBoard alloc] init];
   [self.socialDashBoard setDelegate:self];
+  [self.socialDashBoard setLikeCount:[NSNumber numberWithInt:12]];
   
   [self setHeaderContainerView:self.socialDashBoard];
   
@@ -177,6 +178,19 @@
   [[UIApplication sharedApplication] setStatusBarHidden:self.commentsAreFullScreen];
   NIDINFO(@"CONTAINER WILL APPEAR");
   
+  PFQuery *currentChallengeDay = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
+  [currentChallengeDay includeKey:@"ffwef"];
+  currentChallengeDay.cachePolicy = kPFCachePolicyCacheElseNetwork;
+  [currentChallengeDay getObjectInBackgroundWithId:@"40QlXzWWxZ" block:^(PFObject *obj, NSError *error){
+    if (!error) {
+      self.challengeDay = obj;
+      [self addChallengeDayInterface];
+    }
+    else {
+      NIDINFO(@"%@",[error localizedDescription]);
+    }
+  }];
+  
 //  PFQuery *currentChallengeDay = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
 //  
 //  [currentChallengeDay whereKey:@"objectId" equalTo:@"v9xN4EbG71"];
@@ -220,7 +234,7 @@
   //build and send the photo object then the activity object because it depends on the activity object
   PFObject *comment = [PFObject objectWithClassName:kDTActivityClassKey];
   comment[kDTActivityTypeKey] = kDTActivityTypeComment;
-  comment[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:@"40QlXzWWxZ"];
+  comment[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:self.challengeDay.objectId];
 #warning set toUser and FromUser when users exist
 
   if(self.commentImageFile && self.commentImageFile){
@@ -277,9 +291,9 @@
 {
   //tells the keyboard notifications to just change the keyboard presentation state and dont mess with anything else
   self.isTakingPhoto = YES;
-  
+
   [self.commentInput shouldResignFirstResponder];
-  
+
   if (!self.takeController) {
     self.takeController = [[FDTakeController alloc] init];
     self.takeController.delegate = self;
@@ -295,21 +309,21 @@
   //cancel any pending transfers
   [self.commentImageFile cancel];
   [self.commentThumbnailFile cancel];
-  
+
   UIImage *croppedImage = [photo cropToSize:CGSizeMake(320.f, 320.f) usingMode:NYXCropModeCenter];
   UIImage *croppedThumbnail = [croppedImage scaleToFitSize:CGSizeMake(85.f, 85.f)];
-  
+
   NSData *imageData = UIImageJPEGRepresentation(croppedImage, 0.8f);
   NSData *thumbnailData = UIImageJPEGRepresentation(croppedThumbnail, 0.8f);
   //construct the image files on user selection
   if (imageData && thumbnailData) {
     self.commentImageFile = [PFFile fileWithData:imageData];
     self.commentThumbnailFile = [PFFile fileWithData:thumbnailData];
-    
+
     self.fileUploadBackgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
       [[UIApplication sharedApplication] endBackgroundTask:self.fileUploadBackgroundTaskId];
     }];
-    
+
     [self.commentImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
       if(succeeded){
         NIDINFO(@"succeeded uploading medium image file -- attempting thumbnail image upload");
@@ -324,10 +338,10 @@
       }
     }];
   }
-  
+
   self.isTakingPhoto = NO;
   [self.commentInput placeImageThumbnailPreview:croppedThumbnail];
-  
+
   [self.commentInput shouldBeFirstResponder];
 }
 
@@ -361,6 +375,32 @@
 }
 
 #pragma mark - DTSocialDashBoard Delegate Methods
+
+- (void)didTapLikeButtonFromDTSocialDashBoard:(DTSocialDashBoard *)dashBoard shouldLike:(BOOL)like
+{
+  if (like) {
+    [[DTCache sharedCache] incrementLikeCountForChallengeDay:self.challengeDay];
+    [DTCommonRequests likeChallengeDayInBackGround:self.challengeDay block:^(BOOL succeeded, NSError *error){
+      if (succeeded) {
+        NIDINFO(@"liked");
+      }else{
+        NIDINFO(@"%@",[error localizedDescription]);
+      }
+    }];
+    
+    
+  }else {
+    [[DTCache sharedCache] decrementLikeCountForChallengeDay:self.challengeDay];
+    
+    [DTCommonRequests unLikeChallengeDayInBackGround:self.challengeDay block:^(BOOL succeeded, NSError *error){
+      if (succeeded) {
+        NIDINFO(@"unliked");
+      }else{
+        NIDINFO(@"%@",[error localizedDescription]);
+      }
+    }];
+  }
+}
 
 - (void)didSelectComments
 {
@@ -423,7 +463,7 @@
     [self cleanUpCommentSubmissionInterface];
     return;
   }
-  
+
   if (_footerContainerView && footerContainerView.superview) {
     [_footerContainerView setHidden:YES];
     _footerContainerView = footerContainerView;
@@ -450,10 +490,13 @@
 
 #pragma mark - Handle Panning Comment Controller
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
   return YES;
 }
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
   if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
     //    CGPoint translation = [(UIPanGestureRecognizer*)gestureRecognizer translationInView:self.view];
     if (self.commentsAreFullScreen && self.isAddingComment) {

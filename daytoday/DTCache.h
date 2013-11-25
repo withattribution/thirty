@@ -11,6 +11,12 @@
 @interface DTCache : NSObject
 
 + (id)sharedCache;
+- (void)clear;
 
-
+- (void)incrementLikeCountForChallengeDay:(PFObject *)challengeDay;
+- (void)decrementLikeCountForChallengeDay:(PFObject *)challengeDay;
+- (void)setAttributesForChallengeDay:(PFObject *)challengeDay
+                              likers:(NSArray *)likers
+                          commenters:(NSArray *)commenters
+                isLikedByCurrentUser:(BOOL)liked;
 @end
