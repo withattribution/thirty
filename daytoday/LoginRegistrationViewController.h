@@ -7,9 +7,6 @@
 //
 
 #import "D2ViewController.h"
-#import "UserRequest.h"
-#import "AuthenticationRequest.h"
-
 
 @interface LoginRegistrationViewController : D2ViewController
 

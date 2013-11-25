@@ -2,31 +2,25 @@
 //  LoginRegistrationViewController.m
 //  daytoday
 //
-//  Created by Anderson Miller on 10/1/13.
+//  Created by Alberto Tafoya on 10/1/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
 #import "LoginRegistrationViewController.h"
-#import "ProfileViewController.h"
-
 
 #import "SignUpForm.h"
 #import "UserEntry.h"
 #import "LogInForm.h"
 
-@interface LoginRegistrationViewController () <AuthenticationRequestDelegate,UserRequestDelegate,UIAlertViewDelegate>
+@interface LoginRegistrationViewController () <UIAlertViewDelegate>
 {
   BOOL _isLogin;
   UILabel *_titleLabel;
-  
-  UserRequest *userRequest;
-  AuthenticationRequest *authenticationRequest;
 }
 
 @property (nonatomic,strong) NSMutableDictionary *credentialsDictionary;
 
 - (void)signupOrLogin:(id)sender;
-- (void)facebookLogin:(id)sender;
 
 - (void)prepareCredentialsDictionary;
 - (BOOL)hasValidCredentialsForState;
@@ -51,12 +45,6 @@
   [super viewDidLoad];
   
   [self prepareCredentialsDictionary];
-  
-  userRequest = [[UserRequest alloc] initWithContext:self.context];
-  [userRequest setDelegate:self];
-  
-  authenticationRequest = [[AuthenticationRequest alloc] initWithContext:self.context];
-  [authenticationRequest setDelegate:self];
   
   [self.view setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.f]];
   
@@ -144,8 +132,6 @@
 - (BOOL)hasValidCredentialsForState
 {
   if (_isLogin) {
-    
-#warning logic in place to accept username or email but pretty sure this is not what's being allowed on the service side yet
     return ( (![[self.credentialsDictionary objectForKey:@"username"] isEqual:[NSNull null]] &&
              ![[self.credentialsDictionary objectForKey:@"password"] isEqual:[NSNull null]]) ||
             (![[self.credentialsDictionary objectForKey:@"email"] isEqual:[NSNull null]] &&
@@ -159,115 +145,37 @@
 
 - (void)signupOrLogin:(id)sender
 {
-#warning not sendind optional email as username since it's not implemented service side
-  if(_isLogin && [self hasValidCredentialsForState])
-    [authenticationRequest loginUser:[self.credentialsDictionary objectForKey:@"username"]
-                        withPassword:[self.credentialsDictionary objectForKey:@"password"]];
+  PFUser *user = [PFUser user];
 
-#warning not sending email since not sure if it's being processed service side
-  else if ([self hasValidCredentialsForState])
-    [userRequest createUser:[self.credentialsDictionary objectForKey:@"username"]
-               withPassword:[self.credentialsDictionary objectForKey:@"password"]
-       additionalParameters:nil];
-}
-
-#pragma mark - Facebook Session Methods
-//https://developers.facebook.com/docs/ios/ios-sdk-tutorial/authenticate/
-//https://developers.facebook.com/docs/ios/ios-sdk-tutorial/
-//https://developers.facebook.com/apps/305208832954290/summary?save=1
-//https://developers.facebook.com/docs/ios/share-appid-across-multiple-apps-ios-sdk/
-//- (void)sessionStateChanged:(FBSession *)session
-//                      state:(FBSessionState) state
-//                      error:(NSError *)error
-//{
-//  NIDINFO(@"session state changed!");
-//  NIDINFO(@"session accesstoken: %@",session.accessTokenData);
-//  switch (state) {
-//    case FBSessionStateOpen: {
-//      NIDINFO(@"session accesstoken: %@",session.accessTokenData);
-//      if( [[NSUserDefaults standardUserDefaults] valueForKey:kFacebookAuthToken] == nil ){
-//        [[NSUserDefaults standardUserDefaults] setValue:session.accessTokenData forKey:kFacebookAuthToken];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//      }
-//
-//      [self.navigationController.topViewController dismissViewControllerAnimated:YES completion:^(void){
-//        NIDINFO(@"fb session looks like: %@",session.accessTokenData);
-//
-//      }];
-//    }
-//      break;
-//    case FBSessionStateClosed:
-//    case FBSessionStateClosedLoginFailed:
-//      // Once the user has logged in, we want them to
-//      // be looking at the root view.
-//      [self.navigationController popToRootViewControllerAnimated:NO];
-//      [FBSession.activeSession closeAndClearTokenInformation];
-//      break;
-//    default:
-//      break;
-//  }
-//
-//  if (error) {
-//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-//                                                        message:error.localizedDescription
-//                                                       delegate:nil
-//                                              cancelButtonTitle:@"OK"
-//                                              otherButtonTitles:nil];
-//    [alertView show];
-//  }
-//}
-
-//- (void) facebookLogin:(id)sender
-//{
-//  NIDINFO(@"facebook login button touched!");
-//  [FBSession openActiveSessionWithReadPermissions:nil
-//                                     allowLoginUI:YES
-//                                completionHandler:
-//   ^(FBSession *session,
-//     FBSessionState state, NSError *error) {
-//     [self sessionStateChanged:session state:state error:error];
-//   }];
-//}
-
-#pragma mark - UserRequestDelegate
-- (void) userCreatedSuccesfully:(User*)user
-{
-  ProfileViewController *pvc = [[ProfileViewController alloc] init];
-  [self.navigationController pushViewController:pvc animated:YES];
-}
-
-- (void) gotUser:(User*)user
-{
-  NIDINFO(@"got the user: %@",user);
-}
-
-- (void) userUpdated:(User*)user
-{
-  NIDINFO(@"updated the user: %@",user);
-}
-
-#pragma mark - AuthenticationRequestDelegate
-
--(void) authenticationSuccessful:(User*)user
-{
-  ProfileViewController *pvc = [[ProfileViewController alloc] init];
-  [self.navigationController pushViewController:pvc animated:YES];
-}
-
--(void) logoutSuccessful
-{
-  NIDINFO(@"logoutSuccessful");
-}
-
-- (void) requestDidError:(NSError*)err
-{
-  NIDERROR(@"server error! :%@",[err localizedDescription]);
-  NSString *title = NSLocalizedString(@"Oh Shit", @"alert view title for registration page");
-  NSString *message = NSLocalizedString(@"username or password nonsense", @"reason why the alert view");
-  NSString *cancel = NSLocalizedString(@"Nevermind", @"Cancel/OK");
-  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:nil];
-  
-  [alertView show];
+  if(_isLogin && [self hasValidCredentialsForState]) {
+    NSString *loginCredential;
+    if (![[self.credentialsDictionary objectForKey:@"username"] isEqual:[NSNull null]]) {
+      loginCredential = [self.credentialsDictionary objectForKey:@"username"];
+    }else {
+      loginCredential = [self.credentialsDictionary objectForKey:@"email"];
+    }
+    [PFUser logInWithUsernameInBackground:loginCredential password:[self.credentialsDictionary objectForKey:@"password"]
+                                    block:^(PFUser *user, NSError *error) {
+                                      if (user) {
+                                        NIDINFO(@"logged in");
+                                      } else {
+                                        NIDINFO(@"%@",[error localizedDescription]);
+                                      }
+                                    }];
+  }
+  else if (!_isLogin && [self hasValidCredentialsForState]) {
+    user.username = [self.credentialsDictionary objectForKey:@"username"];
+    user.password = [self.credentialsDictionary objectForKey:@"password"];
+    user.email    = [self.credentialsDictionary objectForKey:@"email"];
+    
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+      if (!error) {
+        NIDINFO(@"signed up");
+      } else {
+        NIDINFO(@"%@",[error localizedDescription]);
+      }
+    }];
+  }
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
