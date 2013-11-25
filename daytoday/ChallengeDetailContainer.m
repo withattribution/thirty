@@ -94,7 +94,6 @@
                                                  name:UIKeyboardDidHideNotification
                                                object:nil];
   }
-  
   return self;
 }
 
@@ -257,10 +256,9 @@
 - (void)willHandleAttemptToAddComment:(NSString *)commentText
 {
   NIDINFO(@"handle comment: %@",commentText);
-
   NSString *trimmedComment = [commentText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
-  //build and send the photo object then the activity object because it depends on the activity object
+  //build and send the Image(s) object then the activity object
+  //because Image class depends on the activity object
   PFObject *comment = [PFObject objectWithClassName:kDTActivityClassKey];
   comment[kDTActivityTypeKey] = kDTActivityTypeComment;
   comment[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:self.challengeDay.objectId];
@@ -424,7 +422,6 @@
       }
     }];
     
-    
   }else {
     [[DTCache sharedCache] decrementLikeCountForChallengeDay:self.challengeDay];
     
@@ -526,7 +523,8 @@
 
 #pragma mark - Handle Panning Comment Controller
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+        shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
   return YES;
 }

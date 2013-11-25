@@ -13,10 +13,21 @@
 + (id)sharedCache;
 - (void)clear;
 
-- (void)incrementLikeCountForChallengeDay:(PFObject *)challengeDay;
-- (void)decrementLikeCountForChallengeDay:(PFObject *)challengeDay;
+- (NSDictionary *)attributesForChallengeDay:(PFObject *)challengeDay;
 - (void)setAttributesForChallengeDay:(PFObject *)challengeDay
                               likers:(NSArray *)likers
                           commenters:(NSArray *)commenters
                 isLikedByCurrentUser:(BOOL)liked;
+
+#pragma mark - Comment Caching Methods
+#warning not implemented so comment count cache is off -- interface for deleting comments does not exist yet!
+- (void)incrementCommentCountForChallengeDay:(PFObject *)challengeDay;
+- (void)decrementCommentCountForChallengeDay:(PFObject *)challengeDay;
+
+#pragma mark - Like Caching Methods
+
+- (void)incrementLikeCountForChallengeDay:(PFObject *)challengeDay;
+- (void)decrementLikeCountForChallengeDay:(PFObject *)challengeDay;
+
+
 @end

@@ -40,6 +40,38 @@
   [self.cache removeAllObjects];
 }
 
+#pragma mark - Comment Caching Methods
+
+- (void)incrementCommentCountForChallengeDay:(PFObject *)challengeDay
+{
+  NSNumber *commentCount = [NSNumber numberWithInt:[[self commentCountForChallengeDay:challengeDay] intValue] + 1];
+  NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:[self attributesForChallengeDay:challengeDay]];
+  [attributes setObject:commentCount forKey:kDTChallengeDayAttributeCommentCountKey];
+  [self setAttributes:attributes forChallengeDay:challengeDay];
+}
+
+- (void)decrementCommentCountForChallengeDay:(PFObject *)challengeDay
+{
+  NSNumber *commentCount = [NSNumber numberWithInt:[[self commentCountForChallengeDay:challengeDay] intValue] - 1];
+  if ([commentCount intValue] < 0) {
+    return;
+  }
+  NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:[self attributesForChallengeDay:challengeDay]];
+  [attributes setObject:commentCount forKey:kDTChallengeDayAttributeCommentCountKey];
+  [self setAttributes:attributes forChallengeDay:challengeDay];
+}
+
+- (NSNumber *)commentCountForChallengeDay:(PFObject *)challengeDay
+{
+  NSDictionary *attributes = [self attributesForChallengeDay:challengeDay];
+  if (attributes) {
+    return [attributes objectForKey:kDTChallengeDayAttributeCommentCountKey];
+  }
+  return [NSNumber numberWithInt:0];
+}
+
+#pragma mark - Like Caching Methods 
+
 - (void)incrementLikeCountForChallengeDay:(PFObject *)challengeDay
 {
   NSNumber *likeCount = [NSNumber numberWithInt:[[self likeCountForChallengeDay:challengeDay] intValue] + 1];
@@ -68,12 +100,6 @@
   return [NSNumber numberWithInt:0];
 }
 
-- (NSDictionary *)attributesForChallengeDay:(PFObject *)challengeDay
-{
-  NSString *key = [self keyForChallengeDay:challengeDay];
-  return [self.cache objectForKey:key];
-}
-
 - (void)setAttributesForChallengeDay:(PFObject *)challengeDay
                               likers:(NSArray *)likers
                           commenters:(NSArray *)commenters
@@ -84,6 +110,12 @@
                     kDTChallengeDayAttributeIsLikedByCurrentUserKey:@(liked)};
   
   [self setAttributes:attributes forChallengeDay:challengeDay];
+}
+
+- (NSDictionary *)attributesForChallengeDay:(PFObject *)challengeDay
+{
+  NSString *key = [self keyForChallengeDay:challengeDay];
+  return [self.cache objectForKey:key];
 }
 
 #pragma mark - ()

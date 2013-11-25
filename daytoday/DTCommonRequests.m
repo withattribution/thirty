@@ -16,7 +16,7 @@
   PFQuery *queryExistingLikes = [PFQuery queryWithClassName:kDTActivityClassKey];
   [queryExistingLikes whereKey:kDTActivityChallengeDayKey equalTo:challengeDay];
   [queryExistingLikes whereKey:kDTActivityTypeKey equalTo:kDTActivityTypeLike];
-  //[queryExistingLikes whereKey:kDTActivityToUserKey equalTo:[PFUser currentUser]];
+  [queryExistingLikes whereKey:kDTActivityFromUserKey equalTo:[PFUser currentUser]];
   [queryExistingLikes setCachePolicy:kPFCachePolicyNetworkOnly];
   [queryExistingLikes findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error){
     if (!error) {
@@ -88,12 +88,12 @@
   PFQuery *queryExistingLikes = [PFQuery queryWithClassName:kDTActivityClassKey];
   [queryExistingLikes whereKey:kDTActivityChallengeDayKey equalTo:challengeDay];
   [queryExistingLikes whereKey:kDTActivityTypeKey equalTo:kDTActivityTypeLike];
-  [queryExistingLikes whereKey:kDTActivityToUserKey equalTo:[PFUser currentUser]];
+  [queryExistingLikes whereKey:kDTActivityFromUserKey equalTo:[PFUser currentUser]];
   [queryExistingLikes setCachePolicy:kPFCachePolicyNetworkOnly];
   [queryExistingLikes findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error){
     if (!error) {
       for (PFObject *activity in activities) {
-        [activity delete];
+        [activity deleteInBackground];
       }
       
       if (completionBlock) {
