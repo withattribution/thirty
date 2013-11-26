@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "_default": {
+            "link": "DayToday"
+        }, 
+        "DayToday": {
+            "applicationId": "pMydn1FlUYwUcXeLRRAMFp3zcZPz3lRQ6IITQEe2", 
+            "masterKey": "XS10pdJDdWaXm3otnlUfbBFH7HrZxTqFYD3hn3NK"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.13"
+    }
+}
