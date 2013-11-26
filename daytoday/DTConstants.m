@@ -8,6 +8,11 @@
 
 #import "DTConstants.h"
 
+#pragma mark - DTNotifications
+
+NSString *const DTChallengeDayActivityCacheDidRefreshNotification =
+  @"com.aok.DayToday.cache.didRefreshActivityForChallengeDayNotification";
+
 #pragma mark - Activity Class
 // Class Key
 NSString *const kDTActivityClassKey                    =@"Activity";
@@ -86,6 +91,8 @@ NSString *const kDTChallengeImageKey                   =@"image";
 NSString *const kDTChallengeDayAttributeLikeCountKey            =@"likes";
 NSString *const kDTChallengeDayAttributeCommentCountKey         =@"comments";
 NSString *const kDTChallengeDayAttributeIsLikedByCurrentUserKey =@"liked";
+NSString *const kDTChallengeDayAttributeCommentersKey           =@"commenters";
+NSString *const kDTChallengeDayAttributeLikersKey               =@"likers";
 
 #pragma mark - Verification Class
 // Class Key

@@ -29,6 +29,7 @@
 		A13DB5E8181EDB1500378901 /* photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E4181EDB1500378901 /* photo.jpg */; };
 		A13DB5E9181EDB1500378901 /* timer.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E5181EDB1500378901 /* timer.jpg */; };
 		A13DB5EA181EDB1500378901 /* tickMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E6181EDB1500378901 /* tickMark.jpg */; };
+		A162B6F418453796007B3CE1 /* DTCommonUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = A162B6F318453796007B3CE1 /* DTCommonUtilities.m */; };
 		A16AC9BD182001C600074AB8 /* Verification+UImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9BC182001C600074AB8 /* Verification+UImage.m */; };
 		A16AC9C01820058D00074AB8 /* Category+UIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9BF1820058D00074AB8 /* Category+UIImage.m */; };
 		A16AC9C61822ACE700074AB8 /* ChallengeDetailVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9C51822ACE700074AB8 /* ChallengeDetailVerificationController.m */; };
@@ -292,6 +293,8 @@
 		A13DB5E4181EDB1500378901 /* photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo.jpg; sourceTree = "<group>"; };
 		A13DB5E5181EDB1500378901 /* timer.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = timer.jpg; sourceTree = "<group>"; };
 		A13DB5E6181EDB1500378901 /* tickMark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tickMark.jpg; sourceTree = "<group>"; };
+		A162B6F218453796007B3CE1 /* DTCommonUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTCommonUtilities.h; sourceTree = "<group>"; };
+		A162B6F318453796007B3CE1 /* DTCommonUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTCommonUtilities.m; sourceTree = "<group>"; };
 		A16AC9BB182001C600074AB8 /* Verification+UImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Verification+UImage.h"; sourceTree = "<group>"; };
 		A16AC9BC182001C600074AB8 /* Verification+UImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Verification+UImage.m"; sourceTree = "<group>"; };
 		A16AC9BE1820058D00074AB8 /* Category+UIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Category+UIImage.h"; sourceTree = "<group>"; };
@@ -948,6 +951,8 @@
 				A1C60D5F183C184800C98C69 /* DTCache.m */,
 				A1C60D61183C185800C98C69 /* DTCommonRequests.h */,
 				A1C60D62183C185800C98C69 /* DTCommonRequests.m */,
+				A162B6F218453796007B3CE1 /* DTCommonUtilities.h */,
+				A162B6F318453796007B3CE1 /* DTCommonUtilities.m */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -1387,6 +1392,7 @@
 				B7E61D4E17BD6AA5002B681B /* main.m in Sources */,
 				A16AC9C01820058D00074AB8 /* Category+UIImage.m in Sources */,
 				B7E61D5217BD6AA5002B681B /* AppDelegate.m in Sources */,
+				A162B6F418453796007B3CE1 /* DTCommonUtilities.m in Sources */,
 				A1275C021806EB5B00019A91 /* UserInfoHeader.m in Sources */,
 				B7E61DEE17C273C4002B681B /* NSDate+SR.m in Sources */,
 				B7E61DF017C273C4002B681B /* NSManagedObject+SR.m in Sources */,

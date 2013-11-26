@@ -18,32 +18,6 @@
 
 @end
 
-//You can use a beforeSave validation in your Cloud Code which rejects the object if it's a duplicate. Let's say that you're storing these in a "BusStop" object and the bus stop identifier is stored as a string in stopId:
-//
-//var BusStop = Parse.Object.extend("BusStop");
-//
-//// Check if stopId is set, and enforce uniqueness based on the stopId column.
-//Parse.Cloud.beforeSave("BusStop", function(request, response) {
-//  if (!request.object.get("stopId")) {
-//    response.error('A BusStop must have a stopId.');
-//  } else {
-//    var query = new Parse.Query(BusStop);
-//    query.equalTo("stopId", request.object.get("stopId"));
-//    query.first({
-//    success: function(object) {
-//      if (object) {
-//        response.error("A BusStop with this stopId already exists.");
-//      } else {
-//        response.success();
-//      }
-//    },
-//    error: function(error) {
-//      response.error("Could not validate uniqueness for this BusStop object.");
-//    }
-//    });
-//  }
-//});
-
 @implementation ChallengeDetailVerificationController
 
 - (id)initWithChallengeDay:(PFObject *)chDay
@@ -105,20 +79,6 @@
 -(void)verificationElement:(DTVerificationElement *)element didVerifySection:(NSUInteger)section
 {
   NIDINFO(@"element: %@ and section:%d",element,section);
-  
-//  if ([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] <
-//      [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]  && )
-//  {
-//    [self.challengeDay incrementKey:kDTChallengeDayTaskCompletedCountKey];
-//  }
-//  [self.challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
-//    if(succeeded){
-//      
-//    }else {
-//      NIDINFO(@"%@",[error localizedDescription]);
-//    }
-//  }];
-
   if ([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] <
       [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]  &&
       ![[self.challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue])

@@ -18,9 +18,20 @@
                               likers:(NSArray *)likers
                           commenters:(NSArray *)commenters
                 isLikedByCurrentUser:(BOOL)liked;
+- (void)refreshCacheActivity:(NSArray *)activities forChallengeDay:(PFObject *)challengeDay;
+
+#pragma mark - Comment And Like Get Methods
+
+- (NSNumber *)likeCountForChallengeDay:(PFObject *)challengeDay;
+- (NSNumber *)commentCountForChallengeDay:(PFObject *)challengeDay;
+- (NSArray *)likersForChallengeDay:(PFObject *)challengeDay;
+- (NSArray *)commentersForChallengeDay:(PFObject *)challengeDay;
+
+- (void)setChallengeDayIsLikedByCurrentUser:(PFObject *)challengeDay liked:(BOOL)liked;
+- (BOOL)isChallengeDayLikedByCurrentUser:(PFObject *)challengeDay;
 
 #pragma mark - Comment Caching Methods
-#warning not implemented so comment count cache is off -- interface for deleting comments does not exist yet!
+
 - (void)incrementCommentCountForChallengeDay:(PFObject *)challengeDay;
 - (void)decrementCommentCountForChallengeDay:(PFObject *)challengeDay;
 

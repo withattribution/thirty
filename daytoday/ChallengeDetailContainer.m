@@ -65,6 +65,10 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIKeyboardDidHideNotification
                                                 object:nil];
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:DTChallengeDayActivityCacheDidRefreshNotification
+                                                object:nil];
 }
 
 - (id)init
@@ -75,20 +79,25 @@
     self.isAddingComment       = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateSocialDashboard:)
+                                                 name:DTChallengeDayActivityCacheDidRefreshNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShowNotification:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShowNotification:)
                                                  name:UIKeyboardDidShowNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHideNotification:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidHideNotification:)
                                                  name:UIKeyboardDidHideNotification
@@ -102,31 +111,34 @@
   _verficationController = [[ChallengeDetailVerificationController alloc] initWithChallengeDay:self.challengeDay];
   [self.view addSubview:self.verficationController.view];
   [self addChildViewController:self.verficationController];
-  
+
   [self.verficationController didMoveToParentViewController:self];
-  
-  _commentController = [[ChallengeDetailCommentController alloc] initWithChallengeDayID:[self.challengeDay objectId]];
-  
+
+  _commentController = [[ChallengeDetailCommentController alloc] initWithChallengeDay:self.challengeDay];
+
   [self.view addSubview:self.commentController.view];
   [self addChildViewController:self.commentController];
   [self.commentController didMoveToParentViewController:self];
-  
+
   _socialDashBoard = [[DTSocialDashBoard alloc] init];
   [self.socialDashBoard setDelegate:self];
-  [self.socialDashBoard setLikeCount:[NSNumber numberWithInt:12]];
+
+  [self.socialDashBoard setLikeCount:[[DTCache sharedCache] likeCountForChallengeDay:self.challengeDay]];
+  [self.socialDashBoard setCommentCount:[[DTCache sharedCache] commentCountForChallengeDay:self.challengeDay]];
+  [self.socialDashBoard setLiked:[[DTCache sharedCache] isChallengeDayLikedByCurrentUser:self.challengeDay]];
   
   [self setHeaderContainerView:self.socialDashBoard];
-  
+
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[social]|"
                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
                                                                     metrics:nil
                                                                       views:@{@"social":self.socialDashBoard}]];
-  
+
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[social(40)]"
                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
                                                                     metrics:nil
                                                                       views:@{@"social":self.socialDashBoard}]];
-  
+
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.headerContainerView
                                                         attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual
@@ -135,7 +147,7 @@
                                                        multiplier:1.f
                                                          constant:0.f]];
   [self.view layoutIfNeeded];
-  
+
   [self.commentController.view setFrame:CGRectMake(0.f,
                                                    [self.verficationController heightForControllerFold] + 40.f,
                                                    self.view.frame.size.width,
@@ -143,7 +155,7 @@
 
   self.commentControllerAnchor = _commentController.view.frame.origin.y - 40;
   self.panningVelocityYThreshold = 500;
-  
+
   UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]
                                            initWithTarget:self
                                            action:@selector(moveCommentController:)];
@@ -151,14 +163,14 @@
   [panRecognizer setMaximumNumberOfTouches:1];
   [panRecognizer setCancelsTouchesInView:NO];
   [panRecognizer setDelegate:self];
-  
+
   [self.commentController.view addGestureRecognizer:panRecognizer];
 }
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
+
   PFQuery *currentChallengeDay = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
   [currentChallengeDay includeKey:kDTChallengeDayIntentKey];
   currentChallengeDay.cachePolicy = kPFCachePolicyNetworkElseCache;
@@ -168,35 +180,6 @@
 //      for (NSString *key in [self.challengeDay allKeys]) {
 //        NIDINFO(@"the keys %@ and the objects: %@ and the class: %@",key, [self.challengeDay objectForKey:key], [[self.challengeDay objectForKey:key] class]);
 //      }
-
-      //create an example intent: save it:
-      //      PFObject *intent = [PFObject objectWithClassName:kDTIntentClassKey];
-      //      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]] forKey:kDTIntentStartingKey];
-      //      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]] forKey:kDTIntentEndingKey];
-      //      [intent setObject:[PFUser currentUser] forKey:kDTIntentUserKey];
-      //
-      //      [intent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
-      //        if(succeeded){
-      //          NIDINFO(@"saved an example intent!");
-      //          self.challengeDay[kDTChallengeDayIntentKey] = [PFObject objectWithoutDataWithClassName:kDTIntentClassKey objectId:intent.objectId];
-      //          [self.challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
-      //            if(succeeded){
-      //              NIDINFO(@"now we have an intent referencing the challenge day which is how we include the user for the challenge day");
-      //            }else {
-      //              NIDINFO(@"%@",[error localizedDescription]);
-      //            }
-      //          }];
-      //
-      //        }
-      //        else {
-      //          NIDINFO(@"%@",[error localizedDescription]);
-      //        }
-      //      }];
-      
-      //      NIDINFO(@"date past: %@",[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]]);
-      //      NIDINFO(@"date NOW: %@",[NSDate date]);
-      //      NIDINFO(@"date future: %@",[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]]);
-      
       [self addChallengeDayInterface];
     }
     else {
@@ -214,41 +197,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  
+
   [self.navigationController.navigationBar setHidden:YES];
   [[UIApplication sharedApplication] setStatusBarHidden:self.commentsAreFullScreen];
   NIDINFO(@"CONTAINER WILL APPEAR");
-  
-//  PFQuery *currentChallengeDay = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
-//  
-//  [currentChallengeDay whereKey:@"objectId" equalTo:@"v9xN4EbG71"];
-//  
-//  [currentChallengeDay getObjectInBackgroundWithId:@"v9xN4EbG71" block:^(PFObject *obj, NSError *err){
-//    if(!err){
-//      self.challengeDayId = obj.objectId;
-//      NIDINFO(@"got object id: %@",self.challengeDayId);
-//      [self addChallengeDayInterface];
-//    }else{
-//      NIDINFO(@"%@",[err localizedDescription]);
-//    }
-//  }];
-
-//  One time only make a challenge day object so that we can reuse the challenge day object id to build out the comment interface
-  
-//  PFObject *challengeDay = [PFObject objectWithClassName:kDTChallengeDayClassKey];
-//  challengeDay[kDTChallengeDayTaskRequiredCountKey] = @3;
-//  challengeDay[kDTChallengeDayTaskCompletedCountKey] = @1;
-//  challengeDay[kDTChallengeDayOrdinalDayKey] = @14;
-//  challengeDay[kDTChallengeDayAccomplishedKey] = @NO;
-//  
-//  [challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
-//  
-//    if (succeeded){
-//      NIDINFO(@"succeeded!");
-//    }else {
-//      NIDINFO(@"%@",[err localizedDescription]);
-//    }
-//  }];
 }
 
 #pragma mark - Comment Input Delegate Methods
@@ -276,7 +228,7 @@
     PFACL *imageACL = [PFACL ACLWithUser:[PFUser currentUser]];
     [imageACL setPublicReadAccess:YES];
     imageObject.ACL = imageACL;
-    
+
     self.imagePostBackgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
       [[UIApplication sharedApplication] endBackgroundTask:self.imagePostBackgroundTaskId];
     }];
@@ -286,11 +238,11 @@
         NIDINFO(@"succeeded uploading image object!");
         //if the comment also has a text field then add that and send
         [comment setObject:imageObject forKey:kDTActivityImageKey];
-        
+
         PFACL *ACL = [PFACL ACLWithUser:[PFUser currentUser]];
         [ACL setPublicReadAccess:YES];
         comment.ACL = ACL;
-        
+
         if (trimmedComment && trimmedComment.length > 0) {
           comment[kDTActivityContentKey] = trimmedComment;
         }
@@ -312,14 +264,14 @@
     PFACL *ACL = [PFACL ACLWithUser:[PFUser currentUser]];
     [ACL setPublicReadAccess:YES];
     comment.ACL = ACL;
-    
+
     if (trimmedComment && trimmedComment.length > 0) {
       comment[kDTActivityContentKey] = trimmedComment;
     }
     [comment saveEventually:^(BOOL succeeded, NSError *error){
       if (succeeded) {
         [self.commentController loadObjects];
-        
+
         [self didCancelCommentAddition];
       }else {
         NIDINFO(@"%@",[error localizedDescription]);
@@ -629,6 +581,15 @@
                        self.commentsAreFullScreen = NO;
                      }
                    }];
+}
+
+#pragma mark - DTCacheRefresh Notifications
+
+- (void)updateSocialDashboard:(NSNotification *)aNotification
+{
+  [self.socialDashBoard setLikeCount:[aNotification.userInfo objectForKey:kDTChallengeDayAttributeLikeCountKey]];
+  [self.socialDashBoard setCommentCount:[aNotification.userInfo objectForKey:kDTChallengeDayAttributeCommentCountKey]];
+  [self.socialDashBoard setLiked:[[aNotification.userInfo objectForKey:kDTChallengeDayAttributeIsLikedByCurrentUserKey] boolValue]];
 }
 
 #pragma mark - UIKeyBoard Notitifications

@@ -6,6 +6,10 @@
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
+#pragma mark - DTNotifications
+
+extern NSString *const DTChallengeDayActivityCacheDidRefreshNotification;
+
 #pragma mark - PFObject Activity Class
 // Class Key
 extern NSString *const kDTActivityClassKey;
@@ -84,6 +88,8 @@ extern NSString *const kDTChallengeImageKey;
 extern NSString *const kDTChallengeDayAttributeLikeCountKey;
 extern NSString *const kDTChallengeDayAttributeCommentCountKey;
 extern NSString *const kDTChallengeDayAttributeIsLikedByCurrentUserKey;
+extern NSString *const kDTChallengeDayAttributeCommentersKey;
+extern NSString *const kDTChallengeDayAttributeLikersKey;
 
 #pragma mark - Verification Class
 // Class Key

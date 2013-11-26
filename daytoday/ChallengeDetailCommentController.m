@@ -14,21 +14,19 @@
 
 @interface ChallengeDetailCommentController ()
 
-@property (nonatomic,strong) NSString *challengeDayId;
+@property (nonatomic,strong) PFObject *challengeDay;
 
 @end
 
 @implementation ChallengeDetailCommentController
 
-- (id)initWithChallengeDayID:(NSString *)dayId
+- (id)initWithChallengeDay:(PFObject *)chDay
 {
     self = [super init];
     if (self) {
-      _challengeDayId = dayId;
-      
+      self.challengeDay= chDay;
       self.parseClassName = kDTActivityClassKey;
       self.pullToRefreshEnabled = NO;
-      
       [self.view setBackgroundColor:[UIColor lightGrayColor]];
     }
     return self;
@@ -61,7 +59,7 @@
 - (PFQuery *)queryForTable {
   PFQuery *query = [PFQuery queryWithClassName:kDTActivityClassKey];
   [query whereKey:kDTActivityChallengeDayKey
-          equalTo:[PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:@"40QlXzWWxZ"]];
+          equalTo:[PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:self.challengeDay.objectId]];
   [query setCachePolicy:kPFCachePolicyNetworkOnly];
 
 // If no objects are loaded in memory, we look to the cache first to fill the table
@@ -78,19 +76,15 @@
 {
   [super objectsDidLoad:error];
   NIDINFO(@"object count: %d",[self.objects count]);
-//
-//  id d = [self.objects firstObject];
-//  
+  
+  [[DTCache sharedCache] refreshCacheActivity:self.objects forChallengeDay:self.challengeDay];
+
 //  for (NSString *k in [d allKeys]) {
 //    NIDINFO(@"the key: %@ and the object: %@",k,[d objectForKey:k]);
 //  }
-//}
 //  if (NSClassFromString(@"UIRefreshControl")) {
 //    [self.refreshControl endRefreshing];
 //  }
-//  
-//  [self.headerView reloadLikeBar];
-//  [self loadLikers];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
@@ -154,18 +148,6 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
-//  PFQuery *query = [PFQuery queryWithClassName:kDTActivityClassKey];
-//  [query whereKey:kDTActivityChallengeDayKey
-//          equalTo:[PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:@"40QlXzWWxZ"]];
-//  [query findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error) {
-//    // comments now contains the comments for myPost
-//    if(!error){
-//      NIDINFO(@"the number of comments: %d",[comments count]);
-//    }else{
-//      NIDINFO(@"%@",[error localizedDescription]);
-//    }
-//  }];
 }
 
 - (void)didReceiveMemoryWarning

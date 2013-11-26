@@ -15,6 +15,7 @@
 - (void)didTapLikeButtonFromDTSocialDashBoard:(DTSocialDashBoard *)dashBoard shouldLike:(BOOL)like;
 - (void)didSelectComments;
 - (void)didSelectShareButton;
+
 @end
 
 @interface DTSocialDashBoard : UIView
@@ -23,6 +24,7 @@
 
 @property (nonatomic,strong) NSNumber *likeCount;
 @property (nonatomic,strong) NSNumber *commentCount;
+@property (nonatomic,assign) BOOL liked;
 
 //- (void)resetCommentDisplayState;
 

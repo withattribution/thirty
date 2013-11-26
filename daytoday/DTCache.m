@@ -40,6 +40,97 @@
   [self.cache removeAllObjects];
 }
 
+#pragma mark - ChallengeDay Activity Cache
+
+- (void)refreshCacheActivity:(NSArray *)activities forChallengeDay:(PFObject *)challengeDay
+{
+  NSMutableArray *likers = [NSMutableArray array];
+  NSMutableArray *commenters = [NSMutableArray array];
+
+  BOOL isLikedByCurrentUser = NO;
+
+  for (PFObject *activity in activities) {
+    if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeComment]
+        && [activity objectForKey:kDTActivityFromUserKey])
+    {
+      [commenters addObject:[activity objectForKey:kDTActivityFromUserKey]];
+    }else if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike]
+              && [activity objectForKey:kDTActivityFromUserKey])
+    {
+      [likers addObject:[activity objectForKey:kDTActivityFromUserKey]];
+    }
+    if ([[[activity objectForKey:kDTActivityFromUserKey] objectId] isEqualToString:[[PFUser currentUser] objectId]]
+        && [[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike])
+    {
+      isLikedByCurrentUser = YES;
+    }
+  }
+  [self setAttributesForChallengeDay:challengeDay
+                              likers:likers
+                          commenters:commenters
+                isLikedByCurrentUser:isLikedByCurrentUser];
+  
+  [[NSNotificationCenter defaultCenter]
+      postNotificationName:DTChallengeDayActivityCacheDidRefreshNotification
+                    object:challengeDay
+                  userInfo:[NSDictionary dictionaryWithDictionary:[self attributesForChallengeDay:challengeDay]]];
+}
+
+#pragma mark - Comment And Like Get Methods
+
+- (NSNumber *)likeCountForChallengeDay:(PFObject *)challengeDay
+{
+  NSDictionary *attributes = [self attributesForChallengeDay:challengeDay];
+  if (attributes) {
+    return [attributes objectForKey:kDTChallengeDayAttributeLikeCountKey];
+  }
+  return [NSNumber numberWithInt:0];
+}
+
+- (NSNumber *)commentCountForChallengeDay:(PFObject *)challengeDay
+{
+  NSDictionary *attributes = [self attributesForChallengeDay:challengeDay];
+  if (attributes) {
+    return [attributes objectForKey:kDTChallengeDayAttributeCommentCountKey];
+  }
+  return [NSNumber numberWithInt:0];
+}
+
+- (NSArray *)likersForChallengeDay:(PFObject *)challengeDay
+{
+  NSDictionary *attributes = [self attributesForChallengeDay:challengeDay];
+  if (attributes) {
+    return [attributes objectForKey:kDTChallengeDayAttributeLikersKey];
+  }
+  return [NSArray array];
+}
+
+- (NSArray *)commentersForChallengeDay:(PFObject *)challengeDay
+{
+  NSDictionary *attributes = [self attributesForChallengeDay:challengeDay];
+  if (attributes) {
+    return [attributes objectForKey:kDTChallengeDayAttributeCommentersKey];
+  }
+  return [NSArray array];
+}
+
+- (void)setChallengeDayIsLikedByCurrentUser:(PFObject *)challengeDay liked:(BOOL)liked
+{
+  NSNumber *isLiked = [NSNumber numberWithBool:liked];
+  NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:[self attributesForChallengeDay:challengeDay]];
+  [attributes setObject:isLiked forKey:kDTChallengeDayAttributeIsLikedByCurrentUserKey];
+  [self setAttributes:attributes forChallengeDay:challengeDay];
+}
+
+- (BOOL)isChallengeDayLikedByCurrentUser:(PFObject *)challengeDay
+{
+  NSDictionary *attributes = [self attributesForChallengeDay:challengeDay];
+  if (attributes) {
+    return [[attributes objectForKey:kDTChallengeDayAttributeIsLikedByCurrentUserKey] boolValue];
+  }
+  return NO;
+}
+
 #pragma mark - Comment Caching Methods
 
 - (void)incrementCommentCountForChallengeDay:(PFObject *)challengeDay
@@ -59,15 +150,6 @@
   NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:[self attributesForChallengeDay:challengeDay]];
   [attributes setObject:commentCount forKey:kDTChallengeDayAttributeCommentCountKey];
   [self setAttributes:attributes forChallengeDay:challengeDay];
-}
-
-- (NSNumber *)commentCountForChallengeDay:(PFObject *)challengeDay
-{
-  NSDictionary *attributes = [self attributesForChallengeDay:challengeDay];
-  if (attributes) {
-    return [attributes objectForKey:kDTChallengeDayAttributeCommentCountKey];
-  }
-  return [NSNumber numberWithInt:0];
 }
 
 #pragma mark - Like Caching Methods 
@@ -91,15 +173,6 @@
   [self setAttributes:attributes forChallengeDay:challengeDay];
 }
 
-- (NSNumber *)likeCountForChallengeDay:(PFObject *)challengeDay
-{
-  NSDictionary *attributes = [self attributesForChallengeDay:challengeDay];
-  if (attributes) {
-    return [attributes objectForKey:kDTChallengeDayAttributeLikeCountKey];
-  }
-  return [NSNumber numberWithInt:0];
-}
-
 - (void)setAttributesForChallengeDay:(PFObject *)challengeDay
                               likers:(NSArray *)likers
                           commenters:(NSArray *)commenters
@@ -107,8 +180,10 @@
 {
   NSDictionary *attributes = @{kDTChallengeDayAttributeLikeCountKey:@([likers count]),
                             kDTChallengeDayAttributeCommentCountKey:@([commenters count]),
-                    kDTChallengeDayAttributeIsLikedByCurrentUserKey:@(liked)};
-  
+                    kDTChallengeDayAttributeIsLikedByCurrentUserKey:@(liked),
+                              kDTChallengeDayAttributeCommentersKey:commenters,
+                                  kDTChallengeDayAttributeLikersKey:likers};
+
   [self setAttributes:attributes forChallengeDay:challengeDay];
 }
 

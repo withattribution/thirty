@@ -10,7 +10,7 @@
 
 @interface ChallengeDetailCommentController : PFQueryTableViewController
 
-- (id)initWithChallengeDayID:(NSString *)challengeDayId;
+- (id)initWithChallengeDay:(PFObject *)chDay;
 
 //- (void)scrollToLastComment;
 //

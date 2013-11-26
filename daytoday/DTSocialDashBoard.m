@@ -23,18 +23,11 @@
     self = [super initWithFrame:frame];
     if (self) {
       
-      _likeCount = [NSNumber numberWithInt:0];
-      _commentCount = [NSNumber numberWithInt:0];
-      
       _heartButton = [UIButton buttonWithType:UIButtonTypeCustom];
       [_heartButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:16.0]];
       [_heartButton setImage:[UIImage imageNamed:@"heart-normal.png"] forState:UIControlStateNormal];
       [_heartButton setImage:[UIImage imageNamed:@"heart-selected.png"] forState:UIControlStateSelected];
       [_heartButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-      
-      if([_likeCount intValue] == 0)
-        [_heartButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
-
       [_heartButton setTitle:[self.likeCount stringValue] forState:UIControlStateNormal];
       [_heartButton setAdjustsImageWhenHighlighted:NO];
       [_heartButton setContentEdgeInsets:UIEdgeInsetsMake(0.f, 0.f, 0.f, 0.f)];
@@ -55,7 +48,7 @@
       [_commentButton setImage:[UIImage imageNamed:@"comment-selected.png"]
                       forState:(UIControlStateSelected | UIControlStateHighlighted)];
       [_commentButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-      [_commentButton setTitle:@"47" forState:UIControlStateNormal];
+      [_commentButton setTitle:[self.commentCount stringValue] forState:UIControlStateNormal];
       [_commentButton setAdjustsImageWhenHighlighted:NO];
       [_commentButton setContentEdgeInsets:UIEdgeInsetsMake(0.f, 0.f, 0.f, 0.f)];
       [_commentButton setImageEdgeInsets:UIEdgeInsetsMake(0.f, 20.f, 0.f, 5.f)];
@@ -77,56 +70,75 @@
       [_shareButton addTarget:self action:@selector(shareSelected:) forControlEvents:UIControlEventTouchUpInside];
       [_shareButton setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
       [_shareButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-      
+
       [self addSubview:_shareButton];
-      
+
       [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     }
     return self;
 }
 
+- (void)setLiked:(BOOL)liked
+{
+  _liked = liked;
+  [self.heartButton setSelected:_liked];
+}
+
 - (void)setLikeCount:(NSNumber *)likeCount
 {
-  if (![_likeCount isEqualToNumber:likeCount]) {
-    _likeCount = likeCount;
-    
-    [self.heartButton setTitle:[_likeCount stringValue] forState:UIControlStateNormal];
-  }
-  if ([_likeCount intValue] > 0) {
+  _likeCount = likeCount;
+  [self.heartButton setTitle:[_likeCount stringValue] forState:UIControlStateNormal];
+  
+  if ([_likeCount intValue] > 0)
     [_heartButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-  }else {
+  else
     [_heartButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
-  }
 }
 
 - (void)setCommentCount:(NSNumber *)commentCount
 {
-  _commentCount = commentCount;
-  [self.commentButton setTitle:[_commentCount stringValue] forState:(UIControlStateNormal | UIControlStateSelected)];
+    _commentCount = commentCount;
+    [self.commentButton setTitle:[_commentCount stringValue] forState:UIControlStateNormal];
+
+//  [self.commentButton setTitle:[_commentCount stringValue] forState:(UIControlStateNormal | UIControlStateSelected)];
 }
 
 - (void)heartSelected:(UIButton *)likeButton
 {
   NSLog(@"this is the heart state: %d",self.heartButton.state);
-  if (self.heartButton.state == (UIControlStateHighlighted | UIControlStateSelected) ) {
-    [self.heartButton setSelected:NO];
-    
+  //this toggles the heart button state as well
+  if (self.liked) {
+    self.liked = NO;
     if ([self.likeCount intValue] > 0) {
       self.likeCount = [NSNumber numberWithInt:[self.likeCount intValue] - 1];
-    
-      if ([_delegate respondsToSelector:@selector(didTapLikeButtonFromDTSocialDashBoard:shouldLike:)])
-        [_delegate didTapLikeButtonFromDTSocialDashBoard:self shouldLike:NO];
     }
   }
-  else {
-    [self.heartButton setSelected:YES];
-    [self.heartButton setHighlighted:NO];
-
+  else{
+    self.liked = YES;
     self.likeCount = [NSNumber numberWithInt:[self.likeCount intValue] + 1];
-    
-    if ([_delegate respondsToSelector:@selector(didTapLikeButtonFromDTSocialDashBoard:shouldLike:)])
-      [_delegate didTapLikeButtonFromDTSocialDashBoard:self shouldLike:YES];
   }
+  
+  if ([_delegate respondsToSelector:@selector(didTapLikeButtonFromDTSocialDashBoard:shouldLike:)])
+    [_delegate didTapLikeButtonFromDTSocialDashBoard:self shouldLike:self.liked];
+  
+//  if (self.heartButton.state == (UIControlStateHighlighted | UIControlStateSelected) ) {
+//    [self.heartButton setSelected:NO];
+//
+//    if ([self.likeCount intValue] > 0) {
+//
+//      if ([_delegate respondsToSelector:@selector(didTapLikeButtonFromDTSocialDashBoard:shouldLike:)])
+//        [_delegate didTapLikeButtonFromDTSocialDashBoard:self shouldLike:self.liked];
+//    }
+//  }
+//  else {
+//    [self.heartButton setSelected:YES];
+//    [self.heartButton setHighlighted:NO];
+//
+//    self.likeCount = [NSNumber numberWithInt:[self.likeCount intValue] + 1];
+//
+//    if ([_delegate respondsToSelector:@selector(didTapLikeButtonFromDTSocialDashBoard:shouldLike:)])
+//      [_delegate didTapLikeButtonFromDTSocialDashBoard:self shouldLike:self.liked];
+//  }
 }
 
 - (void)commentSelected:(UIButton *)comment
@@ -142,7 +154,6 @@
   }
   
   //increment the count as well
-
 }
 
 - (void)shareSelected:(UIButton *)share

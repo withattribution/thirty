@@ -44,41 +44,11 @@
         PFQuery *query = [DTCommonRequests queryForActivitiesOnChallengeDay:challengeDay cachePolicy:kPFCachePolicyNetworkOnly];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
           if (!error) {
-            NSMutableArray *likers = [NSMutableArray array];
-            NSMutableArray *commenters = [NSMutableArray array];
-            
-            BOOL isLikedByCurrentUser = NO;
-
-            for (PFObject *activity in objects) {
-              if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeComment]
-                  && [activity objectForKey:kDTActivityFromUserKey])
-              {
-                [commenters addObject:[activity objectForKey:kDTActivityFromUserKey]];
-              }else if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike]
-                  && [activity objectForKey:kDTActivityFromUserKey])
-              {
-                [likers addObject:[activity objectForKey:kDTActivityFromUserKey]];
-              }
-              if ([[[activity objectForKey:kDTActivityFromUserKey] objectId] isEqualToString:[[PFUser currentUser] objectId]]
-                  && [[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike])
-              {
-                isLikedByCurrentUser = YES;
-              }
-            }
-            [[DTCache sharedCache] setAttributesForChallengeDay:challengeDay
-                                                         likers:likers
-                                                     commenters:commenters
-                                           isLikedByCurrentUser:isLikedByCurrentUser];
+            [[DTCache sharedCache] refreshCacheActivity:objects forChallengeDay:challengeDay];
           }
-
 #warning send push notification here
-        
         }];
-        
-      
       }];
-      
-      
     }
   }];
 }
@@ -103,31 +73,7 @@
       PFQuery *query = [DTCommonRequests queryForActivitiesOnChallengeDay:challengeDay cachePolicy:kPFCachePolicyNetworkOnly];
       [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
         if (!error) {
-            NSMutableArray *likers = [NSMutableArray array];
-            NSMutableArray *commenters = [NSMutableArray array];
-
-            BOOL isLikedByCurrentUser = NO;
-
-            for (PFObject *activity in objects) {
-              if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeComment]
-                  && [activity objectForKey:kDTActivityFromUserKey])
-              {
-                [commenters addObject:[activity objectForKey:kDTActivityFromUserKey]];
-              }else if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike]
-                  && [activity objectForKey:kDTActivityFromUserKey])
-              {
-                [likers addObject:[activity objectForKey:kDTActivityFromUserKey]];
-              }
-              if ([[[activity objectForKey:kDTActivityFromUserKey] objectId] isEqualToString:[[PFUser currentUser] objectId]]
-                  && [[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeLike])
-              {
-                isLikedByCurrentUser = YES;
-              }
-            }
-            [[DTCache sharedCache] setAttributesForChallengeDay:challengeDay
-                                                         likers:likers
-                                                     commenters:commenters
-                                           isLikedByCurrentUser:isLikedByCurrentUser];
+          [[DTCache sharedCache] refreshCacheActivity:objects forChallengeDay:challengeDay];
         }
         
 #warning send push notification here
