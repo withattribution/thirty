@@ -121,7 +121,7 @@
 
   if ([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] <
       [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]  &&
-      ![self.challengeDay objectForKey:kDTChallengeDayAccomplishedKey])
+      ![[self.challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue])
   {
     PFObject *verification = [PFObject objectWithClassName:kDTVerificationClass];
     [verification setObject:@([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] +1)
@@ -135,7 +135,7 @@
       if (succeeded) {
         PFObject *verifyActivity = [PFObject objectWithClassName:kDTActivityClassKey];
         [verifyActivity setObject:kDTActivityTypeVerificationFinish forKey:kDTActivityTypeKey];
-        verification[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
+        verifyActivity[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
                                                                                    objectId:self.challengeDay.objectId];
         verifyActivity[kDTActivityVerificationKey] = [PFObject objectWithoutDataWithClassName:kDTVerificationClass
                                                                                      objectId:verification.objectId];
@@ -147,7 +147,6 @@
             NIDINFO(@"%@",[error localizedDescription]);
           }
         }];
-
       }else {
         NIDINFO(@"%@",[error localizedDescription]);
       }
