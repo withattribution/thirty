@@ -13,10 +13,6 @@
 #import "DTSocialDashBoard.h"
 
 @interface ChallengeDetailVerificationController () <DTVerificationElementDataSource,DTVerificationElementDelegate>
-{
-  NSInteger _fakeCompleted;
-  NSInteger _fakeRequired;
-}
 
 @property (nonatomic,strong) PFObject *challengeDay;
 
@@ -54,7 +50,7 @@
 {
   self = [super init];
   if(self){
-    
+    self.challengeDay = chDay;
   }
   return self;
 }
@@ -65,19 +61,20 @@
   
   [self.view setBackgroundColor:[UIColor colorWithWhite:.9f alpha:1.f]];
   
-  self.eldt = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 175.f,175.f)];
-  [self.eldt setCenter:CGPointMake(self.view.center.x,self.eldt.center.y - 20)];
+  self.verifyElement = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 175.f,175.f)];
+  [self.verifyElement setCenter:CGPointMake(self.view.center.x,self.verifyElement.center.y - 20)];
   
-  [self.eldt setDataSource:self];
-  [self.eldt setDelegate:self];
+  [self.verifyElement setDataSource:self];
+  [self.verifyElement setDelegate:self];
   
-  [self.eldt setAnimationSpeed:1.0];
-  [self.view addSubview:self.eldt];
+  [self.verifyElement setAnimationSpeed:1.0];
+  [self.view addSubview:self.verifyElement];
   
 //    DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
 
-  ChallengeDayDetail *cdd = [[ChallengeDayDetail alloc] initWithFrame:CGRectMake(0., 0., 200., 30)];
-  [cdd setCenter:CGPointMake(self.view.frame.size.width/2.f,self.eldt.frame.origin.y + self.eldt.frame.size.height + 2.5)];
+  ChallengeDayDetail *cdd = [[ChallengeDayDetail alloc] initWithFrame:CGRectMake(0., 0., 200., 30)
+                                                               andDay:[[self.challengeDay objectForKey:kDTChallengeDayOrdinalDayKey] intValue]];
+  [cdd setCenter:CGPointMake(self.view.frame.size.width/2.f,self.verifyElement.frame.origin.y + self.verifyElement.frame.size.height + 2.5)];
   [self.view addSubview:cdd];
 }
 
@@ -86,19 +83,15 @@
   return 240.f;
 }
 
-
-
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
+  [self.verifyElement reloadData:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  _fakeCompleted = 1;
-  _fakeRequired = 6;
-  [self.eldt reloadData:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -112,26 +105,67 @@
 -(void)verificationElement:(DTVerificationElement *)element didVerifySection:(NSUInteger)section
 {
   NIDINFO(@"element: %@ and section:%d",element,section);
-  [self performSelector:@selector(updateFakeCompleted) withObject:nil afterDelay:2.f];
-}
+  
+//  if ([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] <
+//      [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]  && )
+//  {
+//    [self.challengeDay incrementKey:kDTChallengeDayTaskCompletedCountKey];
+//  }
+//  [self.challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+//    if(succeeded){
+//      
+//    }else {
+//      NIDINFO(@"%@",[error localizedDescription]);
+//    }
+//  }];
 
-- (void) updateFakeCompleted
-{
-  _fakeCompleted++;
-  [self.eldt reloadData:NO];
+  if ([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] <
+      [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]  &&
+      ![self.challengeDay objectForKey:kDTChallengeDayAccomplishedKey])
+  {
+    PFObject *verification = [PFObject objectWithClassName:kDTVerificationClass];
+    [verification setObject:@([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] +1)
+                     forKey:kDTVerificationOrdinalKey];
+    //if there is a verification status entered:
+    //[verification setObject:VERIFICATION_STATUS forKey:kDTVerificationStatusContentKey];
+#warning figure out how to propogate verfication type hardcoded for now
+    [verification setObject:kDTVerificationTypeTick forKey:kDTVerificationTypeKey];
+
+    [verification saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+      if (succeeded) {
+        PFObject *verifyActivity = [PFObject objectWithClassName:kDTActivityClassKey];
+        [verifyActivity setObject:kDTActivityTypeVerificationFinish forKey:kDTActivityTypeKey];
+        verification[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
+                                                                                   objectId:self.challengeDay.objectId];
+        verifyActivity[kDTActivityVerificationKey] = [PFObject objectWithoutDataWithClassName:kDTVerificationClass
+                                                                                     objectId:verification.objectId];
+        [verifyActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+          if (succeeded) {
+            NIDINFO(@"verification-tick saved!");
+            [self.verifyElement reloadData:NO];
+          }else {
+            NIDINFO(@"%@",[error localizedDescription]);
+          }
+        }];
+
+      }else {
+        NIDINFO(@"%@",[error localizedDescription]);
+      }
+    }];
+  }
 }
 
 #pragma mark - DTVerificationDataSource
 
 - (NSUInteger)numberOfCompletedSectionsInVerificationElement:(DTVerificationElement *)element
 {
-//  NSLog(@"fake completed: %d",_fakeCompleted);
-  return _fakeCompleted; //numberCompleted
+//  NIDINFO(@"completed: %d",[[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue]);
+  return [[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue];
 }
 
 -(NSUInteger)numberOfSectionsInVerificationElement:(DTVerificationElement *)verificationElement
 {
-  return _fakeRequired; //numberRequired
+  return [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue];
 }
 
 @end

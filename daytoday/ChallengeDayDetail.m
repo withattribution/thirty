@@ -10,11 +10,11 @@
 
 @implementation ChallengeDayDetail
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame andDay:(NSInteger)day
 {
     self = [super initWithFrame:frame];
     if (self) {
-      NSUInteger dayCount = 20; //example days left
+      NSUInteger dayCount = day; //example days left
 
       NSString *day = NSLocalizedString(@"DAY", @"day for day today label");
       NSString *today = NSLocalizedString(@"TODAY", @"today for day today label");

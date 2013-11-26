@@ -19,6 +19,7 @@ NSString *const kDTActivityTypeKey                     =@"type";
 NSString *const kDTActivityContentKey                  =@"content";
 NSString *const kDTActivityImageKey                    =@"image";
 NSString *const kDTActivityChallengeDayKey             =@"challengeDay";
+NSString *const kDTActivityVerificationKey             =@"verify";
 
 // Type Values
 NSString *const kDTActivityTypeLike                    =@"like";
@@ -86,12 +87,23 @@ NSString *const kDTChallengeDayAttributeLikeCountKey            =@"likes";
 NSString *const kDTChallengeDayAttributeCommentCountKey         =@"comments";
 NSString *const kDTChallengeDayAttributeIsLikedByCurrentUserKey =@"liked";
 
+#pragma mark - Verification Class
+// Class Key
+NSString *const kDTVerificationClass                  =@"Verify";
 
+// Field Keys
+NSString *const kDTVerificationStatusContentKey       =@"status";
+NSString *const kDTVerificationImageKey               =@"image";
+NSString *const kDTVerificationTimeKey                =@"time";
+NSString *const kDTVerificationOrdinalKey             =@"ordinal";
+NSString *const kDTVerificationFoursquareIdKey        =@"4sqId";
+NSString *const kDTVerificationTypeKey                =@"type";
 
-
-
-
-
+// Type Values
+NSString *const kDTVerificationTypeTick               =@"tick";
+NSString *const kDTVerificationTypeTimer              =@"timer";
+NSString *const kDTVerificationTypeCheckIn            =@"checkIn";
+NSString *const kDTVerificationTypeImage              =@"image";
 
 
 

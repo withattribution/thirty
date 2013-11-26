@@ -11,7 +11,7 @@
 
 @interface ChallengeDetailVerificationController : D2ViewController 
 
-@property (nonatomic,strong) DTVerificationElement *eldt;
+@property (nonatomic,strong) DTVerificationElement *verifyElement;
 
 - (id)initWithChallengeDay:(PFObject *)chDay;
 

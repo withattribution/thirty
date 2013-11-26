@@ -17,6 +17,7 @@ extern NSString *const kDTActivityTypeKey;
 extern NSString *const kDTActivityContentKey;
 extern NSString *const kDTActivityImageKey;
 extern NSString *const kDTActivityChallengeDayKey;
+extern NSString *const kDTActivityVerificationKey;
 
 // Type Values
 extern NSString *const kDTActivityTypeLike;
@@ -84,7 +85,23 @@ extern NSString *const kDTChallengeDayAttributeLikeCountKey;
 extern NSString *const kDTChallengeDayAttributeCommentCountKey;
 extern NSString *const kDTChallengeDayAttributeIsLikedByCurrentUserKey;
 
+#pragma mark - Verification Class
+// Class Key
+extern NSString *const kDTVerificationClass;
 
+// Field Keys
+extern NSString *const kDTVerificationStatusContentKey;
+extern NSString *const kDTVerificationImageKey;
+extern NSString *const kDTVerificationTimeKey;
+extern NSString *const kDTVerificationOrdinalKey;
+extern NSString *const kDTVerificationFoursquareIdKey;
+extern NSString *const kDTVerificationTypeKey;
+
+// Type Values
+extern NSString *const kDTVerificationTypeTick;
+extern NSString *const kDTVerificationTypeTimer;
+extern NSString *const kDTVerificationTypeCheckIn;
+extern NSString *const kDTVerificationTypeImage;
 
 
 

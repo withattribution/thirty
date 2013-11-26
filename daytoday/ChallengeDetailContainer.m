@@ -99,7 +99,7 @@
 
 - (void)addChallengeDayInterface
 {
-  _verficationController = [[ChallengeDetailVerificationController alloc] init];
+  _verficationController = [[ChallengeDetailVerificationController alloc] initWithChallengeDay:self.challengeDay];
   [self.view addSubview:self.verficationController.view];
   [self addChildViewController:self.verficationController];
   
@@ -161,12 +161,12 @@
   
   PFQuery *currentChallengeDay = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
   [currentChallengeDay includeKey:kDTChallengeDayIntentKey];
-  currentChallengeDay.cachePolicy = kPFCachePolicyCacheElseNetwork;
+  currentChallengeDay.cachePolicy = kPFCachePolicyNetworkElseCache;
   [currentChallengeDay getObjectInBackgroundWithId:@"40QlXzWWxZ" block:^(PFObject *obj, NSError *error){
     if (!error) {
       self.challengeDay = obj;
 //      for (NSString *key in [self.challengeDay allKeys]) {
-//        NIDINFO(@"the keys %@ and the objects: %@",key, [self.challengeDay objectForKey:key]);
+//        NIDINFO(@"the keys %@ and the objects: %@ and the class: %@",key, [self.challengeDay objectForKey:key], [[self.challengeDay objectForKey:key] class]);
 //      }
 
       //create an example intent: save it:

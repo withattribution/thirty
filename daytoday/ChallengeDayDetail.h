@@ -10,4 +10,6 @@
 
 @interface ChallengeDayDetail : UIView
 
+- (id)initWithFrame:(CGRect)frame andDay:(NSInteger)day;
+
 @end
