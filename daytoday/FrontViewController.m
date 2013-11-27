@@ -50,6 +50,7 @@
   
   [self.navigationController.navigationBar setHidden:NO];
 	self.title = NSLocalizedString(@"DEMO MODE", nil);
+  
 }
 
 //Sample code for generating parts of the challenge day for testing and demo usage
@@ -69,24 +70,24 @@
 //    }
 //  }];
 
-//  One time only make a challenge day object so that we can reuse the challenge day object id to build out the comment interface
-
-//  PFObject *challengeDay = [PFObject objectWithClassName:kDTChallengeDayClassKey];
-//  challengeDay[kDTChallengeDayTaskRequiredCountKey] = @3;
-//  challengeDay[kDTChallengeDayTaskCompletedCountKey] = @1;
-//  challengeDay[kDTChallengeDayOrdinalDayKey] = @14;
-//  challengeDay[kDTChallengeDayAccomplishedKey] = @NO;
+//      self.challengeDay[kDTChallengeDayIntentKey] = [PFObject objectWithoutDataWithClassName:kDTIntentClassKey objectId:intent.objectId];
+//      [self.challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
+//        if(succeeded){
+//          NIDINFO(@"now we have an intent referencing the challenge day which is how we include the user for the challenge day");
 //
-//  [challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
 //
-//    if (succeeded){
-//      NIDINFO(@"succeeded!");
-//    }else {
-//      NIDINFO(@"%@",[err localizedDescription]);
-//    }
-//  }];
+//
+//        }else {
+//          NIDINFO(@"%@",[error localizedDescription]);
+//        }
+//      }];
 
 // build an intent model
+
+//NSString *const kDTIntentStartingKey                   =@"start";
+//NSString *const kDTIntentEndingKey                     =@"end";
+//NSString *const kDTIntentUserKey                       =@"user";
+//NSString *const kDTIntentChallengeKey                  =@"challenge";
 
 //create an example intent: save it:
 //      PFObject *intent = [PFObject objectWithClassName:kDTIntentClassKey];

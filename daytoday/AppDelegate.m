@@ -62,8 +62,44 @@
                 clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
 
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    
+  
+//  [self createTestModels];
   return YES;
+}
+
+- (void)createTestModels
+{
+  //One time only make a challenge day object so that we can reuse the challenge day object id to build out the comment interface
+  PFObject *intent = [PFObject objectWithClassName:kDTIntentClassKey];
+  [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]] forKey:kDTIntentStartingKey];
+  [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]] forKey:kDTIntentEndingKey];
+  [intent setObject:[PFUser currentUser] forKey:kDTIntentUserKey];
+  [intent setObject:@"fwefew" forKey:kDTIntentChallengeKey];
+  
+  [intent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
+    if(succeeded){
+      
+      NIDINFO(@"saved an example intent!");
+      PFObject *challengeDay = [PFObject objectWithClassName:kDTChallengeDayClassKey];
+      challengeDay[kDTChallengeDayTaskRequiredCountKey] = @3;
+      challengeDay[kDTChallengeDayTaskCompletedCountKey] = @1;
+      challengeDay[kDTChallengeDayOrdinalDayKey] = @14;
+      challengeDay[kDTChallengeDayAccomplishedKey] = @NO;
+      challengeDay[kDTChallengeDayActiveDateKey] = [NSDate date];
+      challengeDay[kDTChallengeDayIntentKey] = [PFObject objectWithoutDataWithClassName:kDTIntentClassKey objectId:intent.objectId];
+      
+      [challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
+        if (succeeded){
+          NIDINFO(@"succeeded!");
+        }else {
+          NIDINFO(@"%@",[err localizedDescription]);
+        }
+      }];
+    }
+    else {
+      NIDINFO(@"%@",[err localizedDescription]);
+    }
+  }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -89,8 +89,6 @@
     //if there is a verification status entered:
     //[verification setObject:VERIFICATION_STATUS forKey:kDTVerificationStatusContentKey];
 #warning figure out how to propogate verfication type hardcoded for now
-    [verification setObject:kDTVerificationTypeTick forKey:kDTVerificationTypeKey];
-
     [verification saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
       if (succeeded) {
         PFObject *verifyActivity = [PFObject objectWithClassName:kDTActivityClassKey];
