@@ -75,7 +75,6 @@
         if (!error) {
           [[DTCache sharedCache] refreshCacheActivity:objects forChallengeDay:challengeDay];
         }
-        
 #warning send push notification here
       }];
     }else {

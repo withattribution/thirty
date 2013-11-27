@@ -64,7 +64,15 @@ NSString *const kDTChallengeDayTaskRequiredCountKey    =@"required";
 NSString *const kDTChallengeDayTaskCompletedCountKey   =@"completed";
 NSString *const kDTChallengeDayAccomplishedKey         =@"accomplished";
 NSString *const kDTChallengeDayOrdinalDayKey           =@"ordinal";
+NSString *const kDTChallengeDayActiveDateKey           =@"active";
 NSString *const kDTChallengeDayIntentKey               =@"intent";
+
+#pragma mark - Cached ChallengeDay Attributes
+NSString *const kDTChallengeDayAttributeLikeCountKey            =@"likes";
+NSString *const kDTChallengeDayAttributeCommentCountKey         =@"comments";
+NSString *const kDTChallengeDayAttributeIsLikedByCurrentUserKey =@"liked";
+NSString *const kDTChallengeDayAttributeCommentersKey           =@"commenters";
+NSString *const kDTChallengeDayAttributeLikersKey               =@"likers";
 
 #pragma mark - Intent Class
 // Class Key
@@ -74,6 +82,7 @@ NSString *const kDTIntentClassKey                      =@"Intent";
 NSString *const kDTIntentStartingKey                   =@"start";
 NSString *const kDTIntentEndingKey                     =@"end";
 NSString *const kDTIntentUserKey                       =@"user";
+NSString *const kDTIntentChallengeKey                  =@"challenge";
 
 #pragma mark - Challenge Class
 // Class Key
@@ -86,31 +95,25 @@ NSString *const kDTChallengeFrequencyKey               =@"freq";
 NSString *const kDTChallengeCategoryKey                =@"cat";
 NSString *const kDTChallengeNameKey                    =@"name";
 NSString *const kDTChallengeImageKey                   =@"image";
+NSString *const kDTChallengeCreatedByKey               =@"creator";
+NSString *const kDTChallengeVerificationTypeKey        =@"verify";
 
-#pragma mark - Cached ChallengeDay Attributes
-NSString *const kDTChallengeDayAttributeLikeCountKey            =@"likes";
-NSString *const kDTChallengeDayAttributeCommentCountKey         =@"comments";
-NSString *const kDTChallengeDayAttributeIsLikedByCurrentUserKey =@"liked";
-NSString *const kDTChallengeDayAttributeCommentersKey           =@"commenters";
-NSString *const kDTChallengeDayAttributeLikersKey               =@"likers";
+// Type Values
+NSString *const kDTChallengeVerificationTypeTick               =@"tick";
+NSString *const kDTChallengeVerificationTypeTimer              =@"timer";
+NSString *const kDTChallengeVerificationTypeCheckIn            =@"checkIn";
+NSString *const kDTChallengeVerificationTypeImage              =@"image";
 
 #pragma mark - Verification Class
 // Class Key
 NSString *const kDTVerificationClass                  =@"Verify";
 
 // Field Keys
+NSString *const kDTVerificationOrdinalKey             =@"ordinal";
 NSString *const kDTVerificationStatusContentKey       =@"status";
 NSString *const kDTVerificationImageKey               =@"image";
 NSString *const kDTVerificationTimeKey                =@"time";
-NSString *const kDTVerificationOrdinalKey             =@"ordinal";
 NSString *const kDTVerificationFoursquareIdKey        =@"4sqId";
-NSString *const kDTVerificationTypeKey                =@"type";
-
-// Type Values
-NSString *const kDTVerificationTypeTick               =@"tick";
-NSString *const kDTVerificationTypeTimer              =@"timer";
-NSString *const kDTVerificationTypeCheckIn            =@"checkIn";
-NSString *const kDTVerificationTypeImage              =@"image";
 
 
 

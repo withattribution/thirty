@@ -65,7 +65,6 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIKeyboardDidHideNotification
                                                 object:nil];
-  
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:DTChallengeDayActivityCacheDidRefreshNotification
                                                 object:nil];
@@ -373,10 +372,8 @@
         NIDINFO(@"%@",[error localizedDescription]);
       }
     }];
-    
   }else {
     [[DTCache sharedCache] decrementLikeCountForChallengeDay:self.challengeDay];
-    
     [DTCommonRequests unLikeChallengeDayInBackGround:self.challengeDay block:^(BOOL succeeded, NSError *error){
       if (succeeded) {
         NIDINFO(@"unliked");
