@@ -173,7 +173,7 @@
   PFQuery *currentChallengeDay = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
   [currentChallengeDay includeKey:kDTChallengeDayIntentKey];
   currentChallengeDay.cachePolicy = kPFCachePolicyNetworkElseCache;
-  [currentChallengeDay getObjectInBackgroundWithId:@"40QlXzWWxZ" block:^(PFObject *obj, NSError *error){
+  [currentChallengeDay getObjectInBackgroundWithId:@"ghtchuOdJg" block:^(PFObject *obj, NSError *error){
     if (!error) {
       self.challengeDay = obj;
 //      for (NSString *key in [self.challengeDay allKeys]) {
@@ -248,7 +248,7 @@
         [comment saveEventually:^(BOOL succeeded, NSError *error){
           if (succeeded) {
             [self.commentController loadObjects];
-            
+
             [self didCancelCommentAddition];
           }else {
             NIDINFO(@"%@",[error localizedDescription]);

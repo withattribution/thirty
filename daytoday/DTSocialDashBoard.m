@@ -110,6 +110,7 @@
   if (self.liked) {
     self.liked = NO;
     if ([self.likeCount intValue] > 0) {
+
       self.likeCount = [NSNumber numberWithInt:[self.likeCount intValue] - 1];
     }
   }

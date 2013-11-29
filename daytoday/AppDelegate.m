@@ -5,13 +5,13 @@
 //  Created by Anderson Miller on 8/15/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
-#import <Parse/Parse.h>
 
 #import "AppDelegate.h"
 
 #import <NSManagedObject+SR.h>
 #import <NSManagedObjectContext+SR.h>
 #import "D2Request.h"
+#import "MurmurHash.h"
 
 //soley for the demo interface mode
 #ifdef INTERFACE_DEMO_MODE
@@ -63,35 +63,52 @@
 
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
   
-//  [self createTestModels];
+  NSDateFormatter *df = [[NSDateFormatter alloc] init];
+  [df setDateFormat:@"MM/dd/yyyy"];
+  NSString *formattedDate = [df stringFromDate:[NSDate date]];
+
+//  -(uint32_t) hash32:(NSString*)input;
+//  -(uint32_t) hash32:(NSString *)input withSeed:(uint32_t)seed;
+
+  MurmurHash *seedHash = [[MurmurHash alloc] init];
+  uint32_t seedThing = [seedHash hash32:formattedDate];
+
+  NIDINFO(@"%u",seedThing);
+
+  [self createTestModels];
   return YES;
 }
 
 - (void)createTestModels
 {
-  //One time only make a challenge day object so that we can reuse the challenge day object id to build out the comment interface
-  PFObject *intent = [PFObject objectWithClassName:kDTIntentClassKey];
-  [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]] forKey:kDTIntentStartingKey];
-  [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]] forKey:kDTIntentEndingKey];
-  [intent setObject:[PFUser currentUser] forKey:kDTIntentUserKey];
-  [intent setObject:@"fwefew" forKey:kDTIntentChallengeKey];
-  
-  [intent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
+  PFObject *challenge = [PFObject objectWithClassName:kDTChallengeClassKey];
+  [challenge setObject:@"Do yoga for 30 days" forKey:kDTChallengeDescriptionKey];
+  [challenge setObject:@(30) forKey:kDTChallengeDurationKey];
+  [challenge setObject:@(1) forKey:kDTChallengeFrequencyKey];
+  [challenge setObject:@"fitness" forKey:kDTChallengeCategoryKey];
+  [challenge setObject:@"YTTP Challenge" forKey:kDTChallengeNameKey];
+
+//  [challenge setObject:@"Do yoga for 30 days" forKey:kDTChallengeImageKey];
+
+  [challenge setObject:[PFUser currentUser] forKey:kDTChallengeCreatedByKey];
+  [challenge setObject:kDTChallengeVerificationTypeTick forKey:kDTChallengeVerificationTypeKey];
+
+  [challenge saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
     if(succeeded){
+      NIDINFO(@"saved an example challenge!");
+      //One time only make a challenge day object so that we can reuse the challenge day object id to build out the comment interface
+      PFObject *intent = [PFObject objectWithClassName:kDTIntentClassKey];
+      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]] forKey:kDTIntentStartingKey];
+      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]] forKey:kDTIntentEndingKey];
+      [intent setObject:[PFUser currentUser] forKey:kDTIntentUserKey];
+      [intent setObject:[challenge objectId] forKey:kDTIntentChallengeKey];
       
-      NIDINFO(@"saved an example intent!");
-      PFObject *challengeDay = [PFObject objectWithClassName:kDTChallengeDayClassKey];
-      challengeDay[kDTChallengeDayTaskRequiredCountKey] = @3;
-      challengeDay[kDTChallengeDayTaskCompletedCountKey] = @1;
-      challengeDay[kDTChallengeDayOrdinalDayKey] = @14;
-      challengeDay[kDTChallengeDayAccomplishedKey] = @NO;
-      challengeDay[kDTChallengeDayActiveDateKey] = [NSDate date];
-      challengeDay[kDTChallengeDayIntentKey] = [PFObject objectWithoutDataWithClassName:kDTIntentClassKey objectId:intent.objectId];
-      
-      [challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
-        if (succeeded){
-          NIDINFO(@"succeeded!");
-        }else {
+      [intent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
+        if(succeeded){
+          NIDINFO(@"saved an example intent!");
+          
+        }
+        else {
           NIDINFO(@"%@",[err localizedDescription]);
         }
       }];
@@ -100,7 +117,27 @@
       NIDINFO(@"%@",[err localizedDescription]);
     }
   }];
+  
+  
+  
+
 }
+
+//      PFObject *challengeDay = [PFObject objectWithClassName:kDTChallengeDayClassKey];
+//      challengeDay[kDTChallengeDayTaskRequiredCountKey] = @3;
+//      challengeDay[kDTChallengeDayTaskCompletedCountKey] = @1;
+//      challengeDay[kDTChallengeDayOrdinalDayKey] = @14;
+//      challengeDay[kDTChallengeDayAccomplishedKey] = @NO;
+//      challengeDay[kDTChallengeDayActiveDateKey] = [NSDate date];
+//      challengeDay[kDTChallengeDayIntentKey] = [PFObject objectWithoutDataWithClassName:kDTIntentClassKey objectId:intent.objectId];
+//
+//      [challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
+//        if (succeeded){
+//          NIDINFO(@"succeeded!");
+//        }else {
+//          NIDINFO(@"%@",[err localizedDescription]);
+//        }
+//      }];
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

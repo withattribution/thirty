@@ -1,8 +1,26 @@
 
 // Use Parse.Cloud.define to define as many cloud functions as you want.
 // For example:
+
+var murmurHash3 = require('cloud/libs/murmurHash3.min.js');
+
 Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello world!");
+	var d = new Date();
+	var dd = [d.getMonth()+1, d.getDate(), d.getFullYear()].join('/');
+	console.log('the formatted date: '+dd);
+
+	var hash = murmurHash3.x86.hash32(dd);
+
+  response.success('the hash: '+hash);
+});
+
+Parse.Cloud.afterSave("Intent", function(request, response){
+	var d = new Date();
+	var dd = [d.getMonth()+1, d.getDate(), d.getFullYear()].join('/');
+	console.log('the formatted date: '+dd);
+
+	var hash = murmurHash3.x86.hash32(dd);
+	console.log("the hash: "+hash);
 });
 
 Parse.Cloud.beforeSave("Activity", function(request, response) {

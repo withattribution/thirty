@@ -30,6 +30,7 @@
 		A13DB5E9181EDB1500378901 /* timer.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E5181EDB1500378901 /* timer.jpg */; };
 		A13DB5EA181EDB1500378901 /* tickMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E6181EDB1500378901 /* tickMark.jpg */; };
 		A162B6F418453796007B3CE1 /* DTCommonUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = A162B6F318453796007B3CE1 /* DTCommonUtilities.m */; };
+		A162B6FE1847DEF8007B3CE1 /* MurmurHash.mm in Sources */ = {isa = PBXBuildFile; fileRef = A162B6FD1847DEF8007B3CE1 /* MurmurHash.mm */; };
 		A16AC9BD182001C600074AB8 /* Verification+UImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9BC182001C600074AB8 /* Verification+UImage.m */; };
 		A16AC9C01820058D00074AB8 /* Category+UIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9BF1820058D00074AB8 /* Category+UIImage.m */; };
 		A16AC9C61822ACE700074AB8 /* ChallengeDetailVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9C51822ACE700074AB8 /* ChallengeDetailVerificationController.m */; };
@@ -295,6 +296,8 @@
 		A13DB5E6181EDB1500378901 /* tickMark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tickMark.jpg; sourceTree = "<group>"; };
 		A162B6F218453796007B3CE1 /* DTCommonUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTCommonUtilities.h; sourceTree = "<group>"; };
 		A162B6F318453796007B3CE1 /* DTCommonUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTCommonUtilities.m; sourceTree = "<group>"; };
+		A162B6FC1847DEF8007B3CE1 /* MurmurHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MurmurHash.h; sourceTree = "<group>"; };
+		A162B6FD1847DEF8007B3CE1 /* MurmurHash.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MurmurHash.mm; sourceTree = "<group>"; };
 		A16AC9BB182001C600074AB8 /* Verification+UImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Verification+UImage.h"; sourceTree = "<group>"; };
 		A16AC9BC182001C600074AB8 /* Verification+UImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Verification+UImage.m"; sourceTree = "<group>"; };
 		A16AC9BE1820058D00074AB8 /* Category+UIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Category+UIImage.h"; sourceTree = "<group>"; };
@@ -719,6 +722,15 @@
 			name = "verfication images";
 			sourceTree = "<group>";
 		};
+		A162B6F81847C5BE007B3CE1 /* MurmurHash */ = {
+			isa = PBXGroup;
+			children = (
+				A162B6FC1847DEF8007B3CE1 /* MurmurHash.h */,
+				A162B6FD1847DEF8007B3CE1 /* MurmurHash.mm */,
+			);
+			path = MurmurHash;
+			sourceTree = "<group>";
+		};
 		A16AC9BA181FFAB400074AB8 /* category images */ = {
 			isa = PBXGroup;
 			children = (
@@ -816,6 +828,7 @@
 		A1C60D89183D57A300C98C69 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				A162B6F81847C5BE007B3CE1 /* MurmurHash */,
 				A1C60D1E183A7BC200C98C69 /* FacebookSDK.framework */,
 				A1C60D12183A77C300C98C69 /* Parse.framework */,
 				A1C60DE7183D6A1C00C98C69 /* NYXImagesKitLibrary */,
@@ -1450,6 +1463,7 @@
 				B7E61E7117C27F5A002B681B /* UIImageView+AFNetworking.m in Sources */,
 				B7E61E7617C27F6E002B681B /* JSONKit.m in Sources */,
 				B7E61E7D17C284C9002B681B /* DayTodayModels.xcdatamodeld in Sources */,
+				A162B6FE1847DEF8007B3CE1 /* MurmurHash.mm in Sources */,
 				A17E39D1183010EB00F75CC6 /* ChallengeDayDetail.m in Sources */,
 				B7E61E8117C28674002B681B /* D2Request.m in Sources */,
 				A1C60D60183C184800C98C69 /* DTCache.m in Sources */,
