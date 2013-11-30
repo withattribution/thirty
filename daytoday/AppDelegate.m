@@ -71,10 +71,12 @@
 //  -(uint32_t) hash32:(NSString *)input withSeed:(uint32_t)seed;
 
   MurmurHash *seedHash = [[MurmurHash alloc] init];
-  uint32_t seedThing = [seedHash hash32:formattedDate];
-
-  NIDINFO(@"%u",seedThing);
-
+  uint32_t seedThing = [seedHash hash32:@"ljgb3fgLyP"];
+  uint32_t megaSeed = [seedHash hash32:formattedDate withSeed:seedThing];
+  
+//  NIDINFO(@"%u",seedThing);
+  NIDINFO(@"%u",megaSeed);
+  
   [self createTestModels];
   return YES;
 }
@@ -97,21 +99,21 @@
     if(succeeded){
       NIDINFO(@"saved an example challenge!");
       //One time only make a challenge day object so that we can reuse the challenge day object id to build out the comment interface
-      PFObject *intent = [PFObject objectWithClassName:kDTIntentClassKey];
-      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]] forKey:kDTIntentStartingKey];
-      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]] forKey:kDTIntentEndingKey];
-      [intent setObject:[PFUser currentUser] forKey:kDTIntentUserKey];
-      [intent setObject:[challenge objectId] forKey:kDTIntentChallengeKey];
-      
-      [intent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
-        if(succeeded){
-          NIDINFO(@"saved an example intent!");
-          
-        }
-        else {
-          NIDINFO(@"%@",[err localizedDescription]);
-        }
-      }];
+//      PFObject *intent = [PFObject objectWithClassName:kDTIntentClassKey];
+//      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]] forKey:kDTIntentStartingKey];
+//      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]] forKey:kDTIntentEndingKey];
+//      [intent setObject:[PFUser currentUser] forKey:kDTIntentUserKey];
+//      [intent setObject:[challenge objectId] forKey:kDTIntentChallengeKey];
+//      
+//      [intent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
+//        if(succeeded){
+//          NIDINFO(@"saved an example intent!");
+//
+//        }
+//        else {
+//          NIDINFO(@"%@",[err localizedDescription]);
+//        }
+//      }];
     }
     else {
       NIDINFO(@"%@",[err localizedDescription]);

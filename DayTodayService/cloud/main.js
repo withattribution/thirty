@@ -3,8 +3,10 @@
 // For example:
 
 var murmurHash3 = require('cloud/libs/murmurHash3.min.js');
+var moment = require('cloud/libs/moment.min.js');
 
-Parse.Cloud.define("hello", function(request, response) {
+Parse.Cloud.define("hello", function(request, response)
+{
 	var d = new Date();
 	var dd = [d.getMonth()+1, d.getDate(), d.getFullYear()].join('/');
 	console.log('the formatted date: '+dd);
@@ -14,16 +16,40 @@ Parse.Cloud.define("hello", function(request, response) {
   response.success('the hash: '+hash);
 });
 
-Parse.Cloud.afterSave("Intent", function(request, response){
-	var d = new Date();
-	var dd = [d.getMonth()+1, d.getDate(), d.getFullYear()].join('/');
-	console.log('the formatted date: '+dd);
+Parse.Cloud.afterSave("Challenge",function(request,response)
+{
+	var Intent = Parse.Object.extend("Intent");
+	var intent = new Intent();
+	
+	intent.save({
+ 		start: moment().toDate(),
+  		end: moment().add('days',request.object.get("duration")).toDate(),
+  		user: request.user,
+  		challenge:request.object.id
+	}, {
+		success: function(intent) {
+			alert('intent saved: ' + intent.id);
+			// response.success();
+		},
+		error: function(intent, error) {
+			// Execute any logic that should take place if the save fails.
+			// error is a Parse.Error with an error code and description.
+			alert('failed intent saving: ' + error.message);
+			// response.error(error.description);
+		}
+	});
+});
 
-	var hash = murmurHash3.x86.hash32(dd);
+Parse.Cloud.afterSave("Intent", function(request, response)
+{
+	var formattedDate = moment().format("MM/DD/YYYY");
+	var challengeIdSeed =  murmurHash3.x86.hash32(request.object.get("challenge"));
+	var hash = murmurHash3.x86.hash32(formattedDate,challengeIdSeed);
 	console.log("the hash: "+hash);
 });
 
-Parse.Cloud.beforeSave("Activity", function(request, response) {
+Parse.Cloud.beforeSave("Activity", function(request, response)
+{
 	var verfiyKey = request.object.get("verify");
 	if (verfiyKey == undefined) {
 		//essentially only modify the challenge day on Activity Class
