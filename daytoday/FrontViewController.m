@@ -49,8 +49,9 @@
   [self.view addSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"daytoday.jpg"]]];
   
   [self.navigationController.navigationBar setHidden:NO];
+
 	self.title = NSLocalizedString(@"DEMO MODE", nil);
-  
+
 }
 
 //Sample code for generating parts of the challenge day for testing and demo usage

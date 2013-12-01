@@ -98,13 +98,20 @@
   [challenge saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
     if(succeeded){
       NIDINFO(@"saved an example challenge!");
-      //One time only make a challenge day object so that we can reuse the challenge day object id to build out the comment interface
+    }
+    else {
+      NIDINFO(@"%@",[err localizedDescription]);
+    }
+  }];
+}
+
+//One time only make a challenge day object so that we can reuse the challenge day object id to build out the comment interface
 //      PFObject *intent = [PFObject objectWithClassName:kDTIntentClassKey];
 //      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]] forKey:kDTIntentStartingKey];
 //      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]] forKey:kDTIntentEndingKey];
 //      [intent setObject:[PFUser currentUser] forKey:kDTIntentUserKey];
 //      [intent setObject:[challenge objectId] forKey:kDTIntentChallengeKey];
-//      
+//
 //      [intent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
 //        if(succeeded){
 //          NIDINFO(@"saved an example intent!");
@@ -114,16 +121,7 @@
 //          NIDINFO(@"%@",[err localizedDescription]);
 //        }
 //      }];
-    }
-    else {
-      NIDINFO(@"%@",[err localizedDescription]);
-    }
-  }];
-  
-  
-  
 
-}
 
 //      PFObject *challengeDay = [PFObject objectWithClassName:kDTChallengeDayClassKey];
 //      challengeDay[kDTChallengeDayTaskRequiredCountKey] = @3;
