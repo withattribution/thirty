@@ -88,7 +88,7 @@
   UIView *_backing;
 
   BOOL isSectionProgress;
-  NSUInteger _activeSection;
+  NSInteger _activeSection;
   SectionLayer *_section;
 
   NSTimer *_animationTimer;
@@ -259,7 +259,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     }
     //if the number of completed and the number required are equal this interface is locked
     //in the fully completed state
-    if (_activeSection > 0) [self setUserInteractionEnabled:YES];
+    if (_activeSection >= 0) [self setUserInteractionEnabled:YES];
 
     [CATransaction setDisableActions:NO];
     [CATransaction commit];

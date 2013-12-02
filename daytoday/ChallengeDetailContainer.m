@@ -120,7 +120,7 @@
   [self addChildViewController:self.verficationController];
 
   [self.verficationController didMoveToParentViewController:self];
-
+  
   _commentController = [[ChallengeDetailCommentController alloc] initWithChallengeDay:self.challengeDay];
 
   [self.view addSubview:self.commentController.view];
@@ -179,19 +179,6 @@
   [super viewDidLoad];
 
   [DTCommonRequests activeDayForDate:[NSDate date]];
-  
-//  [currentChallengeDay getFirstObjectInBackgroundWithBlock:^(PFObject *day, NSError *error){
-//    if (!error) {
-//      self.challengeDay = day;
-//      for (NSString *key in [self.challengeDay allKeys]) {
-//        NIDINFO(@"the keys %@ and the objects: %@ and the class: %@",key, [self.challengeDay objectForKey:key], [[self.challengeDay objectForKey:key] class]);
-//      }
-//      [self addChallengeDayInterface];
-//    }
-//    else {
-//      NIDINFO(@"%@",[error localizedDescription]);
-//    }
-//  }];
 }
 
 - (void)didReceiveMemoryWarning

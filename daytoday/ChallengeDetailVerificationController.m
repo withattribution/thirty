@@ -45,7 +45,6 @@
   [self.view addSubview:self.verifyElement];
   
 //    DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
-
   ChallengeDayDetail *cdd = [[ChallengeDayDetail alloc] initWithFrame:CGRectMake(0., 0., 200., 30)
                                                                andDay:[[self.challengeDay objectForKey:kDTChallengeDayOrdinalDayKey] intValue]];
   [cdd setCenter:CGPointMake(self.view.frame.size.width/2.f,self.verifyElement.frame.origin.y + self.verifyElement.frame.size.height + 2.5)];
@@ -116,12 +115,14 @@
 
 - (NSUInteger)numberOfCompletedSectionsInVerificationElement:(DTVerificationElement *)element
 {
-//  NIDINFO(@"completed: %d",[[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue]);
+  NIDINFO(@"completed: %d",[[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue]);
   return [[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue];
 }
 
 -(NSUInteger)numberOfSectionsInVerificationElement:(DTVerificationElement *)verificationElement
 {
+  
+  NIDINFO(@"the req count: %d",[[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]);
   return [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue];
 }
 
