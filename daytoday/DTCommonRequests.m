@@ -108,7 +108,7 @@
 }
 
 #pragma mark Activities 
-gi
+
 + (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy
 {
   PFQuery *queryLikes = [PFQuery queryWithClassName:kDTActivityClassKey];
