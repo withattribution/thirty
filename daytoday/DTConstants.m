@@ -8,6 +8,10 @@
 
 #import "DTConstants.h"
 
+#pragma mark - DTUserDefaults
+NSString *const kDTChallengeUserSeed                   =@"seed";
+
+
 #pragma mark - DTNotifications
 
 NSString *const DTChallengeDayActivityCacheDidRefreshNotification =

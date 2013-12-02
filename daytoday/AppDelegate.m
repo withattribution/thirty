@@ -63,20 +63,6 @@
 
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
   
-  NSDateFormatter *df = [[NSDateFormatter alloc] init];
-  [df setDateFormat:@"MM/dd/yyyy"];
-  NSString *formattedDate = [df stringFromDate:[NSDate date]];
-
-//  -(uint32_t) hash32:(NSString*)input;
-//  -(uint32_t) hash32:(NSString *)input withSeed:(uint32_t)seed;
-
-  MurmurHash *seedHash = [[MurmurHash alloc] init];
-  uint32_t seedThing = [seedHash hash32:@"ljgb3fgLyP"];
-  uint32_t megaSeed = [seedHash hash32:formattedDate withSeed:seedThing];
-  
-//  NIDINFO(@"%u",seedThing);
-  NIDINFO(@"%u",megaSeed);
-  
   [self createTestModels];
   return YES;
 }
@@ -98,6 +84,24 @@
   [challenge saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
     if(succeeded){
       NIDINFO(@"saved an example challenge!");
+//      if([[NSUserDefaults standardUserDefaults] valueForKey:kDTChallengeUserSeed] == nil ){
+      MurmurHash *hash = [[MurmurHash alloc] init];
+      uint32_t userSeed = [hash hash32:[[PFUser currentUser] objectId]];
+      NIDINFO(@"user seed: %u",userSeed);
+      NIDINFO(@"challenge id: %@",[challenge objectId]);
+
+      uint32_t challengeUserHash = [hash hash32:[challenge objectId]  withSeed:userSeed];
+      NIDINFO(@"challenge user seed: %u",challengeUserHash);
+      
+      NSNumber *challengeUserSeed = [NSNumber numberWithUnsignedInt:challengeUserHash];
+      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
+
+      [[NSUserDefaults standardUserDefaults] setValue:challengeUserSeed forKey:kDTChallengeUserSeed];
+      [[NSUserDefaults standardUserDefaults] synchronize];
+      
+      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
+
+//      }
     }
     else {
       NIDINFO(@"%@",[err localizedDescription]);

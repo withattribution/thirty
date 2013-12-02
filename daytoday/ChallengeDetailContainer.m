@@ -170,15 +170,13 @@
 {
   [super viewDidLoad];
 
-  PFQuery *currentChallengeDay = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
-  [currentChallengeDay includeKey:kDTChallengeDayIntentKey];
-  currentChallengeDay.cachePolicy = kPFCachePolicyNetworkElseCache;
-  [currentChallengeDay getObjectInBackgroundWithId:@"ghtchuOdJg" block:^(PFObject *obj, NSError *error){
+  PFQuery *currentChallengeDay = [DTCommonRequests queryForchallengeDayForDate:[NSDate date]];
+  [currentChallengeDay getFirstObjectInBackgroundWithBlock:^(PFObject *day, NSError *error){
     if (!error) {
-      self.challengeDay = obj;
-//      for (NSString *key in [self.challengeDay allKeys]) {
-//        NIDINFO(@"the keys %@ and the objects: %@ and the class: %@",key, [self.challengeDay objectForKey:key], [[self.challengeDay objectForKey:key] class]);
-//      }
+      self.challengeDay = day;
+      for (NSString *key in [self.challengeDay allKeys]) {
+        NIDINFO(@"the keys %@ and the objects: %@ and the class: %@",key, [self.challengeDay objectForKey:key], [[self.challengeDay objectForKey:key] class]);
+      }
       [self addChallengeDayInterface];
     }
     else {
