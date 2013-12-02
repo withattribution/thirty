@@ -1,6 +1,5 @@
 var murmurHash3 = require('cloud/libs/murmurHash3.min.js');
 var moment = require('cloud/libs/moment.min.js');
-var timezone = require('cloud/libs/moment-timezone.min.js');
 
 // Parse.Cloud.define("hello", function(request, response)
 // {
@@ -13,6 +12,8 @@ var timezone = require('cloud/libs/moment-timezone.min.js');
 //   response.success('the hash: '+hash);
 // });
 
+//America/Denver
+//.tz("America/Toronto").zone();
 Parse.Cloud.afterSave("Challenge",function(request,response)
 {
 	var Intent = Parse.Object.extend("Intent");
