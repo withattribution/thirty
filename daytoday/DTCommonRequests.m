@@ -88,33 +88,28 @@
 
 #pragma mark Challenge Day Retrieval
 
-+(PFQuery *)queryForchallengeDayForDate:(NSDate *)date
++ (void)activeDayForDate:(NSDate *)date
 {
-  NSDateFormatter *df = [[NSDateFormatter alloc] init];
-  [df setDateFormat:@"MM/dd/yyyy"];
-//  NSString *formattedDate = [df stringFromDate:date];
-//
-//  NIDINFO(@"date %@",formattedDate);
-  NSString *formattedDate = @"12/02/2013";
-
-  
   uint32_t challengeUserSeed = [[[NSUserDefaults standardUserDefaults] objectForKey:kDTChallengeUserSeed] unsignedIntValue];
-
-  MurmurHash *hash = [[MurmurHash alloc] init];
-  uint32_t challengeDayHash = [hash hash32:formattedDate withSeed:challengeUserSeed];
-
-  NIDINFO(@"hash %u",challengeDayHash);
-  PFQuery *dayQuery = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
-  [dayQuery whereKey:kDTChallengeDayActiveDateKey equalTo:@(challengeDayHash)];
-  [dayQuery includeKey:kDTChallengeDayIntentKey];
-  dayQuery.cachePolicy = kPFCachePolicyNetworkOnly;
-
-  return dayQuery;
+  
+  [PFCloud callFunctionInBackground:DTQueryActiveDay
+                     withParameters:@{@"seed": @(challengeUserSeed), @"offset": @([DTCommonUtilities minutesFromGMTForDate:date])}
+                              block:^(PFObject *day, NSError *error) {
+                                if (!error) {
+                                  
+                                }else {
+                                  NIDINFO("error!: %@",error.localizedDescription);
+                                }
+                    [[NSNotificationCenter defaultCenter]
+                                 postNotificationName:DTChallengeDayRetrievedNotification
+                                               object:day
+                                             userInfo:nil];
+  }];
 }
 
 #pragma mark Activities 
-
-+(PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy
+gi
++ (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy
 {
   PFQuery *queryLikes = [PFQuery queryWithClassName:kDTActivityClassKey];
   [queryLikes whereKey:kDTActivityTypeKey equalTo:kDTActivityTypeLike];

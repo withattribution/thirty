@@ -6,6 +6,10 @@
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
+#pragma mark - DTCloudFunctions
+// Cloud Functions
+extern NSString *const DTQueryActiveDay;
+
 #pragma mark - DTUserDefaults
 // Challenge Seed
 extern NSString *const kDTChallengeUserSeed;
@@ -13,6 +17,7 @@ extern NSString *const kDTChallengeUserSeed;
 #pragma mark - DTNotifications
 
 extern NSString *const DTChallengeDayActivityCacheDidRefreshNotification;
+extern NSString *const DTChallengeDayRetrievedNotification;
 
 #pragma mark - PFObject Activity Class
 // Class Key

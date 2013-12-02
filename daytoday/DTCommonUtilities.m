@@ -10,4 +10,9 @@
 
 @implementation DTCommonUtilities
 
++ (NSInteger)minutesFromGMTForDate:(NSDate *)date
+{
+  return ([[NSTimeZone localTimeZone] secondsFromGMTForDate:date]/60.f);
+}
+
 @end

@@ -10,4 +10,6 @@
 
 @interface DTCommonUtilities : NSObject
 
++ (NSInteger)minutesFromGMTForDate:(NSDate *)date;
+
 @end

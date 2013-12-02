@@ -62,10 +62,15 @@
                 clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
 
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-  
-  [self createTestModels];
+
+//  [self createTestModels];
   return YES;
 }
+
+//- (void)applicationSignificantTimeChange:(UIApplication *)application
+//{
+//  
+//}
 
 - (void)createTestModels
 {
@@ -100,7 +105,6 @@
       [[NSUserDefaults standardUserDefaults] synchronize];
       
       NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
-
 //      }
     }
     else {
@@ -142,6 +146,31 @@
 //          NIDINFO(@"%@",[err localizedDescription]);
 //        }
 //      }];
+
+//when we used to generate the active date key on the client
+//+ (PFQuery *)queryForchallengeDayForDate:(NSDate *)date
+//{
+//  NSDateFormatter *df = [[NSDateFormatter alloc] init];
+//  [df setDateFormat:@"MM/dd/yyyy"];
+//  //  NSString *formattedDate = [df stringFromDate:date];
+//  //
+//  //  NIDINFO(@"date %@",formattedDate);
+//  NSString *formattedDate = @"12/02/2013";
+//  
+//  
+//  uint32_t challengeUserSeed = [[[NSUserDefaults standardUserDefaults] objectForKey:kDTChallengeUserSeed] unsignedIntValue];
+//  
+//  MurmurHash *hash = [[MurmurHash alloc] init];
+//  uint32_t challengeDayHash = [hash hash32:formattedDate withSeed:challengeUserSeed];
+//  
+//  NIDINFO(@"hash %u",challengeDayHash);
+//  PFQuery *dayQuery = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
+//  [dayQuery whereKey:kDTChallengeDayActiveDateKey equalTo:@(challengeDayHash)];
+//  [dayQuery includeKey:kDTChallengeDayIntentKey];
+//  dayQuery.cachePolicy = kPFCachePolicyNetworkOnly;
+//  
+//  return dayQuery;
+//}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

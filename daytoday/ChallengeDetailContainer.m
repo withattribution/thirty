@@ -54,6 +54,12 @@
 - (void)dealloc
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:DTChallengeDayRetrievedNotification
+                                                object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:DTChallengeDayActivityCacheDidRefreshNotification
+                                                object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIKeyboardWillShowNotification
                                                 object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -65,9 +71,6 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIKeyboardDidHideNotification
                                                 object:nil];
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:DTChallengeDayActivityCacheDidRefreshNotification
-                                                object:nil];
 }
 
 - (id)init
@@ -76,6 +79,11 @@
   if(self){
     self.commentsAreFullScreen = NO;
     self.isAddingComment       = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didRetrieveChallengeDay:)
+                                                 name:DTChallengeDayRetrievedNotification
+                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateSocialDashboard:)
@@ -170,19 +178,20 @@
 {
   [super viewDidLoad];
 
-  PFQuery *currentChallengeDay = [DTCommonRequests queryForchallengeDayForDate:[NSDate date]];
-  [currentChallengeDay getFirstObjectInBackgroundWithBlock:^(PFObject *day, NSError *error){
-    if (!error) {
-      self.challengeDay = day;
-      for (NSString *key in [self.challengeDay allKeys]) {
-        NIDINFO(@"the keys %@ and the objects: %@ and the class: %@",key, [self.challengeDay objectForKey:key], [[self.challengeDay objectForKey:key] class]);
-      }
-      [self addChallengeDayInterface];
-    }
-    else {
-      NIDINFO(@"%@",[error localizedDescription]);
-    }
-  }];
+  [DTCommonRequests activeDayForDate:[NSDate date]];
+  
+//  [currentChallengeDay getFirstObjectInBackgroundWithBlock:^(PFObject *day, NSError *error){
+//    if (!error) {
+//      self.challengeDay = day;
+//      for (NSString *key in [self.challengeDay allKeys]) {
+//        NIDINFO(@"the keys %@ and the objects: %@ and the class: %@",key, [self.challengeDay objectForKey:key], [[self.challengeDay objectForKey:key] class]);
+//      }
+//      [self addChallengeDayInterface];
+//    }
+//    else {
+//      NIDINFO(@"%@",[error localizedDescription]);
+//    }
+//  }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -576,6 +585,18 @@
                        self.commentsAreFullScreen = NO;
                      }
                    }];
+}
+
+#pragma mark - DTChallengeDayRetrieved Notifications
+
+- (void)didRetrieveChallengeDay:(NSNotification *)aNotification
+{
+  if (aNotification.object) {
+    self.challengeDay = (PFObject *)aNotification.object;
+    [self addChallengeDayInterface];
+  }else {
+    NIDINFO(@"nil challenge day deal with it!");
+  }
 }
 
 #pragma mark - DTCacheRefresh Notifications

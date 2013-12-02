@@ -8,6 +8,11 @@
 
 #import "DTConstants.h"
 
+#pragma mark - DTCloudFunctions
+
+NSString *const DTQueryActiveDay                       =@"activeDay";
+
+
 #pragma mark - DTUserDefaults
 NSString *const kDTChallengeUserSeed                   =@"seed";
 
@@ -16,6 +21,10 @@ NSString *const kDTChallengeUserSeed                   =@"seed";
 
 NSString *const DTChallengeDayActivityCacheDidRefreshNotification =
   @"com.aok.DayToday.cache.didRefreshActivityForChallengeDayNotification";
+
+NSString *const DTChallengeDayRetrievedNotification =
+  @"com.aok.DayToday.day.didRetrieveChallengeDayNotification";
+
 
 #pragma mark - Activity Class
 // Class Key
