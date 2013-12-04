@@ -16,7 +16,7 @@
  {
     self = [super init];
     if (self)
-        self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@",SERVER_HOST]];
+//        self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@",SERVER_HOST]];
 
      //NIDINFO(@"base URL:%@",self.baseURL);
     return self;

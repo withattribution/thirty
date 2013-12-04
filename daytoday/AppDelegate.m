@@ -10,7 +10,6 @@
 
 #import <NSManagedObject+SR.h>
 #import <NSManagedObjectContext+SR.h>
-#import "D2Request.h"
 #import "MurmurHash.h"
 
 //soley for the demo interface mode

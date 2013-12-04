@@ -9,15 +9,16 @@
 #endif
 
 #define INTERFACE_DEMO_MODE 1
-#define LOCAL 1
 
-#ifndef LOCAL
-#define SERVER_HOST @"http://limitless-tundra-3667.herokuapp.com"
-#endif
+//#define LOCAL 1
+//
+//#ifndef LOCAL
+//#define SERVER_HOST @"http://limitless-tundra-3667.herokuapp.com"
+//#endif
 
-#ifndef SERVER_HOST
-#define SERVER_HOST @"http://localhost:8080"
-#endif
+//#ifndef SERVER_HOST
+//#define SERVER_HOST @"http://localhost:8080"
+//#endif
 
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>

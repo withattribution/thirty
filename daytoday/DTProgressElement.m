@@ -101,8 +101,6 @@ static CGFloat EDGE_PADDING = 3.f;
 
 - (NSArray *)datesForIntent:(PFObject *)intent
 {
-  NIDINFO(@"the starting date: %@",[intent objectForKey:kDTIntentStartingKey]);
-  
   NSDate *starting = [intent objectForKey:kDTIntentStartingKey];
   
   NSDateComponents *offSetComp = [_localCalendar components:(NSCalendarUnitDay)
@@ -153,10 +151,10 @@ static CGFloat EDGE_PADDING = 3.f;
     
     [paddedCalendarDates addObjectsFromArray:dates];
     
-    for (int i = 0; i < [paddedCalendarDates count]; i++) {
-      NIDINFO(@"the string for padded: %@",[[DTCommonUtilities displayDayFormatter] stringFromDate:[paddedCalendarDates objectAtIndex:i]]);
-    }
-    NIDINFO(@"padded dates: %d",[paddedCalendarDates count]);
+//    for (int i = 0; i < [paddedCalendarDates count]; i++) {
+//      NIDINFO(@"the string for padded: %@",[[DTCommonUtilities displayDayFormatter] stringFromDate:[paddedCalendarDates objectAtIndex:i]]);
+//    }
+//    NIDINFO(@"padded dates: %d",[paddedCalendarDates count]);
   }
   
   return paddedCalendarDates;
