@@ -16,54 +16,54 @@
 +(DTDotColorGroup *) currentActiveDayColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor blackColor];
-  dcg.fillColor   = [UIColor whiteColor];
-  dcg.textColor  = [UIColor grayColor];
+  dcg.strokeColor      = [UIColor blackColor];
+  dcg.fillColor        = [UIColor whiteColor];
+  dcg.textColor        = [UIColor grayColor];
   return dcg;
 }
 
 +(DTDotColorGroup *) accomplishedDayColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor clearColor];
-  dcg.fillColor   = [UIColor blueColor];
-  dcg.textColor  = [UIColor whiteColor];
+  dcg.strokeColor      = [UIColor clearColor];
+  dcg.fillColor        = [UIColor blueColor];
+  dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }
 
 +(DTDotColorGroup *) someParticipationAndStillActiveColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor orangeColor];
-  dcg.fillColor   = [UIColor lightGrayColor];
-  dcg.textColor  = [UIColor whiteColor];
+  dcg.strokeColor      = [UIColor orangeColor];
+  dcg.fillColor        = [UIColor lightGrayColor];
+  dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }
 
 +(DTDotColorGroup *) someParticipationButFailedColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor blackColor];
-  dcg.fillColor   = [UIColor darkGrayColor];
-  dcg.textColor  = [UIColor whiteColor];
+  dcg.strokeColor      = [UIColor blackColor];
+  dcg.fillColor        = [UIColor darkGrayColor];
+  dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }
 
 +(DTDotColorGroup *) futuresSoBrightYouGottaWearShadesColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor lightGrayColor];
-  dcg.fillColor   = [UIColor lightGrayColor];
-  dcg.textColor  = [UIColor whiteColor];
+  dcg.strokeColor      = [UIColor lightGrayColor];
+  dcg.fillColor        = [UIColor lightGrayColor];
+  dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }
 
 +(DTDotColorGroup *) durationSelectionColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor colorWithWhite:.8f alpha:1.f];
-  dcg.fillColor   = [UIColor colorWithWhite:.4f alpha:.8f];
-  dcg.textColor  = [UIColor lightGrayColor];
+  dcg.strokeColor      = [UIColor colorWithWhite:.8f alpha:1.f];
+  dcg.fillColor        = [UIColor colorWithWhite:.4f alpha:.8f];
+  dcg.textColor        = [UIColor lightGrayColor];
   return dcg;
 }
 
@@ -71,55 +71,63 @@
 +(DTDotColorGroup *) failedDayColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor clearColor];
-  dcg.fillColor   = [UIColor lightGrayColor];
-  dcg.textColor  = [UIColor grayColor];
+  dcg.strokeColor      = [UIColor clearColor];
+  dcg.fillColor        = [UIColor lightGrayColor];
+  dcg.textColor        = [UIColor grayColor];
   return dcg;
 }
 
 +(DTDotColorGroup *) repetitionCountColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor clearColor];
-  dcg.fillColor   = [UIColor blueColor];
-  dcg.textColor  = [UIColor whiteColor];
+  dcg.strokeColor      = [UIColor clearColor];
+  dcg.fillColor        = [UIColor blueColor];
+  dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }
 
 +(DTDotColorGroup *) challengersCountColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor clearColor];
-  dcg.fillColor   = [UIColor yellowColor]; //try to get okra color
-  dcg.textColor  = [UIColor whiteColor];
+  dcg.strokeColor      = [UIColor clearColor];
+  dcg.fillColor        = [UIColor yellowColor]; //try to get okra color
+  dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }
 
 +(DTDotColorGroup *) summaryDayColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor whiteColor];
-  dcg.fillColor   = [UIColor colorWithRed:230.f/255.f green:230.f/255.f blue:230.f/255.f alpha:1.f];
-  dcg.textColor  = [UIColor grayColor];
+  dcg.strokeColor      = [UIColor whiteColor];
+  dcg.fillColor        = [UIColor colorWithRed:230.f/255.f green:230.f/255.f blue:230.f/255.f alpha:1.f];
+  dcg.textColor        = [UIColor grayColor];
   return dcg;
 }
 
 +(DTDotColorGroup *) summaryPercentageColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor clearColor];
-  dcg.fillColor   = [UIColor blueColor];
-  dcg.textColor  = [UIColor whiteColor];
+  dcg.strokeColor      = [UIColor clearColor];
+  dcg.fillColor        = [UIColor blueColor];
+  dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }
 
 +(DTDotColorGroup *) daySelectionColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor = [UIColor lightGrayColor];
-  dcg.fillColor   = [UIColor grayColor];
-  dcg.textColor  = [UIColor whiteColor];
+  dcg.strokeColor      = [UIColor lightGrayColor];
+  dcg.fillColor        = [UIColor grayColor];
+  dcg.textColor        = [UIColor whiteColor];
   return dcg;
+}
+
++ (DTDotColorGroup *) colorGroupForChallengeDay:(PFObject *)challengeDay
+{
+  DTDotColorGroup *dg = [DTDotColorGroup accomplishedDayColorGroup];
+  
+  
+  return dg;
 }
 
 @end
@@ -145,6 +153,11 @@
 
 static CGFloat DOT_PADDING = 3.f;
 static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentage of frame height
+
++ (DTDotElement *)buildForChallengeDay:(PFObject *)challengeDay andDate:(NSDate *)date
+{
+  return [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 50., 50.) andColorGroup:[DTDotColorGroup colorGroupForChallengeDay:challengeDay] andDate:date];
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -248,8 +261,12 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
 
 - (NSNumber*)numberFromDate:(NSDate *)d
 {
-  NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
-  return [NSNumber numberWithInt:[[cal components:NSDayCalendarUnit fromDate:d] day]];
+//  NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
+//  return [NSNumber numberWithInt:[[cal components:NSDayCalendarUnit fromDate:d] day]];
+
+  NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+  [f setNumberStyle:NSNumberFormatterDecimalStyle];
+  return [f numberFromString:[[DTCommonUtilities displayDayFormatter] stringFromDate:d]];
 }
 
 - (void)dotRadius

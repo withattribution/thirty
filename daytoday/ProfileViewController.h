@@ -2,7 +2,7 @@
 //  ProfileViewController.h
 //  daytoday
 //
-//  Created by Anderson Miller on 10/1/13.
+//  Created by Alberto Tafoya on 12/2/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
@@ -10,7 +10,6 @@
 
 @interface ProfileViewController : D2ViewController
 {
-    UIButton *searchChallengesButton;
-    UIButton *createChallengeButton;
+
 }
 @end

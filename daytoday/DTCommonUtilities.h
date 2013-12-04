@@ -11,5 +11,6 @@
 @interface DTCommonUtilities : NSObject
 
 + (NSInteger)minutesFromGMTForDate:(NSDate *)date;
++ (NSDateFormatter *)displayDayFormatter;
 
 @end

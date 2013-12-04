@@ -19,6 +19,11 @@
                           commenters:(NSArray *)commenters
                 isLikedByCurrentUser:(BOOL)liked;
 - (void)refreshCacheActivity:(NSArray *)activities forChallengeDay:(PFObject *)challengeDay;
+- (void)refreshCacheVerification:(NSArray *)verifications forChallengeDay:(PFObject *)challengeDay;
+
+#pragma mark - Intent
+
+
 
 #pragma mark - Comment And Like Get Methods
 

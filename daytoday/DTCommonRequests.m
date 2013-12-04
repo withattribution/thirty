@@ -28,9 +28,9 @@
       PFObject *likeActivity = [PFObject objectWithClassName:kDTActivityClassKey];
       [likeActivity setObject:kDTActivityTypeLike forKey:kDTActivityTypeKey];
       [likeActivity setObject:[PFUser currentUser] forKey:kDTActivityFromUserKey];
-      [likeActivity setObject:[[challengeDay objectForKey:kDTChallengeDayIntentKey]
-                               objectForKey:kDTIntentUserKey]
-                       forKey:kDTActivityToUserKey];
+//      [likeActivity setObject:[[challengeDay objectForKey:kDTChallengeDayIntentKey]
+//                               objectForKey:kDTIntentUserKey]
+//                       forKey:kDTActivityToUserKey];
       likeActivity[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
                                                                                  objectId:challengeDay.objectId];
 
@@ -93,17 +93,17 @@
   uint32_t challengeUserSeed = [[[NSUserDefaults standardUserDefaults] objectForKey:kDTChallengeUserSeed] unsignedIntValue];
   
   [PFCloud callFunctionInBackground:DTQueryActiveDay
-                     withParameters:@{@"seed": @(challengeUserSeed), @"offset": @([DTCommonUtilities minutesFromGMTForDate:date])}
+                     withParameters:@{@"seed": @(challengeUserSeed) }
                               block:^(PFObject *day, NSError *error) {
                                 if (!error) {
-                                  
+                                  [[NSNotificationCenter defaultCenter]
+                                   postNotificationName:DTChallengeDayRetrievedNotification
+                                   object:day
+                                   userInfo:nil];
                                 }else {
                                   NIDINFO("error!: %@",error.localizedDescription);
                                 }
-                    [[NSNotificationCenter defaultCenter]
-                                 postNotificationName:DTChallengeDayRetrievedNotification
-                                               object:day
-                                             userInfo:nil];
+
   }];
 }
 

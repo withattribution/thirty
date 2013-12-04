@@ -208,7 +208,8 @@
   comment[kDTActivityTypeKey] = kDTActivityTypeComment;
   comment[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:self.challengeDay.objectId];
   comment[kDTActivityFromUserKey] = [PFUser currentUser];
-  comment[kDTActivityToUserKey]   = [[self.challengeDay objectForKey:kDTChallengeDayIntentKey] objectForKey:kDTIntentUserKey];
+#warning need to replace method for getting TO USER
+//  comment[kDTActivityToUserKey]   = [[self.challengeDay objectForKey:kDTChallengeDayIntentKey] objectForKey:kDTIntentUserKey];
 
   if(self.commentImageFile && self.commentImageFile){
     //adding image

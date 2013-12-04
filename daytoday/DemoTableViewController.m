@@ -96,10 +96,9 @@
     case 1:
       if ( ![frontNavigationController.topViewController isKindOfClass:[ProfileViewController class]] )
       {
-#warning block this until we have replaced s3 images
-//        ProfileViewController *loginVC = [[ProfileViewController alloc] init];
-//        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginVC];
-//        [revealController setFrontViewController:navigationController animated:YES];
+        ProfileViewController *loginVC = [[ProfileViewController alloc] init];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        [revealController setFrontViewController:navigationController animated:YES];
       }
       else
       {

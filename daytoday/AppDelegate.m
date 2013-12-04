@@ -62,15 +62,27 @@
                 clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
 
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-
+//  [PFUser logOut];
 //  [self createTestModels];
   return YES;
 }
 
-//- (void)applicationSignificantTimeChange:(UIApplication *)application
-//{
-//  
-//}
+- (void)applicationSignificantTimeChange:(UIApplication *)application
+{
+  if ([PFUser currentUser]) {
+    if ([DTCommonUtilities minutesFromGMTForDate:[NSDate date]] != [[[PFUser currentUser] objectForKey:kDTUserGMTOffset] integerValue] ) {
+      [[PFUser currentUser] setObject:@([DTCommonUtilities minutesFromGMTForDate:[NSDate date]]) forKey:kDTUserGMTOffset];
+      [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+        if(succeeded) {
+          NIDINFO(@"updated GMT Offset: %@",[[PFUser currentUser] objectForKey:kDTUserGMTOffset]);
+        }
+        else {
+          NIDINFO(@"user failed to update GMT Offset: %@",[error localizedDescription]);
+        }
+      }];
+    }
+  }
+}
 
 - (void)createTestModels
 {

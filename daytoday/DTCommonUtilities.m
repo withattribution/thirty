@@ -15,4 +15,28 @@
   return ([[NSTimeZone localTimeZone] secondsFromGMTForDate:date]/60.f);
 }
 
++ (NSDateFormatter *)displayDayFormatter
+{
+  static dispatch_once_t pred = 0;
+  __strong static id _sharedFormatter = nil;
+  dispatch_once(&pred, ^{
+    _sharedFormatter = [DTCommonUtilities dayformatter];
+  });
+  return _sharedFormatter;
+}
+
++ (NSDateFormatter *)dayformatter
+{
+  NSDateFormatter *df = [[NSDateFormatter alloc] init];
+  if([PFUser currentUser]) {
+    //convert back from minutes (stored user offset) to seconds
+    [df setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:[[[PFUser currentUser] objectForKey:kDTUserGMTOffset] integerValue]*60]];
+  }
+  else{
+    [df setTimeZone:[NSTimeZone localTimeZone]];
+  }
+  [df setDateFormat:kDTDateFormatNSDateDisplayDay];
+  return df;
+}
+
 @end

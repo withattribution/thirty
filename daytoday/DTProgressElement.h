@@ -50,6 +50,14 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 
 @end
 
+@interface DTChallengeCalendar : NSObject
+
++ (DTChallengeCalendar *)calendarWithIntent:(PFObject *)intent;
+- (NSArray *)progressSnapShotElements;
+- (UIView *)summaryProgressView;
+
+@end
+
 //return an object that holds onto the progress elements that
 //will be used in particular views
 //for instance:
@@ -63,8 +71,10 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 @property (nonatomic,retain) NSArray *progressRows; //Array holding DTProgressRows indexed by week
 
 - (id)initWithIntent:(Intent *)i;
-- (NSArray *)progressSnapShotElements;
-- (UIView *)summaryProgressView;
+//- (NSArray *)progressSnapShotElements;
+//- (UIView *)summaryProgressView;
+
+
 
 @end
 

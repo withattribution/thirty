@@ -14,8 +14,12 @@ extern NSString *const DTQueryActiveDay;
 // Challenge Seed
 extern NSString *const kDTChallengeUserSeed;
 
-#pragma mark - DTNotifications
+#pragma mark - DTDateFormatString
+// Date Format Constants
+extern NSString *const kDTDateFormatNSDateDisplayDay;
 
+#pragma mark - DTNotifications
+// Notification Constants
 extern NSString *const DTChallengeDayActivityCacheDidRefreshNotification;
 extern NSString *const DTChallengeDayRetrievedNotification;
 
@@ -45,6 +49,7 @@ extern NSString *const kDTActivityTypeVerificationFinish;
 // Field Keys
 extern NSString *const kDTUserDisplayNameKey;
 extern NSString *const kDTUserProfileImageKey;
+extern NSString *const kDTUserGMTOffset;
 
 #pragma mark - Image Class
 // Class Key
@@ -71,7 +76,7 @@ extern NSString *const kDTChallengeDayTaskCompletedCountKey;
 extern NSString *const kDTChallengeDayAccomplishedKey;
 extern NSString *const kDTChallengeDayOrdinalDayKey;
 extern NSString *const kDTChallengeDayActiveDateKey;
-extern NSString *const kDTChallengeDayIntentKey;
+//extern NSString *const kDTChallengeDayIntentKey;
 
 #pragma mark - Cached ChallengeDay Attributes
 extern NSString *const kDTChallengeDayAttributeLikeCountKey;
@@ -88,6 +93,7 @@ extern NSString *const kDTIntentClassKey;
 extern NSString *const kDTIntentStartingKey;
 extern NSString *const kDTIntentEndingKey;
 extern NSString *const kDTIntentUserKey;
+extern NSString *const kDTIntentChallengeDays;
 extern NSString *const kDTIntentChallengeKey;
 
 #pragma mark - Challenge Class

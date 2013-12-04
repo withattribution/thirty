@@ -2,17 +2,18 @@ var murmurHash3 = require('cloud/libs/murmurHash3.min.js');
 var moment = require('cloud/libs/moment.min.js');
 
 Parse.Cloud.define("activeDay",function(request,response){
-  var offset = request.params.offset * (-1); //offset client time to match server timezone 
-                                             //which is assumed to be GMT 0 
+  var offset = request.user.get("gmtOffset") * (-1);//offset client time to match server timezone 
+                                                    //which is assumed to be GMT 0 
   var seed = request.params.seed;
   var activeDay = murmurHash3.x86.hash32(moment().zone(offset).format("MM/DD/YYYY"),seed);
 
-//  console.log("the offset date: "+moment().zone(offset).format("MM/DD/YYYY"));
+  // console.log("the offset date: "+moment().zone(offset).format("MM/DD/YYYY"));
   var query = new Parse.Query("ChallengeDay");
   query.equalTo("active",activeDay);
-  query.include("intent");
+  // query.include("intent");
   query.first({
     success: function(day) {
+      console.log("active lookup success!");
       response.success(day);
     },
     error: function() {
@@ -23,22 +24,49 @@ Parse.Cloud.define("activeDay",function(request,response){
 
 Parse.Cloud.afterSave("Challenge",function(request,response)
 {
-  var Intent = Parse.Object.extend("Intent");
-  var intent = new Intent();
+  var offset = request.user.get("gmtOffset") * (-1);
+  var userSeed = murmurHash3.x86.hash32(request.user.id);
+  // console.log("user seed: "+userSeed);
 
-  intent.save({
-      start: moment().toDate(),
-        end: moment().add('days',(request.object.get("duration") - 1)).toDate(),
-       user: request.user,
-  challenge: request.object
-  }, {
-    success: function(intent) {
-      console.log("intent saved");
+  var defaults = {
+          // startMoment: moment(request.object.get("start")),
+          //   endMoment: moment(request.object.get("end")).add('days',1),
+          startMoment: moment().zone(offset),
+            endMoment: moment().zone(offset).add('days',request.object.get("duration")), //includes day past challenge for challenge day array creation
+    challengeUserSeed: murmurHash3.x86.hash32(request.object.id,userSeed),
+             required: request.object.get("freq")
+  }
+  var days = populateDays(defaults);
+  
+  Parse.Object.saveAll( days, {
+    success: function(days) {
+    // All the objects were saved.
+      console.log("all the days are saved");
+      
+      var Intent = Parse.Object.extend("Intent");
+      var intent = new Intent();
+
+      intent.save({
+          start: moment().zone(offset).toDate(),
+            end: moment().zone(offset).add('days',(request.object.get("duration") - 1)).toDate(),
+           user: request.user,
+      challenge: request.object,
+           days: days
+      }, {
+        success: function(intent) {
+          console.log("intent saved");
+        },
+        error: function(intent, error) {
+          console.log(error.description);
+        }
+      });
     },
-    error: function(intent, error) {
-      console.log(error.description);
-    }
+    error: function(error) {
+    // An error occurred while saving one of the objects.
+      console.log("errored out all hard"+error.code);
+    },
   });
+
 });
 
 function populateDays(defaults)
@@ -58,7 +86,6 @@ function populateDays(defaults)
     day.set("accomplished",false); 
     day.set("ordinal",o); 
     day.set("active",murmurHash3.x86.hash32(d.format("MM/DD/YYYY"),defaults.challengeUserSeed)); 
-    day.set("intent",defaults.intent); 
 
     challengeDays.push(day);
     o++;
@@ -66,43 +93,43 @@ function populateDays(defaults)
   return challengeDays;
 };
 
-Parse.Cloud.afterSave("Intent", function(request, response)
-{
-  // console.log("user id: "+request.user.id);
+// Parse.Cloud.afterSave("Intent", function(request, response)
+// {
+//   // console.log("user id: "+request.user.id);
 
-  var userSeed = murmurHash3.x86.hash32(request.user.id);
-  // console.log("user seed: "+userSeed);
+//   var userSeed = murmurHash3.x86.hash32(request.user.id);
+//   // console.log("user seed: "+userSeed);
 
-  var challenge = request.object.get("challenge");
+//   var challenge = request.object.get("challenge");
 
-  challenge.fetch().then(function() {
-    // console.log("chalId: "+challenge.id);
+//   challenge.fetch().then(function() {
+//     // console.log("chalId: "+challenge.id);
 
-    var chUsrSeed = murmurHash3.x86.hash32(challenge.id,userSeed);
-    // console.log("chalUserSeed: "+chUsrSeed);
+//     var chUsrSeed = murmurHash3.x86.hash32(challenge.id,userSeed);
+//     // console.log("chalUserSeed: "+chUsrSeed);
 
-    var defaults = {
-            startMoment: moment(request.object.get("start")),
-              endMoment: moment(request.object.get("end")).add('days',1),
-      challengeUserSeed: murmurHash3.x86.hash32(challenge.id,userSeed),
-                 intent: request.object,
-               required: challenge.get("freq")
-    }
-    var days = populateDays(defaults);
+//     var defaults = {
+//             startMoment: moment(request.object.get("start")),
+//               endMoment: moment(request.object.get("end")).add('days',1),
+//       challengeUserSeed: murmurHash3.x86.hash32(challenge.id,userSeed),
+//                  intent: request.object,
+//                required: challenge.get("freq")
+//     }
+//     var days = populateDays(defaults);
     
-    Parse.Object.saveAll( days, {
-      success: function(days) {
-      // All the objects were saved.
-        console.log("all the days are saved");
-      },
-      error: function(error) {
-      // An error occurred while saving one of the objects.
-        console.log("errored out all hard"+error.code);
-      },
-    });
-    
-  });
-});
+//     Parse.Object.saveAll( days, {
+//       success: function(days) {
+//       // All the objects were saved.
+//         console.log("all the days are saved");
+//       },
+//       error: function(error) {
+//       // An error occurred while saving one of the objects.
+//         console.log("errored out all hard"+error.code);
+//       },
+//     });
+
+//   });
+// });
 
 Parse.Cloud.beforeSave("Activity", function(request, response)
 {
@@ -116,7 +143,7 @@ Parse.Cloud.beforeSave("Activity", function(request, response)
 
   var challengeDayId = request.object.get("challengeDay");
   var challengeDay = Parse.Object.extend("ChallengeDay");
-
+  //this should be a fetch
   var query = new Parse.Query(challengeDay);
   query.get(challengeDayId.id, {
     success: function(challengeDay) {
@@ -131,13 +158,13 @@ Parse.Cloud.beforeSave("Activity", function(request, response)
 
       challengeDay.save(null, {
         success: function(challengeDay) {
-          alert('challenge day saved: ' + challengeDay.id);
+          console.log('challenge day saved: ' + challengeDay.id);
           response.success();
         },
         error: function(challengeDay, error) {
           // Execute any logic that should take place if the save fails.
           // error is a Parse.Error with an error code and description.
-          alert('failed challenge day saving: ' + error.description);
+          console.log('failed challenge day saving: ' + error.description);
           response.error(error.description);
         }
       });
@@ -145,7 +172,7 @@ Parse.Cloud.beforeSave("Activity", function(request, response)
     error: function(object, error) {
       // The object was not retrieved successfully.
       // error is a Parse.Error with an error code and description.
-      alert('failed to query challenge day: ' + error.description);
+      console.log('failed to query challenge day: ' + error.description);
       response.error(error.description);
     }
   });

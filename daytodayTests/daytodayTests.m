@@ -271,8 +271,6 @@
     }];
     [req.client enqueueHTTPRequestOperation:jrequest];
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
-
-    
 }
 
 -(void)testFlow
@@ -437,7 +435,6 @@
 
 -(void) testFetchingImagesForChallenge
 {
-
     NSString *img2small = @"http://daytoday-dev.s3.amazonaws.com/images/6fdd5ad843b94bcf9b147328072e02a3.jpg";
     NSString *img2med  = @"http://daytoday-dev.s3.amazonaws.com/images/1433910dd3b9443fb3d3fb2151866114.jpg";
     NSString *img2large = @"http://daytoday-dev.s3.amazonaws.com/images/a9fc822504d947318c8c0adf99f4b116.jpg";
@@ -465,8 +462,6 @@
     STAssertNil(error, @"this shouldn't be an error");
     
     STAssertTrue([returnObjects count] == 1, @"should return one small image");
-    
-    
-    
 }
+
 @end

@@ -72,7 +72,7 @@
       [_loginButton.titleLabel setTextColor:[UIColor whiteColor]];
       [_loginButton setBackgroundColor:[UIColor colorWithWhite:.5f alpha:1.f]];
       
-      [_loginButton addTarget:self.superview action:@selector(displayLoginForm:) forControlEvents:UIControlEventTouchUpInside];
+      [_loginButton addTarget:self.superview action:@selector(signupOrLogin:) forControlEvents:UIControlEventTouchUpInside];
       [_signupButton setEnabled:_shouldAllowLogin];
 
       [_loginButton.layer setCornerRadius:2.5f];

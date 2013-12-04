@@ -9,22 +9,24 @@
 #import "DTConstants.h"
 
 #pragma mark - DTCloudFunctions
-
+// Cloud Functions
 NSString *const DTQueryActiveDay                       =@"activeDay";
 
-
 #pragma mark - DTUserDefaults
+// Challenge Seed
 NSString *const kDTChallengeUserSeed                   =@"seed";
 
+#pragma mark - DTDateFormatString
+// Date Format Constants
+NSString *const kDTDateFormatNSDateDisplayDay          =@"d";
 
 #pragma mark - DTNotifications
-
+// Notification Constants
 NSString *const DTChallengeDayActivityCacheDidRefreshNotification =
   @"com.aok.DayToday.cache.didRefreshActivityForChallengeDayNotification";
 
 NSString *const DTChallengeDayRetrievedNotification =
   @"com.aok.DayToday.day.didRetrieveChallengeDayNotification";
-
 
 #pragma mark - Activity Class
 // Class Key
@@ -52,6 +54,7 @@ NSString *const kDTActivityTypeVerificationFinish      =@"verificationFinish";
 // Field Keys
 NSString *const kDTUserDisplayNameKey                  =@"displayName";
 NSString *const kDTUserProfileImageKey                 =@"profileImage";
+NSString *const kDTUserGMTOffset                       =@"gmtOffset";
 
 #pragma mark - Image Class
 // Class Key
@@ -78,7 +81,7 @@ NSString *const kDTChallengeDayTaskCompletedCountKey   =@"completed";
 NSString *const kDTChallengeDayAccomplishedKey         =@"accomplished";
 NSString *const kDTChallengeDayOrdinalDayKey           =@"ordinal";
 NSString *const kDTChallengeDayActiveDateKey           =@"active";
-NSString *const kDTChallengeDayIntentKey               =@"intent";
+//NSString *const kDTChallengeDayIntentKey               =@"intent";
 
 #pragma mark - Cached ChallengeDay Attributes
 NSString *const kDTChallengeDayAttributeLikeCountKey            =@"likes";
@@ -95,6 +98,7 @@ NSString *const kDTIntentClassKey                      =@"Intent";
 NSString *const kDTIntentStartingKey                   =@"start";
 NSString *const kDTIntentEndingKey                     =@"end";
 NSString *const kDTIntentUserKey                       =@"user";
+NSString *const kDTIntentChallengeDays                 =@"days";
 NSString *const kDTIntentChallengeKey                  =@"challenge";
 
 #pragma mark - Challenge Class

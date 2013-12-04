@@ -22,6 +22,8 @@
 +(DTDotColorGroup *) summaryDayColorGroup;
 +(DTDotColorGroup *) summaryPercentageColorGroup;
 
++ (DTDotColorGroup *) colorGroupForChallengeDay:(PFObject *)challengeDay;
+
 @property (nonatomic, strong) UIColor* strokeColor;
 @property (nonatomic, strong) UIColor* fillColor;
 @property (nonatomic, strong) UIColor* textColor;
@@ -34,6 +36,8 @@
 @property (nonatomic,retain) NSNumber *dotNumber;
 @property (nonatomic,retain) NSDate *dotDate;
 @property (nonatomic,retain) UIImage *dotImage;
+
++ (DTDotElement *)buildForChallengeDay:(PFObject *)challengeDay andDate:(NSDate *)date;
 
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg;
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg andNumber:(NSNumber *)num;

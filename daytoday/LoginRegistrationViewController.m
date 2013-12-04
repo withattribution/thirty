@@ -146,7 +146,8 @@
 - (void)signupOrLogin:(id)sender
 {
   PFUser *user = [PFUser user];
-
+  [user setObject:@([DTCommonUtilities minutesFromGMTForDate:[NSDate date]]) forKey:kDTUserGMTOffset];
+  
   if(_isLogin && [self hasValidCredentialsForState]) {
     NSString *loginCredential;
     if (![[self.credentialsDictionary objectForKey:@"username"] isEqual:[NSNull null]]) {
