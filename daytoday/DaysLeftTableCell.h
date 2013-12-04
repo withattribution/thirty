@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Intent+D2D.h"
 
 @interface DaysLeftTableCell : UITableViewCell
 
-@property (nonatomic,retain) Intent *intent;
+@property (nonatomic,retain) PFObject *intent;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withIntent:(Intent *)i;
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withIntent:(PFObject *)i;
 
 @end

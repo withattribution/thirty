@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "Intent+D2D.h"
-#import "ChallengeDay+D2D.h"
-#import "Challenge+D2D.h"
-
 typedef NS_ENUM(NSInteger, DTProgressRowEndStyle) {
     DTProgressRowEndFlat,
     DTProgressRowEndFlatLeft,
@@ -65,18 +61,18 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 //the challenge detail progress view
 //the summary progress view
 
-@interface DTProgressElementLayout : NSObject
+//@interface DTProgressElementLayout : NSObject
+//
+//@property (nonatomic,retain) Intent *intent;
+//@property (nonatomic,retain) NSArray *progressRows; //Array holding DTProgressRows indexed by week
+//
+//- (id)initWithIntent:(Intent *)i;
+////- (NSArray *)progressSnapShotElements;
+////- (UIView *)summaryProgressView;
 
-@property (nonatomic,retain) Intent *intent;
-@property (nonatomic,retain) NSArray *progressRows; //Array holding DTProgressRows indexed by week
-
-- (id)initWithIntent:(Intent *)i;
-//- (NSArray *)progressSnapShotElements;
-//- (UIView *)summaryProgressView;
 
 
-
-@end
+//@end
 
 @interface DTProgressElement : UIView
 

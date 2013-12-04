@@ -20,7 +20,7 @@
 #import "DTSelectionSheet.h"
 #import "DTInfiniteScrollView.h"
 #import "DTDotElement.h"
-#import "Verification+UImage.h"
+#import "Verification.h"
 #import "Category+UIImage.h"
 
 #import "UIColor+SR.h"

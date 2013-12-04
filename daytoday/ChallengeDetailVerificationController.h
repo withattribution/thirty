@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
-#import "D2ViewController.h"
+#import "DTViewController.h"
 #import "DTVerificationElement.h"
 
-@interface ChallengeDetailVerificationController : D2ViewController 
+@interface ChallengeDetailVerificationController : DTViewController
 
 @property (nonatomic,strong) DTVerificationElement *verifyElement;
 

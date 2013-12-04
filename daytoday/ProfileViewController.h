@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
-#import "D2ViewController.h"
+#import "DTViewController.h"
 
-@interface ProfileViewController : D2ViewController
+@interface ProfileViewController : DTViewController
 {
 
 }

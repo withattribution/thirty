@@ -25,8 +25,8 @@
 */
 
 #import <UIKit/UIKit.h>
-#import "D2ViewController.h"
+#import "DTViewController.h"
 
-@interface FrontViewController : D2ViewController
+@interface FrontViewController : DTViewController
 
 @end

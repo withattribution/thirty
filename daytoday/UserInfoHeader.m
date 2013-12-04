@@ -7,7 +7,6 @@
 //
 
 #import "UserInfoHeader.h"
-#import "Image+D2D.h"
 #import "NINetworkImageView.h"
 
 //This is the basic user info layout for

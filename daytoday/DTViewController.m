@@ -1,20 +1,20 @@
 //
-//  D2ViewController.m
+//  DTViewController.m
 //  daytoday
 //
-//  Created by Anderson Miller on 10/1/13.
+//  Created by Alberto Tafoya on 12/1/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
-#import "D2ViewController.h"
+#import "DTViewController.h"
 #import "AppDelegate.h"
 #import "SWRevealViewController.h"
 
-@interface D2ViewController ()
+@interface DTViewController ()
 
 @end
 
-@implementation D2ViewController
+@implementation DTViewController
 
 - (void)viewDidLoad
 {
@@ -33,20 +33,10 @@
     return [[UIApplication sharedApplication] statusBarFrame].size.height;
 }
 
--(UIColor*) randomColor
-{
-    return [UIColor randomColor];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
--(NSManagedObjectContext*) context
-{
-    return ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
 }
 
 @end

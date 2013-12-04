@@ -2,17 +2,16 @@
 //  AppDelegate.h
 //  daytoday
 //
-//  Created by Anderson Miller on 8/15/13.
+//  Created by Alberto Tafoya on 12/04/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "D2NavController.h"
+#import "DTNavController.h"
 #import "LoginRegistrationViewController.h"
 #import "ProfileViewController.h"
 #import "CreateChallengeViewController.h"
 #import "ChallengeDetailVerificationController.h"
-#import <CoreData/CoreData.h>
 
 @class ViewController;
 @class SWRevealViewController;
@@ -21,7 +20,7 @@
 
 @property (strong,nonatomic) UIWindow *window;
 
-@property (strong,nonatomic) D2NavController *navController;
+@property (strong,nonatomic) DTNavController *navController;
 @property (strong,nonatomic) LoginRegistrationViewController *loginController;
 @property (strong,nonatomic) ProfileViewController *profileController;
 @property (strong,nonatomic) ViewController *viewController;
@@ -29,12 +28,5 @@
 #ifdef INTERFACE_DEMO_MODE
 @property (strong,nonatomic) SWRevealViewController *demoController;
 #endif
-
-@property (readonly,strong,nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly,strong,nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly,strong,nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-- (void)saveContext;
-- (NSURL *)applicationDocumentsDirectory;
 
 @end

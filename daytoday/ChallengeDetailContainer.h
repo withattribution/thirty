@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "D2ViewController.h"
+#import "DTViewController.h"
 
-@interface ChallengeDetailContainer : D2ViewController
+@interface ChallengeDetailContainer : DTViewController
 
 @end
 

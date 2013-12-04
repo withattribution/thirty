@@ -2,7 +2,7 @@
 //  CreateChallengeViewController.m
 //  daytoday
 //
-//  Created by Anderson Miller on 10/1/13.
+//  Created by Alberto Tafoya on 12/1/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 #import "CreateChallengeViewController.h"
 
 #import "DTSelectionSheet.h"
-#import "Verification+UImage.h"
+#import "Verification.h"
 #import "Category+UIImage.h"
 
 #import "ChallengeName.h"
@@ -610,47 +610,47 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                    completion:NULL];
 }
 
-- (void)attemptChallengeCreation:(UIButton *)b
-{
-  __block BOOL failedTest = YES;
-  [self.creationDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop){
-    if (obj && [obj isKindOfClass:[NSString class]] && ![obj isEqual:[NSNull null]]) {
-      if (((NSString*)obj).length > 0) {
-        failedTest = NO;
-      }else {
-        failedTest = YES;
-        *stop = YES;
-      }
-    }else {
-      failedTest =YES;
-      *stop = YES;
-    }
-  }];
-  
-  if (!failedTest) {
-    ChallengeRequest *challengeRequest = [[ChallengeRequest alloc] initWithContext:((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext];
-    [challengeRequest setDelegate:self];
-    [challengeRequest createChallenge:self.creationDictionary];
-  }
-  else{
-    UIAlertView *nope = [[UIAlertView alloc] initWithTitle:@"Nope!" message:@"Try again, you're just missing like maybe even just one thing -- you can do it!" delegate:nil cancelButtonTitle:@"PUT CHIPS IN A SANDWICH!" otherButtonTitles:nil];
-    [nope show];
-  }
-}
+//- (void)attemptChallengeCreation:(UIButton *)b
+//{
+//  __block BOOL failedTest = YES;
+//  [self.creationDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop){
+//    if (obj && [obj isKindOfClass:[NSString class]] && ![obj isEqual:[NSNull null]]) {
+//      if (((NSString*)obj).length > 0) {
+//        failedTest = NO;
+//      }else {
+//        failedTest = YES;
+//        *stop = YES;
+//      }
+//    }else {
+//      failedTest =YES;
+//      *stop = YES;
+//    }
+//  }];
+//  
+//  if (!failedTest) {
+//    ChallengeRequest *challengeRequest = [[ChallengeRequest alloc] initWithContext:((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext];
+//    [challengeRequest setDelegate:self];
+//    [challengeRequest createChallenge:self.creationDictionary];
+//  }
+//  else{
+//    UIAlertView *nope = [[UIAlertView alloc] initWithTitle:@"Nope!" message:@"Try again, you're just missing like maybe even just one thing -- you can do it!" delegate:nil cancelButtonTitle:@"PUT CHIPS IN A SANDWICH!" otherButtonTitles:nil];
+//    [nope show];
+//  }
+//}
 
-#pragma mark Challenge Creation Request Delegate Methods
-
-- (void) challengeSuccessfullyCreated:(Challenge*)challenge
-{
-  [self transitionShareChallengeController];
-}
-
-- (void) requestDidError:(NSError*)err
-{
-  NIDINFO(@"Challenge Creation failed  :( with error: %@",err);
-  UIAlertView *chFail = [[UIAlertView alloc] initWithTitle:@"Challenge Creation Failed with Error description" message:[[err userInfo] objectForKey:NSLocalizedDescriptionKey] delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
-  [chFail show];
-}
+//#pragma mark Challenge Creation Request Delegate Methods
+//
+//- (void) challengeSuccessfullyCreated:(Challenge*)challenge
+//{
+//  [self transitionShareChallengeController];
+//}
+//
+//- (void) requestDidError:(NSError*)err
+//{
+//  NIDINFO(@"Challenge Creation failed  :( with error: %@",err);
+//  UIAlertView *chFail = [[UIAlertView alloc] initWithTitle:@"Challenge Creation Failed with Error description" message:[[err userInfo] objectForKey:NSLocalizedDescriptionKey] delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+//  [chFail show];
+//}
 
 #pragma mark END OF CHALLENGE CREATION LOOP BACK TO BEGINNING
 

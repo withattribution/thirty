@@ -1,27 +1,24 @@
 //
-//  Verification.h
+//  Verification+UImage.h
 //  daytoday
 //
-//  Created by Anderson Miller on 10/10/13.
+//  Created by pasmo on 10/29/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+#import <UIKit/UIKit.h>
 
-@class Image, Tick;
+typedef NS_ENUM(NSInteger, DTVerificationType) {
+  DTVerificationTickMark,
+  DTVerificationCheckIn,
+  DTVerificationPhoto,
+  DTVerificationTimer
+};
 
-@interface Verification : NSManagedObject
+@interface Verification : NSObject
 
-@property (nonatomic, retain) NSDate * createdAt;
-@property (nonatomic, retain) NSString * desc;
-@property (nonatomic, retain) NSNumber * duration;
-@property (nonatomic, retain) NSNumber * enumeration;
-@property (nonatomic, retain) NSNumber * floatNumber;
-@property (nonatomic, retain) NSNumber * foursquareId;
-@property (nonatomic, retain) NSNumber * verificationId;
-@property (nonatomic, retain) NSNumber * wholeNumber;
-@property (nonatomic, retain) Image *image;
-@property (nonatomic, retain) Tick *tick;
++ (UIImage *)imageForType:(DTVerificationType)type;
++ (NSString *)stringForType:(DTVerificationType)type;
++ (NSArray *)verficationImages;
 
 @end
