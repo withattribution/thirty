@@ -888,8 +888,8 @@
 			isa = PBXGroup;
 			children = (
 				B7E61D4717BD6AA5002B681B /* daytoday */,
-				A1C60D89183D57A300C98C69 /* external */,
 				A1E4256718512E9800DAE577 /* daytodayTests */,
+				A1C60D89183D57A300C98C69 /* external */,
 				B7E61D4017BD6AA5002B681B /* Frameworks */,
 				B7E61D3F17BD6AA5002B681B /* Products */,
 			);
