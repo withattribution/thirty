@@ -7,7 +7,7 @@
 //
 
 #import "DTInfiniteScrollView.h"
-#import "UIColor+SR.h"
+
 
 @interface DTInfiniteScrollView ()
 

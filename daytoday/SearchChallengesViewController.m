@@ -7,7 +7,7 @@
 //
 
 #import "SearchChallengesViewController.h"
-#import <UIColor+SR.h>
+
 
 @interface SearchChallengesViewController ()
 

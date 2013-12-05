@@ -7,7 +7,7 @@
 //
 
 #import "ProfileSectionHeaderView.h"
-#import "UIColor+SR.h"
+
 
 @implementation ProfileSectionHeaderView
 @synthesize challengeLabel,sectionImageView;

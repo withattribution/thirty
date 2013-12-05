@@ -23,8 +23,6 @@
 #import "Verification.h"
 #import "Category+UIImage.h"
 
-#import "UIColor+SR.h"
-
 @interface DTSelectionSheet () {
   NSInteger _currentPage;
 }
@@ -182,7 +180,7 @@ NSInteger static MAX_CATEGORIES = 8;
         UIButton *imageButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [imageButton setFrame:image.bounds];
         [imageButton setTag:i];
-        [imageButton setBackgroundColor:[UIColor randomColor]];
+        [imageButton setBackgroundColor:[UIColor orangeColor]];
         [imageButton addTarget:self action:@selector(selectionForButton:) forControlEvents:UIControlEventTouchUpInside];
 
         [image addSubview:imageButton];
@@ -285,7 +283,7 @@ NSInteger static MAX_CATEGORIES = 8;
                                                                        0,
                                                                        (contentFrameWidth+2*SCROLL_PADDING),
                                                                        contentFrameHeight)];
-      [containerView setBackgroundColor:[UIColor randomColor]];
+      [containerView setBackgroundColor:[UIColor orangeColor]];
       [containerView setAlpha:.5];
 
       UILabel *label = [[UILabel alloc] initWithFrame:((UIView*)[self.selectionArray objectAtIndex:i]).bounds];

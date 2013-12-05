@@ -10,7 +10,6 @@
 
 
 #import "UIImage+Resizing.h"
-#import "UIColor+SR.h"
 
 @interface ChallengeDetailCommentController ()
 
@@ -96,7 +95,7 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
 //    cell.cellInsetWidth = kPAPCellInsetWidth;
 //    cell.delegate = self;
-    cell.backgroundColor = [UIColor randomColor];
+    cell.backgroundColor = [UIColor orangeColor];
   }
   
   cell.textLabel.text = [object objectForKey:kDTActivityContentKey];

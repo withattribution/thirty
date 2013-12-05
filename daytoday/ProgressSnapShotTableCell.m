@@ -9,8 +9,6 @@
 #import "ProgressSnapShotTableCell.h"
 #import "DTProgressElement.h"
 
-#import "UIColor+SR.h"
-
 @implementation ProgressSnapShotTableCell
 @synthesize snapShotElements;
 

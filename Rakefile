@@ -11,15 +11,12 @@ end
 
 desc "get submodules"
 task :submodule do
-  sh "git submodule init"
-  sh "git submodule update"
+  sh "git submodule update --init --recursive"
   pwd = FileUtils.pwd()
-  FileUtils.cd "sr-ios-library"
-  sh "git submodule init"
-  sh "git submodule update"
-  FileUtils.cd "nimbus"
-  sh "git submodule init"
-  sh "git submodule update"
+  FileUtils.cd "external/lib-aok-ios"
+  sh "git submodule update --init --recursive"
+  FileUtils.cd "externals/nimbus"
+  sh "git submodule update --init --recursive"
   FileUtils.cd pwd
 end
 

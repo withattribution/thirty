@@ -17,8 +17,6 @@
 
 #import "DTProgressElement.h"
 
-#import <UIColor+SR.h>
-
 @implementation ProfileHistoryTableView
 
 static NSString *daysLeftCellReuseIdentifier = @"daysLeftCellReuseIdentifier";
@@ -84,7 +82,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
             //    cell.cellInsetWidth = kPAPCellInsetWidth;
             //    cell.delegate = self;
-            cell.backgroundColor = [UIColor randomColor];
+            cell.backgroundColor = [UIColor orangeColor];
           }
           return cell;
         }

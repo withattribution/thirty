@@ -111,7 +111,7 @@
 //      }
     }
     else {
-      NIDINFO(@"%@",[err localizedDescription]);
+//      NIDINFO(@"%@",[err localizedDescription]);
     }
   }];
 }

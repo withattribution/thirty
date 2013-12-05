@@ -16,7 +16,6 @@
 #import "ChallengeName.h"
 #import "ChallengeDescription.h"
 
-#import <UIColor+SR.h>
 #import "DTDotElement.h"
 
 @interface CreateChallengeViewController () {
@@ -137,7 +136,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 {
   UIViewController *viewController = [UIViewController new];
   viewController.view.frame = self.view.bounds;
-  viewController.view.backgroundColor = [UIColor randomColor];
+  viewController.view.backgroundColor = [UIColor orangeColor];
 
   [nameView addObserver:viewController forKeyPath:@"challengeName" options:NSKeyValueObservingOptionNew context:NULL];
 
@@ -483,7 +482,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   UIButton *startButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [startButton setTitle:startText forState:UIControlStateNormal];
-  [startButton setBackgroundColor:[UIColor randomColor]];
+  [startButton setBackgroundColor:[UIColor orangeColor]];
   [startButton addTarget:self action:@selector(attemptChallengeCreation:) forControlEvents:UIControlEventTouchUpInside];
   
   [startButton setTranslatesAutoresizingMaskIntoConstraints:NO];
