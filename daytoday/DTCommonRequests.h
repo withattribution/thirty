@@ -14,9 +14,9 @@
 + (void)unLikeChallengeDayInBackGround:(PFObject *)challengeDay block:(void(^)(BOOL succeeded, NSError *error))completionBlock;
 
 + (void)activeDayForDate:(NSDate *)date;
-+ (void)intentsForUser:(PFUser *)user;
 
 
++ (PFQuery *)queryForchallengeDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy;
 + (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy;
 
 @end

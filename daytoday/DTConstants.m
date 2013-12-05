@@ -28,6 +28,9 @@ NSString *const DTChallengeDayActivityCacheDidRefreshNotification =
 NSString *const DTChallengeDayRetrievedNotification =
   @"com.aok.DayToday.day.didRetrieveChallengeDayNotification";
 
+NSString *const DTChallengeDaysForIntentRetrievedNotification =
+@"com.aok.DayToday.days.didRetrieveChallengeDaysNotification";
+
 #pragma mark - Activity Class
 // Class Key
 NSString *const kDTActivityClassKey                    =@"Activity";
@@ -48,6 +51,7 @@ NSString *const kDTActivityTypeFollow                  =@"follow";
 NSString *const kDTActivityTypeChallengeCreation       =@"challengeCreation";
 NSString *const kDTActivityTypeChallengeJoin           =@"challengeJoin";
 NSString *const kDTActivityTypeChallengeFinish         =@"challengeFinish";
+NSString *const kDTActivityTypeChallengeDayFinish      =@"challengeDayAccomplished";
 NSString *const kDTActivityTypeVerificationFinish      =@"verificationFinish";
 
 #pragma mark - User Class
@@ -80,8 +84,8 @@ NSString *const kDTChallengeDayTaskRequiredCountKey    =@"required";
 NSString *const kDTChallengeDayTaskCompletedCountKey   =@"completed";
 NSString *const kDTChallengeDayAccomplishedKey         =@"accomplished";
 NSString *const kDTChallengeDayOrdinalDayKey           =@"ordinal";
-NSString *const kDTChallengeDayActiveDateKey           =@"active";
-//NSString *const kDTChallengeDayIntentKey               =@"intent";
+NSString *const kDTChallengeDayActiveHashKey           =@"active";
+NSString *const kDTChallengeDayIntentKey               =@"intent";
 
 #pragma mark - Cached ChallengeDay Attributes
 NSString *const kDTChallengeDayAttributeLikeCountKey            =@"likes";
@@ -98,7 +102,8 @@ NSString *const kDTIntentClassKey                      =@"Intent";
 NSString *const kDTIntentStartingKey                   =@"start";
 NSString *const kDTIntentEndingKey                     =@"end";
 NSString *const kDTIntentUserKey                       =@"user";
-NSString *const kDTIntentChallengeDays                 =@"days";
+//NSString *const kDTIntentChallengeDays                 =@"days";
+NSString *const kDTIntentAccomplishedIntentKey         =@"accomplished";
 NSString *const kDTIntentChallengeKey                  =@"challenge";
 
 #pragma mark - Challenge Class

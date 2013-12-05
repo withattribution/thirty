@@ -23,7 +23,7 @@
 
 #pragma mark - Intent
 
-
+//  [[DTCache sharedCache] refreshCacheChallengeAttributes:self.objects forChallengeDay:self.challengeDay];
 
 #pragma mark - Comment And Like Get Methods
 
@@ -44,6 +44,5 @@
 
 - (void)incrementLikeCountForChallengeDay:(PFObject *)challengeDay;
 - (void)decrementLikeCountForChallengeDay:(PFObject *)challengeDay;
-
 
 @end

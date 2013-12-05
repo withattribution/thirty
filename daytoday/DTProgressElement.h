@@ -25,9 +25,9 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 
 @interface DTProgressRow : NSObject
 
-@property(nonatomic) DTProgressRowEndStyle style;
-@property(nonatomic) DTProgressRowTemporalStatus phase;
-@property(nonatomic,retain) NSArray *weekRow;           //Row of DTDotElements for challenge calendar
+@property (nonatomic) DTProgressRowEndStyle style;
+@property (nonatomic) DTProgressRowTemporalStatus phase;
+@property (nonatomic,strong) NSArray *weekRow;           //Row of DTDotElements for challenge calendar
 
 + (DTProgressRow *)withEndStyle:(DTProgressRowEndStyle)end
                           phase:(DTProgressRowTemporalStatus)status
@@ -37,49 +37,32 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 
 @interface DTProgressColorGroup : NSObject
 
-+(DTProgressColorGroup *) summaryProgressBackground;
-+(DTProgressColorGroup *) summaryProgressForeground;
-+(DTProgressColorGroup *) snapshotProgress;
++ (DTProgressColorGroup *) summaryProgressBackground;
++ (DTProgressColorGroup *) summaryProgressForeground;
++ (DTProgressColorGroup *) snapshotProgress;
 
-@property (nonatomic, strong) UIColor* strokeColor;
-@property (nonatomic, strong) UIColor* fillColor;
+@property (nonatomic,strong) UIColor* strokeColor;
+@property (nonatomic,strong) UIColor* fillColor;
 
 @end
 
+@class DTProgressElement;
 @interface DTChallengeCalendar : NSObject
 
 + (DTChallengeCalendar *)calendarWithIntent:(PFObject *)intent;
+
+- (DTProgressElement *)currentProgressElement;
 - (NSArray *)progressSnapShotElements;
 - (UIView *)summaryProgressView;
 
 @end
 
-//return an object that holds onto the progress elements that
-//will be used in particular views
-//for instance:
-//the profile progress snapshot view
-//the challenge detail progress view
-//the summary progress view
-
-//@interface DTProgressElementLayout : NSObject
-//
-//@property (nonatomic,retain) Intent *intent;
-//@property (nonatomic,retain) NSArray *progressRows; //Array holding DTProgressRows indexed by week
-//
-//- (id)initWithIntent:(Intent *)i;
-////- (NSArray *)progressSnapShotElements;
-////- (UIView *)summaryProgressView;
-
-
-
-//@end
-
 @interface DTProgressElement : UIView
 
-@property (nonatomic) CGPoint leftCenter;
-@property (nonatomic) CGPoint rightCenter;
-@property (nonatomic) CGFloat percent;
-@property (nonatomic) CGFloat radius;
+@property (nonatomic,assign) CGPoint leftCenter;
+@property (nonatomic,assign) CGPoint rightCenter;
+@property (nonatomic,assign) CGFloat percent;
+@property (nonatomic,assign) CGFloat radius;
 
 - (id)initForSummaryElement:(CGFloat)p;
 - (id)initWithEndStyle:(DTProgressRowEndStyle)style andColorGroup:(DTProgressColorGroup *)pcg progressUnits:(CGFloat)units;

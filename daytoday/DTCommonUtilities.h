@@ -12,5 +12,6 @@
 
 + (NSInteger)minutesFromGMTForDate:(NSDate *)date;
 + (NSDateFormatter *)displayDayFormatter;
++ (NSCalendar *)commonCalendar;
 
 @end

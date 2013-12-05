@@ -39,4 +39,19 @@
   return df;
 }
 
++ (NSCalendar *)commonCalendar
+{
+  static dispatch_once_t pred = 0;
+  __strong static id _sharedCalendar = nil;
+  dispatch_once(&pred, ^{
+    _sharedCalendar = [NSCalendar autoupdatingCurrentCalendar];
+  });
+  return _sharedCalendar;
+}
+
+//+ (NSCalendar *)calendar
+//{
+//  return [NSCalendar autoupdatingCurrentCalendar];
+//}
+
 @end

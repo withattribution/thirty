@@ -61,7 +61,6 @@
   [query whereKey:kDTActivityChallengeDayKey
           equalTo:[PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:self.challengeDay.objectId]];
   [query setCachePolicy:kPFCachePolicyNetworkOnly];
-
 // If no objects are loaded in memory, we look to the cache first to fill the table
 // and then subsequently do a query against the network.
 //

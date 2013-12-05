@@ -23,6 +23,9 @@ extern NSString *const kDTDateFormatNSDateDisplayDay;
 extern NSString *const DTChallengeDayActivityCacheDidRefreshNotification;
 extern NSString *const DTChallengeDayRetrievedNotification;
 
+extern NSString *const DTChallengeDaysForIntentRetrievedNotification;
+
+
 #pragma mark - PFObject Activity Class
 // Class Key
 extern NSString *const kDTActivityClassKey;
@@ -43,6 +46,7 @@ extern NSString *const kDTActivityTypeFollow;
 extern NSString *const kDTActivityTypeChallengeCreation;
 extern NSString *const kDTActivityTypeChallengeJoin;
 extern NSString *const kDTActivityTypeChallengeFinish;
+extern NSString *const kDTActivityTypeChallengeDayFinish;
 extern NSString *const kDTActivityTypeVerificationFinish;
 
 #pragma mark - User Class
@@ -75,10 +79,14 @@ extern NSString *const kDTChallengeDayTaskRequiredCountKey;
 extern NSString *const kDTChallengeDayTaskCompletedCountKey;
 extern NSString *const kDTChallengeDayAccomplishedKey;
 extern NSString *const kDTChallengeDayOrdinalDayKey;
-extern NSString *const kDTChallengeDayActiveDateKey;
-//extern NSString *const kDTChallengeDayIntentKey;
+extern NSString *const kDTChallengeDayActiveHashKey;
+extern NSString *const kDTChallengeDayIntentKey;
 
 #pragma mark - Cached ChallengeDay Attributes
+extern NSString *const kDTChallengeDayAttributeVerificationCountKey;
+extern NSString *const kDTChallengeDayAttributeAccomplishedStatusKey;
+
+
 extern NSString *const kDTChallengeDayAttributeLikeCountKey;
 extern NSString *const kDTChallengeDayAttributeCommentCountKey;
 extern NSString *const kDTChallengeDayAttributeIsLikedByCurrentUserKey;
@@ -93,7 +101,8 @@ extern NSString *const kDTIntentClassKey;
 extern NSString *const kDTIntentStartingKey;
 extern NSString *const kDTIntentEndingKey;
 extern NSString *const kDTIntentUserKey;
-extern NSString *const kDTIntentChallengeDays;
+//extern NSString *const kDTIntentChallengeDays;
+extern NSString *const kDTIntentAccomplishedIntentKey;
 extern NSString *const kDTIntentChallengeKey;
 
 #pragma mark - Challenge Class

@@ -18,9 +18,6 @@
 
 @implementation AppDelegate
 
-@synthesize navController;
-@synthesize loginController,profileController;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -53,10 +50,11 @@
   
   [Parse setApplicationId:@"pMydn1FlUYwUcXeLRRAMFp3zcZPz3lRQ6IITQEe2"
                 clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
-
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+
 //  [PFUser logOut];
 //  [self createTestModels];
+
   return YES;
 }
 
@@ -97,19 +95,19 @@
 //      if([[NSUserDefaults standardUserDefaults] valueForKey:kDTChallengeUserSeed] == nil ){
       MurmurHash *hash = [[MurmurHash alloc] init];
       uint32_t userSeed = [hash hash32:[[PFUser currentUser] objectId]];
-      NIDINFO(@"user seed: %u",userSeed);
-      NIDINFO(@"challenge id: %@",[challenge objectId]);
+//      NIDINFO(@"user seed: %u",userSeed);
+//      NIDINFO(@"challenge id: %@",[challenge objectId]);
 
       uint32_t challengeUserHash = [hash hash32:[challenge objectId]  withSeed:userSeed];
-      NIDINFO(@"challenge user seed: %u",challengeUserHash);
+//      NIDINFO(@"challenge user seed: %u",challengeUserHash);
       
       NSNumber *challengeUserSeed = [NSNumber numberWithUnsignedInt:challengeUserHash];
-      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
+//      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
 
       [[NSUserDefaults standardUserDefaults] setValue:challengeUserSeed forKey:kDTChallengeUserSeed];
       [[NSUserDefaults standardUserDefaults] synchronize];
       
-      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
+//      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
 //      }
     }
     else {

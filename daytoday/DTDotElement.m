@@ -8,6 +8,13 @@
 
 #import "DTDotElement.h"
 #import <QuartzCore/QuartzCore.h>
+#import "NSCalendar+equalWithGranularity.h"
+
+@interface DTDotColorGroup ()
+
+{NSCalendar *_localCalendar;}
+
+@end
 
 @implementation DTDotColorGroup
 
@@ -122,10 +129,61 @@
   return dcg;
 }
 
-+ (DTDotColorGroup *) colorGroupForChallengeDay:(PFObject *)challengeDay
++ (DTDotColorGroup *) colorGroupForChallengeDay:(PFObject *)challengeDay withDate:(NSDate *)date
 {
-  DTDotColorGroup *dg = [DTDotColorGroup accomplishedDayColorGroup];
+  DTDotColorGroup *dg = [DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup];
+  NSCalendar *referenceCalendar = [DTCommonUtilities commonCalendar];
   
+  //current day
+  if ([referenceCalendar ojf_isDate:date
+                        equalToDate:[NSDate date]
+                    withGranularity:NSDayCalendarUnit]){
+    
+    if (![[challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue] &&
+        [[challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] == 0)
+    {
+      dg = [DTDotColorGroup currentActiveDayColorGroup];
+    }
+    if (![[challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue] &&
+        ([[challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] > 0 ))
+    {
+      dg = [DTDotColorGroup someParticipationAndStillActiveColorGroup];
+    }
+    if ([[challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue])
+    {
+      dg = [DTDotColorGroup accomplishedDayColorGroup];
+    }
+    
+  }
+  
+  //past day
+  if ([referenceCalendar ojf_compareDate:date
+                                  toDate:[NSDate date]
+                       toUnitGranularity:NSCalendarUnitDay] == NSOrderedAscending) {
+    
+    if (![[challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue] &&
+        [[challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] == 0)
+    {
+      dg = [DTDotColorGroup failedDayColorGroup];
+    }
+    if (![[challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue] &&
+        ([[challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] > 0 ))
+    {
+      dg = [DTDotColorGroup someParticipationButFailedColorGroup];
+    }
+    if ([[challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue])
+    {
+      dg = [DTDotColorGroup accomplishedDayColorGroup];
+    }
+    
+  }
+  
+  //future day
+//  if ([referenceCalendar ojf_compareDate:date
+//                           toDate:[NSDate date]
+//                toUnitGranularity:NSCalendarUnitDay] == NSOrderedDescending) {
+//    dg = [DTDotColorGroup futuresSoBrightYouGottaWearShadesColorGroup];
+//  }
   
   return dg;
 }
@@ -156,7 +214,7 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
 
 + (DTDotElement *)buildForChallengeDay:(PFObject *)challengeDay andDate:(NSDate *)date
 {
-  return [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 50., 50.) andColorGroup:[DTDotColorGroup colorGroupForChallengeDay:challengeDay] andDate:date];
+  return [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 50., 50.) andColorGroup:[DTDotColorGroup colorGroupForChallengeDay:challengeDay withDate:date] andDate:date];
 }
 
 - (id)initWithFrame:(CGRect)frame

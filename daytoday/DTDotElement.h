@@ -10,32 +10,32 @@
 
 @interface DTDotColorGroup : NSObject
 
-+(DTDotColorGroup *) currentActiveDayColorGroup;
-+(DTDotColorGroup *) accomplishedDayColorGroup;
-+(DTDotColorGroup *) someParticipationAndStillActiveColorGroup;
-+(DTDotColorGroup *) someParticipationButFailedColorGroup;
-+(DTDotColorGroup *) failedDayColorGroup;
-+(DTDotColorGroup *) futuresSoBrightYouGottaWearShadesColorGroup;
-+(DTDotColorGroup *) durationSelectionColorGroup;
-+(DTDotColorGroup *) repetitionCountColorGroup;
-+(DTDotColorGroup *) challengersCountColorGroup;
-+(DTDotColorGroup *) summaryDayColorGroup;
-+(DTDotColorGroup *) summaryPercentageColorGroup;
++ (DTDotColorGroup *) currentActiveDayColorGroup;
++ (DTDotColorGroup *) accomplishedDayColorGroup;
++ (DTDotColorGroup *) someParticipationAndStillActiveColorGroup;
++ (DTDotColorGroup *) someParticipationButFailedColorGroup;
++ (DTDotColorGroup *) failedDayColorGroup;
++ (DTDotColorGroup *) futuresSoBrightYouGottaWearShadesColorGroup;
++ (DTDotColorGroup *) durationSelectionColorGroup;
++ (DTDotColorGroup *) repetitionCountColorGroup;
++ (DTDotColorGroup *) challengersCountColorGroup;
++ (DTDotColorGroup *) summaryDayColorGroup;
++ (DTDotColorGroup *) summaryPercentageColorGroup;
 
 + (DTDotColorGroup *) colorGroupForChallengeDay:(PFObject *)challengeDay;
 
-@property (nonatomic, strong) UIColor* strokeColor;
-@property (nonatomic, strong) UIColor* fillColor;
-@property (nonatomic, strong) UIColor* textColor;
+@property (nonatomic,strong) UIColor* strokeColor;
+@property (nonatomic,strong) UIColor* fillColor;
+@property (nonatomic,strong) UIColor* textColor;
 
 @end
 
 @interface DTDotElement : UIView
 
 @property (nonatomic) CGFloat radius;
-@property (nonatomic,retain) NSNumber *dotNumber;
-@property (nonatomic,retain) NSDate *dotDate;
-@property (nonatomic,retain) UIImage *dotImage;
+@property (nonatomic,strong) NSNumber *dotNumber;
+@property (nonatomic,strong) NSDate *dotDate;
+@property (nonatomic,strong) UIImage *dotImage;
 
 + (DTDotElement *)buildForChallengeDay:(PFObject *)challengeDay andDate:(NSDate *)date;
 

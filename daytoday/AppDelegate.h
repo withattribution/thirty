@@ -13,7 +13,6 @@
 #import "CreateChallengeViewController.h"
 #import "ChallengeDetailVerificationController.h"
 
-@class ViewController;
 @class SWRevealViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -23,7 +22,6 @@
 @property (strong,nonatomic) DTNavController *navController;
 @property (strong,nonatomic) LoginRegistrationViewController *loginController;
 @property (strong,nonatomic) ProfileViewController *profileController;
-@property (strong,nonatomic) ViewController *viewController;
 
 #ifdef INTERFACE_DEMO_MODE
 @property (strong,nonatomic) SWRevealViewController *demoController;

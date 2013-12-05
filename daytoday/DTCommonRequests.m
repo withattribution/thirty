@@ -22,22 +22,22 @@
   [queryExistingLikes findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error){
     if (!error) {
       for (PFObject *activity in activities) {
-        [activity deleteInBackground];
+        [activity deleteEventually];
       }
 
       PFObject *likeActivity = [PFObject objectWithClassName:kDTActivityClassKey];
       [likeActivity setObject:kDTActivityTypeLike forKey:kDTActivityTypeKey];
       [likeActivity setObject:[PFUser currentUser] forKey:kDTActivityFromUserKey];
-//      [likeActivity setObject:[[challengeDay objectForKey:kDTChallengeDayIntentKey]
-//                               objectForKey:kDTIntentUserKey]
-//                       forKey:kDTActivityToUserKey];
+      [likeActivity setObject:[[challengeDay objectForKey:kDTChallengeDayIntentKey]
+                               objectForKey:kDTIntentUserKey]
+                       forKey:kDTActivityToUserKey];
       likeActivity[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
                                                                                  objectId:challengeDay.objectId];
 
       PFACL *likeACL = [PFACL ACLWithUser:[PFUser currentUser]];
       [likeACL setPublicReadAccess:YES];
       likeActivity.ACL = likeACL;
-      
+
       [likeActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
         if (completionBlock) {
           completionBlock(succeeded,error);
@@ -64,13 +64,13 @@
   [queryExistingLikes findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error){
     if (!error) {
       for (PFObject *activity in activities) {
-        [activity deleteInBackground];
+        [activity deleteEventually];
       }
-      
+
       if (completionBlock) {
         completionBlock(YES,nil);
       }
-      
+
       PFQuery *query = [DTCommonRequests queryForActivitiesOnChallengeDay:challengeDay cachePolicy:kPFCachePolicyNetworkOnly];
       [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
         if (!error) {
@@ -98,8 +98,8 @@
                                 if (!error) {
                                   [[NSNotificationCenter defaultCenter]
                                    postNotificationName:DTChallengeDayRetrievedNotification
-                                   object:day
-                                   userInfo:nil];
+                                                 object:day
+                                               userInfo:nil];
                                 }else {
                                   NIDINFO("error!: %@",error.localizedDescription);
                                 }
@@ -107,7 +107,26 @@
   }];
 }
 
-#pragma mark Activities 
++ (PFQuery *)queryForchallengeDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy
+{
+  PFQuery *query = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
+  [query whereKey:kDTChallengeDayIntentKey equalTo:intent];
+  [query setCachePolicy:cachePolicy];
+//  [challengeDays findObjectsInBackgroundWithBlock:^(NSArray *days, NSError *error){
+//    if (!error && [days count] > 0) {
+//      [[NSNotificationCenter defaultCenter]
+//       postNotificationName:DTChallengeDaysForIntentRetrievedNotification
+//                     object:days
+//                   userInfo:nil];
+//    }else {
+//      NIDINFO(@"error: %@",[error localizedDescription]);
+//    }
+//  
+//  }];
+  return query;
+}
+
+#pragma mark Activities
 
 + (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy
 {
@@ -116,13 +135,13 @@
   [queryLikes whereKey:kDTActivityChallengeDayKey
                equalTo:[PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
                                                        objectId:challengeDay.objectId]];
-  
+
   PFQuery *queryComments = [PFQuery queryWithClassName:kDTActivityClassKey];
   [queryComments whereKey:kDTActivityTypeKey equalTo:kDTActivityTypeComment];
   [queryComments whereKey:kDTActivityChallengeDayKey
                   equalTo:[PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
                                                           objectId:challengeDay.objectId]];
-  
+
   PFQuery *query = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:queryLikes,queryComments, nil]];
   [query setCachePolicy:cachePolicy];
   [query includeKey:kDTActivityFromUserKey];

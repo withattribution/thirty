@@ -14,8 +14,6 @@
 
 @interface ChallengeDetailVerificationController () <DTVerificationElementDataSource,DTVerificationElementDelegate>
 
-@property (nonatomic,strong) PFObject *challengeDay;
-
 @end
 
 @implementation ChallengeDetailVerificationController
@@ -35,8 +33,8 @@
   
   [self.view setBackgroundColor:[UIColor colorWithWhite:.9f alpha:1.f]];
   
-  self.verifyElement = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 175.f,175.f)];
-  [self.verifyElement setCenter:CGPointMake(self.view.center.x,self.verifyElement.center.y - 20)];
+  self.verifyElement = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 150.f,150.f)];
+  [self.verifyElement setCenter:CGPointMake(self.view.center.x,self.verifyElement.center.y - 30)];
   
   [self.verifyElement setDataSource:self];
   [self.verifyElement setDelegate:self];
@@ -44,11 +42,21 @@
   [self.verifyElement setAnimationSpeed:1.0];
   [self.view addSubview:self.verifyElement];
   
-//    DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
-  ChallengeDayDetail *cdd = [[ChallengeDayDetail alloc] initWithFrame:CGRectMake(0., 0., 200., 30)
+  ChallengeDayDetail *cdd = [[ChallengeDayDetail alloc] initWithFrame:CGRectMake(0., 0., 150., 30)
                                                                andDay:[[self.challengeDay objectForKey:kDTChallengeDayOrdinalDayKey] intValue]];
-  [cdd setCenter:CGPointMake(self.view.frame.size.width/2.f,self.verifyElement.frame.origin.y + self.verifyElement.frame.size.height + 2.5)];
+  [cdd setCenter:CGPointMake(self.view.frame.size.width/2.f,self.verifyElement.frame.origin.y + self.verifyElement.frame.size.height - 5.)];
   [self.view addSubview:cdd];
+  
+  DTChallengeCalendar *cc = [DTChallengeCalendar calendarWithIntent:[self.challengeDay objectForKey:kDTChallengeDayIntentKey]];
+  self.challengeProgressElement = [cc currentProgressElement];
+  
+  [self.challengeProgressElement setFrame:CGRectMake(0., 0., 320., 40.)];
+  [self.challengeProgressElement setCenter:CGPointMake(self.view.frame.size.width/2.f, cdd.frame.origin.y + cdd.frame.size.height + 30.)];
+  [self.view addSubview:self.challengeProgressElement];
+  
+//  + (DTChallengeCalendar *)calendarWithIntent:(PFObject *)intent;
+//  - (DTProgressElement *)currentProgressElement;
+
 }
 
 - (CGFloat)heightForControllerFold

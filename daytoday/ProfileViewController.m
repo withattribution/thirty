@@ -26,7 +26,10 @@
 {
   self = [super init];
   if (self) {
-
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(didRetrieveDaysForIntent:)
+//                                                 name:DTChallengeDaysForIntentRetrievedNotification
+//                                               object:nil];
   }
   return self;
 }
@@ -60,10 +63,8 @@
   [intentQuery whereKey:kDTIntentUserKey equalTo:user];
   [intentQuery findObjectsInBackgroundWithBlock:^(NSArray *intents, NSError *error){
     if (!error && [intents count] > 0) {
-//      NIDINFO(@"the intents: %@ and count: %d",intents,[intents count]);
-//      [DTChallengeCalendar calendarWithIntent:[intents firstObject]];
-      
-      [self.historyTable setIntents:intents];
+      NSArray *theIntentsArray = [NSArray arrayWithObjects:[intents firstObject], nil];
+      [self.historyTable setIntentsArray:theIntentsArray];
       [self.historyTable reloadData];
     }else {
       NIDINFO(@"error: %@ and count: %d",[error localizedDescription], [intents count]);
@@ -71,4 +72,17 @@
   }];
 }
 
+
+//#pragma mark - DTChallengeDaysRetrieved Notification
+//
+//- (void)didRetrieveDaysForIntent:(NSNotification *)aNotification
+//{
+//  if (aNotification.object) {
+////    self.challengeDay = (PFObject *)aNotification.object;
+////    [self addChallengeDayInterface];
+//    
+//  }else {
+//    NIDINFO(@"nil challenge day deal with it!");
+//  }
+//}
 @end

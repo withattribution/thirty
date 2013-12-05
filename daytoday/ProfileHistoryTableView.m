@@ -20,7 +20,6 @@
 #import <UIColor+SR.h>
 
 @implementation ProfileHistoryTableView
-@synthesize intents;
 
 static NSString *daysLeftCellReuseIdentifier = @"daysLeftCellReuseIdentifier";
 static NSString *progressRowCellReuseIdentifier = @"progressRowCellReuseIdentifier";
@@ -64,36 +63,34 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 //            return cell;
 //        }
 
-//        if (indexPath.row == 1) {
-  
-            static NSString *cellID = @"CommentCell";
+          static NSString *cellID = @"CommentCell";
 
-            if ([self.intents count] > 0) {
-              ProgressSnapShotTableCell *cell = (ProgressSnapShotTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
-              if (cell == nil) {
-                
-                DTChallengeCalendar *cc = [DTChallengeCalendar calendarWithIntent:[intents objectAtIndex:indexPath.row]];
-                
-                //                DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.row]];
-                cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                        reuseIdentifier:progressRowCellReuseIdentifier
-                                                     withDTProgressRows:[cc progressSnapShotElements]];
-              }
-              return cell;
+          if (indexPath.row == 0 && [self.intentsArray count] > 0) {
+          ProgressSnapShotTableCell *cell = (ProgressSnapShotTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
+          if (cell == nil) {
+            
+            DTChallengeCalendar *cc = [DTChallengeCalendar calendarWithIntent:[self.intentsArray objectAtIndex:indexPath.row]];
+            
+            //                DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.row]];
+            cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                    reuseIdentifier:progressRowCellReuseIdentifier
+                                                 withDTProgressRows:[cc progressSnapShotElements]];
             }
-            else{
-              UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-              if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-                //    cell.cellInsetWidth = kPAPCellInsetWidth;
-                //    cell.delegate = self;
-                cell.backgroundColor = [UIColor randomColor];
-              }
-              return cell;
-            }
+          return cell;
+          }
+        else{
+          UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+          if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            //    cell.cellInsetWidth = kPAPCellInsetWidth;
+            //    cell.delegate = self;
+            cell.backgroundColor = [UIColor randomColor];
+          }
+          return cell;
+        }
   
 
-//        }
+
 
 //        if (indexPath.row == 2) {
 //          ParticipantsTableCell *cell = (ParticipantsTableCell *)[tableView dequeueReusableCellWithIdentifier:participantsRowCellReuseIdentifier];
@@ -123,9 +120,9 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (self.intents && [self.intents count] > 0)
-        return [self.intents count];
-    else
+//    if (self.intents && [self.intents count] > 0)
+//        return [self.intents count];
+//    else
         return 1;
 }
 
@@ -148,7 +145,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 //            return 40.f;
 //    }
 //    else
-        return 68;
+        return 87;
 
 }
 

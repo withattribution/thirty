@@ -10,6 +10,6 @@
 
 @interface ProfileHistoryTableView : UITableView <UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic,retain) NSArray *intents;
+@property (nonatomic,strong) NSArray *intentsArray;
 
 @end

@@ -13,6 +13,7 @@
 
 @property (strong,nonatomic) NSCache *cache;
 - (void)setAttributes:(NSDictionary *)attributes forChallengeDay:(PFObject *)challengeDay;
+
 @end
 
 @implementation DTCache
@@ -36,7 +37,8 @@
   return self;
 }
 
-- (void)clear {
+- (void)clear
+{
   [self.cache removeAllObjects];
 }
 
@@ -205,11 +207,5 @@
 {
   return [NSString stringWithFormat:@"challengeDay_%@",[challengeDay objectId]];
 }
-
-
-
-
-
-
 
 @end
