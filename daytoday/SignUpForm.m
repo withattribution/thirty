@@ -10,10 +10,6 @@
 
 @interface SignUpForm () <UITextFieldDelegate>
 
-@property (nonatomic, strong) UITextField *emailField;
-@property (nonatomic, strong) UITextField *userNameField;
-@property (nonatomic, strong) UITextField *passwordField;
-
 @property (nonatomic, strong) UIButton *signupButton;
 @property (nonatomic, strong) UIButton *loginButton;
 
@@ -39,6 +35,7 @@
       [_emailField setFont:[UIFont fontWithName:@"HelveticaNeue" size:18.0]];
       [_emailField setBackgroundColor:[UIColor colorWithWhite:0.8f alpha:.4f]];
       [_emailField setAutocorrectionType:UITextAutocorrectionTypeNo];
+      [_emailField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
       [_emailField setTextAlignment:NSTextAlignmentLeft];
       [_emailField setReturnKeyType:UIReturnKeyNext];
       [_emailField setKeyboardType:UIKeyboardTypeEmailAddress];
@@ -57,6 +54,7 @@
       [_passwordField setBackgroundColor:[UIColor colorWithWhite:0.8f alpha:.4f]];
       [_passwordField setSecureTextEntry:YES];
       [_passwordField setAutocorrectionType:UITextAutocorrectionTypeNo];
+      [_passwordField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
       [_passwordField setTextAlignment:NSTextAlignmentLeft];
       [_passwordField setReturnKeyType:UIReturnKeyDefault];
       [_passwordField setKeyboardType:UIKeyboardTypeDefault];
@@ -72,6 +70,7 @@
       [_userNameField setFont:[UIFont fontWithName:@"HelveticaNeue" size:18.0]];
       [_userNameField setBackgroundColor:[UIColor colorWithWhite:0.8f alpha:.4f]];
       [_userNameField setAutocorrectionType:UITextAutocorrectionTypeNo];
+      [_userNameField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
       [_userNameField setTextAlignment:NSTextAlignmentLeft];
       [_userNameField setReturnKeyType:UIReturnKeyDefault];
       [_userNameField setKeyboardType:UIKeyboardTypeDefault];

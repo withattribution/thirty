@@ -40,6 +40,19 @@
   LogInForm  *_logInForm;
 }
 
+- (void)dealloc
+{
+  if (_isLogin) {
+    [_logInForm removeObserver:self forKeyPath:@"userNameField.text"];
+    [_logInForm removeObserver:self forKeyPath:@"passwordField.text"];
+  }else{
+    [_signUpForm removeObserver:self forKeyPath:@"userNameField.text"];
+    [_signUpForm removeObserver:self forKeyPath:@"passwordField.text"];
+    [_signUpForm removeObserver:self forKeyPath:@"emailField.text"];
+  }
+}
+
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -90,32 +103,32 @@
 {
   _credentialsDictionary = [[NSMutableDictionary alloc] init];
   
-  [_credentialsDictionary setObject:[NSNull null] forKey:@"username"];
-  [_credentialsDictionary setObject:[NSNull null] forKey:@"password"];
-  [_credentialsDictionary setObject:[NSNull null] forKey:@"email"];
+  [_credentialsDictionary setObject:[NSNull null] forKey:@"userNameField.text"];
+  [_credentialsDictionary setObject:[NSNull null] forKey:@"passwordField.text"];
+  [_credentialsDictionary setObject:[NSNull null] forKey:@"emailField.text"];
 }
 
 - (void)addObserversForState
 {
   if (_isLogin) {
-    [_logInForm addObserver:self forKeyPath:@"username" options:NSKeyValueObservingOptionNew context:NULL];
-    [_logInForm addObserver:self forKeyPath:@"password" options:NSKeyValueObservingOptionNew context:NULL];
+    [_logInForm addObserver:self forKeyPath:@"userNameField.text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_logInForm addObserver:self forKeyPath:@"passwordField.text" options:NSKeyValueObservingOptionNew context:NULL];
   }else{
-    [_signUpForm addObserver:self forKeyPath:@"username" options:NSKeyValueObservingOptionNew context:NULL];
-    [_signUpForm addObserver:self forKeyPath:@"password" options:NSKeyValueObservingOptionNew context:NULL];
-    [_signUpForm addObserver:self forKeyPath:@"email" options:NSKeyValueObservingOptionNew context:NULL];
+    [_signUpForm addObserver:self forKeyPath:@"userNameField.text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_signUpForm addObserver:self forKeyPath:@"passwordField.text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_signUpForm addObserver:self forKeyPath:@"emailField.text"    options:NSKeyValueObservingOptionNew context:NULL];
   }
 }
 
 - (void)removeObserversForState
 {
   if (_isLogin) {
-    [_signUpForm removeObserver:self forKeyPath:@"username"];
-    [_signUpForm removeObserver:self forKeyPath:@"password"];
-    [_signUpForm removeObserver:self forKeyPath:@"email"];
+    [_signUpForm removeObserver:self forKeyPath:@"userNameField.text"];
+    [_signUpForm removeObserver:self forKeyPath:@"passwordField.text"];
+    [_signUpForm removeObserver:self forKeyPath:@"emailField.text"];
   }else{
-    [_logInForm removeObserver:self forKeyPath:@"username"];
-    [_logInForm removeObserver:self forKeyPath:@"password"];
+    [_logInForm removeObserver:self forKeyPath:@"userNameField.text"];
+    [_logInForm removeObserver:self forKeyPath:@"passwordField.text"];
   }
 }
 
@@ -124,22 +137,23 @@
   // Observe the emailaddress, username, and password textfields
   [self.credentialsDictionary  setObject:[change objectForKey:NSKeyValueChangeNewKey] forKey:keyPath];
   
-//  for (NSString *thekey in self.credentialsDictionary) {
-//    NSLog(@"the keys :%@ and object: %@",thekey, [self.credentialsDictionary objectForKey:thekey]);
-//  }
+  for (NSString *thekey in self.credentialsDictionary) {
+    NSLog(@"the keys :%@ and object: %@",thekey, [self.credentialsDictionary objectForKey:thekey]);
+  }
 }
 
 - (BOOL)hasValidCredentialsForState
 {
+  
   if (_isLogin) {
-    return ( (![[self.credentialsDictionary objectForKey:@"username"] isEqual:[NSNull null]] &&
-             ![[self.credentialsDictionary objectForKey:@"password"] isEqual:[NSNull null]]) ||
-            (![[self.credentialsDictionary objectForKey:@"email"] isEqual:[NSNull null]] &&
-             ![[self.credentialsDictionary objectForKey:@"password"] isEqual:[NSNull null]] ));
+    return ( (![[self.credentialsDictionary objectForKey:@"userNameField.text"] isEqual:[NSNull null]] &&
+             ![[self.credentialsDictionary objectForKey:@"passwordField.text"] isEqual:[NSNull null]]) ||
+            (![[self.credentialsDictionary objectForKey:@"emailField.text"] isEqual:[NSNull null]] &&
+             ![[self.credentialsDictionary objectForKey:@"passwordField.text"] isEqual:[NSNull null]] ));
   }else {
-    return (![[self.credentialsDictionary objectForKey:@"username"] isEqual:[NSNull null]] &&
-            ![[self.credentialsDictionary objectForKey:@"password"] isEqual:[NSNull null]] &&
-            ![[self.credentialsDictionary objectForKey:@"email"] isEqual:[NSNull null]]);
+    return (![[self.credentialsDictionary objectForKey:@"userNameField.text"] isEqual:[NSNull null]] &&
+            ![[self.credentialsDictionary objectForKey:@"passwordField.text"] isEqual:[NSNull null]] &&
+            ![[self.credentialsDictionary objectForKey:@"emailField.text"] isEqual:[NSNull null]]);
   }
 }
 
@@ -150,12 +164,12 @@
   
   if(_isLogin && [self hasValidCredentialsForState]) {
     NSString *loginCredential;
-    if (![[self.credentialsDictionary objectForKey:@"username"] isEqual:[NSNull null]]) {
-      loginCredential = [self.credentialsDictionary objectForKey:@"username"];
+    if (![[self.credentialsDictionary objectForKey:@"userNameField.text"] isEqual:[NSNull null]]) {
+      loginCredential = [self.credentialsDictionary objectForKey:@"userNameField.text"];
     }else {
-      loginCredential = [self.credentialsDictionary objectForKey:@"email"];
+      loginCredential = [self.credentialsDictionary objectForKey:@"emailField.text"];
     }
-    [PFUser logInWithUsernameInBackground:loginCredential password:[self.credentialsDictionary objectForKey:@"password"]
+    [PFUser logInWithUsernameInBackground:loginCredential password:[self.credentialsDictionary objectForKey:@"passwordField.text"]
                                     block:^(PFUser *user, NSError *error) {
                                       if (user) {
                                         NIDINFO(@"logged in");
@@ -165,9 +179,9 @@
                                     }];
   }
   else if (!_isLogin && [self hasValidCredentialsForState]) {
-    user.username = [self.credentialsDictionary objectForKey:@"username"];
-    user.password = [self.credentialsDictionary objectForKey:@"password"];
-    user.email    = [self.credentialsDictionary objectForKey:@"email"];
+    user.username = [self.credentialsDictionary objectForKey:@"userNameField.text"];
+    user.password = [self.credentialsDictionary objectForKey:@"passwordField.text"];
+    user.email    = [self.credentialsDictionary objectForKey:@"emailField.text"];
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
       if (!error) {
