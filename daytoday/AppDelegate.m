@@ -52,7 +52,7 @@
                 clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
-  [PFUser logOut];
+//  [PFUser logOut];
 //  [self createTestModels];
 
   return YES;

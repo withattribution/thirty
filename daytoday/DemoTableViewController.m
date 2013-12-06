@@ -30,7 +30,7 @@
   [self.navigationController.navigationBar setHidden:YES];
   [self.view setBackgroundColor:[UIColor lightGrayColor]];
   
-  _names = [NSArray arrayWithObjects:@"LOGIN / REGISTRATION",@"PROFILE",@"CHALLENGE CREATION",@"CHALLENGE DAY DETAIL",@"SEARCH CHALLENGE", nil];
+  _names = [NSArray arrayWithObjects:@"LOGIN / REGISTRATION",@"PROFILE",@"CHALLENGE CREATION",@"CHALLENGE DAY DETAIL",@"LOGOUT", nil];
   
   UIView *h = [[UIView alloc] initWithFrame:CGRectMake(0., 0., self.view.frame.size.width, 60.)];
   h.backgroundColor = [UIColor lightGrayColor];
@@ -82,16 +82,16 @@
   
   switch (indexPath.row) {
     case 0:
-      if ( ![frontNavigationController.topViewController isKindOfClass:[LoginRegistrationViewController class]] )
-      {
-        LoginRegistrationViewController *loginVC = [[LoginRegistrationViewController alloc] init];
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginVC];
-        [revealController setFrontViewController:navigationController animated:YES];
-      }
-      else
-      {
-        [revealController revealToggle:self];
-      }
+        if ( ![frontNavigationController.topViewController isKindOfClass:[LoginRegistrationViewController class]] )
+        {
+          LoginRegistrationViewController *loginVC = [[LoginRegistrationViewController alloc] init];
+          UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+          [revealController setFrontViewController:navigationController animated:YES];
+        }
+        else
+        {
+          [revealController revealToggle:self];
+        }
       break;
     case 1:
       if ( ![frontNavigationController.topViewController isKindOfClass:[ProfileViewController class]] )
