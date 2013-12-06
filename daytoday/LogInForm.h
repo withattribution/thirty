@@ -13,7 +13,4 @@
 @property (nonatomic, strong) UITextField *userNameField;
 @property (nonatomic, strong) UITextField *passwordField;
 
-@property (nonatomic,strong) NSString *username;
-@property (nonatomic,strong) NSString *password;
-
 @end

@@ -176,7 +176,6 @@
   [self toggleAllowSignUp];
   
   if (textField.hasText && [textField isEqual:_emailField]) {
-    self.email = [NSString stringWithString:textField.text];
     if (!_passwordField.hasText) [_passwordField becomeFirstResponder];
     else if(!_userNameField.hasText) [_userNameField becomeFirstResponder];
     else [textField resignFirstResponder];
@@ -185,7 +184,6 @@
   }
 
   if (textField.hasText && [textField isEqual:_passwordField]) {
-    self.password = [NSString stringWithString:textField.text];
     if (!_userNameField.hasText) [_userNameField becomeFirstResponder];
     else if(!_emailField.hasText) [_emailField becomeFirstResponder];
     else [textField resignFirstResponder];
@@ -193,7 +191,6 @@
     return YES;
   }
   if (textField.hasText && [textField isEqual:_userNameField]) {
-    self.username = [NSString stringWithString:textField.text];
     if (!_emailField.hasText) [_emailField becomeFirstResponder];
     else if(!_passwordField.hasText) [_passwordField becomeFirstResponder];
     else [textField resignFirstResponder];
@@ -216,22 +213,6 @@
     [textField setReturnKeyType:UIReturnKeyDone];
   }else {
     [textField setReturnKeyType:UIReturnKeyNext];
-  }
-  return YES;
-}
-
-- (BOOL)textField:(UITextField *)textField
-shouldChangeCharactersInRange:(NSRange)range
-replacementString:(NSString *)string
-{
-  if (textField.hasText && [textField isEqual:_emailField]) {
-    self.email = [NSString stringWithString:textField.text];
-  }
-  if (textField.hasText && [textField isEqual:_passwordField]) {
-    self.password = [NSString stringWithString:textField.text];
-  }
-  if (textField.hasText && [textField isEqual:_userNameField]) {
-    self.username = [NSString stringWithString:textField.text];
   }
   return YES;
 }
