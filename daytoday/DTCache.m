@@ -2,7 +2,7 @@
 //  DTCache.m
 //  daytoday
 //
-//  Created by pasmo on 11/19/13.
+//  Created by Alberto Tafoya on 11/19/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
@@ -76,6 +76,38 @@
       postNotificationName:DTChallengeDayActivityCacheDidRefreshNotification
                     object:challengeDay
                   userInfo:[NSDictionary dictionaryWithDictionary:[self attributesForChallengeDay:challengeDay]]];
+}
+
+#pragma mark - Challenge Days For Intent
+
+- (void)cacheChallengeDays:(NSArray *)days forIntent:(PFObject *)intent
+{
+  NSMutableArray *challengeDays = [NSMutableArray arrayWithCapacity:[days count]];
+  for (int i = 0; i < [days count]; i++)
+  {
+    PFObject *challengeDay = [days objectAtIndex:i];
+    NSDictionary *attributes = @{kDTChallengeDayAttributeRequiredKey:[challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey],
+                                 kDTChallengeDayAttributeCompletedKey:[challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey],
+                                 kDTChallengeDayAttributeAccomplishedKey:[challengeDay objectForKey:kDTChallengeDayAccomplishedKey],
+                                 kDTChallengeDayAttributeOrdinalKey:[challengeDay objectForKey:kDTChallengeDayOrdinalDayKey],
+                                 kDTChallengeDayAttributeActiveHashKey:[challengeDay objectForKey:kDTChallengeDayActiveHashKey],
+                                 kDTChallengeDayAttributeIntentKey:[challengeDay objectForKey:kDTChallengeDayIntentKey]
+                                 };
+    [self setAttributes:attributes forChallengeDay:challengeDay];
+    [challengeDays addObject:attributes];
+  }
+  [self setChallengeDays:challengeDays forIntent:intent];
+  
+  [[NSNotificationCenter defaultCenter]
+   postNotificationName:DTChallengeDayDidCacheDaysForIntentNotification
+   object:challengeDays
+   userInfo:nil];
+}
+
+- (NSArray *)challengeDaysForIntent:(PFObject *)intent
+{
+  NSString *key = [self keyForIntent:intent];
+  return [self.cache objectForKey:key];
 }
 
 #pragma mark - Comment And Like Get Methods
@@ -203,9 +235,20 @@
   [self.cache setObject:attributes forKey:key];
 }
 
+- (void)setChallengeDays:(NSArray *)challengeDays forIntent:(PFObject *)intent
+{
+  NSString *key = [self keyForIntent:intent];
+  [self.cache setObject:challengeDays forKey:key];
+}
+
 - (NSString *)keyForChallengeDay:(PFObject *)challengeDay
 {
   return [NSString stringWithFormat:@"challengeDay_%@",[challengeDay objectId]];
+}
+
+- (NSString *)keyForIntent:(PFObject *)intent
+{
+  return [NSString stringWithFormat:@"intent_%@",[intent objectId]];
 }
 
 @end

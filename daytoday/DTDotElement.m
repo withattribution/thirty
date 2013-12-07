@@ -10,12 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "NSCalendar+equalWithGranularity.h"
 
-@interface DTDotColorGroup ()
-
-{NSCalendar *_localCalendar;}
-
-@end
-
 @implementation DTDotColorGroup
 
 @synthesize textColor,strokeColor,fillColor;
@@ -23,9 +17,9 @@
 +(DTDotColorGroup *) currentActiveDayColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor      = [UIColor blackColor];
-  dcg.fillColor        = [UIColor whiteColor];
-  dcg.textColor        = [UIColor grayColor];
+  dcg.strokeColor      = [UIColor whiteColor];
+  dcg.fillColor        = [UIColor blueColor];
+  dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }
 
@@ -79,7 +73,7 @@
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
   dcg.strokeColor      = [UIColor clearColor];
-  dcg.fillColor        = [UIColor lightGrayColor];
+  dcg.fillColor        = [UIColor redColor];
   dcg.textColor        = [UIColor grayColor];
   return dcg;
 }
@@ -214,7 +208,9 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
 
 + (DTDotElement *)buildForChallengeDay:(PFObject *)challengeDay andDate:(NSDate *)date
 {
-  return [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 50., 50.) andColorGroup:[DTDotColorGroup colorGroupForChallengeDay:challengeDay withDate:date] andDate:date];
+  return [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
+                               andColorGroup:[DTDotColorGroup colorGroupForChallengeDay:challengeDay withDate:date]
+                                     andDate:date];
 }
 
 - (id)initWithFrame:(CGRect)frame

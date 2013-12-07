@@ -22,7 +22,7 @@
   [queryExistingLikes findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error){
     if (!error) {
       for (PFObject *activity in activities) {
-        [activity deleteEventually];
+        [activity deleteInBackground];
       }
 
       PFObject *likeActivity = [PFObject objectWithClassName:kDTActivityClassKey];
@@ -64,7 +64,7 @@
   [queryExistingLikes findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error){
     if (!error) {
       for (PFObject *activity in activities) {
-        [activity deleteEventually];
+        [activity deleteInBackground];
       }
 
       if (completionBlock) {
@@ -107,23 +107,18 @@
   }];
 }
 
-+ (PFQuery *)queryForchallengeDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy
++ (void)requestDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy
 {
-  PFQuery *query = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
-  [query whereKey:kDTChallengeDayIntentKey equalTo:intent];
-  [query setCachePolicy:cachePolicy];
-//  [challengeDays findObjectsInBackgroundWithBlock:^(NSArray *days, NSError *error){
-//    if (!error && [days count] > 0) {
-//      [[NSNotificationCenter defaultCenter]
-//       postNotificationName:DTChallengeDaysForIntentRetrievedNotification
-//                     object:days
-//                   userInfo:nil];
-//    }else {
-//      NIDINFO(@"error: %@",[error localizedDescription]);
-//    }
-//  
-//  }];
-  return query;
+  PFQuery *dayQuery = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
+  [dayQuery whereKey:kDTChallengeDayIntentKey equalTo:intent];
+  [dayQuery setCachePolicy:cachePolicy];
+  [dayQuery findObjectsInBackgroundWithBlock:^(NSArray *days, NSError *error){
+    if (!error && [days count] > 0) {
+      [[DTCache sharedCache] cacheChallengeDays:days forIntent:intent];
+    }else {
+      NIDINFO(@"error: %@",[error localizedDescription]);
+    }
+  }];
 }
 
 #pragma mark Activities

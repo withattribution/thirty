@@ -22,11 +22,17 @@
 + (DTDotColorGroup *) summaryDayColorGroup;
 + (DTDotColorGroup *) summaryPercentageColorGroup;
 
-+ (DTDotColorGroup *) colorGroupForChallengeDay:(PFObject *)challengeDay;
++ (DTDotColorGroup *) colorGroupForChallengeDay:(PFObject *)challengeDay withDate:(NSDate *)date;
 
 @property (nonatomic,strong) UIColor* strokeColor;
 @property (nonatomic,strong) UIColor* fillColor;
 @property (nonatomic,strong) UIColor* textColor;
+
+@end
+
+@interface DTDotColorGroup ()
+
+{NSCalendar *_localCalendar;}
 
 @end
 

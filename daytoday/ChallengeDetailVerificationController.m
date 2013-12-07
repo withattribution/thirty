@@ -51,11 +51,8 @@
   self.challengeProgressElement = [cc currentProgressElement];
   
   [self.challengeProgressElement setFrame:CGRectMake(0., 0., 320., 40.)];
-  [self.challengeProgressElement setCenter:CGPointMake(self.view.frame.size.width/2.f, cdd.frame.origin.y + cdd.frame.size.height + 30.)];
+  [self.challengeProgressElement setCenter:CGPointMake(self.view.frame.size.width/2.f, cdd.frame.origin.y + cdd.frame.size.height + 35.)];
   [self.view addSubview:self.challengeProgressElement];
-  
-//  + (DTChallengeCalendar *)calendarWithIntent:(PFObject *)intent;
-//  - (DTProgressElement *)currentProgressElement;
 
 }
 

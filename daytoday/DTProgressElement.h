@@ -50,7 +50,6 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 @interface DTChallengeCalendar : NSObject
 
 + (DTChallengeCalendar *)calendarWithIntent:(PFObject *)intent;
-
 - (DTProgressElement *)currentProgressElement;
 - (NSArray *)progressSnapShotElements;
 - (UIView *)summaryProgressView;

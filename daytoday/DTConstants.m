@@ -28,8 +28,8 @@ NSString *const DTChallengeDayActivityCacheDidRefreshNotification =
 NSString *const DTChallengeDayRetrievedNotification =
   @"com.aok.DayToday.day.didRetrieveChallengeDayNotification";
 
-NSString *const DTChallengeDaysForIntentRetrievedNotification =
-@"com.aok.DayToday.days.didRetrieveChallengeDaysNotification";
+NSString *const DTChallengeDayDidCacheDaysForIntentNotification =
+  @"com.aok.DayToday.cache.didCacheDaysForIntentNotification";
 
 #pragma mark - Activity Class
 // Class Key
@@ -93,6 +93,13 @@ NSString *const kDTChallengeDayAttributeCommentCountKey         =@"comments";
 NSString *const kDTChallengeDayAttributeIsLikedByCurrentUserKey =@"liked";
 NSString *const kDTChallengeDayAttributeCommentersKey           =@"commenters";
 NSString *const kDTChallengeDayAttributeLikersKey               =@"likers";
+
+NSString *const kDTChallengeDayAttributeRequiredKey =@"req";
+NSString *const kDTChallengeDayAttributeCompletedKey =@"com";
+NSString *const kDTChallengeDayAttributeAccomplishedKey =@"acc";
+NSString *const kDTChallengeDayAttributeOrdinalKey =@"ord";
+NSString *const kDTChallengeDayAttributeActiveHashKey =@"act";
+NSString *const kDTChallengeDayAttributeIntentKey =@"int";
 
 #pragma mark - Intent Class
 // Class Key

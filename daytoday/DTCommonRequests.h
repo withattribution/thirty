@@ -15,8 +15,8 @@
 
 + (void)activeDayForDate:(NSDate *)date;
 
++ (void)requestDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy;
 
-+ (PFQuery *)queryForchallengeDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy;
 + (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy;
 
 @end

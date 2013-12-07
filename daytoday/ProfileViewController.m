@@ -17,7 +17,7 @@
 @interface ProfileViewController ()
 
 @property (nonatomic,strong) ProfileHistoryTableView *historyTable;
-
+@property (nonatomic,strong) NSArray *intentsArray;
 @end
 
 @implementation ProfileViewController
@@ -63,26 +63,38 @@
   [intentQuery whereKey:kDTIntentUserKey equalTo:user];
   [intentQuery findObjectsInBackgroundWithBlock:^(NSArray *intents, NSError *error){
     if (!error && [intents count] > 0) {
-      NSArray *theIntentsArray = [NSArray arrayWithObjects:[intents firstObject], nil];
-      [self.historyTable setIntentsArray:theIntentsArray];
-      [self.historyTable reloadData];
+      
+      self.intentsArray = [NSArray arrayWithObjects:[intents firstObject], nil];
+      NSArray *challengeDays = [[DTCache sharedCache] challengeDaysForIntent:[intents firstObject]];
+      
+      if (!challengeDays || [challengeDays count] == 0) {
+        //try to refresh from the network
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didCacheDaysForIntent:)
+                                                     name:DTChallengeDayDidCacheDaysForIntentNotification
+                                                   object:nil];
+
+        [DTCommonRequests requestDaysForIntent:[intents firstObject] cachePolicy:kPFCachePolicyNetworkOnly];
+      }
     }else {
       NIDINFO(@"error: %@ and count: %d",[error localizedDescription], [intents count]);
     }
   }];
 }
 
+#pragma mark - DTChallengeDays Cache Refreshed Notification
 
-//#pragma mark - DTChallengeDaysRetrieved Notification
-//
-//- (void)didRetrieveDaysForIntent:(NSNotification *)aNotification
-//{
-//  if (aNotification.object) {
-////    self.challengeDay = (PFObject *)aNotification.object;
-////    [self addChallengeDayInterface];
-//    
-//  }else {
-//    NIDINFO(@"nil challenge day deal with it!");
-//  }
-//}
+- (void)didCacheDaysForIntent:(NSNotification *)aNotification
+{
+  if (aNotification.object && [aNotification.object count] > 0) {
+    [self.historyTable setIntentsArray:self.intentsArray];
+    [self.historyTable reloadData];
+  }else {
+    NIDINFO(@"error refreshing challenge days cache for intent");
+  }
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:DTChallengeDayDidCacheDaysForIntentNotification
+                                                object:nil];
+}
 @end

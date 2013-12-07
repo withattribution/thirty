@@ -11,7 +11,6 @@
 #import "NSCalendar+equalWithGranularity.h"
 
 @implementation DTProgressColorGroup
-@synthesize strokeColor,fillColor;
 
 +(DTProgressColorGroup *) summaryProgressBackground
 {
@@ -40,7 +39,6 @@
 @end
 
 @implementation DTProgressRow
-@synthesize style,phase,weekRow;
 
 + (DTProgressRow *)withEndStyle:(DTProgressRowEndStyle)end
                           phase:(DTProgressRowTemporalStatus)status
@@ -71,7 +69,7 @@
 @end
 
 static int NUM_DAYS_FOR_ROW = 7;
-static CGFloat EDGE_PADDING = 3.f;
+static CGFloat EDGE_PADDING = 13.f;
 
 @implementation DTChallengeCalendar
 
@@ -85,67 +83,49 @@ static CGFloat EDGE_PADDING = 3.f;
 {
   self = [super init];
   if (self) {
-    
-    self.startDate = [intent objectForKey:kDTIntentStartingKey];
-    self.endDate = [intent objectForKey:kDTIntentEndingKey];
-    
     _localCalendar = [DTCommonUtilities commonCalendar];
-    
-    PFQuery *challengeDayQuery = [DTCommonRequests queryForchallengeDaysForIntent:intent cachePolicy:kPFCachePolicyNetworkOnly];
-    self.challengeDays = [challengeDayQuery findObjects];
 
-//    [challengeDayQuery findObjectsInBackgroundWithBlock:^(NSArray *days, NSError *error){
-//      if (!error && [days count] > 0) {
-//        self.challengeDays = days;
-    
-        self.intentDates = [self datesForIntent];//:intent];
-        self.challengeCalendarDates = [self padCalendarIfNecessary];//:intent];
-        self.challengeDots = [self buildChallengeDotsForIntent];//:intent];
-        self.rows = [self weekRows];
-        self.progressRows = [self progressRowsFromWeekRows];
-//      }
-//      
-//      else{
-//        NIDINFO(@"error: %@",[error localizedDescription]);
-//      }
-//    
-//    }];
+    self.startDate = [intent objectForKey:kDTIntentStartingKey];
+    self.endDate   = [intent objectForKey:kDTIntentEndingKey];
 
-    
+    self.challengeDays = [[DTCache sharedCache] challengeDaysForIntent:intent];
 
+    [self buildChallengeCalendar];
   }
   return self;
 }
 
-- (NSArray *)datesForIntent//:(PFObject *)intent
+- (void)buildChallengeCalendar
 {
-//  NSDate *starting = [intent objectForKey:kDTIntentStartingKey];
-  
-  NSDateComponents *offSetComp = [_localCalendar components:(NSCalendarUnitDay)
-                                                   fromDate:self.startDate];
-  
+  self.intentDates = [self datesForIntent];
+  self.challengeCalendarDates = [self padCalendarIfNecessary];
+
+  //date stuff stops and challengeday stuff starts
+
+  self.challengeDots = [self buildChallengeDotsForIntent];
+  self.rows = [self weekRows];
+  self.progressRows = [self progressRowsFromWeekRows];
+}
+
+- (NSArray *)datesForIntent
+{
+  NSDateComponents *offSetComp = [_localCalendar components:(NSCalendarUnitDay) fromDate:self.startDate];
   NSMutableArray *dates = [NSMutableArray arrayWithObject:self.startDate];
-
-//  NSArray *challengeDaysFromIntent;// = [intent objectForKey:kDTIntentChallengeDays];
-
-  for (int iterator = 1; iterator < [self.challengeDays count]; iterator++) {
+  for (int iterator = 1; iterator < [self.challengeDays count]; iterator++)
+  {
     [offSetComp setDay:iterator];
-    
     NSDate *offsetDate = [_localCalendar dateByAddingComponents:offSetComp toDate:self.startDate options:0];
     [dates addObject:offsetDate];
   }
-  
 //  for (int i = 0; i < [dates count]; i++) {
 ////    NIDINFO(@"the date: %@",[dates objectAtIndex:i]);
 //    NIDINFO(@"the string for day: %@",[[DTCommonUtilities displayDayFormatter] stringFromDate:[dates objectAtIndex:i]]);
 //  }
-//
 //  NIDINFO(@"the count: %d",[dates count]);
-
   return dates;
 }
 
-- (NSArray *)padCalendarIfNecessary//:(PFObject *)intent
+- (NSArray *)padCalendarIfNecessary
 {
   //add dates to the end of the intent days in order to facilitate
   //the division of the calendar into rows (of NUM_DAYS_FOR_ROW length)
@@ -157,29 +137,24 @@ static CGFloat EDGE_PADDING = 3.f;
     int toAdd = NUM_DAYS_FOR_ROW - mod;
     
     NSMutableArray *dates = [NSMutableArray arrayWithCapacity:toAdd];
-    
     NSDateComponents *offSetComp = [_localCalendar components:(NSCalendarUnitDay)
-                                                     fromDate:self.endDate];//[intent objectForKey:kDTIntentEndingKey]];
-    for (int iterator = 1; iterator <= toAdd; iterator++) {
-      
+                                                     fromDate:self.endDate];
+    for (int iterator = 1; iterator <= toAdd; iterator++)
+    {
       [offSetComp setDay:iterator];
-      
       NSDate *offsetDate = [_localCalendar dateByAddingComponents:offSetComp toDate:self.endDate/*[intent objectForKey:kDTIntentEndingKey]*/ options:0];
       [dates addObject:offsetDate];
     }
-    
     [paddedCalendarDates addObjectsFromArray:dates];
-    
 //    for (int i = 0; i < [paddedCalendarDates count]; i++) {
 //      NIDINFO(@"the string for padded: %@",[[DTCommonUtilities displayDayFormatter] stringFromDate:[paddedCalendarDates objectAtIndex:i]]);
 //    }
 //    NIDINFO(@"padded dates: %d",[paddedCalendarDates count]);
   }
-  
   return paddedCalendarDates;
 }
 
-- (NSArray *)buildChallengeDotsForIntent//:(PFObject *)intent
+- (NSArray *)buildChallengeDotsForIntent
 {
   NSMutableArray *dots = [NSMutableArray arrayWithCapacity:[self.challengeCalendarDates count]];
 //  NSArray *challengeDays;// = [intent objectForKey:kDTIntentChallengeDays];
@@ -198,7 +173,7 @@ static CGFloat EDGE_PADDING = 3.f;
 
 - (NSArray *)weekRows
 {
-  //break apart dtDotCalendar array into subarrays of 7 day long week-rows
+  //break apart dtDotCalendar array into subarrays of NUM_DAYS_FOR_ROW length rows
   NSArray *swapArray = [NSArray arrayWithArray:self.challengeDots];
   NSMutableArray *arrayOfWeeks = [NSMutableArray array];
   
@@ -330,13 +305,13 @@ static CGFloat EDGE_PADDING = 3.f;
 
 - (DTProgressElement *)progressElementForDTProgressRow:(DTProgressRow *)progressRow
 {
-  CGRect GENERIC_DOT_FRAME = CGRectMake(0.f, 0.f, 40.f, 40.f);
+  CGRect GENERIC_DOT_FRAME = CGRectMake(0.f, 0.f, 30.f, 30.f);
   
   DTProgressElement *rowElement = [[DTProgressElement alloc] initWithEndStyle:progressRow.style
                                                                 andColorGroup:[DTProgressColorGroup snapshotProgress]
                                                                 progressUnits:[self progressUnitsForDTProgressRow:progressRow]];
   for (int i = 0; i < [progressRow.weekRow count]; i++) {
-    CGRect DTDotElementFrame = CGRectMake(i*GENERIC_DOT_FRAME.size.width+EDGE_PADDING,
+    CGRect DTDotElementFrame = CGRectMake(i*(GENERIC_DOT_FRAME.size.width+EDGE_PADDING),
                                           0.f,
                                           rowElement.frame.size.height,
                                           rowElement.frame.size.height);
@@ -411,7 +386,6 @@ static CGFloat EDGE_PADDING = 3.f;
 @end
 
 @implementation DTProgressElement
-@synthesize percent,leftCenter,rightCenter,radius;
 
 static CGFloat END_PADDING = 3.f;
 static CGFloat DOT_STROKE_WIDTH = 1.5f;

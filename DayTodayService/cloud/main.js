@@ -6,18 +6,18 @@ Parse.Cloud.define("activeDay",function(request,response){
                                                     //which is assumed to be GMT 0 
   var seed = request.params.seed;
   var activeDay = murmurHash3.x86.hash32(moment().zone(offset).format("MM/DD/YYYY"),seed);
-
+  console.log("the active hash: "+activeDay);
   // console.log("the offset date: "+moment().zone(offset).format("MM/DD/YYYY"));
   var query = new Parse.Query("ChallengeDay");
   query.equalTo("active",activeDay);
   query.include("intent");
   query.first({
     success: function(day) {
-      console.log("active lookup success!");
+      console.log("active lookup success!: "+day);
       response.success(day);
     },
-    error: function() {
-      response.error("active lookup failed");
+    error: function(error) {
+      response.error("active lookup failed: "+error);
     }
   });
 });

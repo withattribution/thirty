@@ -21,9 +21,10 @@
 - (void)refreshCacheActivity:(NSArray *)activities forChallengeDay:(PFObject *)challengeDay;
 - (void)refreshCacheVerification:(NSArray *)verifications forChallengeDay:(PFObject *)challengeDay;
 
-#pragma mark - Intent
+#pragma mark - Challenge Days For Intent
 
-//  [[DTCache sharedCache] refreshCacheChallengeAttributes:self.objects forChallengeDay:self.challengeDay];
+- (NSArray *)challengeDaysForIntent:(PFObject *)intent;
+- (void)cacheChallengeDays:(NSArray *)days forIntent:(PFObject *)intent;
 
 #pragma mark - Comment And Like Get Methods
 
