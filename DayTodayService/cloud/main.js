@@ -60,8 +60,13 @@ Parse.Cloud.define("joinChallenge",function(request,response){
 
         Parse.Object.saveAll( days, {
           success: function(days) {
+            var challengeDictionary = {
+              days: days,
+              intent: intent
+            }
+
             console.log("all the days saved");
-            response.success(days);
+            response.success(challengeDictionary);
           },
           error: function(error) {
             console.log("errored out all hard"+error.code);

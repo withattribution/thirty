@@ -103,7 +103,6 @@
                                 }else {
                                   NIDINFO("error!: %@",error.localizedDescription);
                                 }
-
   }];
 }
 
@@ -127,11 +126,12 @@
 {
   [PFCloud callFunctionInBackground:DTJoinChallenge
                      withParameters:@{@"challenge":challengeId}
-                              block:^(NSArray *days, NSError *error) {
-                                if (!error && [days count] > 0) {
-                                  for (int i = 0; i < [days count]; i++) {
-                                    NIDINFO(@"the ch days: %@",[days objectAtIndex:i]);
-                                  }
+                              block:^(NSDictionary *challengeDictionary, NSError *error) {
+                                if (!error && challengeDictionary) {
+//                                  for (NSString *key in [challengeDictionary allKeys]) {
+//                                    NIDINFO(@"obj key: %@ and object: %@",key, [challengeDictionary objectForKey:key]);
+//                                  }
+                                [[DTCache sharedCache] cacheChallengeDays:[challengeDictionary objectForKey:@"days"] forIntent:[challengeDictionary objectForKey:@"intent"]];
                                 }else {
                                   NIDINFO("error!: %@",error.localizedDescription);
                                 }
