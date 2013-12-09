@@ -110,6 +110,43 @@
   return [self.cache objectForKey:key];
 }
 
+#pragma mark - Intents for User
+
+- (PFObject *)currentActiveIntentForUser:(PFUser *)user
+{
+#warning need better way to determine if intent is active
+  NSArray * intents = [self intentsForUser:user];
+  return [intents lastObject];
+}
+
+- (void)cacheIntent:(PFObject *)intent forUser:(PFUser *)user
+{
+  NSMutableArray *intents = [NSMutableArray arrayWithArray:[self intentsForUser:user]];
+  [intents addObject:intent];
+  [self setIntents:intents forUser:user];
+  
+  [[NSNotificationCenter defaultCenter]
+    postNotificationName:DTIntentDidCacheIntentForUserNotification
+                  object:intent
+                userInfo:nil];
+}
+
+- (void)cacheIntents:(NSArray *)intents forUser:(PFUser *)user
+{
+  [self setIntents:intents forUser:user];
+  
+  [[NSNotificationCenter defaultCenter]
+    postNotificationName:DTIntentDidCacheIntentsForUserNotification
+                  object:intents
+                userInfo:nil];
+}
+
+- (NSArray *)intentsForUser:(PFUser *)user
+{
+  NSString *key = [self keyForUser:user];
+  return [self.cache objectForKey:key];
+}
+
 #pragma mark - Comment And Like Get Methods
 
 - (NSNumber *)likeCountForChallengeDay:(PFObject *)challengeDay
@@ -241,6 +278,12 @@
   [self.cache setObject:challengeDays forKey:key];
 }
 
+- (void)setIntents:(NSArray *)intents forUser:(PFUser *)user
+{
+  NSString *key = [self keyForUser:user];
+  [self.cache setObject:intents forKey:key];
+}
+
 - (NSString *)keyForChallengeDay:(PFObject *)challengeDay
 {
   return [NSString stringWithFormat:@"challengeDay_%@",[challengeDay objectId]];
@@ -249,6 +292,11 @@
 - (NSString *)keyForIntent:(PFObject *)intent
 {
   return [NSString stringWithFormat:@"intent_%@",[intent objectId]];
+}
+
+- (NSString *)keyForUser:(PFUser *)user
+{
+  return [NSString stringWithFormat:@"user_%@",[user objectId]];
 }
 
 @end

@@ -17,7 +17,7 @@ Parse.Cloud.define("activeDay",function(request,response){
       response.success(day);
     },
     error: function(error) {
-      response.error("active lookup failed: "+error);
+      response.error("active day query failed: "+error);
     }
   });
 });
@@ -64,18 +64,16 @@ Parse.Cloud.define("joinChallenge",function(request,response){
               days: days,
               intent: intent
             }
-
-            console.log("all the days saved");
             response.success(challengeDictionary);
           },
           error: function(error) {
-            console.log("errored out all hard"+error.code);
+            response.error("saving days error: "+error.code);
           },
         });
 
       },
       error: function(intent, error) {
-        console.log("intent creation error: " +error);
+        response.error("intent creation error: " +error.code);
       }
 
     });

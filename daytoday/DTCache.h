@@ -26,6 +26,13 @@
 - (NSArray *)challengeDaysForIntent:(PFObject *)intent;
 - (void)cacheChallengeDays:(NSArray *)days forIntent:(PFObject *)intent;
 
+#pragma mark - Intents for User
+
+- (PFObject *)currentActiveIntentForUser:(PFUser *)user;
+- (NSArray *)intentsForUser:(PFUser *)user;
+- (void)cacheIntent:(PFObject *)intent forUser:(PFUser *)user;
+- (void)cacheIntents:(NSArray *)intents forUser:(PFUser *)user;
+
 #pragma mark - Comment And Like Get Methods
 
 - (NSNumber *)likeCountForChallengeDay:(PFObject *)challengeDay;

@@ -53,7 +53,7 @@
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
 //  [PFUser logOut];
-  [self createTestModels];
+//  [self createTestModels];
 
   return YES;
 }

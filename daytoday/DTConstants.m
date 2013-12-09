@@ -32,6 +32,12 @@ NSString *const DTChallengeDayRetrievedNotification =
 NSString *const DTChallengeDayDidCacheDaysForIntentNotification =
   @"com.aok.DayToday.cache.didCacheDaysForIntentNotification";
 
+NSString *const DTIntentDidCacheIntentsForUserNotification =
+  @"com.aok.DayToday.cache.didCacheIntentsForUserNotification";
+
+NSString *const DTIntentDidCacheIntentForUserNotification =
+  @"com.aok.DayToday.cache.didCacheIntentForUserNotification";
+
 #pragma mark - Activity Class
 // Class Key
 NSString *const kDTActivityClassKey                    =@"Activity";

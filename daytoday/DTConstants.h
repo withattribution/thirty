@@ -26,6 +26,9 @@ extern NSString *const DTChallengeDayRetrievedNotification;
 
 extern NSString *const DTChallengeDayDidCacheDaysForIntentNotification;
 
+extern NSString *const DTIntentDidCacheIntentsForUserNotification;
+extern NSString *const DTIntentDidCacheIntentForUserNotification;
+
 #pragma mark - PFObject Activity Class
 // Class Key
 extern NSString *const kDTActivityClassKey;

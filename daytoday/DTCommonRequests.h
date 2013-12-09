@@ -19,6 +19,9 @@
 
 + (void)joinChallenge:(NSString *)challengeId;
 
+#pragma mark Intents for User
++ (void)queryIntentsForUser:(PFUser *)user;
+
 + (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy;
 
 @end

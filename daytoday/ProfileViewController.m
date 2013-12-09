@@ -26,10 +26,7 @@
 {
   self = [super init];
   if (self) {
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(didRetrieveDaysForIntent:)
-//                                                 name:DTChallengeDaysForIntentRetrievedNotification
-//                                               object:nil];
+
   }
   return self;
 }
@@ -54,47 +51,43 @@
                                                                                 self.view.frame.size.width,
                                                                                 self.view.frame.size.height - profileHeightOffset)];
   [self.view addSubview:self.historyTable];
-  [self intentsForUser:[PFUser currentUser]];
-}
+  
+  BOOL hasCachedIntents = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]] != nil;
+  
+  if (!hasCachedIntents) {
+    [DTCommonRequests queryIntentsForUser:[PFUser currentUser]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(cachedIntentsForUser:)
+                                                 name:DTIntentDidCacheIntentsForUserNotification
+                                               object:nil];
+  }else {
+    NSArray *intents = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]];
+    
+//    for (PFObject *i in intents) {
+//      NIDINFO(@"the intents: %@",i);
+//    }
+    
+    [self.historyTable setIntentsArray:[[DTCache sharedCache] intentsForUser:[PFUser currentUser]]];
+    [self.historyTable reloadData];
+  }
 
-- (void)intentsForUser:(PFUser *)user
-{
-  PFQuery *intentQuery = [PFQuery queryWithClassName:kDTIntentClassKey];
-  [intentQuery whereKey:kDTIntentUserKey equalTo:user];
-  [intentQuery findObjectsInBackgroundWithBlock:^(NSArray *intents, NSError *error){
-    if (!error && [intents count] > 0) {
-      
-      self.intentsArray = [NSArray arrayWithObjects:[intents firstObject], nil];
-      NSArray *challengeDays = [[DTCache sharedCache] challengeDaysForIntent:[intents firstObject]];
-      
-      if (!challengeDays || [challengeDays count] == 0) {
-        //try to refresh from the network
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didCacheDaysForIntent:)
-                                                     name:DTChallengeDayDidCacheDaysForIntentNotification
-                                                   object:nil];
-
-        [DTCommonRequests requestDaysForIntent:[intents firstObject] cachePolicy:kPFCachePolicyNetworkOnly];
-      }
-    }else {
-      NIDINFO(@"error: %@ and count: %d",[error localizedDescription], [intents count]);
-    }
-  }];
 }
 
 #pragma mark - DTChallengeDays Cache Refreshed Notification
 
-- (void)didCacheDaysForIntent:(NSNotification *)aNotification
+- (void)cachedIntentsForUser:(NSNotification *)aNotification
 {
+  
   if (aNotification.object && [aNotification.object count] > 0) {
-    [self.historyTable setIntentsArray:self.intentsArray];
+    [self.historyTable setIntentsArray:aNotification.object];
     [self.historyTable reloadData];
   }else {
     NIDINFO(@"error refreshing challenge days cache for intent");
   }
   
   [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:DTChallengeDayDidCacheDaysForIntentNotification
+                                                  name:DTIntentDidCacheIntentsForUserNotification
                                                 object:nil];
 }
 @end

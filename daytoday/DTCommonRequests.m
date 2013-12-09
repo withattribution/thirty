@@ -120,6 +120,21 @@
   }];
 }
 
+#pragma mark Itents for User
+
++ (void)queryIntentsForUser:(PFUser *)user
+{
+  PFQuery *intentQuery = [PFQuery queryWithClassName:kDTIntentClassKey];
+  [intentQuery whereKey:kDTIntentUserKey equalTo:user];
+  [intentQuery findObjectsInBackgroundWithBlock:^(NSArray *intents, NSError *error){
+    if (!error && [intents count] > 0) {
+      [[DTCache sharedCache] cacheIntents:intents forUser:user];
+    }else {
+      NIDINFO(@"error: %@",[error localizedDescription]);
+    }
+  }];
+}
+
 #pragma mark Intent Methods
 
 + (void)joinChallenge:(NSString *)challengeId
@@ -131,7 +146,8 @@
 //                                  for (NSString *key in [challengeDictionary allKeys]) {
 //                                    NIDINFO(@"obj key: %@ and object: %@",key, [challengeDictionary objectForKey:key]);
 //                                  }
-                                [[DTCache sharedCache] cacheChallengeDays:[challengeDictionary objectForKey:@"days"] forIntent:[challengeDictionary objectForKey:@"intent"]];
+                                  [[DTCache sharedCache] cacheIntent:[challengeDictionary objectForKey:@"intent"] forUser:[PFUser currentUser]];
+                                  [[DTCache sharedCache] cacheChallengeDays:[challengeDictionary objectForKey:@"days"] forIntent:[challengeDictionary objectForKey:@"intent"]];
                                 }else {
                                   NIDINFO("error!: %@",error.localizedDescription);
                                 }
