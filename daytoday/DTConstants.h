@@ -9,6 +9,7 @@
 #pragma mark - DTCloudFunctions
 // Cloud Functions
 extern NSString *const DTQueryActiveDay;
+extern NSString *const DTJoinChallenge;
 
 #pragma mark - DTUserDefaults
 // Challenge Seed

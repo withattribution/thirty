@@ -53,7 +53,7 @@
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
 //  [PFUser logOut];
-//  [self createTestModels];
+  [self createTestModels];
 
   return YES;
 }
@@ -107,6 +107,8 @@
       [[NSUserDefaults standardUserDefaults] setValue:challengeUserSeed forKey:kDTChallengeUserSeed];
       [[NSUserDefaults standardUserDefaults] synchronize];
       
+      [DTCommonRequests joinChallenge:[challenge objectId]];
+      
 //      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
 //      }
     }
@@ -115,65 +117,6 @@
     }
   }];
 }
-
-//One time only make a challenge day object so that we can reuse the challenge day object id to build out the comment interface
-//      PFObject *intent = [PFObject objectWithClassName:kDTIntentClassKey];
-//      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]] forKey:kDTIntentStartingKey];
-//      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]] forKey:kDTIntentEndingKey];
-//      [intent setObject:[PFUser currentUser] forKey:kDTIntentUserKey];
-//      [intent setObject:[challenge objectId] forKey:kDTIntentChallengeKey];
-//
-//      [intent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
-//        if(succeeded){
-//          NIDINFO(@"saved an example intent!");
-//
-//        }
-//        else {
-//          NIDINFO(@"%@",[err localizedDescription]);
-//        }
-//      }];
-
-
-//      PFObject *challengeDay = [PFObject objectWithClassName:kDTChallengeDayClassKey];
-//      challengeDay[kDTChallengeDayTaskRequiredCountKey] = @3;
-//      challengeDay[kDTChallengeDayTaskCompletedCountKey] = @1;
-//      challengeDay[kDTChallengeDayOrdinalDayKey] = @14;
-//      challengeDay[kDTChallengeDayAccomplishedKey] = @NO;
-//      challengeDay[kDTChallengeDayActiveDateKey] = [NSDate date];
-//      challengeDay[kDTChallengeDayIntentKey] = [PFObject objectWithoutDataWithClassName:kDTIntentClassKey objectId:intent.objectId];
-//
-//      [challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
-//        if (succeeded){
-//          NIDINFO(@"succeeded!");
-//        }else {
-//          NIDINFO(@"%@",[err localizedDescription]);
-//        }
-//      }];
-
-//when we used to generate the active date key on the client
-//+ (PFQuery *)queryForchallengeDayForDate:(NSDate *)date
-//{
-//  NSDateFormatter *df = [[NSDateFormatter alloc] init];
-//  [df setDateFormat:@"MM/dd/yyyy"];
-//  //  NSString *formattedDate = [df stringFromDate:date];
-//  //
-//  //  NIDINFO(@"date %@",formattedDate);
-//  NSString *formattedDate = @"12/02/2013";
-//  
-//  
-//  uint32_t challengeUserSeed = [[[NSUserDefaults standardUserDefaults] objectForKey:kDTChallengeUserSeed] unsignedIntValue];
-//  
-//  MurmurHash *hash = [[MurmurHash alloc] init];
-//  uint32_t challengeDayHash = [hash hash32:formattedDate withSeed:challengeUserSeed];
-//  
-//  NIDINFO(@"hash %u",challengeDayHash);
-//  PFQuery *dayQuery = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
-//  [dayQuery whereKey:kDTChallengeDayActiveDateKey equalTo:@(challengeDayHash)];
-//  [dayQuery includeKey:kDTChallengeDayIntentKey];
-//  dayQuery.cachePolicy = kPFCachePolicyNetworkOnly;
-//  
-//  return dayQuery;
-//}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

@@ -27,7 +27,7 @@
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
   dcg.strokeColor      = [UIColor clearColor];
-  dcg.fillColor        = [UIColor blueColor];
+  dcg.fillColor        = [UIColor purpleColor];
   dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }

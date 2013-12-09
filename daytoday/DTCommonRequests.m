@@ -86,7 +86,7 @@
   }];
 }
 
-#pragma mark Challenge Day Retrieval
+#pragma mark Challenge Day Methods
 
 + (void)activeDayForDate:(NSDate *)date
 {
@@ -119,6 +119,23 @@
       NIDINFO(@"error: %@",[error localizedDescription]);
     }
   }];
+}
+
+#pragma mark Intent Methods
+
++ (void)joinChallenge:(NSString *)challengeId
+{
+  [PFCloud callFunctionInBackground:DTJoinChallenge
+                     withParameters:@{@"challenge":challengeId}
+                              block:^(NSArray *days, NSError *error) {
+                                if (!error && [days count] > 0) {
+                                  for (int i = 0; i < [days count]; i++) {
+                                    NIDINFO(@"the ch days: %@",[days objectAtIndex:i]);
+                                  }
+                                }else {
+                                  NIDINFO("error!: %@",error.localizedDescription);
+                                }
+                              }];
 }
 
 #pragma mark Activities

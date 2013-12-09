@@ -17,6 +17,8 @@
 
 + (void)requestDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy;
 
++ (void)joinChallenge:(NSString *)challengeId;
+
 + (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy;
 
 @end

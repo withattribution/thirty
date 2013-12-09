@@ -11,6 +11,7 @@
 #pragma mark - DTCloudFunctions
 // Cloud Functions
 NSString *const DTQueryActiveDay                       =@"activeDay";
+NSString *const DTJoinChallenge                        =@"joinChallenge";
 
 #pragma mark - DTUserDefaults
 // Challenge Seed
