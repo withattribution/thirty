@@ -62,23 +62,20 @@
                                                  name:DTIntentDidCacheIntentsForUserNotification
                                                object:nil];
   }else {
-    NSArray *intents = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]];
-    
+//    NSArray *intents = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]];
 //    for (PFObject *i in intents) {
 //      NIDINFO(@"the intents: %@",i);
 //    }
-    
     [self.historyTable setIntentsArray:[[DTCache sharedCache] intentsForUser:[PFUser currentUser]]];
     [self.historyTable reloadData];
   }
 
 }
 
-#pragma mark - DTChallengeDays Cache Refreshed Notification
+#pragma mark - Intents for User Cache Refreshed Notification
 
 - (void)cachedIntentsForUser:(NSNotification *)aNotification
 {
-  
   if (aNotification.object && [aNotification.object count] > 0) {
     [self.historyTable setIntentsArray:aNotification.object];
     [self.historyTable reloadData];

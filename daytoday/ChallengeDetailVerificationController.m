@@ -14,6 +14,8 @@
 
 @interface ChallengeDetailVerificationController () <DTVerificationElementDataSource,DTVerificationElementDelegate>
 
+@property (nonatomic,strong) ChallengeDayDetail *cdd;
+
 @end
 
 @implementation ChallengeDetailVerificationController
@@ -42,19 +44,37 @@
   [self.verifyElement setAnimationSpeed:1.0];
   [self.view addSubview:self.verifyElement];
   
-  ChallengeDayDetail *cdd = [[ChallengeDayDetail alloc] initWithFrame:CGRectMake(0., 0., 150., 30)
+  self.cdd = [[ChallengeDayDetail alloc] initWithFrame:CGRectMake(0., 0., 150., 30)
                                                                andDay:[[self.challengeDay objectForKey:kDTChallengeDayOrdinalDayKey] intValue]];
-  [cdd setCenter:CGPointMake(self.view.frame.size.width/2.f,self.verifyElement.frame.origin.y + self.verifyElement.frame.size.height - 5.)];
-  [self.view addSubview:cdd];
+  [self.cdd setCenter:CGPointMake(self.view.frame.size.width/2.f,self.verifyElement.frame.origin.y + self.verifyElement.frame.size.height - 5.)];
+  [self.view addSubview:self.cdd];
   
-  DTChallengeCalendar *cc = [DTChallengeCalendar calendarWithIntent:[self.challengeDay objectForKey:kDTChallengeDayIntentKey]];
-  self.challengeProgressElement = [cc currentProgressElement];
+  BOOL hasActiveIntent = [[DTCache sharedCache] currentActiveIntentForUser:[PFUser currentUser]] != nil;
+  if (!hasActiveIntent) {
+    [DTCommonRequests queryIntentsForUser:[PFUser currentUser]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(cachedIntentsForUser:)
+                                                 name:DTIntentDidCacheIntentsForUserNotification
+                                               object:nil];
+  }else {
+    [self addChallengeProgressElement];
+  }
   
-  [self.challengeProgressElement setFrame:CGRectMake(0., 0., 320., 40.)];
-  [self.challengeProgressElement setCenter:CGPointMake(self.view.frame.size.width/2.f, cdd.frame.origin.y + cdd.frame.size.height + 35.)];
-  [self.view addSubview:self.challengeProgressElement];
+  
+
 
 }
+
+- (void)addChallengeProgressElement
+{
+  DTChallengeCalendar *cc = [DTChallengeCalendar calendarWithIntent:[[DTCache sharedCache] currentActiveIntentForUser:[PFUser currentUser]]];
+  self.challengeProgressElement = [cc currentProgressElement];
+  [self.challengeProgressElement setFrame:CGRectMake(0., 0., 320., 40.)];
+  [self.challengeProgressElement setCenter:CGPointMake(self.view.frame.size.width/2.f, self.cdd.frame.origin.y + self.cdd.frame.size.height + 35.)];
+  [self.view addSubview:self.challengeProgressElement];
+}
+
 
 - (CGFloat)heightForControllerFold
 {
@@ -129,6 +149,16 @@
   
   NIDINFO(@"the req count: %d",[[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]);
   return [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue];
+}
+
+#pragma mark - Intents for User Cache Refreshed Notification
+
+- (void)cachedIntentsForUser:(NSNotification *)aNotification
+{
+  [self addChallengeProgressElement];
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:DTIntentDidCacheIntentsForUserNotification
+                                                object:nil];
 }
 
 @end

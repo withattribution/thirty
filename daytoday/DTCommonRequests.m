@@ -28,9 +28,10 @@
       PFObject *likeActivity = [PFObject objectWithClassName:kDTActivityClassKey];
       [likeActivity setObject:kDTActivityTypeLike forKey:kDTActivityTypeKey];
       [likeActivity setObject:[PFUser currentUser] forKey:kDTActivityFromUserKey];
-      [likeActivity setObject:[[challengeDay objectForKey:kDTChallengeDayIntentKey]
-                               objectForKey:kDTIntentUserKey]
-                       forKey:kDTActivityToUserKey];
+#warning need to use stored intent to retrieve user to associate activity with
+//      [likeActivity setObject:[[challengeDay objectForKey:kDTChallengeDayIntentKey]
+//                               objectForKey:kDTIntentUserKey]
+//                       forKey:kDTActivityToUserKey];
       likeActivity[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
                                                                                  objectId:challengeDay.objectId];
 
@@ -108,11 +109,17 @@
 
 + (void)requestDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy
 {
-  PFQuery *dayQuery = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
-  [dayQuery whereKey:kDTChallengeDayIntentKey equalTo:intent];
+  PFRelation *intentRelation = [intent relationforKey:kDTIntentChallengeDays];
+  PFQuery *dayQuery = [intentRelation query];
+  
+  
+  
+//  PFQuery *dayQuery = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
+//  [dayQuery whereKey:kDTChallengeDayIntentKey equalTo:intent];
   [dayQuery setCachePolicy:cachePolicy];
   [dayQuery findObjectsInBackgroundWithBlock:^(NSArray *days, NSError *error){
     if (!error && [days count] > 0) {
+      
       [[DTCache sharedCache] cacheChallengeDays:days forIntent:intent];
     }else {
       NIDINFO(@"error: %@",[error localizedDescription]);
@@ -135,19 +142,24 @@
   }];
 }
 
+//PFRelation *relation = [book relationforKey:@"authors"];
+//PFQuery *query = [relation query];
+
 #pragma mark Intent Methods
 
 + (void)joinChallenge:(NSString *)challengeId
 {
   [PFCloud callFunctionInBackground:DTJoinChallenge
                      withParameters:@{@"challenge":challengeId}
-                              block:^(NSDictionary *challengeDictionary, NSError *error) {
-                                if (!error && challengeDictionary) {
+                              block:^(PFObject *intent, NSError *error) {
+                                if (!error && intent) {
+                                  NIDINFO(@"success!: %@",intent);
 //                                  for (NSString *key in [challengeDictionary allKeys]) {
 //                                    NIDINFO(@"obj key: %@ and object: %@",key, [challengeDictionary objectForKey:key]);
 //                                  }
-                                  [[DTCache sharedCache] cacheIntent:[challengeDictionary objectForKey:@"intent"] forUser:[PFUser currentUser]];
-                                  [[DTCache sharedCache] cacheChallengeDays:[challengeDictionary objectForKey:@"days"] forIntent:[challengeDictionary objectForKey:@"intent"]];
+                                  [[DTCache sharedCache] cacheIntent:intent forUser:[PFUser currentUser]];
+                                  [DTCommonRequests requestDaysForIntent:intent cachePolicy:kPFCachePolicyNetworkOnly];
+//                                  [[DTCache sharedCache] cacheChallengeDays:[challengeDictionary objectForKey:@"days"] forIntent:[challengeDictionary objectForKey:@"intent"]];
                                 }else {
                                   NIDINFO("error!: %@",error.localizedDescription);
                                 }

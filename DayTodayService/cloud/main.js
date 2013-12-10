@@ -1,6 +1,99 @@
 var murmurHash3 = require('cloud/libs/murmurHash3.min.js');
 var moment = require('cloud/libs/moment.min.js');
 
+// curl -X POST \
+//   -H "X-Parse-Application-Id: pMydn1FlUYwUcXeLRRAMFp3zcZPz3lRQ6IITQEe2" \
+//   -H "X-Parse-REST-API-Key: xZvVVirqiqEeHsivxTcUHPygbGQy9qS3u9DjLHsW" \
+//   -H "Content-Type: application/json" \
+//   -d '{"movie":"The Matrix"}' \
+//   https://api.parse.com/1/functions/testRelation
+
+Parse.Cloud.define("testRelation",function(request,response){
+  console.log("test in progress");
+
+  var container = [];
+
+  var Parent = Parse.Object.extend("parent");
+  var parent = new Parent();
+  var relation = parent.relation("children");
+
+  var Child = Parse.Object.extend("child");
+
+  for (var i = 0; i < 3; i++) {
+      var child = new Child();
+      child.set("status",false);
+      child.set("date",new Date());
+      container.push(child);
+  };
+
+  Parse.Object.saveAll( container ).then(function(){
+    parent.save().then(function(){
+      // var relation = child.relation("parent");
+
+      for (var j = 0; j < container.length; j++) {
+        relation.add(container[j]);
+        //relation.add(child);
+      };
+
+      parent.save(null, {
+        success:function(obj) {
+          response.success("check your corners");
+        }, error:function(error){
+          response.error("aww fuck");
+        }
+      });
+
+    });
+
+  });
+
+});
+
+// curl -X POST \
+//   -H "X-Parse-Application-Id: pMydn1FlUYwUcXeLRRAMFp3zcZPz3lRQ6IITQEe2" \
+//   -H "X-Parse-REST-API-Key: xZvVVirqiqEeHsivxTcUHPygbGQy9qS3u9DjLHsW" \
+//   -H "Content-Type: application/json" \
+//   -d '{"movie":"The Matrix"}' \
+//   https://api.parse.com/1/functions/changeChild
+
+Parse.Cloud.define("getChildren",function(request,response){
+  console.log("time to get the children");
+
+  var Parent = Parse.Object.extend("parent");
+  var query = new Parse.Query(Parent);
+
+  query.get("24EJTx4Ce1",function(pOBJ){
+    var relation = pOBJ.relation("children");
+    var q = relation.query();
+    q.find({
+      success: function(list) {
+        response.success(list);
+      },
+      error: function(object, error) {
+       response.error(error.code);
+        // error is a Parse.Error with an error code and description.
+      }
+    });
+  });
+});
+
+Parse.Cloud.define("changeChild",function(request,response){
+  var Child = Parse.Object.extend("child");
+  var query = new Parse.Query(Child);
+  query.get("KLNZ9aTIky",function(childObj){
+    console.log("got this object: "+childObj.id);
+    childObj.set("status",true);
+    childObj.save(null,{
+      success: function() {
+        response.success("saved a child with code");
+      },
+      error: function(error) {
+        response.error("child save failed: "+error);
+      }
+    });
+  });
+});
+
 Parse.Cloud.define("activeDay",function(request,response){
   //offset client time to match server timezone
   //which is assumed to be GMT 0 
@@ -37,11 +130,11 @@ Parse.Cloud.define("joinChallenge",function(request,response){
     var Intent = Parse.Object.extend("Intent");
     var intent = new Intent();
     intent.save({
-         start: moment().zone(offset).toDate(),
-           end: moment().zone(offset).add('days',(challenge.get("duration") - 1)).toDate(),
-          user: request.user,
+           start: moment().zone(offset).toDate(),
+             end: moment().zone(offset).add('days',(challenge.get("duration") - 1)).toDate(),
+            user: request.user,
     accomplished: false,
-     challenge: challenge
+       challenge: challenge
     }, {
       success: function(intent) {
         console.log("intent saved with ID: "+intent.id);
@@ -52,19 +145,28 @@ Parse.Cloud.define("joinChallenge",function(request,response){
                 //end moment includes day past challenge for challenge day array creation 
                 endMoment: moment().zone(offset).add('days',challenge.get("duration")),
         challengeUserSeed: murmurHash3.x86.hash32(challenge.id,userSeed),
-                 required: challenge.get("freq"),
-                   intent: intent
+                 required: challenge.get("freq")
+                   // intent: intent
         }
 
         var days = populateDays(defaults);
 
         Parse.Object.saveAll( days, {
           success: function(days) {
-            var challengeDictionary = {
-              days: days,
+            var toRelate = {
+                days: days,
               intent: intent
-            }
-            response.success(challengeDictionary);
+            };
+            var relatedIntent = relateToIntent(toRelate);
+            //resave intent with related challenge days
+            relatedIntent.save(null, {
+              success: function(intent) {
+                response.success(intent);
+              },          
+              error: function(error) {
+               response.error("saving intent error: "+error.code);
+              }
+            });
           },
           error: function(error) {
             response.error("saving days error: "+error.code);
@@ -80,6 +182,15 @@ Parse.Cloud.define("joinChallenge",function(request,response){
   });
 
 });
+
+function relateToIntent(object)
+{
+  var relation = object.intent.relation("days");
+  for (var i = 0; i < object.days.length; i++) {
+    relation.add(object.days[i]);
+  };
+  return object.intent;
+}
 
 function populateDays(defaults)
 {
@@ -98,7 +209,7 @@ function populateDays(defaults)
     day.set("accomplished",false); 
     day.set("ordinal",o); 
     day.set("active",murmurHash3.x86.hash32(d.format("MM/DD/YYYY"),defaults.challengeUserSeed)); 
-    day.set("intent",defaults.intent);
+    // day.set("intent",defaults.intent);
 
     challengeDays.push(day);
     o++;

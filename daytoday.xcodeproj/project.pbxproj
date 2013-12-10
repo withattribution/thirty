@@ -1400,6 +1400,7 @@
 				A1E4257418512E9800DAE577 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B7E61D3917BD6AA5002B681B /* Build configuration list for PBXProject "daytoday" */ = {
 			isa = XCConfigurationList;

@@ -82,6 +82,7 @@
 
 - (void)cacheChallengeDays:(NSArray *)days forIntent:(PFObject *)intent
 {
+  
   NSMutableArray *challengeDays = [NSMutableArray arrayWithCapacity:[days count]];
   for (int i = 0; i < [days count]; i++)
   {
@@ -90,8 +91,8 @@
                                  kDTChallengeDayAttributeCompletedKey:[challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey],
                                  kDTChallengeDayAttributeAccomplishedKey:[challengeDay objectForKey:kDTChallengeDayAccomplishedKey],
                                  kDTChallengeDayAttributeOrdinalKey:[challengeDay objectForKey:kDTChallengeDayOrdinalDayKey],
-                                 kDTChallengeDayAttributeActiveHashKey:[challengeDay objectForKey:kDTChallengeDayActiveHashKey],
-                                 kDTChallengeDayAttributeIntentKey:[challengeDay objectForKey:kDTChallengeDayIntentKey]
+                                 kDTChallengeDayAttributeActiveHashKey:[challengeDay objectForKey:kDTChallengeDayActiveHashKey]
+//                                 kDTChallengeDayAttributeIntentKey:[challengeDay objectForKey:kDTChallengeDayIntentKey]
                                  };
     [self setAttributes:attributes forChallengeDay:challengeDay];
     [challengeDays addObject:attributes];
