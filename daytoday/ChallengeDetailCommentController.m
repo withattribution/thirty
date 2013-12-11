@@ -10,11 +10,13 @@
 #import "CommentCell.h"
 #import "UIImage+Resizing.h"
 
-@interface ChallengeDetailCommentController ()
+@interface ChallengeDetailCommentController () <CommentCellDelegate>
 
 @property (nonatomic,strong) PFObject *challengeDay;
 
 @end
+
+#define commentCellInsetWidth 2.f
 
 @implementation ChallengeDetailCommentController
 
@@ -47,10 +49,7 @@
 //    return 20;
 //}
 //
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  return 80.f;
-}
+
 
 #pragma mark - PFQueryTableViewController
 
@@ -85,6 +84,15 @@
 //  }
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  PFObject *objectForRow = [self.objects objectAtIndex:indexPath.row];
+  
+  return [CommentCell heightForCellTextContent:[objectForRow objectForKey:kDTActivityContentKey]
+                                   imageOjbect:[objectForRow objectForKey:kDTActivityImageKey]
+                                cellInsetWidth:commentCellInsetWidth];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
   static NSString *cellID = @"CommentCell";
@@ -93,12 +101,18 @@
   CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
   if (cell == nil) {
     cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    cell.cellInsetWidth = 5.f;
+    cell.cellInsetWidth = commentCellInsetWidth;
     cell.delegate = self;
   }
   
   [cell setUser:[object objectForKey:kDTActivityFromUserKey]];
   [cell setContentText:[object objectForKey:kDTActivityContentKey]];
+  
+//  if ([object objectForKey:kDTActivityImageKey] != nil) {
+//    NIDINFO(@"the activity image key: %@",[object objectForKey:kDTActivityImageKey]);
+//  }
+  
+  [cell setContentImage:[object objectForKey:kDTActivityImageKey]];
   [cell setDate:[object createdAt]];
 //  cell.textLabel.text = [object objectForKey:kDTActivityContentKey];
 

@@ -12,7 +12,7 @@
 #import "DTImageView.h"
 
 @class CommentCell;
-@protocol DTCommentCellDelegate <NSObject>
+@protocol CommentCellDelegate <NSObject>
 
 @optional
 - (void)cell:(CommentCell *)cellView didTapUserButton:(PFUser *)aUser;
@@ -23,7 +23,7 @@
   NSUInteger horizontalTextSpace;
 }
 
-@property (nonatomic,weak) id<DTCommentCellDelegate> delegate;
+@property (nonatomic,weak) id<CommentCellDelegate> delegate;
 
 @property (nonatomic,strong) PFUser *user;
 @property (nonatomic,strong) UIView *mainView;
@@ -33,15 +33,21 @@
 @property (nonatomic,strong) UIButton *nameButton;
 @property (nonatomic,strong) UILabel *timeLabel;
 @property (nonatomic,strong) UILabel *contentLabel;
-@property (nonatomic,strong) UIImageView *contentImageView;
+@property (nonatomic,strong) PFImageView *contentImageView;
 
 /*! The horizontal inset of the cell */
 @property (nonatomic) CGFloat cellInsetWidth;
+
+/*! Static Helper methods */
++ (CGFloat)heightForCellTextContent:(NSString *)textContent
+                        imageOjbect:(PFObject *)imageObject
+                     cellInsetWidth:(CGFloat)cellInset;
 
 /*! Setters for the cell's content */
 - (void)setContentText:(NSString *)contentString;
 - (void)setDate:(NSDate *)date;
 - (void)setCellInsetWidth:(CGFloat)insetWidth;
+- (void)setContentImage:(PFObject *)imageObject;
 
 /*! Layout constants */
 #define vertBorderSpacing 2.0f
@@ -60,6 +66,7 @@
 #define textContentX horiBorderSpacing
 #define textContentY vertBorderSpacing+userImageDim+(4*vertElemSpacing)
 
+#define imageContentDim 320.f
 
 #define nameX userImageX+userImageDim+horiElemSpacing+horiElemSpacing
 #define nameY vertTextBorderSpacing

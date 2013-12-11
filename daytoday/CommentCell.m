@@ -11,7 +11,10 @@
 
 static TTTTimeIntervalFormatter *timeFormatter;
 
-@interface CommentCell ()
+@interface CommentCell (){
+  BOOL hasContentImage;
+  BOOL hasContentText;
+}
 
 + (CGFloat)horizontalTextSpaceForInsetWidth:(CGFloat)insetWidth;
 
@@ -23,8 +26,10 @@ static TTTTimeIntervalFormatter *timeFormatter;
 {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
-
     // Initialization code
+    hasContentText = NO;
+    hasContentImage = NO;
+
     if (!timeFormatter) {
       timeFormatter = [[TTTTimeIntervalFormatter alloc] init];
     }
@@ -75,6 +80,11 @@ static TTTTimeIntervalFormatter *timeFormatter;
     [self.contentLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.contentLabel setBackgroundColor:[UIColor clearColor]];
     [self.mainView addSubview:self.contentLabel];
+    
+    self.contentImageView = [[PFImageView alloc] init];
+    [self.contentImageView setBackgroundColor:[UIColor blueColor]];
+    [self.contentImageView setOpaque:YES];
+    [self.mainView addSubview:self.contentImageView];
 
 //    self.userButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [self.userButton setBackgroundColor:[UIColor clearColor]];
@@ -92,7 +102,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
   
   [self.mainView setFrame:CGRectMake(self.cellInsetWidth,
                                     self.contentView.frame.origin.y,
-                                    self.contentView.frame.size.width - 2*self.cellInsetWidth,
+                                    self.contentView.frame.size.width - (2*self.cellInsetWidth),
                                     self.contentView.frame.size.height)];
   // Layout user image
   [self.userImageView setFrame:CGRectMake(userImageX, userImageY, userImageDim, userImageDim)];
@@ -107,12 +117,24 @@ static TTTTimeIntervalFormatter *timeFormatter;
   [self.nameButton setFrame:CGRectMake(nameX, nameY, nameRect.size.width, nameRect.size.height)];
 //  // Layout the content
 //  CGSize contentSize = [self.contentLabel.text sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(horizontalTextSpace, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-  CGRect contentRect = [self.contentLabel.text boundingRectWithSize:CGSizeMake(horizontalTextSpace,CGFLOAT_MAX)
-                                                                  options:NSStringDrawingUsesLineFragmentOrigin
-                                                               attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]}
-                                                                  context:nil];
-  [self.contentLabel setFrame:CGRectMake(textContentX, textContentY, contentRect.size.width, contentRect.size.height)];
-
+  CGRect textContentRect = [self.contentLabel.text boundingRectWithSize:CGSizeMake(horizontalTextSpace,CGFLOAT_MAX)
+                                                            options:NSStringDrawingUsesLineFragmentOrigin
+                                                         attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]}
+                                                            context:nil];
+  if (hasContentText) {
+    [self.contentLabel setFrame:CGRectMake(textContentX, textContentY, textContentRect.size.width, textContentRect.size.height)];
+  }
+  
+  if (hasContentImage) {
+    CGFloat imageOriginY = 0.f;
+    if (hasContentText) {
+      imageOriginY = textContentY + textContentRect.size.height + vertElemSpacing;
+    }else {
+      imageOriginY = textContentY + vertElemSpacing;
+    }
+    [self.contentImageView setFrame:CGRectMake(0.f, imageOriginY, imageContentDim, imageContentDim)];
+  }
+  
   // Layout the timestamp label
 //  CGSize timeSize = [self.timeLabel.text sizeWithFont:[UIFont systemFontOfSize:11] forWidth:horizontalTextSpace lineBreakMode:NSLineBreakByTruncatingTail];
   CGRect timeRect = [self.timeLabel.text boundingRectWithSize:CGSizeMake(horizontalTextSpace,CGFLOAT_MAX)
@@ -127,6 +149,41 @@ static TTTTimeIntervalFormatter *timeFormatter;
 //  [self.separatorImage setFrame:CGRectMake(0, self.frame.size.height-2, self.frame.size.width-cellInsetWidth*2, 2)];
 //  [self.separatorImage setHidden:hideSeparator];
 }
+
+/*! Static Helper methods */
++ (CGFloat)heightForCellTextContent:(NSString *)textContent
+                        imageOjbect:(PFObject *)imageObject
+                     cellInsetWidth:(CGFloat)cellInset
+{
+  
+  CGFloat horizontalTextSpace =  [CommentCell horizontalTextSpaceForInsetWidth:cellInset];
+
+  
+  CGRect textContentRect = [textContent boundingRectWithSize:CGSizeMake(horizontalTextSpace,CGFLOAT_MAX)
+                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                  attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]}
+                                                     context:nil];
+
+  
+//  CGSize nameSize = [name sizeWithFont:[UIFont boldSystemFontOfSize:13.0f] forWidth:200.0f lineBreakMode:NSLineBreakByTruncatingTail];
+//  NSString *paddedString = [PAPBaseTextCell padString:content withFont:[UIFont systemFontOfSize:13.0f] toWidth:nameSize.width];
+//  CGFloat horizontalTextSpace = [PAPActivityCell horizontalTextSpaceForInsetWidth:cellInset];
+//  
+//  CGSize contentSize = [paddedString sizeWithFont:[UIFont systemFontOfSize:13.0f] constrainedToSize:CGSizeMake(horizontalTextSpace, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+//  CGFloat singleLineHeight = [@"Test" sizeWithFont:[UIFont systemFontOfSize:13.0f]].height;
+  
+  // Calculate the added height necessary for multiline text. Ensure value is not below 0.
+//  CGFloat multilineHeightAddition = contentSize.height - singleLineHeight;
+  
+  CGFloat imageHeight = 0.f;
+  
+  if (imageObject) {
+    imageHeight += imageContentDim;
+  }
+  
+  return textContentY + textContentRect.size.height + imageHeight;//48.0f + fmax(0.0f, multilineHeightAddition);
+}
+
 
 #pragma mark - Delegate methods
 
@@ -152,6 +209,10 @@ static TTTTimeIntervalFormatter *timeFormatter;
 }
 
 - (void)setContentText:(NSString *)contentString {
+  if (contentString != nil) {
+    hasContentText = YES;
+  }
+  
   // If we have a user we pad the content with spaces to make room for the name
 //  if (self.user) {
 //    CGSize nameSize = [self.nameButton.titleLabel.text sizeWithFont:[UIFont boldSystemFontOfSize:13] forWidth:nameMaxWidth lineBreakMode:NSLineBreakByTruncatingTail];
@@ -167,10 +228,22 @@ static TTTTimeIntervalFormatter *timeFormatter;
   [self setNeedsDisplay];
 }
 
-//- (void)setContentImageView:(UIImageView *)contentImageView:(NSString *)contentString
-//{
-//
-//}
+- (void)setContentImage:(PFObject *)imageObject
+{
+  if (!imageObject) {
+    return;
+  }
+
+  hasContentImage = YES;
+
+  self.contentImageView.image = [UIImage imageNamed:@"commentImagePlaceholder.jpg"];
+
+  [imageObject fetchIfNeededInBackgroundWithBlock:^(PFObject *imgObj, NSError *error){
+    [self.contentImageView setFile:[imgObj objectForKey:kDTImageMediumKey]];
+    [self.contentImageView loadInBackground];
+    [self setNeedsDisplay];
+  }];
+}
 
 - (void)setDate:(NSDate *)date {
   // Set the label with a human readable time
@@ -186,7 +259,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
   [self setNeedsDisplay];
 }
 
-/* Static helper to obtain the horizontal space left for name and content after taking the inset and image in consideration */
+/* Static helper to obtain the  horizontal space left for name and content after taking the inset and image in consideration */
 + (CGFloat)horizontalTextSpaceForInsetWidth:(CGFloat)insetWidth {
   return (320-(insetWidth*2)) - (horiBorderSpacing+userImageDim+horiElemSpacing+horiBorderSpacing);
 }
