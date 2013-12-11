@@ -16,7 +16,7 @@
 
 @end
 
-#define commentCellInsetWidth 2.f
+#define commentCellInsetWidth 5.f
 
 @implementation ChallengeDetailCommentController
 
@@ -96,7 +96,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
   static NSString *cellID = @"CommentCell";
-  
   // Try to dequeue a cell and create one if necessary
   CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
   if (cell == nil) {

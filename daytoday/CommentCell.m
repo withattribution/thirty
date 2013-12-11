@@ -109,20 +109,19 @@ static TTTTimeIntervalFormatter *timeFormatter;
 //  [self.userButton setFrame:CGRectMake(userImageX, userImageY, userImageDim, userImageDim)];
 
   // Layout the name button
-  //self.nameButton.titleLabel.text
   CGRect nameRect = [@"username" boundingRectWithSize:CGSizeMake(nameMaxWidth,CGFLOAT_MAX)
                                                                         options:NSStringDrawingUsesLineFragmentOrigin
                                                                      attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:10]}
                                                                         context:nil];
   [self.nameButton setFrame:CGRectMake(nameX, nameY, nameRect.size.width, nameRect.size.height)];
-//  // Layout the content
-//  CGSize contentSize = [self.contentLabel.text sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(horizontalTextSpace, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+
+  // Layout the contentText
   CGRect textContentRect = [self.contentLabel.text boundingRectWithSize:CGSizeMake(horizontalTextSpace,CGFLOAT_MAX)
                                                             options:NSStringDrawingUsesLineFragmentOrigin
                                                          attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:13]}
                                                             context:nil];
   
-  CGFloat textContentY = vertBorderSpacing+userImageDim+(0g*vertElemSpacing);
+  CGFloat textContentY = vertBorderSpacing+userImageDim;
   
   if (hasContentImage)
   {
@@ -135,7 +134,6 @@ static TTTTimeIntervalFormatter *timeFormatter;
   
 
   // Layout the timestamp label
-//  CGSize timeSize = [self.timeLabel.text sizeWithFont:[UIFont systemFontOfSize:11] forWidth:horizontalTextSpace lineBreakMode:NSLineBreakByTruncatingTail];
   CGRect timeRect = [self.timeLabel.text boundingRectWithSize:CGSizeMake(horizontalTextSpace,CGFLOAT_MAX)
                                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                                   attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]}
@@ -143,10 +141,6 @@ static TTTTimeIntervalFormatter *timeFormatter;
   
   [self.timeLabel setFrame:CGRectMake(self.mainView.frame.size.width-timeRect.size.width, timeY, timeRect.size.width, timeRect.size.height)];
   [self.mainView bringSubviewToFront:self.userImageView];
-  
-//  // Layour separator
-//  [self.separatorImage setFrame:CGRectMake(0, self.frame.size.height-2, self.frame.size.width-cellInsetWidth*2, 2)];
-//  [self.separatorImage setHidden:hideSeparator];
 }
 
 /*! Static Helper methods */
@@ -154,11 +148,9 @@ static TTTTimeIntervalFormatter *timeFormatter;
                         imageOjbect:(PFObject *)imageObject
                      cellInsetWidth:(CGFloat)cellInset
 {
+  CGFloat interpretedHorizontalTextSpace =  [CommentCell horizontalTextSpaceForInsetWidth:cellInset];
   
-  CGFloat horizontalTextSpace =  [CommentCell horizontalTextSpaceForInsetWidth:cellInset];
-
-  
-  CGRect textContentRect = [textContent boundingRectWithSize:CGSizeMake(horizontalTextSpace,CGFLOAT_MAX)
+  CGRect textContentRect = [textContent boundingRectWithSize:CGSizeMake(interpretedHorizontalTextSpace,CGFLOAT_MAX)
                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                   attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]}
                                                      context:nil];
@@ -182,9 +174,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
   return vertBorderSpacing+userImageDim+(4*vertElemSpacing) + textContentRect.size.height + imageHeight;//48.0f + fmax(0.0f, multilineHeightAddition);
 }
 
-
 #pragma mark - Delegate methods
-
 ///* Inform delegate that a user image or name was tapped */
 - (void)didTapUserButtonAction:(id)sender {
   if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didTapUserButton:)]) {
@@ -265,7 +255,6 @@ static TTTTimeIntervalFormatter *timeFormatter;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
   [super setSelected:selected animated:animated];
-
   // Configure the view for the selected state
 }
 
