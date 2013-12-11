@@ -122,7 +122,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
                                                          attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:13]}
                                                             context:nil];
   
-  CGFloat textContentY = vertBorderSpacing+userImageDim+(4*vertElemSpacing);
+  CGFloat textContentY = vertBorderSpacing+userImageDim+(0g*vertElemSpacing);
   
   if (hasContentImage)
   {
