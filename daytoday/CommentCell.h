@@ -61,11 +61,13 @@
 
 #define userImageX horiBorderSpacing
 #define userImageY vertBorderSpacing
-#define userImageDim 33.0f
+#define userImageDim 35.0f
 
 #define textContentX horiBorderSpacing
-#define textContentY vertBorderSpacing+userImageDim+(4*vertElemSpacing)
+//#define textContentY vertBorderSpacing+userImageDim+(4*vertElemSpacing)
 
+#define imageContentX horiBorderSpacing
+#define imageContentY vertBorderSpacing+userImageDim+(4*vertElemSpacing)
 #define imageContentDim 320.f
 
 #define nameX userImageX+userImageDim+horiElemSpacing+horiElemSpacing

@@ -107,14 +107,8 @@
   
   [cell setUser:[object objectForKey:kDTActivityFromUserKey]];
   [cell setContentText:[object objectForKey:kDTActivityContentKey]];
-  
-//  if ([object objectForKey:kDTActivityImageKey] != nil) {
-//    NIDINFO(@"the activity image key: %@",[object objectForKey:kDTActivityImageKey]);
-//  }
-  
   [cell setContentImage:[object objectForKey:kDTActivityImageKey]];
   [cell setDate:[object createdAt]];
-//  cell.textLabel.text = [object objectForKey:kDTActivityContentKey];
 
   return cell;
 }

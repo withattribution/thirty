@@ -55,7 +55,7 @@
   [layerCopy setIsVerified:_isVerified];
   
   [layerCopy setBackgroundColor:[UIColor clearColor].CGColor];
-  [layerCopy setStrokeColor:[UIColor whiteColor].CGColor];
+//  [layerCopy setStrokeColor:[UIColor whiteColor].CGColor];
   [layerCopy setZPosition:0];
   [layerCopy setLineWidth:2.5f];
   
@@ -346,7 +346,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
   [section setIsVerified:verificationStatus];
   
   [section setBackgroundColor:[UIColor clearColor].CGColor];
-  [section setStrokeColor:[UIColor whiteColor].CGColor];
+//  [section setStrokeColor:[UIColor whiteColor].CGColor];
   [section setZPosition:0];
   [section setLineWidth:2.5f];
   

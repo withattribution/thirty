@@ -43,19 +43,19 @@ static TTTTimeIntervalFormatter *timeFormatter;
     self.backgroundColor = [UIColor clearColor];
 
     self.mainView = [[UIView alloc] initWithFrame:self.contentView.frame];
-    [self.mainView setBackgroundColor:[UIColor orangeColor]];
+    [self.mainView setBackgroundColor:[UIColor clearColor]];
 
     self.userImageView = [[DTProfileImageView alloc] init];
     [self.userImageView.layer setCornerRadius:userImageDim/2.f];
-    [self.userImageView setBackgroundColor:[UIColor purpleColor]];
+    [self.userImageView setBackgroundColor:[UIColor darkGrayColor]];
     [self.userImageView setOpaque:YES];
     [self.userImageView.profileButton addTarget:self action:@selector(didTapUserButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     ////    [self.userButton addTarget:self action:@selector(didTapUserButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.mainView addSubview:self.userImageView];
 
     self.nameButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.nameButton setBackgroundColor:[UIColor grayColor]];
-    [self.nameButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.nameButton setBackgroundColor:[UIColor clearColor]];
+    [self.nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.nameButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
     [self.nameButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10]];
     [self.nameButton.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -67,22 +67,22 @@ static TTTTimeIntervalFormatter *timeFormatter;
 
     self.timeLabel = [[UILabel alloc] init];
     [self.timeLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
-    [self.timeLabel setTextColor:[UIColor blueColor]];
-    [self.timeLabel setBackgroundColor:[UIColor redColor]];
+    [self.timeLabel setTextColor:[UIColor blackColor]];
+    [self.timeLabel setBackgroundColor:[UIColor clearColor]];
 //    [self.timeLabel setShadowColor:[UIColor colorWithWhite:1.0f alpha:0.70f]];
 //    [self.timeLabel setShadowOffset:CGSizeMake(0, 1)];
     [self.mainView addSubview:self.timeLabel];
 
     self.contentLabel = [[UILabel alloc] init];
     [self.contentLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13]];
-    [self.contentLabel setTextColor:[UIColor blueColor]];
+    [self.contentLabel setTextColor:[UIColor blackColor]];
     [self.contentLabel setNumberOfLines:0];
     [self.contentLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.contentLabel setBackgroundColor:[UIColor clearColor]];
     [self.mainView addSubview:self.contentLabel];
     
     self.contentImageView = [[PFImageView alloc] init];
-    [self.contentImageView setBackgroundColor:[UIColor blueColor]];
+    [self.contentImageView setBackgroundColor:[UIColor clearColor]];
     [self.contentImageView setOpaque:YES];
     [self.mainView addSubview:self.contentImageView];
 
@@ -110,7 +110,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
 
   // Layout the name button
   //self.nameButton.titleLabel.text
-  CGRect nameRect = [@"alberto" boundingRectWithSize:CGSizeMake(nameMaxWidth,CGFLOAT_MAX)
+  CGRect nameRect = [@"username" boundingRectWithSize:CGSizeMake(nameMaxWidth,CGFLOAT_MAX)
                                                                         options:NSStringDrawingUsesLineFragmentOrigin
                                                                      attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:10]}
                                                                         context:nil];
@@ -119,22 +119,21 @@ static TTTTimeIntervalFormatter *timeFormatter;
 //  CGSize contentSize = [self.contentLabel.text sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(horizontalTextSpace, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
   CGRect textContentRect = [self.contentLabel.text boundingRectWithSize:CGSizeMake(horizontalTextSpace,CGFLOAT_MAX)
                                                             options:NSStringDrawingUsesLineFragmentOrigin
-                                                         attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]}
+                                                         attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:13]}
                                                             context:nil];
-  if (hasContentText) {
-    [self.contentLabel setFrame:CGRectMake(textContentX, textContentY, textContentRect.size.width, textContentRect.size.height)];
+  
+  CGFloat textContentY = vertBorderSpacing+userImageDim+(4*vertElemSpacing);
+  
+  if (hasContentImage)
+  {
+    textContentY += imageContentDim;
+    [self.contentImageView setFrame:CGRectMake(0.f, vertBorderSpacing+(userImageDim*(.80f)), imageContentDim-(2*self.cellInsetWidth), imageContentDim)];
   }
   
-  if (hasContentImage) {
-    CGFloat imageOriginY = 0.f;
-    if (hasContentText) {
-      imageOriginY = textContentY + textContentRect.size.height + vertElemSpacing;
-    }else {
-      imageOriginY = textContentY + vertElemSpacing;
-    }
-    [self.contentImageView setFrame:CGRectMake(0.f, imageOriginY, imageContentDim, imageContentDim)];
-  }
+  [self.contentLabel setFrame:CGRectMake(textContentX, textContentY, textContentRect.size.width, textContentRect.size.height)];
+
   
+
   // Layout the timestamp label
 //  CGSize timeSize = [self.timeLabel.text sizeWithFont:[UIFont systemFontOfSize:11] forWidth:horizontalTextSpace lineBreakMode:NSLineBreakByTruncatingTail];
   CGRect timeRect = [self.timeLabel.text boundingRectWithSize:CGSizeMake(horizontalTextSpace,CGFLOAT_MAX)
@@ -143,7 +142,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
                                                                      context:nil];
   
   [self.timeLabel setFrame:CGRectMake(self.mainView.frame.size.width-timeRect.size.width, timeY, timeRect.size.width, timeRect.size.height)];
-  [self.mainView bringSubviewToFront:self.contentLabel];
+  [self.mainView bringSubviewToFront:self.userImageView];
   
 //  // Layour separator
 //  [self.separatorImage setFrame:CGRectMake(0, self.frame.size.height-2, self.frame.size.width-cellInsetWidth*2, 2)];
@@ -164,7 +163,6 @@ static TTTTimeIntervalFormatter *timeFormatter;
                                                   attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]}
                                                      context:nil];
 
-  
 //  CGSize nameSize = [name sizeWithFont:[UIFont boldSystemFontOfSize:13.0f] forWidth:200.0f lineBreakMode:NSLineBreakByTruncatingTail];
 //  NSString *paddedString = [PAPBaseTextCell padString:content withFont:[UIFont systemFontOfSize:13.0f] toWidth:nameSize.width];
 //  CGFloat horizontalTextSpace = [PAPActivityCell horizontalTextSpaceForInsetWidth:cellInset];
@@ -172,16 +170,16 @@ static TTTTimeIntervalFormatter *timeFormatter;
 //  CGSize contentSize = [paddedString sizeWithFont:[UIFont systemFontOfSize:13.0f] constrainedToSize:CGSizeMake(horizontalTextSpace, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
 //  CGFloat singleLineHeight = [@"Test" sizeWithFont:[UIFont systemFontOfSize:13.0f]].height;
   
-  // Calculate the added height necessary for multiline text. Ensure value is not below 0.
+// Calculate the added height necessary for multiline text. Ensure value is not below 0.
 //  CGFloat multilineHeightAddition = contentSize.height - singleLineHeight;
-  
+
   CGFloat imageHeight = 0.f;
-  
+
   if (imageObject) {
     imageHeight += imageContentDim;
   }
-  
-  return textContentY + textContentRect.size.height + imageHeight;//48.0f + fmax(0.0f, multilineHeightAddition);
+
+  return vertBorderSpacing+userImageDim+(4*vertElemSpacing) + textContentRect.size.height + imageHeight;//48.0f + fmax(0.0f, multilineHeightAddition);
 }
 
 
@@ -198,8 +196,8 @@ static TTTTimeIntervalFormatter *timeFormatter;
   _user = aUser;
   // Set name button properties and avatar image
 //  [self.userImageView setFile:[_user objectForKey:kPAPUserProfilePicSmallKey]];
-  [self.nameButton setTitle:@"alberto" forState:UIControlStateNormal];
-  [self.nameButton setTitle:@"alberto" forState:UIControlStateHighlighted];
+  [self.nameButton setTitle:@"username" forState:UIControlStateNormal];
+  [self.nameButton setTitle:@"username" forState:UIControlStateHighlighted];
   
   // If user is set after the contentText, we reset the content to include padding
   if (self.contentLabel.text) {
