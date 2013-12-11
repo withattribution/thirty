@@ -13,5 +13,5 @@
 + (NSInteger)minutesFromGMTForDate:(NSDate *)date;
 + (NSDateFormatter *)displayDayFormatter;
 + (NSCalendar *)commonCalendar;
-
+//+ (uint32_t)challengeUserSeedFromIntent:(PFObject *)intent;
 @end

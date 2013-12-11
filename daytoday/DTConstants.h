@@ -14,6 +14,7 @@ extern NSString *const DTJoinChallenge;
 #pragma mark - DTUserDefaults
 // Challenge Seed
 extern NSString *const kDTChallengeUserSeed;
+extern NSString *const kDTActiveIntent;
 
 #pragma mark - DTDateFormatString
 // Date Format Constants

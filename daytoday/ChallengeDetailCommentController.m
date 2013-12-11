@@ -7,8 +7,7 @@
 //
 
 #import "ChallengeDetailCommentController.h"
-
-
+#import "CommentCell.h"
 #import "UIImage+Resizing.h"
 
 @interface ChallengeDetailCommentController ()
@@ -91,22 +90,18 @@
   static NSString *cellID = @"CommentCell";
   
   // Try to dequeue a cell and create one if necessary
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+  CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
   if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-//    cell.cellInsetWidth = kPAPCellInsetWidth;
-//    cell.delegate = self;
-    cell.backgroundColor = [UIColor orangeColor];
+    cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    cell.cellInsetWidth = 5.f;
+    cell.delegate = self;
   }
   
-  
-  
-  cell.textLabel.text = [object objectForKey:kDTActivityContentKey];
-  
-//  [cell setUser:[object objectForKey:kPAPActivityFromUserKey]];
-//  [cell setContentText:[object objectForKey:kPAPActivityContentKey]];
-//  [cell setDate:[object createdAt]];
-  
+  [cell setUser:[object objectForKey:kDTActivityFromUserKey]];
+  [cell setContentText:[object objectForKey:kDTActivityContentKey]];
+  [cell setDate:[object createdAt]];
+//  cell.textLabel.text = [object objectForKey:kDTActivityContentKey];
+
   return cell;
 }
 

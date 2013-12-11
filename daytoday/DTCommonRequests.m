@@ -89,7 +89,7 @@
 
 #pragma mark Challenge Day Methods
 
-+ (void)activeDayForDate:(NSDate *)date
++ (void)activeDayForDate:(NSDate *)date// withIntent:(PFObject *)intent
 {
   uint32_t challengeUserSeed = [[[NSUserDefaults standardUserDefaults] objectForKey:kDTChallengeUserSeed] unsignedIntValue];
   
@@ -111,15 +111,9 @@
 {
   PFRelation *intentRelation = [intent relationforKey:kDTIntentChallengeDays];
   PFQuery *dayQuery = [intentRelation query];
-  
-  
-  
-//  PFQuery *dayQuery = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
-//  [dayQuery whereKey:kDTChallengeDayIntentKey equalTo:intent];
   [dayQuery setCachePolicy:cachePolicy];
   [dayQuery findObjectsInBackgroundWithBlock:^(NSArray *days, NSError *error){
     if (!error && [days count] > 0) {
-      
       [[DTCache sharedCache] cacheChallengeDays:days forIntent:intent];
     }else {
       NIDINFO(@"error: %@",[error localizedDescription]);
@@ -158,6 +152,11 @@
 //                                    NIDINFO(@"obj key: %@ and object: %@",key, [challengeDictionary objectForKey:key]);
 //                                  }
                                   [[DTCache sharedCache] cacheIntent:intent forUser:[PFUser currentUser]];
+                                  
+#warning should a user have an avtive intent associated with their account?
+//                                  [[NSUserDefaults standardUserDefaults] setValue:intent forKey:kDTActiveIntent];
+                                  [[NSUserDefaults standardUserDefaults] synchronize];
+                                  
                                   [DTCommonRequests requestDaysForIntent:intent cachePolicy:kPFCachePolicyNetworkOnly];
 //                                  [[DTCache sharedCache] cacheChallengeDays:[challengeDictionary objectForKey:@"days"] forIntent:[challengeDictionary objectForKey:@"intent"]];
                                 }else {

@@ -42,6 +42,14 @@
   [self.cache removeAllObjects];
 }
 
+#pragma mark - Active Challenge Day
+
++ (PFObject *)cachedActiveDayForDate:(NSDate *)date
+{
+  
+}
+
+
 #pragma mark - ChallengeDay Activity Cache
 
 - (void)refreshCacheActivity:(NSArray *)activities forChallengeDay:(PFObject *)challengeDay
@@ -115,7 +123,7 @@
 
 - (PFObject *)currentActiveIntentForUser:(PFUser *)user
 {
-#warning need better way to determine if intent is active
+#warning need better way to determine if +INTENT+ is active
   NSArray * intents = [self intentsForUser:user];
   return [intents lastObject];
 }

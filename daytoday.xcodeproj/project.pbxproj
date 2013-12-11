@@ -107,6 +107,12 @@
 		A1E4256618512E9800DAE577 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4117BD6AA5002B681B /* UIKit.framework */; };
 		A1E4256C18512E9800DAE577 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1E4256A18512E9800DAE577 /* InfoPlist.strings */; };
 		A1E4256E18512E9800DAE577 /* daytodayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E4256D18512E9800DAE577 /* daytodayTests.m */; };
+		A1ECF0E518577F540012B71D /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0E418577F540012B71D /* CommentCell.m */; };
+		A1ECF0E7185780950012B71D /* profile_sq.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1ECF0E6185780950012B71D /* profile_sq.jpg */; };
+		A1ECF0EA1857ACEB0012B71D /* DTProfileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0E91857ACEB0012B71D /* DTProfileImageView.m */; };
+		A1ECF0ED1857ACFE0012B71D /* DTImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0EC1857ACFE0012B71D /* DTImageView.m */; };
+		A1ECF0F21857B3E50012B71D /* UserImagePlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = A1ECF0F11857B3E50012B71D /* UserImagePlaceholder.png */; };
+		A1ECF0F61857EA010012B71D /* TTTTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0F51857EA010012B71D /* TTTTimeIntervalFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A1F79C46183573E700C3B8A3 /* ChallengeDetailContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */; };
 		A1F79C491835740A00C3B8A3 /* ChallengeDetailCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C481835740A00C3B8A3 /* ChallengeDetailCommentController.m */; };
 		A1F79C4C1836652500C3B8A3 /* DTSocialDashBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */; };
@@ -336,6 +342,16 @@
 		A1E4256B18512E9800DAE577 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A1E4256D18512E9800DAE577 /* daytodayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = daytodayTests.m; sourceTree = "<group>"; };
 		A1E4256F18512E9800DAE577 /* daytodayTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "daytodayTests-Prefix.pch"; sourceTree = "<group>"; };
+		A1ECF0E318577F540012B71D /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		A1ECF0E418577F540012B71D /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
+		A1ECF0E6185780950012B71D /* profile_sq.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = profile_sq.jpg; sourceTree = "<group>"; };
+		A1ECF0E81857ACEB0012B71D /* DTProfileImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTProfileImageView.h; sourceTree = "<group>"; };
+		A1ECF0E91857ACEB0012B71D /* DTProfileImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTProfileImageView.m; sourceTree = "<group>"; };
+		A1ECF0EB1857ACFE0012B71D /* DTImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTImageView.h; sourceTree = "<group>"; };
+		A1ECF0EC1857ACFE0012B71D /* DTImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTImageView.m; sourceTree = "<group>"; };
+		A1ECF0F11857B3E50012B71D /* UserImagePlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UserImagePlaceholder.png; sourceTree = "<group>"; };
+		A1ECF0F41857EA010012B71D /* TTTTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTTimeIntervalFormatter.h; sourceTree = "<group>"; };
+		A1ECF0F51857EA010012B71D /* TTTTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTTimeIntervalFormatter.m; sourceTree = "<group>"; };
 		A1F79C44183573E700C3B8A3 /* ChallengeDetailContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailContainer.h; sourceTree = "<group>"; };
 		A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDetailContainer.m; sourceTree = "<group>"; };
 		A1F79C471835740A00C3B8A3 /* ChallengeDetailCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailCommentController.h; sourceTree = "<group>"; };
@@ -683,12 +699,17 @@
 		A17E39CE18300F7800F75CC6 /* challenge day */ = {
 			isa = PBXGroup;
 			children = (
+				A1ECF0E218577EF10012B71D /* comment cell */,
 				A17E39CF183010EB00F75CC6 /* ChallengeDayDetail.h */,
 				A17E39D0183010EB00F75CC6 /* ChallengeDayDetail.m */,
 				A1F79C6A1836AC4800C3B8A3 /* CommentInputView.h */,
 				A1F79C6B1836AC4800C3B8A3 /* CommentInputView.m */,
 				A12F8B0D1836FF9700C9F086 /* CommentUtilityView.h */,
 				A12F8B0E1836FF9700C9F086 /* CommentUtilityView.m */,
+				A1ECF0E81857ACEB0012B71D /* DTProfileImageView.h */,
+				A1ECF0E91857ACEB0012B71D /* DTProfileImageView.m */,
+				A1ECF0EB1857ACFE0012B71D /* DTImageView.h */,
+				A1ECF0EC1857ACFE0012B71D /* DTImageView.m */,
 			);
 			name = "challenge day";
 			sourceTree = "<group>";
@@ -750,6 +771,8 @@
 		A1B5E61B1829BF970050A136 /* demo assets */ = {
 			isa = PBXGroup;
 			children = (
+				A1ECF0F11857B3E50012B71D /* UserImagePlaceholder.png */,
+				A1ECF0E6185780950012B71D /* profile_sq.jpg */,
 				A19A00D9182ADACA00EE3B61 /* daytoday.jpg */,
 				A19A00DA182ADACA00EE3B61 /* daytoday@2x.jpg */,
 				A1B5E61C1829BFA00050A136 /* reveal-icon.png */,
@@ -761,6 +784,7 @@
 		A1C60D89183D57A300C98C69 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				A1ECF0F31857E9E20012B71D /* TTTTimeIntervalFormatter */,
 				A11D9DFD18511FF2007A70ED /* FacebookSDK.framework */,
 				A11D9DFE18511FF2007A70ED /* Parse.framework */,
 				A11D9D87185111B6007A70ED /* lib-aok-ios */,
@@ -822,6 +846,24 @@
 				A1E4256F18512E9800DAE577 /* daytodayTests-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A1ECF0E218577EF10012B71D /* comment cell */ = {
+			isa = PBXGroup;
+			children = (
+				A1ECF0E318577F540012B71D /* CommentCell.h */,
+				A1ECF0E418577F540012B71D /* CommentCell.m */,
+			);
+			name = "comment cell";
+			sourceTree = "<group>";
+		};
+		A1ECF0F31857E9E20012B71D /* TTTTimeIntervalFormatter */ = {
+			isa = PBXGroup;
+			children = (
+				A1ECF0F41857EA010012B71D /* TTTTimeIntervalFormatter.h */,
+				A1ECF0F51857EA010012B71D /* TTTTimeIntervalFormatter.m */,
+			);
+			name = TTTTimeIntervalFormatter;
 			sourceTree = "<group>";
 		};
 		A1F79C43183573A300C3B8A3 /* ChallengeDetailControllers */ = {
@@ -1071,11 +1113,13 @@
 				A1275C3D1808FD6B00019A91 /* sectionImageHolder.jpg in Resources */,
 				A13DB5E7181EDB1500378901 /* checkIn.jpg in Resources */,
 				A1F79C681836731400C3B8A3 /* comment-normal.png in Resources */,
+				A1ECF0F21857B3E50012B71D /* UserImagePlaceholder.png in Resources */,
 				B7E61D5617BD6AA5002B681B /* Default@2x.png in Resources */,
 				A13DB5E9181EDB1500378901 /* timer.jpg in Resources */,
 				A1F79C671836731400C3B8A3 /* comment-selected.png in Resources */,
 				B7E61D5817BD6AA5002B681B /* Default-568h@2x.png in Resources */,
 				A1B5E61E1829BFA00050A136 /* reveal-icon.png in Resources */,
+				A1ECF0E7185780950012B71D /* profile_sq.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1119,6 +1163,7 @@
 				A11D9DD018511227007A70ED /* NIPaths.m in Sources */,
 				A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */,
 				A11D9DC218511227007A70ED /* NICommonMetrics.m in Sources */,
+				A1ECF0F61857EA010012B71D /* TTTTimeIntervalFormatter.m in Sources */,
 				A11D9DC618511227007A70ED /* NIError.m in Sources */,
 				A19867371837CE3000BC229F /* FDTakeController.m in Sources */,
 				A11D9DF418511261007A70ED /* AFJSONRequestOperation.m in Sources */,
@@ -1126,8 +1171,10 @@
 				A1B5E61A1829BE960050A136 /* FrontViewController.m in Sources */,
 				A11D9DF818511261007A70ED /* AFXMLRequestOperation.m in Sources */,
 				B73903B417FB1DB600B9C9BB /* LoginRegistrationViewController.m in Sources */,
+				A1ECF0ED1857ACFE0012B71D /* DTImageView.m in Sources */,
 				B73903CB17FB6DC700B9C9BB /* SearchChallengesViewController.m in Sources */,
 				A11D9DC818511227007A70ED /* NIImageUtilities.m in Sources */,
+				A1ECF0EA1857ACEB0012B71D /* DTProfileImageView.m in Sources */,
 				A11D9DC518511227007A70ED /* NIDeviceOrientation.m in Sources */,
 				A16AC9C61822ACE700074AB8 /* ChallengeDetailVerificationController.m in Sources */,
 				A11D9DC918511227007A70ED /* NIInMemoryCache.m in Sources */,
@@ -1167,6 +1214,7 @@
 				A1C60D5D183C183900C98C69 /* DTConstants.m in Sources */,
 				A16AC9D718298D6B00074AB8 /* DemoTableViewController.m in Sources */,
 				A11D9DCF18511227007A70ED /* NIOperations.m in Sources */,
+				A1ECF0E518577F540012B71D /* CommentCell.m in Sources */,
 				A11D9DD218511227007A70ED /* NISDKAvailability.m in Sources */,
 				A1AC68B118163D38004A1F5D /* DTSelectionSheet.m in Sources */,
 				A11D9DC118511227007A70ED /* NIButtonUtilities.m in Sources */,

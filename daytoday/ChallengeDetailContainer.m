@@ -178,7 +178,8 @@
 {
   [super viewDidLoad];
 
-  [DTCommonRequests activeDayForDate:[NSDate date]];
+  [DTCommonRequests activeDayForDate:[NSDate date]];//] withIntent:<#(PFObject *)#>];
+  
 }
 
 - (void)didReceiveMemoryWarning
@@ -209,7 +210,7 @@
   comment[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:self.challengeDay.objectId];
   comment[kDTActivityFromUserKey] = [PFUser currentUser];
 #warning need to replace method for getting TO USER --> use a stored intent
-//  comment[kDTActivityToUserKey]   = [[self.challengeDay objectForKey:kDTChallengeDayIntentKey] objectForKey:kDTIntentUserKey];
+  comment[kDTActivityToUserKey]   = [PFUser currentUser];//[[self.challengeDay objectForKey:kDTChallengeDayIntentKey] objectForKey:kDTIntentUserKey];
 
   if(self.commentImageFile && self.commentImageFile){
     //adding image

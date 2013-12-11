@@ -13,7 +13,7 @@
 + (void)likeChallengeDayInBackGround:(PFObject *)challengeDay block:(void(^)(BOOL succeeded, NSError *error))completionBlock;
 + (void)unLikeChallengeDayInBackGround:(PFObject *)challengeDay block:(void(^)(BOOL succeeded, NSError *error))completionBlock;
 
-+ (void)activeDayForDate:(NSDate *)date;
++ (void)activeDayForDate:(NSDate *)date;// withIntent:(PFObject *)intent;
 
 + (void)requestDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy;
 

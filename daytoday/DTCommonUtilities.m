@@ -7,6 +7,7 @@
 //
 
 #import "DTCommonUtilities.h"
+#import "MurmurHash.h"
 
 @implementation DTCommonUtilities
 
@@ -49,9 +50,24 @@
   return _sharedCalendar;
 }
 
-//+ (NSCalendar *)calendar
+//+ (uint32_t)challengeUserSeedFromIntent:(PFObject *)intent
 //{
-//  return [NSCalendar autoupdatingCurrentCalendar];
+//  NIDINFO(@"the userfrom intent: %@", [intent objectForKey:kDTIntentUserKey]);
+//  
+////  MurmurHash *hash = [[MurmurHash alloc] init];
+////  uint32_t userSeed = [hash hash32:[[PFUser currentUser] objectId]];
+////  //      NIDINFO(@"user seed: %u",userSeed);
+////  //      NIDINFO(@"challenge id: %@",[challenge objectId]);
+////  
+////  uint32_t challengeUserHash = [hash hash32:[challenge objectId]  withSeed:userSeed];
+////  //      NIDINFO(@"challenge user seed: %u",challengeUserHash);
+////  
+////  NSNumber *challengeUserSeed = [NSNumber numberWithUnsignedInt:challengeUserHash];
+////  //      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
+////  
+////  [[NSUserDefaults standardUserDefaults] setValue:challengeUserSeed forKey:kDTChallengeUserSeed];
+////  [[NSUserDefaults standardUserDefaults] synchronize];
+//  
+//  return 1;
 //}
-
 @end
