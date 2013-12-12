@@ -7,6 +7,7 @@
 //
 
 #import "ChallengeDetailVerificationController.h"
+#import "Verification.h"
 #import "DTVerificationElement.h"
 
 #import "ChallengeDayDetail.h"
@@ -40,6 +41,7 @@
   
   [self.verifyElement setDataSource:self];
   [self.verifyElement setDelegate:self];
+  [self.verifyElement setType:DTVerificationTickMark];
   
   [self.verifyElement setAnimationSpeed:1.0];
   [self.view addSubview:self.verifyElement];

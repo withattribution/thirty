@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Verification.h"
 
 @class DTVerificationElement;
 @protocol DTVerificationElementDataSource <NSObject>
@@ -23,11 +24,13 @@
 @interface DTVerificationElement : UIView
 @property (nonatomic,weak) id<DTVerificationElementDataSource> dataSource;
 @property (nonatomic,weak) id<DTVerificationElementDelegate> delegate;
+@property (nonatomic,assign) DTVerificationType *verificationType;
 @property (nonatomic,assign) CGFloat dotRadius;
 @property (nonatomic,assign) CGPoint dotCenter;
 @property (nonatomic,assign) CGFloat startSectionAngle;
 @property (nonatomic,assign) CGFloat animationSpeed;
 
+- (void)setType:(DTVerificationType)type;
 - (void)reloadData:(BOOL)animated;
 
 @end

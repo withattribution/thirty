@@ -121,16 +121,6 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
       self.dotRadius = MIN(frame.size.width/2.f, frame.size.height/2.f) - 0;
       self.dotCenter = CGPointMake(frame.size.width/2.f, frame.size.height/2.f);
       
-      UIView *circle = [[UIView alloc] initWithFrame:CGRectMake(0., 0., self.frame.size.width*.65, self.frame.size.height*.65)];
-      [circle setCenter:self.dotCenter];
-      [circle.layer setBorderColor:[UIColor darkGrayColor].CGColor];
-      [circle.layer setBorderWidth:2.f];
-      [circle setAlpha:0.8f];
-      [circle.layer setCornerRadius:self.dotRadius*.65];
-      [circle setBackgroundColor:[UIColor whiteColor]];
-      [self addSubview:circle];
-      [self bringSubviewToFront:circle];
-      
       UILongPressGestureRecognizer *press = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(isHoldingSection:)];
       [press setMinimumPressDuration:.01];
       [self addGestureRecognizer:press];
@@ -140,6 +130,30 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     }
     return self;
 }
+
+- (void)setType:(DTVerificationType)type
+{
+  UIImageView *verificationImage = [[UIImageView alloc] initWithFrame:CGRectMake(0., 0., self.frame.size.width*.65, self.frame.size.height*.65)];
+  verificationImage.image = [Verification imageForType:type];
+  [verificationImage setCenter:self.dotCenter];
+  [verificationImage.layer setBorderColor:[UIColor blueColor].CGColor];
+  [verificationImage.layer setBorderWidth:1.2f];
+  [verificationImage.layer setCornerRadius:self.dotRadius*.65];
+  [verificationImage.layer setMasksToBounds:YES];
+//  [verificationImage.layer setShouldRasterize:YES];
+  [self addSubview:verificationImage];
+  [self bringSubviewToFront:verificationImage];
+//  UIView *circle = [[UIView alloc] initWithFrame:CGRectMake(0., 0., self.frame.size.width*.65, self.frame.size.height*.65)];
+//  [circle setCenter:self.dotCenter];
+//  [circle.layer setBorderColor:[UIColor darkGrayColor].CGColor];
+//  [circle.layer setBorderWidth:2.f];
+//  [circle setAlpha:0.8f];
+//  [circle.layer setCornerRadius:self.dotRadius*.65];
+//  [circle setBackgroundColor:[UIColor orangeColor]];
+//  [self addSubview:circle];
+//  [self bringSubviewToFront:circle];
+}
+
 
 - (void)isHoldingSection:(UIGestureRecognizer *)g
 {
