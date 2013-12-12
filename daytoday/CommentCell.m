@@ -11,10 +11,7 @@
 
 static TTTTimeIntervalFormatter *timeFormatter;
 
-@interface CommentCell (){
-  BOOL hasContentImage;
-  BOOL hasContentText;
-}
+@interface CommentCell ()
 
 + (CGFloat)horizontalTextSpaceForInsetWidth:(CGFloat)insetWidth;
 
@@ -27,9 +24,6 @@ static TTTTimeIntervalFormatter *timeFormatter;
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     // Initialization code
-    hasContentText = NO;
-    hasContentImage = NO;
-
     if (!timeFormatter) {
       timeFormatter = [[TTTTimeIntervalFormatter alloc] init];
     }
@@ -50,7 +44,6 @@ static TTTTimeIntervalFormatter *timeFormatter;
     [self.userImageView setBackgroundColor:[UIColor darkGrayColor]];
     [self.userImageView setOpaque:YES];
     [self.userImageView.profileButton addTarget:self action:@selector(didTapUserButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    ////    [self.userButton addTarget:self action:@selector(didTapUserButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.mainView addSubview:self.userImageView];
 
     self.nameButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -59,9 +52,6 @@ static TTTTimeIntervalFormatter *timeFormatter;
     [self.nameButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
     [self.nameButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10]];
     [self.nameButton.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
-    //    [self.nameButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    [self.nameButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    //    [self.nameButton.titleLabel setShadowOffset:CGSizeMake( 0.0f, 1.0f)];
     [self.nameButton addTarget:self action:@selector(didTapUserButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.mainView addSubview:self.nameButton];
 
@@ -69,8 +59,6 @@ static TTTTimeIntervalFormatter *timeFormatter;
     [self.timeLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
     [self.timeLabel setTextColor:[UIColor blackColor]];
     [self.timeLabel setBackgroundColor:[UIColor clearColor]];
-//    [self.timeLabel setShadowColor:[UIColor colorWithWhite:1.0f alpha:0.70f]];
-//    [self.timeLabel setShadowOffset:CGSizeMake(0, 1)];
     [self.mainView addSubview:self.timeLabel];
 
     self.contentLabel = [[UILabel alloc] init];
@@ -85,11 +73,6 @@ static TTTTimeIntervalFormatter *timeFormatter;
     [self.contentImageView setBackgroundColor:[UIColor clearColor]];
     [self.contentImageView setOpaque:YES];
     [self.mainView addSubview:self.contentImageView];
-
-//    self.userButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [self.userButton setBackgroundColor:[UIColor clearColor]];
-//    [self.userButton addTarget:self action:@selector(didTapUserButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.mainView addSubview:self.userButton];
 
     [self.contentView addSubview:self.mainView];
   }
@@ -106,7 +89,6 @@ static TTTTimeIntervalFormatter *timeFormatter;
                                     self.contentView.frame.size.height)];
   // Layout user image
   [self.userImageView setFrame:CGRectMake(userImageX, userImageY, userImageDim, userImageDim)];
-//  [self.userButton setFrame:CGRectMake(userImageX, userImageY, userImageDim, userImageDim)];
 
   // Layout the name button
   CGRect nameRect = [@"username" boundingRectWithSize:CGSizeMake(nameMaxWidth,CGFLOAT_MAX)
@@ -120,10 +102,9 @@ static TTTTimeIntervalFormatter *timeFormatter;
                                                             options:NSStringDrawingUsesLineFragmentOrigin
                                                          attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:13]}
                                                             context:nil];
-  
   CGFloat textContentY = vertBorderSpacing+userImageDim;
   
-  if (hasContentImage)
+  if (self.contentImageView.image != nil)
   {
     textContentY += imageContentDim;
     [self.contentImageView setFrame:CGRectMake(0.f, vertBorderSpacing+(userImageDim*(.80f)), imageContentDim-(2*self.cellInsetWidth), imageContentDim)];
@@ -131,14 +112,11 @@ static TTTTimeIntervalFormatter *timeFormatter;
   
   [self.contentLabel setFrame:CGRectMake(textContentX, textContentY, textContentRect.size.width, textContentRect.size.height)];
 
-  
-
   // Layout the timestamp label
   CGRect timeRect = [self.timeLabel.text boundingRectWithSize:CGSizeMake(horizontalTextSpace,CGFLOAT_MAX)
                                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                                   attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]}
                                                                      context:nil];
-  
   [self.timeLabel setFrame:CGRectMake(self.mainView.frame.size.width-timeRect.size.width, timeY, timeRect.size.width, timeRect.size.height)];
   [self.mainView bringSubviewToFront:self.userImageView];
 }
@@ -197,10 +175,6 @@ static TTTTimeIntervalFormatter *timeFormatter;
 }
 
 - (void)setContentText:(NSString *)contentString {
-  if (contentString != nil) {
-    hasContentText = YES;
-  }
-  
   // If we have a user we pad the content with spaces to make room for the name
 //  if (self.user) {
 //    CGSize nameSize = [self.nameButton.titleLabel.text sizeWithFont:[UIFont boldSystemFontOfSize:13] forWidth:nameMaxWidth lineBreakMode:NSLineBreakByTruncatingTail];
@@ -216,21 +190,12 @@ static TTTTimeIntervalFormatter *timeFormatter;
   [self setNeedsDisplay];
 }
 
-- (void)setContentImage:(PFObject *)imageObject
+- (void) prepareForReuse
 {
-  if (!imageObject) {
-    return;
-  }
+  [super prepareForReuse];
 
-  hasContentImage = YES;
-
-  self.contentImageView.image = [UIImage imageNamed:@"commentImagePlaceholder.jpg"];
-
-  [imageObject fetchIfNeededInBackgroundWithBlock:^(PFObject *imgObj, NSError *error){
-    [self.contentImageView setFile:[imgObj objectForKey:kDTImageMediumKey]];
-    [self.contentImageView loadInBackground];
-    [self setNeedsDisplay];
-  }];
+  self.contentImageView.image = nil;
+  self.contentImageView.file = nil;
 }
 
 - (void)setDate:(NSDate *)date {

@@ -47,7 +47,6 @@
 - (void)setContentText:(NSString *)contentString;
 - (void)setDate:(NSDate *)date;
 - (void)setCellInsetWidth:(CGFloat)insetWidth;
-- (void)setContentImage:(PFObject *)imageObject;
 
 /*! Layout constants */
 #define vertBorderSpacing 2.0f

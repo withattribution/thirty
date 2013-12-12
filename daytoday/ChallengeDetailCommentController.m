@@ -104,11 +104,24 @@
     cell.delegate = self;
   }
   
-  [cell setUser:[object objectForKey:kDTActivityFromUserKey]];
-  [cell setContentText:[object objectForKey:kDTActivityContentKey]];
-  [cell setContentImage:[object objectForKey:kDTActivityImageKey]];
-  [cell setDate:[object createdAt]];
+  if (object) {
+    [cell setUser:[object objectForKey:kDTActivityFromUserKey]];
+    [cell setContentText:[object objectForKey:kDTActivityContentKey]];
 
+    if ([object objectForKey:kDTActivityImageKey] != nil)
+    {
+      cell.contentImageView.image = [UIImage imageNamed:@"commentImagePlaceholder.jpg"];
+
+      [[object objectForKey:kDTActivityImageKey] fetchIfNeededInBackgroundWithBlock:^(PFObject *image, NSError *error){
+        [cell.contentImageView setFile:[image objectForKey:kDTImageMediumKey]];
+        if ([cell.contentImageView.file isDataAvailable]) {
+          [cell.contentImageView loadInBackground];
+        }
+      }];
+    }
+    [cell setDate:[object createdAt]];
+  }
+  
   return cell;
 }
 
