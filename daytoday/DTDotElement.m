@@ -78,7 +78,7 @@
   return dcg;
 }
 
-+(DTDotColorGroup *) repetitionCountColorGroup
++(DTDotColorGroup *) frequenctCountColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
   dcg.strokeColor      = [UIColor clearColor];

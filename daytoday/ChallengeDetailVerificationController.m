@@ -38,13 +38,21 @@
   
   self.verifyElement = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 150.f,150.f)];
   [self.verifyElement setCenter:CGPointMake(self.view.center.x,self.verifyElement.center.y - 30)];
-  
   [self.verifyElement setDataSource:self];
   [self.verifyElement setDelegate:self];
   [self.verifyElement setType:DTVerificationTickMark];
-  
   [self.verifyElement setAnimationSpeed:1.0];
   [self.view addSubview:self.verifyElement];
+  
+  NSNumber *remaining = [NSNumber numberWithInt:
+                         [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue] -
+                         [[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue]];
+  
+  self.frequencyDot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 50.f) andColorGroup:[DTDotColorGroup frequenctCountColorGroup] andNumber:remaining];
+  [self.frequencyDot setAlpha:0.80];
+  [self.frequencyDot setUserInteractionEnabled:NO];
+  [self.frequencyDot setCenter:self.verifyElement.center];
+  [self.view addSubview:self.frequencyDot];
   
   self.cdd = [[ChallengeDayDetail alloc] initWithFrame:CGRectMake(0., 0., 150., 30)
                                                                andDay:[[self.challengeDay objectForKey:kDTChallengeDayOrdinalDayKey] intValue]];
@@ -54,7 +62,7 @@
   BOOL hasActiveIntent = [[DTCache sharedCache] currentActiveIntentForUser:[PFUser currentUser]] != nil;
   if (!hasActiveIntent) {
     [DTCommonRequests queryIntentsForUser:[PFUser currentUser]];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cachedIntentsForUser:)
                                                  name:DTIntentDidCacheIntentsForUserNotification
@@ -62,10 +70,6 @@
   }else {
     [self addChallengeProgressElement];
   }
-  
-  
-
-
 }
 
 - (void)addChallengeProgressElement
@@ -76,7 +80,6 @@
   [self.challengeProgressElement setCenter:CGPointMake(self.view.frame.size.width/2.f, self.cdd.frame.origin.y + self.cdd.frame.size.height + 35.)];
   [self.view addSubview:self.challengeProgressElement];
 }
-
 
 - (CGFloat)heightForControllerFold
 {
@@ -126,7 +129,12 @@
         [verifyActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
           if (succeeded) {
             NIDINFO(@"verification-tick saved!");
-            [self.verifyElement reloadData:NO];
+            [self.challengeDay fetchInBackgroundWithBlock:^(PFObject *day, NSError *error){
+              if(!error && day){
+                self.challengeDay = day;
+                [self.verifyElement reloadData:NO];
+              }
+            }];
           }else {
             NIDINFO(@"%@",[error localizedDescription]);
           }
@@ -143,12 +151,16 @@
 - (NSUInteger)numberOfCompletedSectionsInVerificationElement:(DTVerificationElement *)element
 {
   NIDINFO(@"completed: %d",[[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue]);
+  NSNumber *remaining = [NSNumber numberWithInt:
+                         [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue] -
+                         [[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue]];
+  [self.frequencyDot setDotNumber:remaining];
+  
   return [[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue];
 }
 
 -(NSUInteger)numberOfSectionsInVerificationElement:(DTVerificationElement *)verificationElement
 {
-  
   NIDINFO(@"the req count: %d",[[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]);
   return [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue];
 }

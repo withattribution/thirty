@@ -44,7 +44,14 @@
 
 #pragma mark - Active Challenge Day
 
-+ (PFObject *)cachedActiveDayForDate:(NSDate *)date
+- (PFObject *)cachedActiveDayForDate:(NSDate *)date
+{
+
+}
+
+#pragma mark - ChallengeDay Verification Cache
+
+- (void)refreshVerificationActivity:(PFObject *)verification forChallengeDay:(PFObject *)challengeDay
 {
   
 }

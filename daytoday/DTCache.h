@@ -18,12 +18,16 @@
                               likers:(NSArray *)likers
                           commenters:(NSArray *)commenters
                 isLikedByCurrentUser:(BOOL)liked;
+
 - (void)refreshCacheActivity:(NSArray *)activities forChallengeDay:(PFObject *)challengeDay;
-- (void)refreshCacheVerification:(NSArray *)verifications forChallengeDay:(PFObject *)challengeDay;
+
+#pragma mark - ChallengeDay Verification Cache
+
+- (void)refreshVerificationActivity:(PFObject *)verification forChallengeDay:(PFObject *)challengeDay;
 
 #pragma mark - Active Challenge Day
 
-+ (PFObject *)cachedActiveDayForDate:(NSDate *)date;
+- (PFObject *)cachedActiveDayForDate:(NSDate *)date;
 
 #pragma mark - Challenge Days For Intent
 
