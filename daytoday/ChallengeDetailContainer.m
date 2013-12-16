@@ -9,6 +9,7 @@
 #import "ChallengeDetailContainer.h"
 #import "ChallengeDetailVerificationController.h"
 #import "ChallengeDetailCommentController.h"
+#import "ProfileViewController.h"
 #import "FDTakeController.h"
 
 #import "DTSocialDashBoard.h"
@@ -17,11 +18,14 @@
 
 #import "UIImage+Resizing.h"
 
+#import "DTNavigationBar.h"
+
 @interface ChallengeDetailContainer () <UIGestureRecognizerDelegate,
                                           DTSocialDashBoardDelegate,
                                          CommentUtilityViewDelegate,
                                            CommentInputViewDelegate,
-                                                      FDTakeDelegate>
+                                                     FDTakeDelegate,
+                                            DTNavigationBarDelegate>
 
 @property (nonatomic,strong) ChallengeDetailVerificationController *verficationController;
 @property (nonatomic,strong) ChallengeDetailCommentController *commentController;
@@ -35,6 +39,7 @@
 @property (nonatomic,strong) UIView *headerContainerView;
 @property (nonatomic,strong) UIView *footerContainerView;
 
+@property (nonatomic,strong) DTNavigationBar *navigationBar;
 @property (nonatomic,strong) DTSocialDashBoard *socialDashBoard;
 @property (nonatomic,strong) CommentInputView *commentInput;
 @property (nonatomic,strong) CommentUtilityView *commentUtility;
@@ -127,6 +132,11 @@
   [self addChildViewController:self.commentController];
   [self.commentController didMoveToParentViewController:self];
 
+  self.navigationBar = [[DTNavigationBar alloc] initWithFrame:CGRectMake(0.f,[self padWithStatusBarHeight],self.view.frame.size.width,0.f)];
+  [self.view addSubview:self.navigationBar];
+  [self.navigationBar setDelegate:self];
+  [self.navigationBar setContentText:[[[[[PFUser currentUser] objectForKey:kDTUserActiveIntent] objectForKey:kDTIntentChallengeKey] fetchIfNeeded] objectForKey:kDTChallengeNameKey]];
+  
   _socialDashBoard = [[DTSocialDashBoard alloc] init];
   [self.socialDashBoard setDelegate:self];
 
@@ -177,7 +187,7 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  [DTCommonRequests activeDayForDate:[NSDate date] user:[PFUser currentUser]];//] withIntent:<#(PFObject *)#>];
+  [DTCommonRequests activeDayForDate:[NSDate date] user:[PFUser currentUser]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -593,6 +603,16 @@
   [self.socialDashBoard setLikeCount:[aNotification.userInfo objectForKey:kDTChallengeDayAttributeLikeCountKey]];
   [self.socialDashBoard setCommentCount:[aNotification.userInfo objectForKey:kDTChallengeDayAttributeCommentCountKey]];
   [self.socialDashBoard setLiked:[[aNotification.userInfo objectForKey:kDTChallengeDayAttributeIsLikedByCurrentUserKey] boolValue]];
+}
+
+#pragma mark - DTNavigationBar Delegate Methods
+
+- (void)userDidTapUserProfileButton:(UIButton *)button user:(PFUser *)user
+{
+#warning this is mad broken?
+  ProfileViewController *profileVC = [[ProfileViewController alloc] initWithUser:[PFUser currentUser]];
+  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
+  [navigationController pushViewController:profileVC animated:YES];
 }
 
 #pragma mark - UIKeyBoard Notitifications

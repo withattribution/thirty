@@ -214,7 +214,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
 
 /* Static helper to obtain the  horizontal space left for name and content after taking the inset and image in consideration */
 + (CGFloat)horizontalTextSpaceForInsetWidth:(CGFloat)insetWidth {
-  return (320-(insetWidth*2)) - (horiBorderSpacing+userImageDim+horiElemSpacing+horiBorderSpacing);
+  return ([[UIScreen mainScreen] bounds].size.width-(insetWidth*2)) - (horiBorderSpacing+userImageDim+horiElemSpacing+horiBorderSpacing);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

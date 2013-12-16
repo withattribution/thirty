@@ -91,9 +91,14 @@
 
 + (void)activeDayForDate:(NSDate *)date user:(PFUser *)user
 {
-//  uint32_t challengeUserSeed = [[[NSUserDefaults standardUserDefaults] objectForKey:kDTChallengeUserSeed] unsignedIntValue];
+  uint32_t challengeUserSeed;
   
-  uint32_t challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:[[DTCache sharedCache] currentActiveIntentForUser:user]];
+  if ([[DTCache sharedCache] currentActiveIntentForUser:user] != nil) {
+    challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:[[DTCache sharedCache] currentActiveIntentForUser:user]];
+  }else {
+    challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:[[user objectForKey:kDTUserActiveIntent] fetchIfNeeded]];
+  }
+
   NIDINFO(@"seed: %u",challengeUserSeed);
   
   [PFCloud callFunctionInBackground:DTQueryActiveDay
@@ -152,7 +157,7 @@
   [userQuery includeKey:kDTUserActiveIntent];
   [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *obj, NSError *error){
     if (!error && obj) {
-      NIDINFO(@"the obj: %@",obj);
+      NIDINFO(@"the obj: %@",[obj objectForKey:kDTUserActiveIntent]);
       [[DTCache sharedCache] cacheActiveIntent:[obj objectForKey:kDTUserActiveIntent] user:user];
     }else {
       NIDINFO(@"active intent query failed: %@", [error localizedDescription]);

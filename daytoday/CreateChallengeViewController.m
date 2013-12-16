@@ -637,20 +637,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 //  }
 //}
 
-//#pragma mark Challenge Creation Request Delegate Methods
-//
-//- (void) challengeSuccessfullyCreated:(Challenge*)challenge
-//{
-//  [self transitionShareChallengeController];
-//}
-//
-//- (void) requestDidError:(NSError*)err
-//{
-//  NIDINFO(@"Challenge Creation failed  :( with error: %@",err);
-//  UIAlertView *chFail = [[UIAlertView alloc] initWithTitle:@"Challenge Creation Failed with Error description" message:[[err userInfo] objectForKey:NSLocalizedDescriptionKey] delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
-//  [chFail show];
-//}
-
 #pragma mark END OF CHALLENGE CREATION LOOP BACK TO BEGINNING
 
 - (void)transitionShareChallengeController
@@ -692,7 +678,6 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-  
   UIViewController *newChallengeCreation = [[CreateChallengeViewController alloc] init];
   [self presentViewController:newChallengeCreation animated:YES completion:^{
     [newChallengeCreation didMoveToParentViewController:self];
@@ -733,36 +718,5 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 //
 //  return transform;
 //}
-
-
-// --> in case I should do a fake auth for the fake user and user creation
-
-//Auth *userA = [[Auth alloc] init];
-//Auth *userB = [[Auth alloc] init];
-//Auth *userC = [[Auth alloc] init];
-//UserRequest *req = [[UserRequest alloc] initWithContext:self.managedObjectContext];
-//
-//req.delegate = self;
-//[req createUser:userA.username withPassword:userA.password additionalParameters:nil];
-//[[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
-//userA.userId = tempUser.userId;
-//
-//AuthenticationRequest* req1 = [[AuthenticationRequest alloc] initWithContext:self.managedObjectContext];
-//req1.delegate = self;
-//[req1 logoutDevice];
-//
-//[req createUser:userB.username withPassword:userB.password additionalParameters:nil];
-//[[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
-//userB.userId = tempUser.userId;
-//[req1 logoutDevice];
-//
-//[req createUser:userC.username withPassword:userC.password additionalParameters:nil];
-//[[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
-//userC.userId = tempUser.userId;
-//[req1 logoutDevice];
-//
-//[req1 loginUser:userA.username withPassword:userA.password];
-//[[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kWaitTimeForRequest]];
-//STAssertTrue(authSuccess, @"authentication was unusccessful");
 
 @end

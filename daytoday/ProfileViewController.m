@@ -18,58 +18,65 @@
 
 @property (nonatomic,strong) ProfileHistoryTableView *historyTable;
 @property (nonatomic,strong) NSArray *intentsArray;
+
+- (BOOL)hasCachedIntents;
+
 @end
 
 @implementation ProfileViewController
 
-- (id)init
+- (id)initWithUser:(PFUser *)user
 {
   self = [super init];
   if (self) {
-
+    self.aUser = user;
+    
+    UserInfoHeader *infoHeader = [[UserInfoHeader alloc] initWithFrame:CGRectMake(0.f,
+                                                                                  [self padWithStatusBarHeight],
+                                                                                  self.view.frame.size.width,
+                                                                                  105.f)
+                                                              withUser:self.aUser];
+    [self.view addSubview:infoHeader];
+    
+    NIDINFO(@"current user: %@",self.aUser);
+    
+    CGFloat profileHeightOffset = infoHeader.frame.origin.y + infoHeader.frame.size.height;
+    self.historyTable = [[ProfileHistoryTableView alloc] initWithFrame:CGRectMake(0,
+                                                                                  profileHeightOffset,
+                                                                                  self.view.frame.size.width,
+                                                                                  self.view.frame.size.height - profileHeightOffset)];
+    [self.view addSubview:self.historyTable];
   }
   return self;
+}
+
+- (BOOL)hasCachedIntents
+{
+  return [[DTCache sharedCache] intentsForUser:self.aUser] != nil;
 }
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  // Do any additional setup after loading the view.
-  self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.];
-  UserInfoHeader *infoHeader = [[UserInfoHeader alloc] initWithFrame:CGRectMake(0.f,
-                                                                                [self padWithStatusBarHeight],
-                                                                                self.view.frame.size.width,
-                                                                                105.f)
-                                                            withUser:[PFUser currentUser]];
-  [self.view addSubview:infoHeader];
 
-  NIDINFO(@"current user: %@",[[PFUser currentUser] objectId]);
-  
-  CGFloat profileHeightOffset = infoHeader.frame.origin.y + infoHeader.frame.size.height;
-  self.historyTable = [[ProfileHistoryTableView alloc] initWithFrame:CGRectMake(0,
-                                                                                profileHeightOffset,
-                                                                                self.view.frame.size.width,
-                                                                                self.view.frame.size.height - profileHeightOffset)];
-  [self.view addSubview:self.historyTable];
-  
-  BOOL hasCachedIntents = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]] != nil;
-  
-  if (!hasCachedIntents) {
+  self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.];
+
+  if (![self hasCachedIntents]) {
     [DTCommonRequests queryIntentsForUser:[PFUser currentUser]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cachedIntentsForUser:)
                                                  name:DTIntentDidCacheIntentsForUserNotification
                                                object:nil];
-  }else {
+  }
+  else{
+    [self.historyTable setIntentsArray:[[DTCache sharedCache] intentsForUser:self.aUser]];
+    [self.historyTable reloadData];
+  }
 //    NSArray *intents = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]];
 //    for (PFObject *i in intents) {
 //      NIDINFO(@"the intents: %@",i);
 //    }
-    [self.historyTable setIntentsArray:[[DTCache sharedCache] intentsForUser:[PFUser currentUser]]];
-    [self.historyTable reloadData];
-  }
-
 }
 
 #pragma mark - Intents for User Cache Refreshed Notification

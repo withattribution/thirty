@@ -94,9 +94,9 @@
         }
       break;
     case 1:
-      if ( ![frontNavigationController.topViewController isKindOfClass:[ProfileViewController class]] )
+      if ( ![frontNavigationController.topViewController isKindOfClass:[ProfileViewController class]] && [PFUser currentUser])
       {
-        ProfileViewController *loginVC = [[ProfileViewController alloc] init];
+        ProfileViewController *loginVC = [[ProfileViewController alloc] initWithUser:[PFUser currentUser]];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginVC];
         [revealController setFrontViewController:navigationController animated:YES];
       }

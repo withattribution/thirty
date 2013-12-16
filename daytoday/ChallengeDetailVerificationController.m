@@ -39,7 +39,7 @@
   [super viewDidLoad];
   [self.view setBackgroundColor:[UIColor colorWithWhite:.9f alpha:1.f]];
 
-  self.verifyElement = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 150.f,150.f)];
+  self.verifyElement = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,95.f, 150.f,150.f)];
   [self.verifyElement setCenter:CGPointMake(self.view.center.x,self.verifyElement.center.y - 30)];
   [self.verifyElement setDataSource:self];
   [self.verifyElement setDelegate:self];
@@ -109,7 +109,7 @@
 
 - (CGFloat)heightForControllerFold
 {
-  return 240.f;
+  return 285.f;
 }
 
 - (void)viewWillAppear:(BOOL)animated

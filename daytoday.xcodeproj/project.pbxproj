@@ -116,6 +116,8 @@
 		A1ECF0F81858C7660012B71D /* commentImagePlaceholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1ECF0F71858C7660012B71D /* commentImagePlaceholder.jpg */; };
 		A1ECF0FB185CBA3B0012B71D /* DTProgressRow.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0FA185CBA3B0012B71D /* DTProgressRow.m */; };
 		A1ECF0FE185D0BAA0012B71D /* DTChallengeCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0FD185D0BAA0012B71D /* DTChallengeCalendar.m */; };
+		A1ECF101185F80630012B71D /* DTNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF100185F80630012B71D /* DTNavigationBar.m */; };
+		A1ECF104185F97B00012B71D /* accessoryCaret.png in Resources */ = {isa = PBXBuildFile; fileRef = A1ECF103185F97B00012B71D /* accessoryCaret.png */; };
 		A1F79C46183573E700C3B8A3 /* ChallengeDetailContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */; };
 		A1F79C491835740A00C3B8A3 /* ChallengeDetailCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C481835740A00C3B8A3 /* ChallengeDetailCommentController.m */; };
 		A1F79C4C1836652500C3B8A3 /* DTSocialDashBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */; };
@@ -360,6 +362,9 @@
 		A1ECF0FA185CBA3B0012B71D /* DTProgressRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTProgressRow.m; sourceTree = "<group>"; };
 		A1ECF0FC185D0BAA0012B71D /* DTChallengeCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTChallengeCalendar.h; sourceTree = "<group>"; };
 		A1ECF0FD185D0BAA0012B71D /* DTChallengeCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTChallengeCalendar.m; sourceTree = "<group>"; };
+		A1ECF0FF185F80630012B71D /* DTNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTNavigationBar.h; sourceTree = "<group>"; };
+		A1ECF100185F80630012B71D /* DTNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTNavigationBar.m; sourceTree = "<group>"; };
+		A1ECF103185F97B00012B71D /* accessoryCaret.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accessoryCaret.png; sourceTree = "<group>"; };
 		A1F79C44183573E700C3B8A3 /* ChallengeDetailContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailContainer.h; sourceTree = "<group>"; };
 		A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDetailContainer.m; sourceTree = "<group>"; };
 		A1F79C471835740A00C3B8A3 /* ChallengeDetailCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailCommentController.h; sourceTree = "<group>"; };
@@ -626,20 +631,22 @@
 		A1275C081806EB7A00019A91 /* ui elements */ = {
 			isa = PBXGroup;
 			children = (
-				A1ECF0F9185CBA3B0012B71D /* DTProgressRow.h */,
-				A1ECF0FA185CBA3B0012B71D /* DTProgressRow.m */,
+				A1ECF0FF185F80630012B71D /* DTNavigationBar.h */,
+				A1ECF100185F80630012B71D /* DTNavigationBar.m */,
 				A1F79C4A1836652500C3B8A3 /* DTSocialDashBoard.h */,
 				A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */,
 				A1AC68B81816D8A1004A1F5D /* DTInfiniteScrollView.h */,
 				A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */,
 				A1AC68AF18163D38004A1F5D /* DTSelectionSheet.h */,
 				A1AC68B018163D38004A1F5D /* DTSelectionSheet.m */,
+				A16AC9C71822AD2A00074AB8 /* DTVerificationElement.h */,
+				A16AC9C81822AD2A00074AB8 /* DTVerificationElement.m */,
 				A1275C091806EB8C00019A91 /* DTDotElement.h */,
 				A1275C0A1806EB8C00019A91 /* DTDotElement.m */,
 				A1275C0D1806EB8C00019A91 /* DTProgressElement.h */,
 				A1275C0E1806EB8C00019A91 /* DTProgressElement.m */,
-				A16AC9C71822AD2A00074AB8 /* DTVerificationElement.h */,
-				A16AC9C81822AD2A00074AB8 /* DTVerificationElement.m */,
+				A1ECF0F9185CBA3B0012B71D /* DTProgressRow.h */,
+				A1ECF0FA185CBA3B0012B71D /* DTProgressRow.m */,
 				A1ECF0FC185D0BAA0012B71D /* DTChallengeCalendar.h */,
 				A1ECF0FD185D0BAA0012B71D /* DTChallengeCalendar.m */,
 			);
@@ -663,6 +670,7 @@
 			isa = PBXGroup;
 			children = (
 				A198673E183826A300BC229F /* takePhoto.png */,
+				A1ECF102185F979F0012B71D /* challenge day images */,
 				A19867381837CE6300BC229F /* profile images */,
 				A1F79C4D18366AD200C3B8A3 /* social dashboard buttons */,
 				A13DB5E2181EDAE700378901 /* verfication images */,
@@ -877,6 +885,14 @@
 				A1ECF0F51857EA010012B71D /* TTTTimeIntervalFormatter.m */,
 			);
 			name = TTTTimeIntervalFormatter;
+			sourceTree = "<group>";
+		};
+		A1ECF102185F979F0012B71D /* challenge day images */ = {
+			isa = PBXGroup;
+			children = (
+				A1ECF103185F97B00012B71D /* accessoryCaret.png */,
+			);
+			name = "challenge day images";
 			sourceTree = "<group>";
 		};
 		A1F79C43183573A300C3B8A3 /* ChallengeDetailControllers */ = {
@@ -1116,6 +1132,7 @@
 				A1ECF0F81858C7660012B71D /* commentImagePlaceholder.jpg in Resources */,
 				A13DB5E8181EDB1500378901 /* photo.jpg in Resources */,
 				A1F79C691836731400C3B8A3 /* heart-selected.png in Resources */,
+				A1ECF104185F97B00012B71D /* accessoryCaret.png in Resources */,
 				A198673F183826A400BC229F /* takePhoto.png in Resources */,
 				A19A00DB182ADACA00EE3B61 /* daytoday.jpg in Resources */,
 				A19A00DC182ADACA00EE3B61 /* daytoday@2x.jpg in Resources */,
@@ -1199,6 +1216,7 @@
 				A11D9DDC1851124A007A70ED /* NIImageProcessing.m in Sources */,
 				B73903D117FB701A00B9C9BB /* DTViewController.m in Sources */,
 				B73903C817FB5FED00B9C9BB /* ProfileViewController.m in Sources */,
+				A1ECF101185F80630012B71D /* DTNavigationBar.m in Sources */,
 				A1F79C4C1836652500C3B8A3 /* DTSocialDashBoard.m in Sources */,
 				A1ECF0FE185D0BAA0012B71D /* DTChallengeCalendar.m in Sources */,
 				A120945E182C3991005B20F7 /* LogInForm.m in Sources */,
