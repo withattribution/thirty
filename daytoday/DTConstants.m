@@ -66,6 +66,7 @@ NSString *const kDTActivityTypeVerificationFinish      =@"verificationFinish";
 #pragma mark - User Class
 // Field Keys
 NSString *const kDTUserDisplayNameKey                  =@"displayName";
+NSString *const kDTUserActiveIntent                    =@"activeIntent";
 NSString *const kDTUserProfileImageKey                 =@"profileImage";
 NSString *const kDTUserGMTOffset                       =@"gmtOffset";
 //NSString *const kDTUserIntents                         =@"intents";

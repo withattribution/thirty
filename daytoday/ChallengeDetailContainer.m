@@ -177,9 +177,7 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-
-  [DTCommonRequests activeDayForDate:[NSDate date]];//] withIntent:<#(PFObject *)#>];
-  
+  [DTCommonRequests activeDayForDate:[NSDate date] user:[PFUser currentUser]];//] withIntent:<#(PFObject *)#>];
 }
 
 - (void)didReceiveMemoryWarning
@@ -580,7 +578,7 @@
 
 - (void)didRetrieveChallengeDay:(NSNotification *)aNotification
 {
-  if (aNotification.object) {
+  if (aNotification.object && aNotification.object != [NSNull null]) {
     self.challengeDay = (PFObject *)aNotification.object;
     [self addChallengeDayInterface];
   }else {

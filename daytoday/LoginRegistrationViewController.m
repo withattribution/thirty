@@ -173,6 +173,9 @@
                                     block:^(PFUser *user, NSError *error) {
                                       if (user) {
                                         NIDINFO(@"logged in");
+                                        if ([[user objectForKey:kDTUserActiveIntent] objectId].length > 0) {
+                                          [DTCommonRequests queryActiveIntent:user];
+                                        }
                                       } else {
                                         NIDINFO(@"%@",[error localizedDescription]);
                                       }

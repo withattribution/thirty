@@ -135,9 +135,14 @@
 
 - (PFObject *)currentActiveIntentForUser:(PFUser *)user
 {
-#warning need better way to determine if +INTENT+ is active
-  NSArray * intents = [self intentsForUser:user];
-  return [intents lastObject];
+  NSString *key = [self keyForActiveIntent:user];
+  return [self.cache objectForKey:key];
+}
+
+- (void)cacheActiveIntent:(PFObject *)intent user:(PFUser *)user
+{
+  [self setActiveIntent:intent user:user];
+  [self cacheIntent:intent forUser:user];
 }
 
 - (void)cacheIntent:(PFObject *)intent forUser:(PFUser *)user
@@ -299,6 +304,12 @@
   [self.cache setObject:challengeDays forKey:key];
 }
 
+- (void)setActiveIntent:(PFObject *)intent user:(PFUser *)user
+{
+  NSString *key = [self keyForActiveIntent:user];
+  [self.cache setObject:intent forKey:key];
+}
+
 - (void)setIntents:(NSArray *)intents forUser:(PFUser *)user
 {
   NSString *key = [self keyForUser:user];
@@ -308,6 +319,11 @@
 - (NSString *)keyForChallengeDay:(PFObject *)challengeDay
 {
   return [NSString stringWithFormat:@"challengeDay_%@",[challengeDay objectId]];
+}
+
+- (NSString *)keyForActiveIntent:(PFUser *)user
+{
+  return [NSString stringWithFormat:@"active_intent_%@",[user objectId]];
 }
 
 - (NSString *)keyForIntent:(PFObject *)intent

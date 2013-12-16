@@ -57,6 +57,7 @@ extern NSString *const kDTActivityTypeVerificationFinish;
 #pragma mark - User Class
 // Field Keys
 extern NSString *const kDTUserDisplayNameKey;
+extern NSString *const kDTUserActiveIntent;
 extern NSString *const kDTUserProfileImageKey;
 extern NSString *const kDTUserGMTOffset;
 //extern NSString *const kDTUserIntents;

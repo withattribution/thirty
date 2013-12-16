@@ -89,14 +89,18 @@
 
 #pragma mark Challenge Day Methods
 
-+ (void)activeDayForDate:(NSDate *)date// withIntent:(PFObject *)intent
++ (void)activeDayForDate:(NSDate *)date user:(PFUser *)user
 {
-  uint32_t challengeUserSeed = [[[NSUserDefaults standardUserDefaults] objectForKey:kDTChallengeUserSeed] unsignedIntValue];
+//  uint32_t challengeUserSeed = [[[NSUserDefaults standardUserDefaults] objectForKey:kDTChallengeUserSeed] unsignedIntValue];
+  
+  uint32_t challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:[[DTCache sharedCache] currentActiveIntentForUser:user]];
+  NIDINFO(@"seed: %u",challengeUserSeed);
   
   [PFCloud callFunctionInBackground:DTQueryActiveDay
                      withParameters:@{@"seed": @(challengeUserSeed) }
                               block:^(PFObject *day, NSError *error) {
                                 if (!error) {
+                                  NIDINFO(@"the day: %@",day);
                                   [[NSNotificationCenter defaultCenter]
                                    postNotificationName:DTChallengeDayRetrievedNotification
                                                  object:day
@@ -123,6 +127,39 @@
 
 #pragma mark Itents for User
 
++ (void)activeIntent:(PFObject *)intent
+{
+  //only a valid call if user is logged in
+  if ([PFUser currentUser])
+  {
+      [[PFUser currentUser] setObject:intent forKey:kDTUserActiveIntent];
+      [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+        if(succeeded) {
+          NIDINFO(@"updated active intent: %@",[[PFUser currentUser] objectForKey:kDTUserActiveIntent]);
+          [[DTCache sharedCache] cacheActiveIntent:[[PFUser currentUser] objectForKey:kDTUserActiveIntent]
+                                              user:[PFUser currentUser]];
+        }
+        else {
+          NIDINFO(@"user failed to set active intent: %@",[error localizedDescription]);
+        }
+      }];
+  }
+}
+
++ (void)queryActiveIntent:(PFUser *)user
+{
+  PFQuery *userQuery = [PFUser query];
+  [userQuery includeKey:kDTUserActiveIntent];
+  [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *obj, NSError *error){
+    if (!error && obj) {
+      NIDINFO(@"the obj: %@",obj);
+      [[DTCache sharedCache] cacheActiveIntent:[obj objectForKey:kDTUserActiveIntent] user:user];
+    }else {
+      NIDINFO(@"active intent query failed: %@", [error localizedDescription]);
+    }
+  }];
+}
+
 + (void)queryIntentsForUser:(PFUser *)user
 {
   PFQuery *intentQuery = [PFQuery queryWithClassName:kDTIntentClassKey];
@@ -136,9 +173,6 @@
   }];
 }
 
-//PFRelation *relation = [book relationforKey:@"authors"];
-//PFQuery *query = [relation query];
-
 #pragma mark Intent Methods
 
 + (void)joinChallenge:(NSString *)challengeId
@@ -148,17 +182,8 @@
                               block:^(PFObject *intent, NSError *error) {
                                 if (!error && intent) {
                                   NIDINFO(@"success!: %@",intent);
-//                                  for (NSString *key in [challengeDictionary allKeys]) {
-//                                    NIDINFO(@"obj key: %@ and object: %@",key, [challengeDictionary objectForKey:key]);
-//                                  }
-                                  [[DTCache sharedCache] cacheIntent:intent forUser:[PFUser currentUser]];
-                                  
-#warning should a user have an avtive intent associated with their account?
-//                                  [[NSUserDefaults standardUserDefaults] setValue:intent forKey:kDTActiveIntent];
-                                  [[NSUserDefaults standardUserDefaults] synchronize];
-                                  
+                                  [DTCommonRequests activeIntent:intent];
                                   [DTCommonRequests requestDaysForIntent:intent cachePolicy:kPFCachePolicyNetworkOnly];
-//                                  [[DTCache sharedCache] cacheChallengeDays:[challengeDictionary objectForKey:@"days"] forIntent:[challengeDictionary objectForKey:@"intent"]];
                                 }else {
                                   NIDINFO("error!: %@",error.localizedDescription);
                                 }

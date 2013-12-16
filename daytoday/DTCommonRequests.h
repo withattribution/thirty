@@ -13,14 +13,17 @@
 + (void)likeChallengeDayInBackGround:(PFObject *)challengeDay block:(void(^)(BOOL succeeded, NSError *error))completionBlock;
 + (void)unLikeChallengeDayInBackGround:(PFObject *)challengeDay block:(void(^)(BOOL succeeded, NSError *error))completionBlock;
 
-+ (void)activeDayForDate:(NSDate *)date;// withIntent:(PFObject *)intent;
++ (void)activeDayForDate:(NSDate *)date user:(PFUser *)user;
 
 + (void)requestDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy;
 
 + (void)joinChallenge:(NSString *)challengeId;
 
 #pragma mark Intents for User
+
++ (void)activeIntent:(PFObject *)intent;
 + (void)queryIntentsForUser:(PFUser *)user;
++ (void)queryActiveIntent:(PFUser *)user;
 
 + (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy;
 

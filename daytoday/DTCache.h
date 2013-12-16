@@ -37,7 +37,9 @@
 
 #pragma mark - Intents for User
 
+- (void)cacheActiveIntent:(PFObject *)intent user:(PFUser *)user;
 - (PFObject *)currentActiveIntentForUser:(PFUser *)user;
+
 - (NSArray *)intentsForUser:(PFUser *)user;
 - (void)cacheIntent:(PFObject *)intent forUser:(PFUser *)user;
 - (void)cacheIntents:(NSArray *)intents forUser:(PFUser *)user;

@@ -37,7 +37,6 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
   [self.view setBackgroundColor:[UIColor colorWithWhite:.9f alpha:1.f]];
 
   self.verifyElement = [[DTVerificationElement alloc] initWithFrame:CGRectMake(50.f,50.f, 150.f,150.f)];
@@ -62,15 +61,13 @@
                                                                andDay:[[self.challengeDay objectForKey:kDTChallengeDayOrdinalDayKey] intValue]];
   [self.cdd setCenter:CGPointMake(self.view.frame.size.width/2.f,self.verifyElement.frame.origin.y + self.verifyElement.frame.size.height - 5.)];
   [self.view addSubview:self.cdd];
-  
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   if (![self hasActiveIntent]) {
-    [DTCommonRequests queryIntentsForUser:[PFUser currentUser]];
-
+    [DTCommonRequests queryActiveIntent:[PFUser currentUser]];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cachedIntentsForUser:)
-                                                 name:DTIntentDidCacheIntentsForUserNotification
+                                                 name:DTIntentDidCacheIntentForUserNotification
                                                object:nil];
   }else {
     [self addChallengeProgressElement];
@@ -108,7 +105,6 @@
   [self.rowView setDelegate:self];
   [self.rowView setDataSource:self.calendarObject];
   [self.view addSubview:self.rowView];
-
 }
 
 - (CGFloat)heightForControllerFold
@@ -199,9 +195,13 @@
 
 - (void)cachedIntentsForUser:(NSNotification *)aNotification
 {
+//  NSArray *intentsForUser = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]];
+//  NIDINFO(@"the first (and only) intent: %@",[intentsForUser firstObject]);
+//  [DTCommonRequests activeIntent:[intentsForUser firstObject]];
+//  NIDINFO(@"the active intent ID: %@",[[[PFUser currentUser] objectForKey:kDTActiveIntent] objectId]);
   [self addChallengeProgressElement];
   [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:DTIntentDidCacheIntentsForUserNotification
+                                                  name:DTIntentDidCacheIntentForUserNotification
                                                 object:nil];
 }
 
