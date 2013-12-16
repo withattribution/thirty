@@ -101,7 +101,7 @@ Parse.Cloud.define("activeDay",function(request,response){
   var seed = request.params.seed;
   var activeDay = murmurHash3.x86.hash32(moment().zone(offset).format("MM/DD/YYYY"),seed);
   //console.log("the active hash: "+activeDay);
-  // console.log("the offset date: "+moment().zone(offset).format("MM/DD/YYYY"));
+  //console.log("the offset date: "+moment().zone(offset).format("MM/DD/YYYY"));
   var query = new Parse.Query("ChallengeDay");
   query.equalTo("active",activeDay);
   query.include("intent");

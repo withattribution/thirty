@@ -43,7 +43,7 @@
 @property (nonatomic,strong) NSDate *dotDate;
 @property (nonatomic,strong) UIImage *dotImage;
 
-+ (DTDotElement *)buildForChallengeDay:(PFObject *)challengeDay andDate:(NSDate *)date;
++ (DTDotElement *)buildForChallengeDay:(PFObject *)challengeDay andDate:(NSDate *)date frame:(CGRect)frame;
 
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg;
 - (id)initWithFrame:(CGRect)f andColorGroup:(DTDotColorGroup *)dg andNumber:(NSNumber *)num;

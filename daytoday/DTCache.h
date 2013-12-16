@@ -31,6 +31,7 @@
 
 #pragma mark - Challenge Days For Intent
 
+- (PFObject *)challengeDayForDate:(NSDate *)date intent:(PFObject *)intent;
 - (NSArray *)challengeDaysForIntent:(PFObject *)intent;
 - (void)cacheChallengeDays:(NSArray *)days forIntent:(PFObject *)intent;
 

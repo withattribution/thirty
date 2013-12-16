@@ -114,6 +114,8 @@
 		A1ECF0F21857B3E50012B71D /* UserImagePlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = A1ECF0F11857B3E50012B71D /* UserImagePlaceholder.png */; };
 		A1ECF0F61857EA010012B71D /* TTTTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0F51857EA010012B71D /* TTTTimeIntervalFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A1ECF0F81858C7660012B71D /* commentImagePlaceholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1ECF0F71858C7660012B71D /* commentImagePlaceholder.jpg */; };
+		A1ECF0FB185CBA3B0012B71D /* DTProgressRow.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0FA185CBA3B0012B71D /* DTProgressRow.m */; };
+		A1ECF0FE185D0BAA0012B71D /* DTChallengeCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0FD185D0BAA0012B71D /* DTChallengeCalendar.m */; };
 		A1F79C46183573E700C3B8A3 /* ChallengeDetailContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */; };
 		A1F79C491835740A00C3B8A3 /* ChallengeDetailCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C481835740A00C3B8A3 /* ChallengeDetailCommentController.m */; };
 		A1F79C4C1836652500C3B8A3 /* DTSocialDashBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */; };
@@ -354,6 +356,10 @@
 		A1ECF0F41857EA010012B71D /* TTTTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTTimeIntervalFormatter.h; sourceTree = "<group>"; };
 		A1ECF0F51857EA010012B71D /* TTTTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTTimeIntervalFormatter.m; sourceTree = "<group>"; };
 		A1ECF0F71858C7660012B71D /* commentImagePlaceholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = commentImagePlaceholder.jpg; sourceTree = "<group>"; };
+		A1ECF0F9185CBA3B0012B71D /* DTProgressRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTProgressRow.h; sourceTree = "<group>"; };
+		A1ECF0FA185CBA3B0012B71D /* DTProgressRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTProgressRow.m; sourceTree = "<group>"; };
+		A1ECF0FC185D0BAA0012B71D /* DTChallengeCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTChallengeCalendar.h; sourceTree = "<group>"; };
+		A1ECF0FD185D0BAA0012B71D /* DTChallengeCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTChallengeCalendar.m; sourceTree = "<group>"; };
 		A1F79C44183573E700C3B8A3 /* ChallengeDetailContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailContainer.h; sourceTree = "<group>"; };
 		A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDetailContainer.m; sourceTree = "<group>"; };
 		A1F79C471835740A00C3B8A3 /* ChallengeDetailCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailCommentController.h; sourceTree = "<group>"; };
@@ -620,6 +626,8 @@
 		A1275C081806EB7A00019A91 /* ui elements */ = {
 			isa = PBXGroup;
 			children = (
+				A1ECF0F9185CBA3B0012B71D /* DTProgressRow.h */,
+				A1ECF0FA185CBA3B0012B71D /* DTProgressRow.m */,
 				A1F79C4A1836652500C3B8A3 /* DTSocialDashBoard.h */,
 				A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */,
 				A1AC68B81816D8A1004A1F5D /* DTInfiniteScrollView.h */,
@@ -632,6 +640,8 @@
 				A1275C0E1806EB8C00019A91 /* DTProgressElement.m */,
 				A16AC9C71822AD2A00074AB8 /* DTVerificationElement.h */,
 				A16AC9C81822AD2A00074AB8 /* DTVerificationElement.m */,
+				A1ECF0FC185D0BAA0012B71D /* DTChallengeCalendar.h */,
+				A1ECF0FD185D0BAA0012B71D /* DTChallengeCalendar.m */,
 			);
 			name = "ui elements";
 			sourceTree = "<group>";
@@ -1165,6 +1175,7 @@
 				A11D9DFC18511271007A70ED /* JSONKit.m in Sources */,
 				A11D9DC318511227007A70ED /* NIDataStructures.m in Sources */,
 				A11D9DD018511227007A70ED /* NIPaths.m in Sources */,
+				A1ECF0FB185CBA3B0012B71D /* DTProgressRow.m in Sources */,
 				A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */,
 				A11D9DC218511227007A70ED /* NICommonMetrics.m in Sources */,
 				A1ECF0F61857EA010012B71D /* TTTTimeIntervalFormatter.m in Sources */,
@@ -1189,6 +1200,7 @@
 				B73903D117FB701A00B9C9BB /* DTViewController.m in Sources */,
 				B73903C817FB5FED00B9C9BB /* ProfileViewController.m in Sources */,
 				A1F79C4C1836652500C3B8A3 /* DTSocialDashBoard.m in Sources */,
+				A1ECF0FE185D0BAA0012B71D /* DTChallengeCalendar.m in Sources */,
 				A120945E182C3991005B20F7 /* LogInForm.m in Sources */,
 				A1209461182C39AE005B20F7 /* UserEntry.m in Sources */,
 				A1275C431809EEEA00019A91 /* ProgressSnapShotTableCell.m in Sources */,

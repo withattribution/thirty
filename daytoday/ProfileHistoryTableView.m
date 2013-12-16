@@ -67,10 +67,10 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
           ProgressSnapShotTableCell *cell = (ProgressSnapShotTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
           if (cell == nil) {
             
-            DTChallengeCalendar *cc = [DTChallengeCalendar calendarWithIntent:[self.intentsArray objectAtIndex:indexPath.row]];            
-            cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                    reuseIdentifier:progressRowCellReuseIdentifier
-                                                 withDTProgressRows:[cc progressSnapShotElements]];
+//            DTChallengeCalendar *cc = [DTChallengeCalendar calendarWithIntent:[self.intentsArray objectAtIndex:indexPath.row]];            
+//            cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
+//                                                    reuseIdentifier:progressRowCellReuseIdentifier
+//                                                 withDTProgressRows:[cc progressSnapShotElements]];
             }
           return cell;
           }

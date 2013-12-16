@@ -16,6 +16,7 @@
 @property (nonatomic,assign) BOOL isVerified;
 
 - (void)createArcAnimationForKey:(NSString *)key fromValue:(NSNumber *)from toValue:(NSNumber *)to Delegate:(id)delegate;
+
 @end
 
 @implementation SectionLayer

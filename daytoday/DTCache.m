@@ -46,14 +46,14 @@
 
 - (PFObject *)cachedActiveDayForDate:(NSDate *)date
 {
-
+#warning not implemented
 }
 
 #pragma mark - ChallengeDay Verification Cache
 
 - (void)refreshVerificationActivity:(PFObject *)verification forChallengeDay:(PFObject *)challengeDay
 {
-  
+#warning not implemented
 }
 
 
@@ -93,30 +93,35 @@
                   userInfo:[NSDictionary dictionaryWithDictionary:[self attributesForChallengeDay:challengeDay]]];
 }
 
+#pragma mark - Challenge Day For Date
+
+- (PFObject *)challengeDayForDate:(NSDate *)date intent:(PFObject *)intent
+{
+  uint32_t dayHash = [DTCommonUtilities dayHashFromDate:date intent:intent];
+//  NIDINFO(@"dayHash: %u",dayHash);
+
+  PFObject *chDayForDate = nil;
+  NSArray *challengeDays = [self challengeDaysForIntent:intent];
+  
+  for (int i = 0; i < [challengeDays count]; i++) {
+    if ([[[challengeDays objectAtIndex:i] objectForKey:kDTChallengeDayActiveHashKey] unsignedIntValue] == dayHash)
+    {
+      chDayForDate = [challengeDays objectAtIndex:i];
+      break;
+    }
+  }
+  return chDayForDate;
+}
+
 #pragma mark - Challenge Days For Intent
 
 - (void)cacheChallengeDays:(NSArray *)days forIntent:(PFObject *)intent
 {
-  
-  NSMutableArray *challengeDays = [NSMutableArray arrayWithCapacity:[days count]];
-  for (int i = 0; i < [days count]; i++)
-  {
-    PFObject *challengeDay = [days objectAtIndex:i];
-    NSDictionary *attributes = @{kDTChallengeDayAttributeRequiredKey:[challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey],
-                                 kDTChallengeDayAttributeCompletedKey:[challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey],
-                                 kDTChallengeDayAttributeAccomplishedKey:[challengeDay objectForKey:kDTChallengeDayAccomplishedKey],
-                                 kDTChallengeDayAttributeOrdinalKey:[challengeDay objectForKey:kDTChallengeDayOrdinalDayKey],
-                                 kDTChallengeDayAttributeActiveHashKey:[challengeDay objectForKey:kDTChallengeDayActiveHashKey]
-//                                 kDTChallengeDayAttributeIntentKey:[challengeDay objectForKey:kDTChallengeDayIntentKey]
-                                 };
-    [self setAttributes:attributes forChallengeDay:challengeDay];
-    [challengeDays addObject:attributes];
-  }
-  [self setChallengeDays:challengeDays forIntent:intent];
+  [self setChallengeDays:days forIntent:intent];
   
   [[NSNotificationCenter defaultCenter]
    postNotificationName:DTChallengeDayDidCacheDaysForIntentNotification
-   object:challengeDays
+   object:days
    userInfo:nil];
 }
 

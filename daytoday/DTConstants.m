@@ -21,6 +21,7 @@ NSString *const kDTActiveIntent                        =@"activeIntent";
 #pragma mark - DTDateFormatString
 // Date Format Constants
 NSString *const kDTDateFormatNSDateDisplayDay          =@"d";
+NSString *const kDTDateFormatNSDateDisplayForSeed      =@"MM/dd/yyyy";
 
 #pragma mark - DTNotifications
 // Notification Constants
@@ -67,6 +68,7 @@ NSString *const kDTActivityTypeVerificationFinish      =@"verificationFinish";
 NSString *const kDTUserDisplayNameKey                  =@"displayName";
 NSString *const kDTUserProfileImageKey                 =@"profileImage";
 NSString *const kDTUserGMTOffset                       =@"gmtOffset";
+//NSString *const kDTUserIntents                         =@"intents";
 
 #pragma mark - Image Class
 // Class Key
@@ -102,13 +104,6 @@ NSString *const kDTChallengeDayAttributeIsLikedByCurrentUserKey =@"liked";
 NSString *const kDTChallengeDayAttributeCommentersKey           =@"commenters";
 NSString *const kDTChallengeDayAttributeLikersKey               =@"likers";
 
-NSString *const kDTChallengeDayAttributeRequiredKey =@"req";
-NSString *const kDTChallengeDayAttributeCompletedKey =@"com";
-NSString *const kDTChallengeDayAttributeAccomplishedKey =@"acc";
-NSString *const kDTChallengeDayAttributeOrdinalKey =@"ord";
-NSString *const kDTChallengeDayAttributeActiveHashKey =@"act";
-//NSString *const kDTChallengeDayAttributeIntentKey =@"int";
-
 #pragma mark - Intent Class
 // Class Key
 NSString *const kDTIntentClassKey                      =@"Intent";
@@ -120,6 +115,7 @@ NSString *const kDTIntentUserKey                       =@"user";
 NSString *const kDTIntentChallengeDays                 =@"days";
 NSString *const kDTIntentAccomplishedIntentKey         =@"accomplished";
 NSString *const kDTIntentChallengeKey                  =@"challenge";
+#warning need an ATTRIBUTE FOR PERCENT COMPLETED FOR INTENT -- this makes a summary view
 
 #pragma mark - Challenge Class
 // Class Key

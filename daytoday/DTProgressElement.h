@@ -16,25 +16,6 @@ typedef NS_ENUM(NSInteger, DTProgressRowEndStyle) {
     DTProgressRowEndUndefined
 };
 
-typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
-    DTProgressRowPast,
-    DTProgressRowCurrent,
-    DTProgressRowFuture,
-    DTProgressRowTemporalStatusUndefined
-};
-
-@interface DTProgressRow : NSObject
-
-@property (nonatomic) DTProgressRowEndStyle style;
-@property (nonatomic) DTProgressRowTemporalStatus phase;
-@property (nonatomic,strong) NSArray *weekRow;           //Row of DTDotElements for challenge calendar
-
-+ (DTProgressRow *)withEndStyle:(DTProgressRowEndStyle)end
-                          phase:(DTProgressRowTemporalStatus)status
-                            row:(NSArray *)row;
-
-@end
-
 @interface DTProgressColorGroup : NSObject
 
 + (DTProgressColorGroup *) summaryProgressBackground;
@@ -46,16 +27,6 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 
 @end
 
-@class DTProgressElement;
-@interface DTChallengeCalendar : NSObject
-
-+ (DTChallengeCalendar *)calendarWithIntent:(PFObject *)intent;
-- (DTProgressElement *)currentProgressElement;
-- (NSArray *)progressSnapShotElements;
-- (UIView *)summaryProgressView;
-
-@end
-
 @interface DTProgressElement : UIView
 
 @property (nonatomic,assign) CGPoint leftCenter;
@@ -63,9 +34,11 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 @property (nonatomic,assign) CGFloat percent;
 @property (nonatomic,assign) CGFloat radius;
 
++ (DTProgressElement *)buildForStyle:(DTProgressRowEndStyle)style progressUnits:(CGFloat)units frame:(CGRect)frame;
+- (id)initWithEndStyle:(DTProgressRowEndStyle)style andColorGroup:(DTProgressColorGroup *)pcg progressUnits:(CGFloat)units frame:(CGRect)frame;
+
 - (id)initForSummaryElement:(CGFloat)p;
 - (id)initWithEndStyle:(DTProgressRowEndStyle)style andColorGroup:(DTProgressColorGroup *)pcg progressUnits:(CGFloat)units;
-
 - (id)initWithFrame:(CGRect)frame andColorGroup:(DTProgressColorGroup *)pcg withPercent:(CGFloat)p;
 - (id)initWithFrame:(CGRect)frame andColorGroup:(DTProgressColorGroup *)pcg progressUnits:(CGFloat)units;
 
@@ -74,8 +47,8 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 - (void)drawFlatRightProgressElement;
 - (void)drawRoundedProgressElement;
 
-- (CGPoint)rightCenter;
-- (CGPoint)leftCenter;
+//- (CGPoint)rightCenter;
+//- (CGPoint)leftCenter;
 
 @end
 

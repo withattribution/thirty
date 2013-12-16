@@ -11,7 +11,12 @@
 @interface DTCommonUtilities : NSObject
 
 + (NSInteger)minutesFromGMTForDate:(NSDate *)date;
+
 + (NSDateFormatter *)displayDayFormatter;
++ (NSDateFormatter *)dayformatterForSeed;
+
 + (NSCalendar *)commonCalendar;
-//+ (uint32_t)challengeUserSeedFromIntent:(PFObject *)intent;
+
++ (uint32_t)challengeUserSeedFromIntent:(PFObject *)intent;
++ (uint32_t)dayHashFromDate:(NSDate *)date intent:(PFObject *)intent;
 @end

@@ -36,7 +36,7 @@
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
   dcg.strokeColor      = [UIColor orangeColor];
-  dcg.fillColor        = [UIColor lightGrayColor];
+  dcg.fillColor        = [UIColor darkGrayColor];
   dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }
@@ -45,7 +45,7 @@
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
   dcg.strokeColor      = [UIColor blackColor];
-  dcg.fillColor        = [UIColor darkGrayColor];
+  dcg.fillColor        = [UIColor blackColor];
   dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }
@@ -53,8 +53,8 @@
 +(DTDotColorGroup *) futuresSoBrightYouGottaWearShadesColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
-  dcg.strokeColor      = [UIColor lightGrayColor];
-  dcg.fillColor        = [UIColor lightGrayColor];
+  dcg.strokeColor      = [UIColor yellowColor];
+  dcg.fillColor        = [UIColor yellowColor];
   dcg.textColor        = [UIColor whiteColor];
   return dcg;
 }
@@ -203,12 +203,12 @@
 
 @implementation DTDotElement
 
-static CGFloat DOT_PADDING = 3.f;
+static CGFloat DOT_PADDING = 0.f;//3.f;
 static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentage of frame height
 
-+ (DTDotElement *)buildForChallengeDay:(PFObject *)challengeDay andDate:(NSDate *)date
++ (DTDotElement *)buildForChallengeDay:(PFObject *)challengeDay andDate:(NSDate *)date frame:(CGRect)frame
 {
-  return [[DTDotElement alloc] initWithFrame:CGRectMake(0., 0., 40., 40.)
+  return [[DTDotElement alloc] initWithFrame:frame
                                andColorGroup:[DTDotColorGroup colorGroupForChallengeDay:challengeDay withDate:date]
                                      andDate:date];
 }
@@ -313,11 +313,22 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
   [self drawLabelWithNumber:self.dotNumber];
 }
 
+- (void)setCenter:(CGPoint)center
+{
+  CGRect centerFrame = CGRectMake(center.x - (self.frame.size.height/2.f), center.y - (self.frame.size.height/2.f), self.frame.size.height, self.frame.size.height);
+  [self setFrame:centerFrame];
+  
+  if (_dotLabel) {
+    [_dotLabel removeFromSuperview];
+    [self drawLabelWithNumber:self.dotNumber];
+  }else if(_dotImage){
+    [_dotImageView removeFromSuperview];
+    [self placeInscribedImage:self.dotImage];
+  }
+}
+
 - (NSNumber*)numberFromDate:(NSDate *)d
 {
-//  NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
-//  return [NSNumber numberWithInt:[[cal components:NSDayCalendarUnit fromDate:d] day]];
-
   NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
   [f setNumberStyle:NSNumberFormatterDecimalStyle];
   return [f numberFromString:[[DTCommonUtilities displayDayFormatter] stringFromDate:d]];
@@ -370,7 +381,6 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
   CGFloat angle = M_PI/6.0f;
   CGFloat boundLength = (2*(cos(angle)*self.radius));
 //  CGFloat boundHeight = (2*(sin(angle)*self.radius));
-
   //always square
   return CGRectMake(self.frame.origin.x,self.frame.origin.y, boundLength*(1.15f), boundLength*(1.15f));
 }
