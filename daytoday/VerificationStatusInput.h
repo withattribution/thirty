@@ -13,8 +13,7 @@
 @protocol VerificationStatusInputDelegate <NSObject>
 
 @optional
-//- (void)cell:(VerificationStatusInput *)view didTapUserButton:(PFUser *)aUser;
-
+- (void)statusInput:(VerificationStatusInput *)view didTapOkButton:(UIButton *)aButton textView:(UITextView *)textView;
 @end
 
 @interface VerificationStatusInput : UIView {

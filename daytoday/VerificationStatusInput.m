@@ -208,7 +208,9 @@
 
 - (void)didTapOkButtonAction:(UIButton *)aButton
 {
-  
+  if([_delegate respondsToSelector:@selector(statusInput:didTapOkButton:textView:)]){
+    [_delegate statusInput:self didTapOkButton:aButton textView:self.statusTextView];
+  }
 }
 
 #pragma mark - UITextView Delegate Methods

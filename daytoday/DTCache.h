@@ -21,6 +21,11 @@
 
 - (void)refreshCacheActivity:(NSArray *)activities forChallengeDay:(PFObject *)challengeDay;
 
+#pragma mark - Challenge For Intent
+
+- (void)cacheChallenge:(PFObject *)challenge forIntent:(PFObject *)intent;
+- (PFObject *)challengeForIntent:(PFObject *)intent;
+
 #pragma mark - ChallengeDay Verification Cache
 
 - (void)refreshVerificationActivity:(PFObject *)verification forChallengeDay:(PFObject *)challengeDay;
@@ -38,7 +43,7 @@
 #pragma mark - Intents for User
 
 - (void)cacheActiveIntent:(PFObject *)intent user:(PFUser *)user;
-- (PFObject *)currentActiveIntentForUser:(PFUser *)user;
+- (PFObject *)activeIntentForUser:(PFUser *)user;
 
 - (NSArray *)intentsForUser:(PFUser *)user;
 - (void)cacheIntent:(PFObject *)intent forUser:(PFUser *)user;

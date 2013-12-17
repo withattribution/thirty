@@ -56,6 +56,24 @@
 #warning not implemented
 }
 
+#pragma mark - Challenge For Intent
+
+- (void)cacheChallenge:(PFObject *)challenge forIntent:(PFObject *)intent
+{
+  NSString *key = [self keyForChallenge:intent];
+  [self.cache setObject:challenge forKey:key];
+}
+
+- (PFObject *)challengeForIntent:(PFObject *)intent
+{
+  NSString *key = [self keyForChallenge:intent];
+  return [self.cache objectForKey:key];
+}
+
+- (NSString *)keyForChallenge:(PFObject *)intent
+{
+  return [NSString stringWithFormat:@"challenge_%@",[[intent objectForKey:kDTIntentChallengeKey] objectId]];
+}
 
 #pragma mark - ChallengeDay Activity Cache
 
@@ -133,7 +151,7 @@
 
 #pragma mark - Intents for User
 
-- (PFObject *)currentActiveIntentForUser:(PFUser *)user
+- (PFObject *)activeIntentForUser:(PFUser *)user
 {
   NSString *key = [self keyForActiveIntent:user];
   return [self.cache objectForKey:key];

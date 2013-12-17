@@ -121,6 +121,7 @@
 		A1ECF107185FC0BE0012B71D /* VerificationStatusController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF106185FC0BE0012B71D /* VerificationStatusController.m */; };
 		A1ECF10B185FCB900012B71D /* VerificationStatusInput.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF10A185FCB8F0012B71D /* VerificationStatusInput.m */; };
 		A1ECF10D185FCBB80012B71D /* verificationTick.png in Resources */ = {isa = PBXBuildFile; fileRef = A1ECF10C185FCBB80012B71D /* verificationTick.png */; };
+		A1ECF10E186076D30012B71D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A11D9DFE18511FF2007A70ED /* Parse.framework */; };
 		A1F79C46183573E700C3B8A3 /* ChallengeDetailContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */; };
 		A1F79C491835740A00C3B8A3 /* ChallengeDetailCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C481835740A00C3B8A3 /* ChallengeDetailCommentController.m */; };
 		A1F79C4C1836652500C3B8A3 /* DTSocialDashBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */; };
@@ -425,6 +426,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1ECF10E186076D30012B71D /* Parse.framework in Frameworks */,
 				A1E4256418512E9800DAE577 /* SenTestingKit.framework in Frameworks */,
 				A1E4256618512E9800DAE577 /* UIKit.framework in Frameworks */,
 				A1E4256518512E9800DAE577 /* Foundation.framework in Frameworks */,
@@ -1327,6 +1329,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/pasmo/aok/daytoday/external,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "daytodayTests/daytodayTests-Prefix.pch";
@@ -1361,6 +1364,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/pasmo/aok/daytoday/external,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "daytodayTests/daytodayTests-Prefix.pch";

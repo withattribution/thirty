@@ -65,33 +65,24 @@
   [self.view addSubview:self.cdd];
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  if (![self hasActiveIntent]) {
-    [DTCommonRequests queryActiveIntent:[PFUser currentUser]];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(cachedIntentsForUser:)
-                                                 name:DTIntentDidCacheIntentForUserNotification
-                                               object:nil];
-  }else {
-    [self addChallengeProgressElement];
-  }
+
+  [self addChallengeProgressElement];
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-- (BOOL)hasActiveIntent
-{
-  return [[DTCache sharedCache] currentActiveIntentForUser:[PFUser currentUser]] != nil;
-}
+
 
 - (BOOL)intentHasChallengeDays
 {
-  return [[DTCache sharedCache] challengeDaysForIntent:[[DTCache sharedCache] currentActiveIntentForUser:[PFUser currentUser]]] != nil;
+  return [[DTCache sharedCache] challengeDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]] != nil;
 }
 
 - (void)addChallengeProgressElement
 {
   if(![self intentHasChallengeDays]) {
-    [DTCommonRequests requestDaysForIntent:[[DTCache sharedCache] currentActiveIntentForUser:[PFUser currentUser]] cachePolicy:kPFCachePolicyNetworkOnly];
+    [DTCommonRequests requestDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]] cachePolicy:kPFCachePolicyNetworkOnly];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cachedChallengeDaysForIntent:)
@@ -99,7 +90,7 @@
                                                object:nil];
   }
   
-  self.calendarObject = [DTChallengeCalendar calendarWithIntent:[[DTCache sharedCache] currentActiveIntentForUser:[PFUser currentUser]]];
+  self.calendarObject = [DTChallengeCalendar calendarWithIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
   
   self.rowView = [[DTProgressRow alloc] initWithFrame:CGRectMake(0.f, self.cdd.frame.origin.y + self.cdd.frame.size.height + 15., self.view.frame.size.width, 40.f)];
 //  [self.rowView setCenter:CGPointMake(self.view.frame.size.width/2.f, self.cdd.frame.origin.y + self.cdd.frame.size.height + 35.)];
@@ -137,7 +128,7 @@
 {
   VerificationStatusController *vc = [[VerificationStatusController alloc] init];
   [self.parentViewController.view addSubview:vc.view];
-  
+
 //  NIDINFO(@"element: %@ and section:%d",element,section);
 //  if ([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] <
 //      [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]  &&
@@ -197,18 +188,6 @@
 }
 
 #pragma mark - Intents for User Cache Refreshed Notification
-
-- (void)cachedIntentsForUser:(NSNotification *)aNotification
-{
-//  NSArray *intentsForUser = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]];
-//  NIDINFO(@"the first (and only) intent: %@",[intentsForUser firstObject]);
-//  [DTCommonRequests activeIntent:[intentsForUser firstObject]];
-//  NIDINFO(@"the active intent ID: %@",[[[PFUser currentUser] objectForKey:kDTActiveIntent] objectId]);
-  [self addChallengeProgressElement];
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:DTIntentDidCacheIntentForUserNotification
-                                                object:nil];
-}
 
 - (void)cachedChallengeDaysForIntent:(NSNotification *)aNotification
 {

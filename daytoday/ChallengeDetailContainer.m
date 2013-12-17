@@ -132,11 +132,14 @@
   [self addChildViewController:self.commentController];
   [self.commentController didMoveToParentViewController:self];
 
+  PFObject *challenge = [[[[PFUser currentUser] objectForKey:kDTUserActiveIntent] objectForKey:kDTIntentChallengeKey] fetchIfNeeded];
+  [[DTCache sharedCache] cacheChallenge:challenge forIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
+
   self.navigationBar = [[DTNavigationBar alloc] initWithFrame:CGRectMake(0.f,[self padWithStatusBarHeight],self.view.frame.size.width,0.f)];
   [self.view addSubview:self.navigationBar];
   [self.navigationBar setDelegate:self];
-  [self.navigationBar setContentText:[[[[[PFUser currentUser] objectForKey:kDTUserActiveIntent] objectForKey:kDTIntentChallengeKey] fetchIfNeeded] objectForKey:kDTChallengeNameKey]];
-  
+  [self.navigationBar setContentText:[challenge objectForKey:kDTChallengeNameKey]];
+    
   _socialDashBoard = [[DTSocialDashBoard alloc] init];
   [self.socialDashBoard setDelegate:self];
 
@@ -584,16 +587,43 @@
                    }];
 }
 
+- (BOOL)hasActiveIntent
+{
+  return [[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]] != nil;
+}
+
 #pragma mark - DTChallengeDayRetrieved Notifications
 
 - (void)didRetrieveChallengeDay:(NSNotification *)aNotification
 {
   if (aNotification.object && aNotification.object != [NSNull null]) {
+    
     self.challengeDay = (PFObject *)aNotification.object;
-    [self addChallengeDayInterface];
+
+    if (![self hasActiveIntent]) {
+      [DTCommonRequests queryActiveIntent:[PFUser currentUser]];
+      [[NSNotificationCenter defaultCenter] addObserver:self
+                                               selector:@selector(cachedIntentsForUser:)
+                                                   name:DTIntentDidCacheIntentForUserNotification
+                                                 object:nil];
+    }else {
+      [self addChallengeDayInterface];
+    }
   }else {
     NIDINFO(@"nil challenge day deal with it!");
   }
+}
+
+- (void)cachedIntentsForUser:(NSNotification *)aNotification
+{
+  //  NSArray *intentsForUser = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]];
+  //  NIDINFO(@"the first (and only) intent: %@",[intentsForUser firstObject]);
+  //  [DTCommonRequests activeIntent:[intentsForUser firstObject]];
+  //  NIDINFO(@"the active intent ID: %@",[[[PFUser currentUser] objectForKey:kDTActiveIntent] objectId]);
+  [self addChallengeDayInterface];
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:DTIntentDidCacheIntentForUserNotification
+                                                object:nil];
 }
 
 #pragma mark - DTCacheRefresh Notifications

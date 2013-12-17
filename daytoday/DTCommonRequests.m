@@ -93,8 +93,8 @@
 {
   uint32_t challengeUserSeed;
   
-  if ([[DTCache sharedCache] currentActiveIntentForUser:user] != nil) {
-    challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:[[DTCache sharedCache] currentActiveIntentForUser:user]];
+  if ([[DTCache sharedCache] activeIntentForUser:user] != nil) {
+    challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:[[DTCache sharedCache] activeIntentForUser:user]];
   }else {
     challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:[[user objectForKey:kDTUserActiveIntent] fetchIfNeeded]];
   }
