@@ -609,10 +609,8 @@
 
 - (void)userDidTapUserProfileButton:(UIButton *)button user:(PFUser *)user
 {
-#warning this is mad broken?
   ProfileViewController *profileVC = [[ProfileViewController alloc] initWithUser:[PFUser currentUser]];
-  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
-  [navigationController pushViewController:profileVC animated:YES];
+  [self presentViewController:profileVC animated:YES completion:NULL];
 }
 
 #pragma mark - UIKeyBoard Notitifications

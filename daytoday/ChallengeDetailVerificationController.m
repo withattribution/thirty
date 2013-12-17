@@ -7,6 +7,8 @@
 //
 
 #import "ChallengeDetailVerificationController.h"
+#import "VerificationStatusController.h"
+
 #import "Verification.h"
 #import "DTVerificationElement.h"
 
@@ -133,43 +135,46 @@
 
 -(void)verificationElement:(DTVerificationElement *)element didVerifySection:(NSUInteger)section
 {
-  NIDINFO(@"element: %@ and section:%d",element,section);
-  if ([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] <
-      [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]  &&
-      ![[self.challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue])
-  {
-    PFObject *verification = [PFObject objectWithClassName:kDTVerificationClass];
-    [verification setObject:@([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] +1)
-                     forKey:kDTVerificationOrdinalKey];
-    //if there is a verification status entered:
-    //[verification setObject:VERIFICATION_STATUS forKey:kDTVerificationStatusContentKey];
-#warning figure out how to propogate verfication type hardcoded for now
-    [verification saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
-      if (succeeded) {
-        PFObject *verifyActivity = [PFObject objectWithClassName:kDTActivityClassKey];
-        [verifyActivity setObject:kDTActivityTypeVerificationFinish forKey:kDTActivityTypeKey];
-        verifyActivity[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
-                                                                                   objectId:self.challengeDay.objectId];
-        verifyActivity[kDTActivityVerificationKey] = [PFObject objectWithoutDataWithClassName:kDTVerificationClass
-                                                                                     objectId:verification.objectId];
-        [verifyActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
-          if (succeeded) {
-            NIDINFO(@"verification-tick saved!");
-            [self.challengeDay fetchInBackgroundWithBlock:^(PFObject *day, NSError *error){
-              if(!error && day){
-                self.challengeDay = day;
-                [self.verifyElement reloadData:NO];
-              }
-            }];
-          }else {
-            NIDINFO(@"%@",[error localizedDescription]);
-          }
-        }];
-      }else {
-        NIDINFO(@"%@",[error localizedDescription]);
-      }
-    }];
-  }
+  VerificationStatusController *vc = [[VerificationStatusController alloc] init];
+  [self.parentViewController.view addSubview:vc.view];
+  
+//  NIDINFO(@"element: %@ and section:%d",element,section);
+//  if ([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] <
+//      [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]  &&
+//      ![[self.challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue])
+//  {
+//    PFObject *verification = [PFObject objectWithClassName:kDTVerificationClass];
+//    [verification setObject:@([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] +1)
+//                     forKey:kDTVerificationOrdinalKey];
+//    //if there is a verification status entered:
+//    //[verification setObject:VERIFICATION_STATUS forKey:kDTVerificationStatusContentKey];
+//#warning figure out how to propogate verfication type hardcoded for now
+//    [verification saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+//      if (succeeded) {
+//        PFObject *verifyActivity = [PFObject objectWithClassName:kDTActivityClassKey];
+//        [verifyActivity setObject:kDTActivityTypeVerificationFinish forKey:kDTActivityTypeKey];
+//        verifyActivity[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
+//                                                                                   objectId:self.challengeDay.objectId];
+//        verifyActivity[kDTActivityVerificationKey] = [PFObject objectWithoutDataWithClassName:kDTVerificationClass
+//                                                                                     objectId:verification.objectId];
+//        [verifyActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+//          if (succeeded) {
+//            NIDINFO(@"verification-tick saved!");
+//            [self.challengeDay fetchInBackgroundWithBlock:^(PFObject *day, NSError *error){
+//              if(!error && day){
+//                self.challengeDay = day;
+//                [self.verifyElement reloadData:NO];
+//              }
+//            }];
+//          }else {
+//            NIDINFO(@"%@",[error localizedDescription]);
+//          }
+//        }];
+//      }else {
+//        NIDINFO(@"%@",[error localizedDescription]);
+//      }
+//    }];
+//  }
 }
 
 #pragma mark - DTVerificationDataSource

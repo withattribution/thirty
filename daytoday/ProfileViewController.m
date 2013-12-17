@@ -59,7 +59,7 @@
 {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.1];
 
   if (![self hasCachedIntents]) {
     [DTCommonRequests queryIntentsForUser:[PFUser currentUser]];

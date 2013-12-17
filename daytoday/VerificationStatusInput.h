@@ -1,51 +1,51 @@
 //
-//  CommentCell.h
+//  VerificationStatusInput.h
 //  daytoday
 //
-//  Created by pasmo on 12/10/13.
+//  Created by pasmo on 12/16/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-
 #import "DTProfileImageView.h"
-#import "DTImageView.h"
 
-@class CommentCell;
-@protocol CommentCellDelegate <NSObject>
+@class VerificationStatusInput;
+@protocol VerificationStatusInputDelegate <NSObject>
 
 @optional
-- (void)cell:(CommentCell *)cellView didTapUserButton:(PFUser *)aUser;
+//- (void)cell:(VerificationStatusInput *)view didTapUserButton:(PFUser *)aUser;
 
 @end
 
-@interface CommentCell : UITableViewCell {
+@interface VerificationStatusInput : UIView {
   NSUInteger horizontalTextSpace;
 }
 
-@property (nonatomic,weak) id<CommentCellDelegate> delegate;
+@property (nonatomic,weak) id<VerificationStatusInputDelegate> delegate;
 
 @property (nonatomic,strong) PFUser *user;
 @property (nonatomic,strong) UIView *mainView;
 @property (nonatomic,strong) DTProfileImageView *userImageView;
 
 @property (nonatomic,strong) UIButton *nameButton;
-@property (nonatomic,strong) UILabel *timeLabel;
+@property (nonatomic,strong) UIView *contentBacking;
 @property (nonatomic,strong) UILabel *contentLabel;
+@property (nonatomic,strong) UIImageView *verificationImageView;
+
 @property (nonatomic,strong) PFImageView *contentImageView;
 
-/*! The horizontal inset of the cell */
-@property (nonatomic) CGFloat cellInsetWidth;
+@property (nonatomic,strong) UITextView *statusTextView;
+@property (nonatomic,strong) UILabel *placeholderLabel;
 
-/*! Static Helper methods */
-+ (CGFloat)heightForCellTextContent:(NSString *)textContent
-                        imageOjbect:(PFObject *)imageObject
-                     cellInsetWidth:(CGFloat)cellInset;
+@property (nonatomic,strong) UIButton *okButton;
+
+
+/*! The horizontal inset of the cell */
+@property (nonatomic) CGFloat insetWidth;
 
 /*! Setters for the cell's content */
 - (void)setContentText:(NSString *)contentString;
-- (void)setDate:(NSDate *)date;
-- (void)setCellInsetWidth:(CGFloat)insetWidth;
+- (void)setInsetWidth:(CGFloat)insetWidth;
 
 /*! Layout constants */
 #define vertBorderSpacing 2.0f
@@ -72,8 +72,8 @@
 #define nameY vertTextBorderSpacing
 #define nameMaxWidth 200.0f
 
-//#define timeX userImageX+userImageDim+horiElemSpacing
-#define timeY nameY
+#define verificationImageDim 25.f
+#define statusTextHeight 80.f
 
-
+#define okButtonHeight 36.f
 @end
