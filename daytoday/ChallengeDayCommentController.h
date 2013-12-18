@@ -1,5 +1,5 @@
 //
-//  ChallengeDetailCommentController.h
+//  ChallengeDayCommentController.h
 //  daytoday
 //
 //  Created by pasmo on 11/14/13.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChallengeDetailCommentController : PFQueryTableViewController
+@interface ChallengeDayCommentController : PFQueryTableViewController
 
 - (id)initWithChallengeDay:(PFObject *)chDay;
 

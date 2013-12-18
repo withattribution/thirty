@@ -12,7 +12,7 @@
 #import "LoginRegistrationViewController.h"
 #import "ProfileViewController.h"
 #import "CreateChallengeViewController.h"
-#import "ChallengeDetailContainer.h"
+#import "ChallengeDayContainer.h"
 #import "SearchChallengesViewController.h"
 
 @interface DemoTableViewController ()
@@ -118,9 +118,9 @@
       }
       break;
     case 3:
-      if ( ![frontNavigationController.topViewController isKindOfClass:[ChallengeDetailContainer class]] )
+      if ( ![frontNavigationController.topViewController isKindOfClass:[ChallengeDayContainer class]] )
       {
-        ChallengeDetailContainer *loginVC = [[ChallengeDetailContainer alloc] init];
+        ChallengeDayContainer *loginVC = [[ChallengeDayContainer alloc] init];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginVC];
         [revealController setFrontViewController:navigationController animated:YES];
       }

@@ -11,7 +11,7 @@
 #import "LoginRegistrationViewController.h"
 #import "ProfileViewController.h"
 #import "CreateChallengeViewController.h"
-#import "ChallengeDetailVerificationController.h"
+#import "ChallengeDayVerificationController.h"
 
 @class SWRevealViewController;
 

@@ -141,7 +141,13 @@ extern NSString *const kDTVerificationStatusContentKey;
 extern NSString *const kDTVerificationImageKey;
 extern NSString *const kDTVerificationTimeKey;
 extern NSString *const kDTVerificationFoursquareIdKey;
+extern NSString *const kDTVerificationTypeKey;
 
+// Type Values
+extern NSUInteger const kDTVerificationTypeTick;
+extern NSUInteger const kDTVerificationTypeCheckIn;
+extern NSUInteger const kDTVerificationTypeImage;
+extern NSUInteger const kDTVerificationTypeTimer;
 
 
 

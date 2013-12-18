@@ -1,5 +1,5 @@
 //
-//  ChallengeDetailContainer.h
+//  ChallengeDayContainer.h
 //  daytoday
 //
 //  Created by pasmo on 11/14/13.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DTViewController.h"
 
-@interface ChallengeDetailContainer : DTViewController
+@interface ChallengeDayContainer : DTViewController
 
 @end
 

@@ -63,6 +63,9 @@
 		A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C451809F66600019A91 /* ParticipantsTableCell.m */; };
 		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
 		A12F8B0F1836FF9700C9F086 /* CommentUtilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = A12F8B0E1836FF9700C9F086 /* CommentUtilityView.m */; };
+		A134C18E1861F91600DA24C7 /* DTBaseCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A134C18D1861F91600DA24C7 /* DTBaseCommentCell.m */; };
+		A134C191186225B800DA24C7 /* DTVerificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A134C190186225B800DA24C7 /* DTVerificationCell.m */; };
+		A134C194186225CF00DA24C7 /* DTVerificationInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A134C193186225CF00DA24C7 /* DTVerificationInputCell.m */; };
 		A13DB5E7181EDB1500378901 /* checkIn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E3181EDB1500378901 /* checkIn.jpg */; };
 		A13DB5E8181EDB1500378901 /* photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E4181EDB1500378901 /* photo.jpg */; };
 		A13DB5E9181EDB1500378901 /* timer.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E5181EDB1500378901 /* timer.jpg */; };
@@ -71,7 +74,7 @@
 		A162B6FE1847DEF8007B3CE1 /* MurmurHash.mm in Sources */ = {isa = PBXBuildFile; fileRef = A162B6FD1847DEF8007B3CE1 /* MurmurHash.mm */; };
 		A16AC9BD182001C600074AB8 /* Verification.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9BC182001C600074AB8 /* Verification.m */; };
 		A16AC9C01820058D00074AB8 /* Category+UIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9BF1820058D00074AB8 /* Category+UIImage.m */; };
-		A16AC9C61822ACE700074AB8 /* ChallengeDetailVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9C51822ACE700074AB8 /* ChallengeDetailVerificationController.m */; };
+		A16AC9C61822ACE700074AB8 /* ChallengeDayVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9C51822ACE700074AB8 /* ChallengeDayVerificationController.m */; };
 		A16AC9C91822AD2A00074AB8 /* DTVerificationElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9C81822AD2A00074AB8 /* DTVerificationElement.m */; };
 		A16AC9D418298A5E00074AB8 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9D318298A5E00074AB8 /* SWRevealViewController.m */; };
 		A16AC9D718298D6B00074AB8 /* DemoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16AC9D618298D6B00074AB8 /* DemoTableViewController.m */; };
@@ -107,7 +110,6 @@
 		A1E4256618512E9800DAE577 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E61D4117BD6AA5002B681B /* UIKit.framework */; };
 		A1E4256C18512E9800DAE577 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1E4256A18512E9800DAE577 /* InfoPlist.strings */; };
 		A1E4256E18512E9800DAE577 /* daytodayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E4256D18512E9800DAE577 /* daytodayTests.m */; };
-		A1ECF0E518577F540012B71D /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0E418577F540012B71D /* CommentCell.m */; };
 		A1ECF0E7185780950012B71D /* profile_sq.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1ECF0E6185780950012B71D /* profile_sq.jpg */; };
 		A1ECF0EA1857ACEB0012B71D /* DTProfileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0E91857ACEB0012B71D /* DTProfileImageView.m */; };
 		A1ECF0ED1857ACFE0012B71D /* DTImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0EC1857ACFE0012B71D /* DTImageView.m */; };
@@ -123,8 +125,8 @@
 		A1ECF10E186076D30012B71D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A11D9DFE18511FF2007A70ED /* Parse.framework */; };
 		A1ECF1111860B7CC0012B71D /* VerificationStatusTable.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF1101860B7CC0012B71D /* VerificationStatusTable.m */; };
 		A1ECF1141860B8000012B71D /* VerificationStatusInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF1131860B8000012B71D /* VerificationStatusInputCell.m */; };
-		A1F79C46183573E700C3B8A3 /* ChallengeDetailContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */; };
-		A1F79C491835740A00C3B8A3 /* ChallengeDetailCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C481835740A00C3B8A3 /* ChallengeDetailCommentController.m */; };
+		A1F79C46183573E700C3B8A3 /* ChallengeDayContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C45183573E700C3B8A3 /* ChallengeDayContainer.m */; };
+		A1F79C491835740A00C3B8A3 /* ChallengeDayCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C481835740A00C3B8A3 /* ChallengeDayCommentController.m */; };
 		A1F79C4C1836652500C3B8A3 /* DTSocialDashBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */; };
 		A1F79C661836731400C3B8A3 /* heart-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = A1F79C621836731400C3B8A3 /* heart-normal.png */; };
 		A1F79C671836731400C3B8A3 /* comment-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A1F79C631836731400C3B8A3 /* comment-selected.png */; };
@@ -277,6 +279,12 @@
 		A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+equalWithGranularity.m"; sourceTree = "<group>"; };
 		A12F8B0D1836FF9700C9F086 /* CommentUtilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentUtilityView.h; sourceTree = "<group>"; };
 		A12F8B0E1836FF9700C9F086 /* CommentUtilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentUtilityView.m; sourceTree = "<group>"; };
+		A134C18C1861F91600DA24C7 /* DTBaseCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTBaseCommentCell.h; sourceTree = "<group>"; };
+		A134C18D1861F91600DA24C7 /* DTBaseCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTBaseCommentCell.m; sourceTree = "<group>"; };
+		A134C18F186225B800DA24C7 /* DTVerificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTVerificationCell.h; sourceTree = "<group>"; };
+		A134C190186225B800DA24C7 /* DTVerificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTVerificationCell.m; sourceTree = "<group>"; };
+		A134C192186225CF00DA24C7 /* DTVerificationInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTVerificationInputCell.h; sourceTree = "<group>"; };
+		A134C193186225CF00DA24C7 /* DTVerificationInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTVerificationInputCell.m; sourceTree = "<group>"; };
 		A13DB5E3181EDB1500378901 /* checkIn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkIn.jpg; sourceTree = "<group>"; };
 		A13DB5E4181EDB1500378901 /* photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo.jpg; sourceTree = "<group>"; };
 		A13DB5E5181EDB1500378901 /* timer.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = timer.jpg; sourceTree = "<group>"; };
@@ -289,8 +297,8 @@
 		A16AC9BC182001C600074AB8 /* Verification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Verification.m; sourceTree = "<group>"; };
 		A16AC9BE1820058D00074AB8 /* Category+UIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Category+UIImage.h"; sourceTree = "<group>"; };
 		A16AC9BF1820058D00074AB8 /* Category+UIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Category+UIImage.m"; sourceTree = "<group>"; };
-		A16AC9C41822ACE700074AB8 /* ChallengeDetailVerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailVerificationController.h; sourceTree = "<group>"; };
-		A16AC9C51822ACE700074AB8 /* ChallengeDetailVerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDetailVerificationController.m; sourceTree = "<group>"; };
+		A16AC9C41822ACE700074AB8 /* ChallengeDayVerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDayVerificationController.h; sourceTree = "<group>"; };
+		A16AC9C51822ACE700074AB8 /* ChallengeDayVerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDayVerificationController.m; sourceTree = "<group>"; };
 		A16AC9C71822AD2A00074AB8 /* DTVerificationElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTVerificationElement.h; sourceTree = "<group>"; };
 		A16AC9C81822AD2A00074AB8 /* DTVerificationElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTVerificationElement.m; sourceTree = "<group>"; };
 		A16AC9D218298A5E00074AB8 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -352,8 +360,6 @@
 		A1E4256B18512E9800DAE577 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A1E4256D18512E9800DAE577 /* daytodayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = daytodayTests.m; sourceTree = "<group>"; };
 		A1E4256F18512E9800DAE577 /* daytodayTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "daytodayTests-Prefix.pch"; sourceTree = "<group>"; };
-		A1ECF0E318577F540012B71D /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
-		A1ECF0E418577F540012B71D /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
 		A1ECF0E6185780950012B71D /* profile_sq.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = profile_sq.jpg; sourceTree = "<group>"; };
 		A1ECF0E81857ACEB0012B71D /* DTProfileImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTProfileImageView.h; sourceTree = "<group>"; };
 		A1ECF0E91857ACEB0012B71D /* DTProfileImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTProfileImageView.m; sourceTree = "<group>"; };
@@ -377,10 +383,10 @@
 		A1ECF1101860B7CC0012B71D /* VerificationStatusTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationStatusTable.m; sourceTree = "<group>"; };
 		A1ECF1121860B8000012B71D /* VerificationStatusInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationStatusInputCell.h; sourceTree = "<group>"; };
 		A1ECF1131860B8000012B71D /* VerificationStatusInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationStatusInputCell.m; sourceTree = "<group>"; };
-		A1F79C44183573E700C3B8A3 /* ChallengeDetailContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailContainer.h; sourceTree = "<group>"; };
-		A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDetailContainer.m; sourceTree = "<group>"; };
-		A1F79C471835740A00C3B8A3 /* ChallengeDetailCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailCommentController.h; sourceTree = "<group>"; };
-		A1F79C481835740A00C3B8A3 /* ChallengeDetailCommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDetailCommentController.m; sourceTree = "<group>"; };
+		A1F79C44183573E700C3B8A3 /* ChallengeDayContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDayContainer.h; sourceTree = "<group>"; };
+		A1F79C45183573E700C3B8A3 /* ChallengeDayContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDayContainer.m; sourceTree = "<group>"; };
+		A1F79C471835740A00C3B8A3 /* ChallengeDayCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDayCommentController.h; sourceTree = "<group>"; };
+		A1F79C481835740A00C3B8A3 /* ChallengeDayCommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDayCommentController.m; sourceTree = "<group>"; };
 		A1F79C4A1836652500C3B8A3 /* DTSocialDashBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTSocialDashBoard.h; sourceTree = "<group>"; };
 		A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTSocialDashBoard.m; sourceTree = "<group>"; };
 		A1F79C621836731400C3B8A3 /* heart-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-normal.png"; sourceTree = "<group>"; };
@@ -610,6 +616,7 @@
 			isa = PBXGroup;
 			children = (
 				A1ECF108185FC0DE0012B71D /* verification views */,
+				A1ECF0E218577EF10012B71D /* comment cells */,
 				A17E39CE18300F7800F75CC6 /* challenge day */,
 				A120943B182B1119005B20F7 /* login & registration */,
 				A16AC9D118298A4800074AB8 /* dependencies */,
@@ -736,9 +743,6 @@
 			children = (
 				A1ECF10F1860B7CC0012B71D /* VerificationStatusTable.h */,
 				A1ECF1101860B7CC0012B71D /* VerificationStatusTable.m */,
-				A1ECF1121860B8000012B71D /* VerificationStatusInputCell.h */,
-				A1ECF1131860B8000012B71D /* VerificationStatusInputCell.m */,
-				A1ECF0E218577EF10012B71D /* comment cell */,
 				A17E39CF183010EB00F75CC6 /* ChallengeDayDetail.h */,
 				A17E39D0183010EB00F75CC6 /* ChallengeDayDetail.m */,
 				A1F79C6A1836AC4800C3B8A3 /* CommentInputView.h */,
@@ -888,13 +892,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		A1ECF0E218577EF10012B71D /* comment cell */ = {
+		A1ECF0E218577EF10012B71D /* comment cells */ = {
 			isa = PBXGroup;
 			children = (
-				A1ECF0E318577F540012B71D /* CommentCell.h */,
-				A1ECF0E418577F540012B71D /* CommentCell.m */,
+				A1ECF1121860B8000012B71D /* VerificationStatusInputCell.h */,
+				A1ECF1131860B8000012B71D /* VerificationStatusInputCell.m */,
+				A134C192186225CF00DA24C7 /* DTVerificationInputCell.h */,
+				A134C193186225CF00DA24C7 /* DTVerificationInputCell.m */,
+				A134C18F186225B800DA24C7 /* DTVerificationCell.h */,
+				A134C190186225B800DA24C7 /* DTVerificationCell.m */,
+				A134C18C1861F91600DA24C7 /* DTBaseCommentCell.h */,
+				A134C18D1861F91600DA24C7 /* DTBaseCommentCell.m */,
 			);
-			name = "comment cell";
+			name = "comment cells";
 			sourceTree = "<group>";
 		};
 		A1ECF0F31857E9E20012B71D /* TTTTimeIntervalFormatter */ = {
@@ -921,17 +931,17 @@
 			name = "verification views";
 			sourceTree = "<group>";
 		};
-		A1F79C43183573A300C3B8A3 /* ChallengeDetailControllers */ = {
+		A1F79C43183573A300C3B8A3 /* ChallengeDayControllers */ = {
 			isa = PBXGroup;
 			children = (
-				A1F79C44183573E700C3B8A3 /* ChallengeDetailContainer.h */,
-				A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */,
-				A16AC9C41822ACE700074AB8 /* ChallengeDetailVerificationController.h */,
-				A16AC9C51822ACE700074AB8 /* ChallengeDetailVerificationController.m */,
-				A1F79C471835740A00C3B8A3 /* ChallengeDetailCommentController.h */,
-				A1F79C481835740A00C3B8A3 /* ChallengeDetailCommentController.m */,
+				A1F79C44183573E700C3B8A3 /* ChallengeDayContainer.h */,
+				A1F79C45183573E700C3B8A3 /* ChallengeDayContainer.m */,
+				A16AC9C41822ACE700074AB8 /* ChallengeDayVerificationController.h */,
+				A16AC9C51822ACE700074AB8 /* ChallengeDayVerificationController.m */,
+				A1F79C471835740A00C3B8A3 /* ChallengeDayCommentController.h */,
+				A1F79C481835740A00C3B8A3 /* ChallengeDayCommentController.m */,
 			);
-			name = ChallengeDetailControllers;
+			name = ChallengeDayControllers;
 			sourceTree = "<group>";
 		};
 		A1F79C4D18366AD200C3B8A3 /* social dashboard buttons */ = {
@@ -956,7 +966,7 @@
 				B73903CA17FB6DC700B9C9BB /* SearchChallengesViewController.m */,
 				B73903CC17FB6DD800B9C9BB /* CreateChallengeViewController.h */,
 				B73903CD17FB6DD800B9C9BB /* CreateChallengeViewController.m */,
-				A1F79C43183573A300C3B8A3 /* ChallengeDetailControllers */,
+				A1F79C43183573A300C3B8A3 /* ChallengeDayControllers */,
 				A1B5E6171829BE770050A136 /* DemoControllers */,
 				B73903C617FB5FED00B9C9BB /* ProfileViewController.h */,
 				A1ECF105185FC0BE0012B71D /* VerificationFlowController.h */,
@@ -1223,6 +1233,7 @@
 				A11D9DC318511227007A70ED /* NIDataStructures.m in Sources */,
 				A11D9DD018511227007A70ED /* NIPaths.m in Sources */,
 				A1ECF0FB185CBA3B0012B71D /* DTProgressRow.m in Sources */,
+				A134C18E1861F91600DA24C7 /* DTBaseCommentCell.m in Sources */,
 				A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */,
 				A11D9DC218511227007A70ED /* NICommonMetrics.m in Sources */,
 				A1ECF0F61857EA010012B71D /* TTTTimeIntervalFormatter.m in Sources */,
@@ -1239,7 +1250,7 @@
 				A11D9DC818511227007A70ED /* NIImageUtilities.m in Sources */,
 				A1ECF0EA1857ACEB0012B71D /* DTProfileImageView.m in Sources */,
 				A11D9DC518511227007A70ED /* NIDeviceOrientation.m in Sources */,
-				A16AC9C61822ACE700074AB8 /* ChallengeDetailVerificationController.m in Sources */,
+				A16AC9C61822ACE700074AB8 /* ChallengeDayVerificationController.m in Sources */,
 				A11D9DC918511227007A70ED /* NIInMemoryCache.m in Sources */,
 				B73903B117FB1C8800B9C9BB /* DTNavController.m in Sources */,
 				A1275C041806EB5B00019A91 /* ProfileSectionHeaderView.m in Sources */,
@@ -1261,11 +1272,12 @@
 				A1C60D60183C184800C98C69 /* DTCache.m in Sources */,
 				A1AC68C118182057004A1F5D /* ChallengeName.m in Sources */,
 				A1ECF107185FC0BE0012B71D /* VerificationFlowController.m in Sources */,
-				A1F79C491835740A00C3B8A3 /* ChallengeDetailCommentController.m in Sources */,
+				A1F79C491835740A00C3B8A3 /* ChallengeDayCommentController.m in Sources */,
 				A11D9DF718511261007A70ED /* AFURLConnectionOperation.m in Sources */,
 				A11D9DF118511261007A70ED /* AFHTTPClient.m in Sources */,
 				A11D9DCB18511227007A70ED /* NINavigationAppearance.m in Sources */,
-				A1F79C46183573E700C3B8A3 /* ChallengeDetailContainer.m in Sources */,
+				A134C194186225CF00DA24C7 /* DTVerificationInputCell.m in Sources */,
+				A1F79C46183573E700C3B8A3 /* ChallengeDayContainer.m in Sources */,
 				A1275C171806EB8C00019A91 /* DTDotElement.m in Sources */,
 				A1275C2C1806FD4600019A91 /* ProfileHistoryTableView.m in Sources */,
 				B73903CE17FB6DD800B9C9BB /* CreateChallengeViewController.m in Sources */,
@@ -1280,13 +1292,13 @@
 				A1C60D5D183C183900C98C69 /* DTConstants.m in Sources */,
 				A16AC9D718298D6B00074AB8 /* DemoTableViewController.m in Sources */,
 				A11D9DCF18511227007A70ED /* NIOperations.m in Sources */,
-				A1ECF0E518577F540012B71D /* CommentCell.m in Sources */,
 				A11D9DD218511227007A70ED /* NISDKAvailability.m in Sources */,
 				A1AC68B118163D38004A1F5D /* DTSelectionSheet.m in Sources */,
 				A11D9DC118511227007A70ED /* NIButtonUtilities.m in Sources */,
 				A11D9DD618511227007A70ED /* NSString+NimbusCore.m in Sources */,
 				A1AC68C718198E6F004A1F5D /* ChallengeDescription.m in Sources */,
 				A11D9DC718511227007A70ED /* NIFoundationMethods.m in Sources */,
+				A134C191186225B800DA24C7 /* DTVerificationCell.m in Sources */,
 				A19A00E3182ADD8200EE3B61 /* SVProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

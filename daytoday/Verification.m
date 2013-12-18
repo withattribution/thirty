@@ -32,7 +32,7 @@
   return image;
 }
 
-+ (UIImage *)activeityImageForType:(DTVerificationType)type
++ (UIImage *)activityImageForType:(DTVerificationType)type
 {
   UIImage *image = [UIImage imageNamed:@"verificationTick.png"];
   switch (type) {

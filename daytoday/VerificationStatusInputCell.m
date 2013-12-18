@@ -47,9 +47,9 @@
     [self.nameButton setUserInteractionEnabled:NO];
     [self.mainView addSubview:self.nameButton];
     
-    self.contentBacking = [[UIView alloc] init];
-    [self.contentBacking setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
-    [self.mainView addSubview:self.contentBacking];
+    self.textBacking = [[UIView alloc] init];
+    [self.textBacking setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
+    [self.mainView addSubview:self.textBacking];
     
     self.verificationImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"verificationTick.png"]];
     [self.verificationImageView setBackgroundColor:[UIColor clearColor]];
@@ -121,11 +121,10 @@
                                               context:nil];
   [self.nameButton setFrame:CGRectMake(nameX, nameY, nameRect.size.width, nameRect.size.height)];
   
-  [self.contentBacking setFrame:CGRectMake(self.cellInsetWidth,
+  [self.textBacking setFrame:CGRectMake(self.cellInsetWidth,
                                            self.userImageView.frame.origin.y + userImageDim*.80,
                                            self.mainView.frame.size.width - (2*self.cellInsetWidth),
                                            vertBorderSpacing + verificationImageDim + vertElemSpacing + statusTextHeight + vertBorderSpacing +(4*vertElemSpacing))];
-  
   
   [self.verificationImageView setFrame:CGRectMake(self.userImageView.center.x - verificationImageDim/2.f,
                                                   self.userImageView.frame.origin.y + userImageDim + vertElemSpacing,
@@ -160,7 +159,7 @@
                                              textContentRect.size.height)];
   
   [self.okButton setFrame:CGRectMake(self.cellInsetWidth,
-                                     self.contentBacking.frame.origin.y+self.contentBacking.frame.size.height + (4*vertElemSpacing),
+                                     self.textBacking.frame.origin.y+self.textBacking.frame.size.height + (4*vertElemSpacing),
                                      self.mainView.frame.size.width-(2*self.cellInsetWidth),
                                      okButtonHeight)];
   
@@ -201,7 +200,7 @@
 
 - (void)setVerificationType:(DTVerificationType)verificationType
 {
-  [self.verificationImageView setImage:[Verification activeityImageForType:verificationType]];
+  [self.verificationImageView setImage:[Verification activityImageForType:verificationType]];
 }
 
 /* Static helper to obtain the  horizontal space left for name and content after taking the inset and image in consideration */

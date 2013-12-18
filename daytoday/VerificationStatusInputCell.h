@@ -18,7 +18,7 @@
 @end
 
 @interface VerificationStatusInputCell : UITableViewCell {
-NSUInteger horizontalTextSpace;
+  NSUInteger horizontalTextSpace;
 }
 
 @property (nonatomic,weak) id<VerificationStatusCellDelegate> delegate;
@@ -28,7 +28,7 @@ NSUInteger horizontalTextSpace;
 @property (nonatomic,strong) DTProfileImageView *userImageView;
 
 @property (nonatomic,strong) UIButton *nameButton;
-@property (nonatomic,strong) UIView *contentBacking;
+@property (nonatomic,strong) UIView *textBacking;
 @property (nonatomic,strong) UILabel *contentLabel;
 @property (nonatomic,strong) UIImageView *verificationImageView;
 

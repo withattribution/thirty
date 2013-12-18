@@ -151,8 +151,13 @@ NSString *const kDTVerificationStatusContentKey       =@"status";
 NSString *const kDTVerificationImageKey               =@"image";
 NSString *const kDTVerificationTimeKey                =@"time";
 NSString *const kDTVerificationFoursquareIdKey        =@"4sqId";
+NSString *const kDTVerificationTypeKey                =@"type";
 
-
+// Type Values
+NSUInteger const kDTVerificationTypeTick              =0;
+NSUInteger const kDTVerificationTypeCheckIn           =1;
+NSUInteger const kDTVerificationTypeImage             =2;
+NSUInteger const kDTVerificationTypeTimer             =3;
 
 
 

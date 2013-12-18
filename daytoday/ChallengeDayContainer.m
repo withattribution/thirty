@@ -1,14 +1,14 @@
 //
-//  ChallengeDetailContainer.m
+//  ChallengeDayContainer.m
 //  daytoday
 //
 //  Created by pasmo on 11/14/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
-#import "ChallengeDetailContainer.h"
-#import "ChallengeDetailVerificationController.h"
-#import "ChallengeDetailCommentController.h"
+#import "ChallengeDayContainer.h"
+#import "ChallengeDayVerificationController.h"
+#import "ChallengeDayCommentController.h"
 #import "ProfileViewController.h"
 #import "FDTakeController.h"
 
@@ -23,7 +23,7 @@
 
 #import "VerificationFlowController.h"
 
-@interface ChallengeDetailContainer () <UIGestureRecognizerDelegate,
+@interface ChallengeDayContainer () <UIGestureRecognizerDelegate,
                                           DTSocialDashBoardDelegate,
                                          CommentUtilityViewDelegate,
                                            CommentInputViewDelegate,
@@ -31,7 +31,7 @@
                                             DTNavigationBarDelegate>
 
 @property (nonatomic,strong) ChallengeDetailVerificationController *verficationController;
-@property (nonatomic,strong) ChallengeDetailCommentController *commentController;
+@property (nonatomic,strong) ChallengeDayCommentController *commentController;
 @property (nonatomic,strong) FDTakeController *takeController;
 
 @property (nonatomic,strong) PFFile *commentImageFile;
@@ -57,7 +57,7 @@
 
 @end
 
-@implementation ChallengeDetailContainer
+@implementation ChallengeDayContainer
 
 - (void)dealloc
 {
@@ -139,7 +139,7 @@
   
 
   
-  _commentController = [[ChallengeDetailCommentController alloc] initWithChallengeDay:self.challengeDay];
+  _commentController = [[ChallengeDayCommentController alloc] initWithChallengeDay:self.challengeDay];
 
   [self.view addSubview:self.commentController.view];
   [self addChildViewController:self.commentController];
