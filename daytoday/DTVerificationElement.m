@@ -227,6 +227,11 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     NSUInteger sectionCount = [_dataSource numberOfSectionsInVerificationElement:self];
     NSUInteger completedCount = [_dataSource numberOfCompletedSectionsInVerificationElement:self];
     
+    //if we reload without verification progress we need to reset the last verified section
+    if ([sectionLayers count] > completedCount) {
+      [(SectionLayer*)[sectionLayers lastObject] setIsVerified:NO];
+    }
+
     _activeSection = (sectionCount > completedCount) ? completedCount : -1;
     
     CGFloat angle = (M_PI * 2) / MAX(sectionCount, 1);

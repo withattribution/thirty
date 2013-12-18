@@ -20,6 +20,9 @@
 
 #import "DTNavigationBar.h"
 
+
+#import "VerificationFlowController.h"
+
 @interface ChallengeDetailContainer () <UIGestureRecognizerDelegate,
                                           DTSocialDashBoardDelegate,
                                          CommentUtilityViewDelegate,
@@ -118,6 +121,14 @@
   return self;
 }
 
+- (void) willMoveToParentViewController:(UIViewController *)parent
+{
+  [super willMoveToParentViewController:parent];
+  if ([parent isKindOfClass:[VerificationFlowController class]]) {
+    [self.verficationController viewWillAppear:NO];
+  }
+}
+
 - (void)addChallengeDayInterface
 {
   _verficationController = [[ChallengeDetailVerificationController alloc] initWithChallengeDay:self.challengeDay];
@@ -125,6 +136,8 @@
   [self addChildViewController:self.verficationController];
 
   [self.verficationController didMoveToParentViewController:self];
+  
+
   
   _commentController = [[ChallengeDetailCommentController alloc] initWithChallengeDay:self.challengeDay];
 

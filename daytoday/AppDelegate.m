@@ -87,7 +87,7 @@
 //  [challenge setObject:@"Do yoga for 30 days" forKey:kDTChallengeImageKey];
 
   [challenge setObject:[PFUser currentUser] forKey:kDTChallengeCreatedByKey];
-  [challenge setObject:kDTChallengeVerificationTypeTick forKey:kDTChallengeVerificationTypeKey];
+  [challenge setObject:@(kDTChallengeVerificationTypeTick) forKey:kDTChallengeVerificationTypeKey];
 
   [challenge saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
     if(succeeded){

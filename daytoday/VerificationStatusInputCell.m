@@ -1,30 +1,29 @@
 //
-//  VerificationStatusInput.m
+//  VerificationStatusInputCell.m
 //  daytoday
 //
-//  Created by pasmo on 12/16/13.
+//  Created by pasmo on 12/17/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
-#import "VerificationStatusInput.h"
+#import "VerificationStatusInputCell.h"
 
-@interface VerificationStatusInput () <UITextViewDelegate>
+@interface VerificationStatusInputCell () <UITextViewDelegate>
 
 + (CGFloat)horizontalTextSpaceForInsetWidth:(CGFloat)insetWidth;
 
 @end
 
-@implementation VerificationStatusInput
+@implementation VerificationStatusInputCell
 
 #define STATUS_PLACE_HOLDER  @"Add a status message..."
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-  self = [super initWithFrame:frame];
+  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
-
-    self.insetWidth = 5.f;
-    horizontalTextSpace =  [VerificationStatusInput horizontalTextSpaceForInsetWidth:self.insetWidth];
+    self.cellInsetWidth = 5.f;
+    horizontalTextSpace =  [VerificationStatusInputCell horizontalTextSpaceForInsetWidth:self.cellInsetWidth];
     
     self.opaque = YES;
     self.backgroundColor = [UIColor clearColor];
@@ -36,7 +35,7 @@
     [self.userImageView.layer setCornerRadius:userImageDim/2.f];
     [self.userImageView setBackgroundColor:[UIColor darkGrayColor]];
     [self.userImageView setOpaque:YES];
-    [self.userImageView.profileButton addTarget:self action:@selector(didTapUserButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.userImageView.profileButton addTarget:self action:@selector(didTapUserButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.mainView addSubview:self.userImageView];
     
     self.nameButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -100,7 +99,7 @@
     [self.okButton setTitle:@"OK" forState:UIControlStateHighlighted];
     [self.okButton addTarget:self action:@selector(didTapOkButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.mainView addSubview:self.okButton];
-
+    
     [self addSubview:self.mainView];
   }
   return self;
@@ -109,14 +108,12 @@
 - (void)layoutSubviews
 {
   [super layoutSubviews];
-  
-  [self.mainView setFrame:CGRectMake(self.insetWidth,
-                                     self.frame.origin.y,
-                                     self.frame.size.width - (2*self.insetWidth),
+  [self.mainView setFrame:CGRectMake(self.cellInsetWidth,
+                                     vertBorderSpacing,
+                                     self.frame.size.width - (2*self.cellInsetWidth),
                                      self.frame.size.height)];
   // Layout user image
   [self.userImageView setFrame:CGRectMake(userImageX, userImageY, userImageDim, userImageDim)];
-  
   // Layout the name button
   CGRect nameRect = [@"username" boundingRectWithSize:CGSizeMake(nameMaxWidth,CGFLOAT_MAX)
                                               options:NSStringDrawingUsesLineFragmentOrigin
@@ -124,16 +121,16 @@
                                               context:nil];
   [self.nameButton setFrame:CGRectMake(nameX, nameY, nameRect.size.width, nameRect.size.height)];
   
-  [self.contentBacking setFrame:CGRectMake(self.insetWidth,
-                                          self.userImageView.frame.origin.y + userImageDim*.80,
-                                          self.mainView.frame.size.width - (2*self.insetWidth),
+  [self.contentBacking setFrame:CGRectMake(self.cellInsetWidth,
+                                           self.userImageView.frame.origin.y + userImageDim*.80,
+                                           self.mainView.frame.size.width - (2*self.cellInsetWidth),
                                            vertBorderSpacing + verificationImageDim + vertElemSpacing + statusTextHeight + vertBorderSpacing +(4*vertElemSpacing))];
   
   
   [self.verificationImageView setFrame:CGRectMake(self.userImageView.center.x - verificationImageDim/2.f,
-                                           self.userImageView.frame.origin.y + userImageDim + vertElemSpacing,
-                                           verificationImageDim,
-                                           verificationImageDim)];
+                                                  self.userImageView.frame.origin.y + userImageDim + vertElemSpacing,
+                                                  verificationImageDim,
+                                                  verificationImageDim)];
   // Layout the contentText
   CGRect textContentRect = [self.contentLabel.text boundingRectWithSize:CGSizeMake(horizontalTextSpace,CGFLOAT_MAX)
                                                                 options:NSStringDrawingUsesLineFragmentOrigin
@@ -144,7 +141,7 @@
   if (self.contentImageView.image != nil)
   {
     textContentY += imageContentDim;
-    [self.contentImageView setFrame:CGRectMake(0.f, vertBorderSpacing+(userImageDim*(.80f)), imageContentDim-(2*self.insetWidth), imageContentDim)];
+    [self.contentImageView setFrame:CGRectMake(0.f, vertBorderSpacing+(userImageDim*(.80f)), imageContentDim-(2*self.cellInsetWidth), imageContentDim)];
   }
   
   [self.contentLabel setFrame:CGRectMake(userImageX+userImageDim+horiElemSpacing+horiElemSpacing,
@@ -154,7 +151,7 @@
   
   [self.statusTextView setFrame:CGRectMake(self.mainView.frame.origin.x + horiBorderSpacing,
                                            self.verificationImageView.frame.origin.y + verificationImageDim + vertElemSpacing,
-                                           self.mainView.frame.size.width - (2*horiBorderSpacing) - (2*self.insetWidth),
+                                           self.mainView.frame.size.width - (2*horiBorderSpacing) - (2*self.cellInsetWidth),
                                            statusTextHeight)];
   
   [self.placeholderLabel setFrame:CGRectMake(self.mainView.frame.origin.x + (2*horiBorderSpacing),
@@ -162,9 +159,9 @@
                                              self.mainView.frame.size.width - (2*horiBorderSpacing),
                                              textContentRect.size.height)];
   
-  [self.okButton setFrame:CGRectMake(self.insetWidth,
+  [self.okButton setFrame:CGRectMake(self.cellInsetWidth,
                                      self.contentBacking.frame.origin.y+self.contentBacking.frame.size.height + (4*vertElemSpacing),
-                                     self.mainView.frame.size.width-(2*self.insetWidth),
+                                     self.mainView.frame.size.width-(2*self.cellInsetWidth),
                                      okButtonHeight)];
   
   [self.mainView bringSubviewToFront:self.userImageView];
@@ -179,24 +176,32 @@
   [self.nameButton setTitle:@"username" forState:UIControlStateHighlighted];
   
   // If user is set after the contentText, we reset the content to include padding
-  if (self.contentLabel.text) {
-    [self setContentText:self.contentLabel.text];
-  }
+//  if (self.contentLabel.text) {
+//    [self setContentText:self.contentLabel.text];
+//  }
   [self setNeedsDisplay];
 }
 
-- (void)setContentText:(NSString *)contentString
+- (void)setOrdinal:(NSNumber *)verificationOrdinal
 {
-  [self.contentLabel setText:[contentString uppercaseString]];
+
+  [self.contentLabel setText:[[NSString stringWithFormat:@"%@ %@ OF THE DAY",
+                               [Verification ordinalMessageForNumber:verificationOrdinal],
+                               [Verification stringForType:(DTVerificationType)0]] uppercaseString]];
   [self setNeedsDisplay];
 }
 
 - (void)setInsetWidth:(CGFloat)insetWidth {
   // Change the mainView's frame to be insetted by insetWidth and update the content text space
-  _insetWidth = insetWidth;
-  [self.mainView setFrame:CGRectMake(insetWidth, self.mainView.frame.origin.y, self.mainView.frame.size.width-2*insetWidth, self.mainView.frame.size.height)];
-  horizontalTextSpace = [VerificationStatusInput horizontalTextSpaceForInsetWidth:insetWidth];
+  _cellInsetWidth = insetWidth;
+  [self.mainView setFrame:CGRectMake(insetWidth, self.mainView.frame.origin.y, self.mainView.frame.size.width-(2*insetWidth), self.mainView.frame.size.height)];
+  horizontalTextSpace = [VerificationStatusInputCell horizontalTextSpaceForInsetWidth:insetWidth];
   [self setNeedsDisplay];
+}
+
+- (void)setVerificationType:(DTVerificationType)verificationType
+{
+  [self.verificationImageView setImage:[Verification activeityImageForType:verificationType]];
 }
 
 /* Static helper to obtain the  horizontal space left for name and content after taking the inset and image in consideration */
@@ -204,12 +209,37 @@
   return ([[UIScreen mainScreen] bounds].size.width-(insetWidth*2)) - (horiBorderSpacing+verificationImageDim+horiElemSpacing+horiBorderSpacing);
 }
 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+  [super setSelected:selected animated:animated];
+  
+  // Configure the view for the selected state
+}
+
+- (void) prepareForReuse
+{
+  [super prepareForReuse];
+  
+  self.contentImageView.image = nil;
+  self.contentImageView.file = nil;
+}
+
+/*! Static Helper methods */
++ (CGFloat)hasImage:(BOOL)image cellInsetWidth:(CGFloat)cellInset
+{  
+  CGFloat imageHeight = 0.f;
+  if (image) {
+    imageHeight += imageContentDim;
+  }
+  return (2*vertBorderSpacing)+userImageDim+(10*vertElemSpacing)+verificationImageDim+statusTextHeight+imageHeight+okButtonHeight;
+}
+
 #pragma VerificationStatusInput Delegate Methods
 
 - (void)didTapOkButtonAction:(UIButton *)aButton
 {
-  if([_delegate respondsToSelector:@selector(statusInput:didTapOkButton:textView:)]){
-    [_delegate statusInput:self didTapOkButton:aButton textView:self.statusTextView];
+  if([_delegate respondsToSelector:@selector(cell:didTapSubmitButton:)]){
+    [_delegate cell:self didTapSubmitButton:self.statusTextView];
   }
 }
 

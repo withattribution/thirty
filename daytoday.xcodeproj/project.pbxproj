@@ -118,10 +118,11 @@
 		A1ECF0FE185D0BAA0012B71D /* DTChallengeCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF0FD185D0BAA0012B71D /* DTChallengeCalendar.m */; };
 		A1ECF101185F80630012B71D /* DTNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF100185F80630012B71D /* DTNavigationBar.m */; };
 		A1ECF104185F97B00012B71D /* accessoryCaret.png in Resources */ = {isa = PBXBuildFile; fileRef = A1ECF103185F97B00012B71D /* accessoryCaret.png */; };
-		A1ECF107185FC0BE0012B71D /* VerificationStatusController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF106185FC0BE0012B71D /* VerificationStatusController.m */; };
-		A1ECF10B185FCB900012B71D /* VerificationStatusInput.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF10A185FCB8F0012B71D /* VerificationStatusInput.m */; };
+		A1ECF107185FC0BE0012B71D /* VerificationFlowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF106185FC0BE0012B71D /* VerificationFlowController.m */; };
 		A1ECF10D185FCBB80012B71D /* verificationTick.png in Resources */ = {isa = PBXBuildFile; fileRef = A1ECF10C185FCBB80012B71D /* verificationTick.png */; };
 		A1ECF10E186076D30012B71D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A11D9DFE18511FF2007A70ED /* Parse.framework */; };
+		A1ECF1111860B7CC0012B71D /* VerificationStatusTable.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF1101860B7CC0012B71D /* VerificationStatusTable.m */; };
+		A1ECF1141860B8000012B71D /* VerificationStatusInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF1131860B8000012B71D /* VerificationStatusInputCell.m */; };
 		A1F79C46183573E700C3B8A3 /* ChallengeDetailContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */; };
 		A1F79C491835740A00C3B8A3 /* ChallengeDetailCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C481835740A00C3B8A3 /* ChallengeDetailCommentController.m */; };
 		A1F79C4C1836652500C3B8A3 /* DTSocialDashBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */; };
@@ -369,11 +370,13 @@
 		A1ECF0FF185F80630012B71D /* DTNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTNavigationBar.h; sourceTree = "<group>"; };
 		A1ECF100185F80630012B71D /* DTNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTNavigationBar.m; sourceTree = "<group>"; };
 		A1ECF103185F97B00012B71D /* accessoryCaret.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accessoryCaret.png; sourceTree = "<group>"; };
-		A1ECF105185FC0BE0012B71D /* VerificationStatusController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationStatusController.h; sourceTree = "<group>"; };
-		A1ECF106185FC0BE0012B71D /* VerificationStatusController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationStatusController.m; sourceTree = "<group>"; };
-		A1ECF109185FCB8F0012B71D /* VerificationStatusInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationStatusInput.h; sourceTree = "<group>"; };
-		A1ECF10A185FCB8F0012B71D /* VerificationStatusInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationStatusInput.m; sourceTree = "<group>"; };
+		A1ECF105185FC0BE0012B71D /* VerificationFlowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationFlowController.h; sourceTree = "<group>"; };
+		A1ECF106185FC0BE0012B71D /* VerificationFlowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationFlowController.m; sourceTree = "<group>"; };
 		A1ECF10C185FCBB80012B71D /* verificationTick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = verificationTick.png; sourceTree = "<group>"; };
+		A1ECF10F1860B7CC0012B71D /* VerificationStatusTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationStatusTable.h; sourceTree = "<group>"; };
+		A1ECF1101860B7CC0012B71D /* VerificationStatusTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationStatusTable.m; sourceTree = "<group>"; };
+		A1ECF1121860B8000012B71D /* VerificationStatusInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationStatusInputCell.h; sourceTree = "<group>"; };
+		A1ECF1131860B8000012B71D /* VerificationStatusInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationStatusInputCell.m; sourceTree = "<group>"; };
 		A1F79C44183573E700C3B8A3 /* ChallengeDetailContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailContainer.h; sourceTree = "<group>"; };
 		A1F79C45183573E700C3B8A3 /* ChallengeDetailContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDetailContainer.m; sourceTree = "<group>"; };
 		A1F79C471835740A00C3B8A3 /* ChallengeDetailCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDetailCommentController.h; sourceTree = "<group>"; };
@@ -731,6 +734,10 @@
 		A17E39CE18300F7800F75CC6 /* challenge day */ = {
 			isa = PBXGroup;
 			children = (
+				A1ECF10F1860B7CC0012B71D /* VerificationStatusTable.h */,
+				A1ECF1101860B7CC0012B71D /* VerificationStatusTable.m */,
+				A1ECF1121860B8000012B71D /* VerificationStatusInputCell.h */,
+				A1ECF1131860B8000012B71D /* VerificationStatusInputCell.m */,
 				A1ECF0E218577EF10012B71D /* comment cell */,
 				A17E39CF183010EB00F75CC6 /* ChallengeDayDetail.h */,
 				A17E39D0183010EB00F75CC6 /* ChallengeDayDetail.m */,
@@ -910,8 +917,6 @@
 		A1ECF108185FC0DE0012B71D /* verification views */ = {
 			isa = PBXGroup;
 			children = (
-				A1ECF109185FCB8F0012B71D /* VerificationStatusInput.h */,
-				A1ECF10A185FCB8F0012B71D /* VerificationStatusInput.m */,
 			);
 			name = "verification views";
 			sourceTree = "<group>";
@@ -954,8 +959,8 @@
 				A1F79C43183573A300C3B8A3 /* ChallengeDetailControllers */,
 				A1B5E6171829BE770050A136 /* DemoControllers */,
 				B73903C617FB5FED00B9C9BB /* ProfileViewController.h */,
-				A1ECF105185FC0BE0012B71D /* VerificationStatusController.h */,
-				A1ECF106185FC0BE0012B71D /* VerificationStatusController.m */,
+				A1ECF105185FC0BE0012B71D /* VerificationFlowController.h */,
+				A1ECF106185FC0BE0012B71D /* VerificationFlowController.m */,
 				B73903C717FB5FED00B9C9BB /* ProfileViewController.m */,
 				B73903B217FB1DB600B9C9BB /* LoginRegistrationViewController.h */,
 				B73903B317FB1DB600B9C9BB /* LoginRegistrationViewController.m */,
@@ -1203,6 +1208,7 @@
 				A11D9DCA18511227007A70ED /* NIInvocationMethods.m in Sources */,
 				A11D9DF618511261007A70ED /* AFPropertyListRequestOperation.m in Sources */,
 				A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */,
+				A1ECF1141860B8000012B71D /* VerificationStatusInputCell.m in Sources */,
 				A11D9DDD1851124A007A70ED /* NINetworkImageView.m in Sources */,
 				A11D9DF918511261007A70ED /* UIImageView+AFNetworking.m in Sources */,
 				B7E61D4E17BD6AA5002B681B /* main.m in Sources */,
@@ -1224,6 +1230,7 @@
 				A19867371837CE3000BC229F /* FDTakeController.m in Sources */,
 				A11D9DF418511261007A70ED /* AFJSONRequestOperation.m in Sources */,
 				A1275C191806EB8C00019A91 /* DTProgressElement.m in Sources */,
+				A1ECF1111860B7CC0012B71D /* VerificationStatusTable.m in Sources */,
 				A1B5E61A1829BE960050A136 /* FrontViewController.m in Sources */,
 				A11D9DF818511261007A70ED /* AFXMLRequestOperation.m in Sources */,
 				B73903B417FB1DB600B9C9BB /* LoginRegistrationViewController.m in Sources */,
@@ -1253,7 +1260,7 @@
 				A11D9DD418511227007A70ED /* NIState.m in Sources */,
 				A1C60D60183C184800C98C69 /* DTCache.m in Sources */,
 				A1AC68C118182057004A1F5D /* ChallengeName.m in Sources */,
-				A1ECF107185FC0BE0012B71D /* VerificationStatusController.m in Sources */,
+				A1ECF107185FC0BE0012B71D /* VerificationFlowController.m in Sources */,
 				A1F79C491835740A00C3B8A3 /* ChallengeDetailCommentController.m in Sources */,
 				A11D9DF718511261007A70ED /* AFURLConnectionOperation.m in Sources */,
 				A11D9DF118511261007A70ED /* AFHTTPClient.m in Sources */,
@@ -1274,7 +1281,6 @@
 				A16AC9D718298D6B00074AB8 /* DemoTableViewController.m in Sources */,
 				A11D9DCF18511227007A70ED /* NIOperations.m in Sources */,
 				A1ECF0E518577F540012B71D /* CommentCell.m in Sources */,
-				A1ECF10B185FCB900012B71D /* VerificationStatusInput.m in Sources */,
 				A11D9DD218511227007A70ED /* NISDKAvailability.m in Sources */,
 				A1AC68B118163D38004A1F5D /* DTSelectionSheet.m in Sources */,
 				A11D9DC118511227007A70ED /* NIButtonUtilities.m in Sources */,

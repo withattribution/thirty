@@ -7,7 +7,7 @@
 //
 
 #import "ChallengeDetailVerificationController.h"
-#import "VerificationStatusController.h"
+#import "VerificationFlowController.h"
 
 #import "Verification.h"
 #import "DTVerificationElement.h"
@@ -17,8 +17,11 @@
 #import "DTChallengeCalendar.h"
 #import "DTProgressRow.h"
 
-@interface ChallengeDetailVerificationController () <DTVerificationElementDataSource,DTVerificationElementDelegate,DTProgressRowDelegate>
+@interface ChallengeDetailVerificationController () <DTVerificationElementDataSource,
+                                                       DTVerificationElementDelegate,
+                                                               DTProgressRowDelegate>
 
+@property (nonatomic,strong) VerificationFlowController *verificationFlow;
 @property (nonatomic,strong) ChallengeDayDetail *cdd;
 @property (nonatomic,strong) DTProgressRow *rowView;
 @property (nonatomic,strong) DTChallengeCalendar *calendarObject;
@@ -72,8 +75,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-
-
 - (BOOL)intentHasChallengeDays
 {
   return [[DTCache sharedCache] challengeDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]] != nil;
@@ -89,11 +90,8 @@
                                                  name:DTChallengeDayDidCacheDaysForIntentNotification
                                                object:nil];
   }
-  
   self.calendarObject = [DTChallengeCalendar calendarWithIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
-  
   self.rowView = [[DTProgressRow alloc] initWithFrame:CGRectMake(0.f, self.cdd.frame.origin.y + self.cdd.frame.size.height + 15., self.view.frame.size.width, 40.f)];
-//  [self.rowView setCenter:CGPointMake(self.view.frame.size.width/2.f, self.cdd.frame.origin.y + self.cdd.frame.size.height + 35.)];
 
   [self.rowView setDelegate:self];
   [self.rowView setDataSource:self.calendarObject];
@@ -126,46 +124,21 @@
 
 -(void)verificationElement:(DTVerificationElement *)element didVerifySection:(NSUInteger)section
 {
-  VerificationStatusController *vc = [[VerificationStatusController alloc] init];
-  [self.parentViewController.view addSubview:vc.view];
+  NIDINFO(@"element: %@ and section:%d",element,section);
+  if ([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] <
+      [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]  &&
+      ![[self.challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue])
+  {
+    self.verificationFlow = [[VerificationFlowController alloc] init];
+    [self.parentViewController addChildViewController:self.verificationFlow];
+    [self.parentViewController.view addSubview:self.verificationFlow.view];
+    [self.verificationFlow didMoveToParentViewController:self];
 
-//  NIDINFO(@"element: %@ and section:%d",element,section);
-//  if ([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] <
-//      [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]  &&
-//      ![[self.challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue])
-//  {
-//    PFObject *verification = [PFObject objectWithClassName:kDTVerificationClass];
-//    [verification setObject:@([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] +1)
-//                     forKey:kDTVerificationOrdinalKey];
-//    //if there is a verification status entered:
-//    //[verification setObject:VERIFICATION_STATUS forKey:kDTVerificationStatusContentKey];
-//#warning figure out how to propogate verfication type hardcoded for now
-//    [verification saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
-//      if (succeeded) {
-//        PFObject *verifyActivity = [PFObject objectWithClassName:kDTActivityClassKey];
-//        [verifyActivity setObject:kDTActivityTypeVerificationFinish forKey:kDTActivityTypeKey];
-//        verifyActivity[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
-//                                                                                   objectId:self.challengeDay.objectId];
-//        verifyActivity[kDTActivityVerificationKey] = [PFObject objectWithoutDataWithClassName:kDTVerificationClass
-//                                                                                     objectId:verification.objectId];
-//        [verifyActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
-//          if (succeeded) {
-//            NIDINFO(@"verification-tick saved!");
-//            [self.challengeDay fetchInBackgroundWithBlock:^(PFObject *day, NSError *error){
-//              if(!error && day){
-//                self.challengeDay = day;
-//                [self.verifyElement reloadData:NO];
-//              }
-//            }];
-//          }else {
-//            NIDINFO(@"%@",[error localizedDescription]);
-//          }
-//        }];
-//      }else {
-//        NIDINFO(@"%@",[error localizedDescription]);
-//      }
-//    }];
-//  }
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updatedChallengeDay:)
+                                                 name:DTChallengeDayDidCacheDayNotification
+                                               object:nil];
+  }
 }
 
 #pragma mark - DTVerificationDataSource
@@ -194,6 +167,24 @@
   [self.rowView reloadData:YES date:[NSDate date]];
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:DTChallengeDayDidCacheDaysForIntentNotification
+                                                object:nil];
+}
+
+#pragma mark - Challenge Day Refreshed Notification
+
+- (void)updatedChallengeDay:(NSNotification *)aNotification
+{
+  NIDINFO(@"full circle back to verifcation reloading -- does this work if it's not on screen?");
+  if (aNotification.object != nil) {
+    [self.verificationFlow dismissStatusUpdateTableView];
+    self.challengeDay = aNotification.object;
+    [self.verifyElement reloadData:NO];
+  }else{
+    NIDINFO(@"some kind of error updating the challenge day object");
+  }
+
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:DTChallengeDayDidCacheDayNotification
                                                 object:nil];
 }
 

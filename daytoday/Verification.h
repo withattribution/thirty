@@ -1,5 +1,5 @@
 //
-//  Verification+UImage.h
+//  Verification.h
 //  daytoday
 //
 //  Created by pasmo on 10/29/13.
@@ -9,16 +9,19 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, DTVerificationType) {
-  DTVerificationTickMark,
-  DTVerificationCheckIn,
-  DTVerificationPhoto,
-  DTVerificationTimer
+  DTVerificationTickMark = 0, //0
+  DTVerificationCheckIn,      //1
+  DTVerificationPhoto,        //2
+  DTVerificationTimer         //3
 };
 
 @interface Verification : NSObject
 
 + (UIImage *)imageForType:(DTVerificationType)type;
++ (UIImage *)activeityImageForType:(DTVerificationType)type;
 + (NSString *)stringForType:(DTVerificationType)type;
++ (NSString *)ordinalMessageForNumber:(NSNumber *)ordinal;
 + (NSArray *)verficationImages;
 
 @end
+

@@ -219,4 +219,45 @@
   return query;
 }
 
++ (void)verificationActivity:(NSString *)status
+{
+  //add image or mapview content to this method definition
+  PFObject *challengeDay = [[DTCache sharedCache] challengeDayForDate:[NSDate date] intent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
+  
+  PFObject *verification = [PFObject objectWithClassName:kDTVerificationClass];
+  [verification setObject:@([[challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] +1)
+                   forKey:kDTVerificationOrdinalKey];
+  //if there is a verification status entered:
+  NSString *trimmedStatus = [status stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+  if (trimmedStatus.length > 0)
+  {
+    [verification setObject:trimmedStatus forKey:kDTVerificationStatusContentKey];
+  }
+  [verification saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+    if (succeeded) {
+      PFObject *verifyActivity = [PFObject objectWithClassName:kDTActivityClassKey];
+      [verifyActivity setObject:kDTActivityTypeVerificationFinish forKey:kDTActivityTypeKey];
+      verifyActivity[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:challengeDay.objectId];
+      verifyActivity[kDTActivityVerificationKey] = [PFObject objectWithoutDataWithClassName:kDTVerificationClass objectId:verification.objectId];
+      [verifyActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+        if (succeeded) {
+          NIDINFO(@"verification-tick saved!");
+          [challengeDay fetchInBackgroundWithBlock:^(PFObject *day, NSError *error){
+            if(!error && day){
+              [[DTCache sharedCache] cacheChallengeDay:day];
+            }
+          }];
+        }else {
+          NIDINFO(@"%@",[error localizedDescription]);
+        }
+      }];
+    }else {
+      NIDINFO(@"%@",[error localizedDescription]);
+    }
+  }];
+}
+
+
+
+
 @end

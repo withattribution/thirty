@@ -1,26 +1,27 @@
 //
-//  VerificationStatusInput.h
+//  VerificationStatusInputCell.h
 //  daytoday
 //
-//  Created by pasmo on 12/16/13.
+//  Created by pasmo on 12/17/13.
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "DTProfileImageView.h"
+#import "Verification.h"
 
-@class VerificationStatusInput;
-@protocol VerificationStatusInputDelegate <NSObject>
+@class VerificationStatusInputCell;
+@protocol VerificationStatusCellDelegate <NSObject>
 
 @optional
-- (void)statusInput:(VerificationStatusInput *)view didTapOkButton:(UIButton *)aButton textView:(UITextView *)textView;
+- (void)cell:(VerificationStatusInputCell *)cellView didTapSubmitButton:(UITextView *)textView;
 @end
 
-@interface VerificationStatusInput : UIView {
-  NSUInteger horizontalTextSpace;
+@interface VerificationStatusInputCell : UITableViewCell {
+NSUInteger horizontalTextSpace;
 }
 
-@property (nonatomic,weak) id<VerificationStatusInputDelegate> delegate;
+@property (nonatomic,weak) id<VerificationStatusCellDelegate> delegate;
 
 @property (nonatomic,strong) PFUser *user;
 @property (nonatomic,strong) UIView *mainView;
@@ -38,12 +39,16 @@
 
 @property (nonatomic,strong) UIButton *okButton;
 
+@property (nonatomic) DTVerificationType verificationType;
 
 /*! The horizontal inset of the cell */
-@property (nonatomic) CGFloat insetWidth;
+@property (nonatomic) CGFloat cellInsetWidth;
+
+/*! Static Helper methods */
++ (CGFloat)hasImage:(BOOL)image cellInsetWidth:(CGFloat)cellInset;
 
 /*! Setters for the cell's content */
-- (void)setContentText:(NSString *)contentString;
+- (void)setOrdinal:(NSNumber *)verificationOrdinal;
 - (void)setInsetWidth:(CGFloat)insetWidth;
 
 /*! Layout constants */
@@ -75,4 +80,5 @@
 #define statusTextHeight 80.f
 
 #define okButtonHeight 36.f
+
 @end

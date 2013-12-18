@@ -27,6 +27,7 @@ extern NSString *const DTChallengeDayActivityCacheDidRefreshNotification;
 extern NSString *const DTChallengeDayRetrievedNotification;
 
 extern NSString *const DTChallengeDayDidCacheDaysForIntentNotification;
+extern NSString *const DTChallengeDayDidCacheDayNotification;
 
 extern NSString *const DTIntentDidCacheIntentsForUserNotification;
 extern NSString *const DTIntentDidCacheIntentForUserNotification;
@@ -125,10 +126,10 @@ extern NSString *const kDTChallengeCreatedByKey;
 extern NSString *const kDTChallengeVerificationTypeKey;
 
 // Type Values
-extern NSString *const kDTChallengeVerificationTypeTick;
-extern NSString *const kDTChallengeVerificationTypeTimer;
-extern NSString *const kDTChallengeVerificationTypeCheckIn;
-extern NSString *const kDTChallengeVerificationTypeImage;
+extern NSUInteger const kDTChallengeVerificationTypeTick;
+extern NSUInteger const kDTChallengeVerificationTypeCheckIn;
+extern NSUInteger const kDTChallengeVerificationTypeImage;
+extern NSUInteger const kDTChallengeVerificationTypeTimer;
 
 #pragma mark - Verification Class
 // Class Key

@@ -42,20 +42,6 @@
   [self.cache removeAllObjects];
 }
 
-#pragma mark - Active Challenge Day
-
-- (PFObject *)cachedActiveDayForDate:(NSDate *)date
-{
-#warning not implemented
-}
-
-#pragma mark - ChallengeDay Verification Cache
-
-- (void)refreshVerificationActivity:(PFObject *)verification forChallengeDay:(PFObject *)challengeDay
-{
-#warning not implemented
-}
-
 #pragma mark - Challenge For Intent
 
 - (void)cacheChallenge:(PFObject *)challenge forIntent:(PFObject *)intent
@@ -73,6 +59,17 @@
 - (NSString *)keyForChallenge:(PFObject *)intent
 {
   return [NSString stringWithFormat:@"challenge_%@",[[intent objectForKey:kDTIntentChallengeKey] objectId]];
+}
+
+- (void)cacheChallengeDay:(PFObject *)challengeDay
+{
+  NSString *key = [self keyForChallengeDay:challengeDay];
+  [self.cache setObject:challengeDay forKey:key];
+  
+  [[NSNotificationCenter defaultCenter]
+          postNotificationName:DTChallengeDayDidCacheDayNotification
+          object:challengeDay
+          userInfo:nil];
 }
 
 #pragma mark - ChallengeDay Activity Cache

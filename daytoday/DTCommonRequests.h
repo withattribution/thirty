@@ -27,4 +27,10 @@
 
 + (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy;
 
+#pragma mark Verification Activity Request
+
++ (void)verificationActivity:(NSString *)status;
++ (void)refreshActiveChallengeDay;
+
+
 @end

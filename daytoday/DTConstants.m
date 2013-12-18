@@ -34,6 +34,9 @@ NSString *const DTChallengeDayRetrievedNotification =
 NSString *const DTChallengeDayDidCacheDaysForIntentNotification =
   @"com.aok.DayToday.cache.didCacheDaysForIntentNotification";
 
+NSString *const DTChallengeDayDidCacheDayNotification =
+  @"com.aok.DayToday.cache.didCacheDayNotification";
+
 NSString *const DTIntentDidCacheIntentsForUserNotification =
   @"com.aok.DayToday.cache.didCacheIntentsForUserNotification";
 
@@ -133,10 +136,10 @@ NSString *const kDTChallengeCreatedByKey               =@"creator";
 NSString *const kDTChallengeVerificationTypeKey        =@"verify";
 
 // Type Values
-NSString *const kDTChallengeVerificationTypeTick               =@"tick";
-NSString *const kDTChallengeVerificationTypeTimer              =@"timer";
-NSString *const kDTChallengeVerificationTypeCheckIn            =@"checkIn";
-NSString *const kDTChallengeVerificationTypeImage              =@"image";
+NSUInteger const kDTChallengeVerificationTypeTick             =0;
+NSUInteger const kDTChallengeVerificationTypeCheckIn          =1;
+NSUInteger const kDTChallengeVerificationTypeImage            =2;
+NSUInteger const kDTChallengeVerificationTypeTimer            =3;
 
 #pragma mark - Verification Class
 // Class Key
