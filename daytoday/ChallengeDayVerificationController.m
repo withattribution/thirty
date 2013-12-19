@@ -29,6 +29,9 @@
 
 @end
 
+#define kVerificationDayInset 5.f
+
+
 @implementation ChallengeDetailVerificationController
 
 - (id)initWithChallengeDay:(PFObject *)chDay
@@ -95,6 +98,7 @@
 
   [self.rowView setDelegate:self];
   [self.rowView setDataSource:self.calendarObject];
+  [self.rowView setRowInset:kVerificationDayInset];
   [self.view addSubview:self.rowView];
 }
 
@@ -107,6 +111,10 @@
 {
   [super viewWillAppear:animated];
   [self.verifyElement reloadData:YES];
+  
+  if([self intentHasChallengeDays]){
+    [self.rowView reloadData:NO date:[NSDate date]];
+  }
 }
 
 - (void)viewDidAppear:(BOOL)animated

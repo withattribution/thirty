@@ -125,7 +125,6 @@
 {
   [super willMoveToParentViewController:parent];
   
-  
   if ([parent isKindOfClass:[VerificationFlowController class]]) {
     [self.verficationController viewWillAppear:NO];
     [self.commentController loadObjects];

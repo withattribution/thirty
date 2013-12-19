@@ -16,6 +16,7 @@
 @property (nonatomic,strong) NSArray *rowDates;
 
 @property (nonatomic,strong) DTProgressElement *progressElement;
++ (CGFloat)paddingForRowInset:(CGFloat)rowInset numberOfDTDots:(NSUInteger)dotCount frame:(CGRect)frame;
 
 @end
 
@@ -25,7 +26,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-      _rowInset = 5.f;
+      _rowInset = 0.f;
       _dotCount = 0;
     }
     return self;
@@ -50,8 +51,6 @@
 //  NIDINFO(@"result: %f",([[UIScreen mainScreen] bounds].size.width-(rowInset*2) - (dotCount * frame.size.height))/dotCount);
   return ((([[UIScreen mainScreen] bounds].size.width-(rowInset*2)) - (dotCount * frame.size.height))/dotCount);
 }
-
-
 
 - (void)reloadData:(BOOL)animated date:(NSDate *)date
 {
@@ -79,12 +78,12 @@
       [dtDotRow addObject:dayDot];
     }
 
-    NSUInteger position            = ([_dataSource indexForDate:self date:date] + 1);
+    NSUInteger position            = ([_dataSource indexForDate:self date:date]+1);
     DTProgressRowEndStyle endStyle = [_dataSource endStyleForProgressRow:self date:date];
 
     CGFloat progressUnits = (position * (self.dotPadding + self.frame.size.height));
 //    NIDINFO(@"units: %f",progressUnits);
-    DTProgressElement *progressElement = [DTProgressElement buildForStyle:endStyle progressUnits:progressUnits frame:CGRectMake(self.rowInset, 0., self.frame.size.width-(2*self.rowInset), self.frame.size.height)];
+    DTProgressElement *progressElement = [DTProgressElement buildForStyle:endStyle progressUnits:progressUnits frame:CGRectMake(self.rowInset/2.f, 0.f, self.frame.size.width-(1*self.rowInset), self.frame.size.height)];
 //    [progressElement setBackgroundColor:[UIColor orangeColor]];
     [self insertSubview:progressElement atIndex:0];
   }

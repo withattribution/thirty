@@ -41,6 +41,5 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 @property (nonatomic,weak) id<DTProgressRowDataSource> dataSource;
 @property (nonatomic,weak) id<DTProgressRowDelegate> delegate;
 
-+ (CGFloat)paddingForRowInset:(CGFloat)rowInset numberOfDTDots:(NSUInteger)dotCount frame:(CGRect)frame;
 - (void)reloadData:(BOOL)animated date:(NSDate *)date;
 @end
