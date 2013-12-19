@@ -8,9 +8,9 @@
 
 #import "Verification.h"
 #import "VerificationStatusTable.h"
-#import "VerificationStatusInputCell.h"
+#import "DTVerificationInputCell.h"
 
-@interface VerificationStatusTable () <UITableViewDelegate, UITableViewDataSource, VerificationStatusCellDelegate>
+@interface VerificationStatusTable () <UITableViewDelegate, UITableViewDataSource, DTVerificationInputCellDelegate>
 
 @end
 
@@ -50,7 +50,8 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  return [VerificationStatusInputCell hasImage:(self.imageViewToUpload != nil || self.mapToUpload != nil)
+  return [DTVerificationInputCell heightForCellTextContent:nil
+                                           hasImageContent:(self.imageViewToUpload != nil || self.mapToUpload != nil)
                                 cellInsetWidth:kStatusRowInset];
 }
 
@@ -60,11 +61,11 @@
 {
   static NSString *cellID = @"statusInputCell";
   
-  VerificationStatusInputCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+  DTVerificationInputCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
   if (cell == nil) {
-    cell = [[VerificationStatusInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    cell = [[DTVerificationInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     cell.cellInsetWidth = kStatusRowInset;
-    cell.delegate = self;
+    cell.submitDelegate = self;
   }
   [cell setUser:[PFUser currentUser]];
   [cell setOrdinal:[NSNumber numberWithInt:[[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] + 1]];
@@ -84,7 +85,7 @@
 
 #pragma mark VerificationStatusCell Delegate Method
 
-- (void)cell:(VerificationStatusInputCell *)cellView didTapSubmitButton:(UITextView *)textView
+- (void)cell:(DTVerificationInputCell *)cellView didTapSubmitButton:(UITextView *)textView
 {
   [DTCommonRequests verificationActivity:textView.text];
 }

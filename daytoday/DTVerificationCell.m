@@ -21,6 +21,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
 {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
+    
     if (!timeFormatter) {
       timeFormatter = [[TTTTimeIntervalFormatter alloc] init];
     }

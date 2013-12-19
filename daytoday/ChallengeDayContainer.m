@@ -124,8 +124,11 @@
 - (void) willMoveToParentViewController:(UIViewController *)parent
 {
   [super willMoveToParentViewController:parent];
+  
+  
   if ([parent isKindOfClass:[VerificationFlowController class]]) {
     [self.verficationController viewWillAppear:NO];
+    [self.commentController loadObjects];
   }
 }
 
@@ -136,8 +139,6 @@
   [self addChildViewController:self.verficationController];
 
   [self.verficationController didMoveToParentViewController:self];
-  
-
   
   _commentController = [[ChallengeDayCommentController alloc] initWithChallengeDay:self.challengeDay];
 

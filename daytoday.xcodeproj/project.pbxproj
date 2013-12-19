@@ -124,7 +124,6 @@
 		A1ECF10D185FCBB80012B71D /* verificationTick.png in Resources */ = {isa = PBXBuildFile; fileRef = A1ECF10C185FCBB80012B71D /* verificationTick.png */; };
 		A1ECF10E186076D30012B71D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A11D9DFE18511FF2007A70ED /* Parse.framework */; };
 		A1ECF1111860B7CC0012B71D /* VerificationStatusTable.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF1101860B7CC0012B71D /* VerificationStatusTable.m */; };
-		A1ECF1141860B8000012B71D /* VerificationStatusInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF1131860B8000012B71D /* VerificationStatusInputCell.m */; };
 		A1F79C46183573E700C3B8A3 /* ChallengeDayContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C45183573E700C3B8A3 /* ChallengeDayContainer.m */; };
 		A1F79C491835740A00C3B8A3 /* ChallengeDayCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C481835740A00C3B8A3 /* ChallengeDayCommentController.m */; };
 		A1F79C4C1836652500C3B8A3 /* DTSocialDashBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */; };
@@ -381,8 +380,6 @@
 		A1ECF10C185FCBB80012B71D /* verificationTick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = verificationTick.png; sourceTree = "<group>"; };
 		A1ECF10F1860B7CC0012B71D /* VerificationStatusTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationStatusTable.h; sourceTree = "<group>"; };
 		A1ECF1101860B7CC0012B71D /* VerificationStatusTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationStatusTable.m; sourceTree = "<group>"; };
-		A1ECF1121860B8000012B71D /* VerificationStatusInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationStatusInputCell.h; sourceTree = "<group>"; };
-		A1ECF1131860B8000012B71D /* VerificationStatusInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationStatusInputCell.m; sourceTree = "<group>"; };
 		A1F79C44183573E700C3B8A3 /* ChallengeDayContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDayContainer.h; sourceTree = "<group>"; };
 		A1F79C45183573E700C3B8A3 /* ChallengeDayContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDayContainer.m; sourceTree = "<group>"; };
 		A1F79C471835740A00C3B8A3 /* ChallengeDayCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDayCommentController.h; sourceTree = "<group>"; };
@@ -615,7 +612,6 @@
 		A1275BEB1806EA8E00019A91 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				A1ECF108185FC0DE0012B71D /* verification views */,
 				A1ECF0E218577EF10012B71D /* comment cells */,
 				A17E39CE18300F7800F75CC6 /* challenge day */,
 				A120943B182B1119005B20F7 /* login & registration */,
@@ -895,8 +891,6 @@
 		A1ECF0E218577EF10012B71D /* comment cells */ = {
 			isa = PBXGroup;
 			children = (
-				A1ECF1121860B8000012B71D /* VerificationStatusInputCell.h */,
-				A1ECF1131860B8000012B71D /* VerificationStatusInputCell.m */,
 				A134C192186225CF00DA24C7 /* DTVerificationInputCell.h */,
 				A134C193186225CF00DA24C7 /* DTVerificationInputCell.m */,
 				A134C18F186225B800DA24C7 /* DTVerificationCell.h */,
@@ -922,13 +916,6 @@
 				A1ECF103185F97B00012B71D /* accessoryCaret.png */,
 			);
 			name = "challenge day images";
-			sourceTree = "<group>";
-		};
-		A1ECF108185FC0DE0012B71D /* verification views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "verification views";
 			sourceTree = "<group>";
 		};
 		A1F79C43183573A300C3B8A3 /* ChallengeDayControllers */ = {
@@ -969,9 +956,9 @@
 				A1F79C43183573A300C3B8A3 /* ChallengeDayControllers */,
 				A1B5E6171829BE770050A136 /* DemoControllers */,
 				B73903C617FB5FED00B9C9BB /* ProfileViewController.h */,
+				B73903C717FB5FED00B9C9BB /* ProfileViewController.m */,
 				A1ECF105185FC0BE0012B71D /* VerificationFlowController.h */,
 				A1ECF106185FC0BE0012B71D /* VerificationFlowController.m */,
-				B73903C717FB5FED00B9C9BB /* ProfileViewController.m */,
 				B73903B217FB1DB600B9C9BB /* LoginRegistrationViewController.h */,
 				B73903B317FB1DB600B9C9BB /* LoginRegistrationViewController.m */,
 			);
@@ -1218,7 +1205,6 @@
 				A11D9DCA18511227007A70ED /* NIInvocationMethods.m in Sources */,
 				A11D9DF618511261007A70ED /* AFPropertyListRequestOperation.m in Sources */,
 				A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */,
-				A1ECF1141860B8000012B71D /* VerificationStatusInputCell.m in Sources */,
 				A11D9DDD1851124A007A70ED /* NINetworkImageView.m in Sources */,
 				A11D9DF918511261007A70ED /* UIImageView+AFNetworking.m in Sources */,
 				B7E61D4E17BD6AA5002B681B /* main.m in Sources */,
