@@ -41,6 +41,8 @@ typedef NS_ENUM(NSUInteger, DTGlobalNavType) {
 
 @property (nonatomic,assign) CGFloat insetWidth;
 
+- (void)setHeartButtonState:(BOOL)selected;
+
 + (id)globalNavigationWithType:(DTGlobalNavType)type;
 - (id)initWithFrame:(CGRect)frame type:(DTGlobalNavType)type;
 
@@ -51,8 +53,8 @@ typedef NS_ENUM(NSUInteger, DTGlobalNavType) {
 #define dtHoriElement 4.f
 
 #define dtGlobalButtonY dtVertBorder+dtVertElement
-#define dtGlobalButtonHeight 40.f
-#define dtGlobalButtonWidth 34.f
+#define dtGlobalButtonHeight 34.f
+#define dtGlobalButtonWidth 40.f
 #define dtFomoButtonWidth dtGlobalButtonWidth+15.f
 #define dtGlobalNavHeight ((2*dtVertBorder)+(2*dtVertElement)+dtGlobalButtonHeight)
 

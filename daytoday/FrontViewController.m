@@ -25,11 +25,11 @@
 */
 
 #import "FrontViewController.h"
-#import "SWRevealViewController.h"
-#import "DTGlobalNavigation.h"
+//#import "SWRevealViewController.h"
+//#import "DTGlobalNavigation.h"
 
 @interface FrontViewController() <DTGlobalNavigationDelegate>
-@property (nonatomic,strong) SWRevealViewController *revealController;
+//@property (nonatomic,strong) SWRevealViewController *revealController;
 @end
 
 @implementation FrontViewController
@@ -52,10 +52,10 @@
 //
 //	self.title = NSLocalizedString(@"DEMO MODE", nil);
 
-  DTGlobalNavigation *globalNav = [DTGlobalNavigation globalNavigationWithType:DTGlobalNavTypeGeneric];
-  [globalNav setInsetWidth:5.f];
-  [globalNav setDelegate:self];
-  [self.view addSubview:globalNav];
+  self.globalNavigation = [DTGlobalNavigation globalNavigationWithType:DTGlobalNavTypeGeneric];
+  [self.globalNavigation setInsetWidth:5.f];
+  [self.globalNavigation setDelegate:self];
+  [self.view addSubview:self.globalNavigation];
 }
 
 

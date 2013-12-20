@@ -80,7 +80,7 @@
   NSMutableArray *commenters = [NSMutableArray array];
 
   BOOL isLikedByCurrentUser = NO;
-
+  
   for (PFObject *activity in activities) {
     if ([[activity objectForKey:kDTActivityTypeKey] isEqualToString:kDTActivityTypeComment]
         && [activity objectForKey:kDTActivityFromUserKey])

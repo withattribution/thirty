@@ -18,11 +18,11 @@
 
 #import "UIImage+Resizing.h"
 
-#import "DTGlobalNavigation.h"
+//#import "DTGlobalNavigation.h"
 #import "DTNavigationBar.h"
 
 #import "VerificationFlowController.h"
-#import "SWRevealViewController.h"
+//#import "SWRevealViewController.h"
 
 @interface ChallengeDayContainer () <UIGestureRecognizerDelegate,
                                           DTSocialDashBoardDelegate,
@@ -67,9 +67,6 @@
                                                   name:DTChallengeDayRetrievedNotification
                                                 object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:DTChallengeDayActivityCacheDidRefreshNotification
-                                                object:nil];
-  [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIKeyboardWillShowNotification
                                                 object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -86,35 +83,26 @@
 - (id)init
 {
   self = [super init];
-  if(self){
+  if(self)
+  {
     self.commentsAreFullScreen = NO;
     self.isAddingComment       = NO;
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didRetrieveChallengeDay:)
                                                  name:DTChallengeDayRetrievedNotification
                                                object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateSocialDashboard:)
-                                                 name:DTChallengeDayActivityCacheDidRefreshNotification
-                                               object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShowNotification:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShowNotification:)
                                                  name:UIKeyboardDidShowNotification
                                                object:nil];
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHideNotification:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidHideNotification:)
                                                  name:UIKeyboardDidHideNotification
@@ -140,49 +128,27 @@
   [self addChildViewController:self.verficationController];
 
   [self.verficationController didMoveToParentViewController:self];
+
+#warning this does not allow for other users to view other challenges
+
+  PFObject *intent = [[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]];
+  PFObject *challenge = [[[[PFUser currentUser] objectForKey:kDTUserActiveIntent] objectForKey:kDTIntentChallengeKey] fetchIfNeeded];
+  [[DTCache sharedCache] cacheChallenge:challenge forIntent:intent];
+
+#warning this does not allow for other users to view other challenges
+  
+  self.navigationBar = [[DTNavigationBar alloc] initWithFrame:CGRectMake(0.f,[self padWithStatusBarHeight],self.view.frame.size.width,0.f)];
+  [self.view addSubview:self.navigationBar];
+  [self.navigationBar setDelegate:self];
+  [self.navigationBar setContentText:[challenge objectForKey:kDTChallengeNameKey]];
+
   
   _commentController = [[ChallengeDayCommentController alloc] initWithChallengeDay:self.challengeDay];
 
   [self.view addSubview:self.commentController.view];
   [self addChildViewController:self.commentController];
   [self.commentController didMoveToParentViewController:self];
-
-  PFObject *challenge = [[[[PFUser currentUser] objectForKey:kDTUserActiveIntent] objectForKey:kDTIntentChallengeKey] fetchIfNeeded];
-  [[DTCache sharedCache] cacheChallenge:challenge forIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
-
-  self.navigationBar = [[DTNavigationBar alloc] initWithFrame:CGRectMake(0.f,[self padWithStatusBarHeight],self.view.frame.size.width,0.f)];
-  [self.view addSubview:self.navigationBar];
-  [self.navigationBar setDelegate:self];
-  [self.navigationBar setContentText:[challenge objectForKey:kDTChallengeNameKey]];
-    
-//  _socialDashBoard = [[DTSocialDashBoard alloc] init];
-//  [self.socialDashBoard setDelegate:self];
-//
-//  [self.socialDashBoard setLikeCount:[[DTCache sharedCache] likeCountForChallengeDay:self.challengeDay]];
-//  [self.socialDashBoard setCommentCount:[[DTCache sharedCache] commentCountForChallengeDay:self.challengeDay]];
-//  [self.socialDashBoard setLiked:[[DTCache sharedCache] isChallengeDayLikedByCurrentUser:self.challengeDay]];
-//  
-//  [self setHeaderContainerView:self.socialDashBoard];
-
-//  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[social]|"
-//                                                                    options:NSLayoutFormatDirectionLeadingToTrailing
-//                                                                    metrics:nil
-//                                                                      views:@{@"social":self.socialDashBoard}]];
-//
-//  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[social(40)]"
-//                                                                    options:NSLayoutFormatDirectionLeadingToTrailing
-//                                                                    metrics:nil
-//                                                                      views:@{@"social":self.socialDashBoard}]];
-//
-//  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.headerContainerView
-//                                                        attribute:NSLayoutAttributeBottom
-//                                                        relatedBy:NSLayoutRelationEqual
-//                                                           toItem:self.commentController.tableView
-//                                                        attribute:NSLayoutAttributeTop
-//                                                       multiplier:1.f
-//                                                         constant:0.f]];
-//  [self.view layoutIfNeeded];
-
+  
   [self.commentController.view setFrame:CGRectMake(0.f,
                                                    [self.verficationController heightForControllerFold] + 0.f,//40.f,
                                                    self.view.frame.size.width,
@@ -201,11 +167,13 @@
 
   [self.commentController.view addGestureRecognizer:panRecognizer];
 
-  DTGlobalNavigation *globalNav = [DTGlobalNavigation globalNavigationWithType:DTGlobalNavTypeSocial];
-  [globalNav setDelegate:self];
-  [globalNav setInsetWidth:5.f];
+  self.globalNavigation = [DTGlobalNavigation globalNavigationWithType:DTGlobalNavTypeSocial];
+  [self.globalNavigation setDelegate:self];
+  [self.globalNavigation setInsetWidth:5.f];
+  [self.globalNavigation setHeartButtonState:[[DTCache sharedCache] isChallengeDayLikedByCurrentUser:self.challengeDay]];
+  [self.globalNavigation.fomoButton setHidden:([[[intent objectForKey:kDTIntentChallengeKey] objectId] isEqualToString:[challenge objectId]])];
   
-  [self.view addSubview:globalNav];
+  [self.view addSubview:self.globalNavigation];
 }
 
 - (void)viewDidLoad
@@ -389,30 +357,39 @@
 
 #pragma mark - DTSocialDashBoard Delegate Methods
 
-- (void)didTapLikeButtonFromDTSocialDashBoard:(DTSocialDashBoard *)dashBoard shouldLike:(BOOL)like
+- (void)didTapLikeAction
 {
-  if (like) {
+  [self.globalNavigation.heartButton setUserInteractionEnabled:NO];
+  
+  if (![[DTCache sharedCache] isChallengeDayLikedByCurrentUser:self.challengeDay]) {
     [[DTCache sharedCache] incrementLikeCountForChallengeDay:self.challengeDay];
+    [self.globalNavigation setHeartButtonState:YES];
     [DTCommonRequests likeChallengeDayInBackGround:self.challengeDay block:^(BOOL succeeded, NSError *error){
       if (succeeded) {
         NIDINFO(@"liked");
+        //- (void)setChallengeDayIsLikedByCurrentUser:(PFObject *)challengeDay liked:(BOOL)liked
+        [[DTCache sharedCache] setChallengeDayIsLikedByCurrentUser:self.challengeDay liked:YES];
       }else{
         NIDINFO(@"%@",[error localizedDescription]);
       }
+      [self.globalNavigation.heartButton setUserInteractionEnabled:YES];
     }];
   }else {
     [[DTCache sharedCache] decrementLikeCountForChallengeDay:self.challengeDay];
+    [self.globalNavigation setHeartButtonState:NO];
     [DTCommonRequests unLikeChallengeDayInBackGround:self.challengeDay block:^(BOOL succeeded, NSError *error){
       if (succeeded) {
         NIDINFO(@"unliked");
+        [[DTCache sharedCache] setChallengeDayIsLikedByCurrentUser:self.challengeDay liked:NO];
       }else{
         NIDINFO(@"%@",[error localizedDescription]);
       }
+      [self.globalNavigation.heartButton setUserInteractionEnabled:YES];
     }];
   }
 }
 
-- (void)didSelectComments
+- (void)didTapCommentAction
 {
   self.isAddingComment = YES;
 
@@ -561,7 +538,6 @@
 - (void)moveControllerToTopWithOptions:(NSDictionary *)options
 {
   CGFloat keyboardHeight = [[options objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
-  CGFloat headerContainerHeight = self.headerContainerView.frame.size.height;
   CGFloat footerContainerHeight = self.footerContainerView.frame.size.height;
   
   [UIView animateWithDuration:.32f
@@ -569,13 +545,12 @@
                       options:(UIViewAnimationOptionBeginFromCurrentState| UIViewAnimationCurveEaseOut)
                    animations:^{
                      [self.view layoutIfNeeded];
-                     
                      self.commentController.view.frame = CGRectMake(0.f,
-                                                                headerContainerHeight,
-                                                                self.view.frame.size.width,
+                                                                    0.f,
+                                                                    self.view.frame.size.width,
                                                                     (self.isAddingComment && options)
-                                                                    ? self.view.frame.size.height - keyboardHeight - headerContainerHeight - footerContainerHeight
-                                                                    : self.view.frame.size.height - headerContainerHeight);
+                                                                    ? self.view.frame.size.height-keyboardHeight-footerContainerHeight
+                                                                    : self.view.frame.size.height);
                      [[UIApplication sharedApplication] setStatusBarHidden:YES];
                    }
                    completion:^(BOOL finished) {
@@ -587,8 +562,6 @@
 
 -(void)moveControllerToOriginalPositionWithOptions:(NSDictionary *)options
 {
-  CGFloat headerContainerHeight = self.headerContainerView.frame.size.height;
-
 	[UIView animateWithDuration:.32f
                         delay:0
                       options:(UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationCurveEaseOut)
@@ -596,9 +569,9 @@
                      [self.view layoutIfNeeded];
                      
                      self.commentController.view.frame = CGRectMake(0.f,
-                                                                [self.verficationController heightForControllerFold] + headerContainerHeight,
+                                                                [self.verficationController heightForControllerFold],
                                                                 self.view.frame.size.width,
-                                                                self.view.frame.size.height - [self.verficationController heightForControllerFold] - headerContainerHeight);
+                                                                self.view.frame.size.height - [self.verficationController heightForControllerFold]);
                      [[UIApplication sharedApplication] setStatusBarHidden:NO];
                    }
                    completion:^(BOOL finished) {
@@ -615,20 +588,31 @@
 
 - (void)userDidTapGlobalNavigationButtonType:(DTGlobalButtonType)type
 {
-  if(type == DTGlobalButtonTypeGlobal)
-  {
-    SWRevealViewController *revealController = self.revealViewController;
-    [revealController revealToggle:self];
+  SWRevealViewController *revealController = self.revealController;
+
+  switch (type) {
+    case DTGlobalButtonTypeGlobal:
+      [revealController revealToggle:self];
+      break;
+    case DTGlobalButtonTypeFomo:
+      break;
+    case DTGlobalButtonTypeComment:
+      [self didTapCommentAction];
+      break;
+    case DTGlobalButtonTypeShare:
+      break;
+    case DTGlobalButtonTypeHeart:
+      [self didTapLikeAction];
+      break;
   }
 }
-//SWRevealViewController *revealController = self.revealViewController;
 
 #pragma mark - DTChallengeDayRetrieved Notifications
 
 - (void)didRetrieveChallengeDay:(NSNotification *)aNotification
 {
-  if (aNotification.object && aNotification.object != [NSNull null]) {
-    
+  if (aNotification.object && aNotification.object != [NSNull null])
+  {
     self.challengeDay = (PFObject *)aNotification.object;
 
     if (![self hasActiveIntent]) {
@@ -655,15 +639,6 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:DTIntentDidCacheIntentForUserNotification
                                                 object:nil];
-}
-
-#pragma mark - DTCacheRefresh Notifications
-
-- (void)updateSocialDashboard:(NSNotification *)aNotification
-{
-  [self.socialDashBoard setLikeCount:[aNotification.userInfo objectForKey:kDTChallengeDayAttributeLikeCountKey]];
-  [self.socialDashBoard setCommentCount:[aNotification.userInfo objectForKey:kDTChallengeDayAttributeCommentCountKey]];
-  [self.socialDashBoard setLiked:[[aNotification.userInfo objectForKey:kDTChallengeDayAttributeIsLikedByCurrentUserKey] boolValue]];
 }
 
 #pragma mark - DTNavigationBar Delegate Methods

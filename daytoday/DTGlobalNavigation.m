@@ -91,11 +91,11 @@
   [self.mainView setFrame:CGRectMake(self.insetWidth,0.f,self.frame.size.width-(2*self.insetWidth),dtGlobalNavHeight)];
 
   CGFloat mainViewWidth = self.mainView.frame.size.width;
-  
+
   [self.globalNavButton setFrame:CGRectMake(0.f,dtGlobalButtonY,dtGlobalButtonWidth,dtGlobalButtonHeight)];
   if(self.globalNavigationType == DTGlobalNavTypeSocial)
   {
-    [self.fomoButton setFrame:CGRectMake(mainViewWidth-(3*dtGlobalButtonWidth+dtFomoButtonWidth+(3*dtHoriElement)),dtGlobalButtonY+3,dtFomoButtonWidth,dtGlobalButtonWidth)];
+    [self.fomoButton setFrame:CGRectMake(mainViewWidth-(3*dtGlobalButtonWidth+dtFomoButtonWidth+(3*dtHoriElement)),dtGlobalButtonY,dtFomoButtonWidth,dtGlobalButtonHeight)];
     [self.commentButton setFrame:CGRectMake(mainViewWidth-(3*dtGlobalButtonWidth+(2*dtHoriElement)),dtGlobalButtonY,dtGlobalButtonWidth,dtGlobalButtonHeight)];
     [self.shareButton setFrame:CGRectMake(mainViewWidth-(2*dtGlobalButtonWidth+dtHoriElement),dtGlobalButtonY,dtGlobalButtonWidth,dtGlobalButtonHeight)];
     [self.heartButton setFrame:CGRectMake(mainViewWidth-dtGlobalButtonWidth,dtGlobalButtonY,dtGlobalButtonWidth,dtGlobalButtonHeight)];
@@ -111,11 +111,15 @@
   [self.mainView setFrame:CGRectMake(insetWidth, 0.f, self.frame.size.width-(2*insetWidth), dtGlobalNavHeight)];
 }
 
+- (void)setHeartButtonState:(BOOL)selected
+{
+  [self.heartButton setSelected:selected];
+}
+
 #pragma mark Delegate Methods
 
 - (void)didTapGlobalButtonAction:(UIButton *)aButton
 {
-  
   if([_delegate respondsToSelector:@selector(userDidTapGlobalNavigationButtonType:)]){
     [_delegate userDidTapGlobalNavigationButtonType:(DTGlobalButtonType)aButton.tag];
   }

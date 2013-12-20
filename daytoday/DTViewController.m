@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
-#import "DTViewController.h"
 #import "AppDelegate.h"
-#import "SWRevealViewController.h"
+#import "DTViewController.h"
+//#import "SWRevealViewController.h"
 
 @interface DTViewController ()
 
@@ -21,8 +21,8 @@
   [super viewDidLoad];
 
 #ifdef INTERFACE_DEMO_MODE
-  SWRevealViewController *revealController = [self revealViewController];
-  [self.navigationController.view addGestureRecognizer:revealController.panGestureRecognizer];
+  self.revealController = [self revealViewController];
+  [self.navigationController.view addGestureRecognizer:self.revealController.panGestureRecognizer];
   [self.navigationController.navigationBar setHidden:YES];
 #endif
 

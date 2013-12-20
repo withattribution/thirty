@@ -29,12 +29,14 @@
       self.challengeDay= chDay;
       self.parseClassName = kDTActivityClassKey;
       self.pullToRefreshEnabled = NO;
+      [self.view setOpaque:YES];
       [self.view setBackgroundColor:[UIColor lightGrayColor]];
     }
     return self;
 }
 
 #pragma mark - Table View Datasource
+
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 //{
 ////  if (self.intents && [self.intents count] > 0)
@@ -52,7 +54,6 @@
 //}
 //
 
-
 #pragma mark - PFQueryTableViewController
 
 - (PFQuery *)queryForTable
@@ -61,8 +62,6 @@
   [commentActivity whereKey:kDTActivityChallengeDayKey
           equalTo:[PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:self.challengeDay.objectId]];
   [commentActivity whereKey:kDTActivityTypeKey equalTo:kDTActivityTypeComment];
-  
-  
   
   PFQuery *verificationActivity = [PFQuery queryWithClassName:kDTActivityClassKey];
   [verificationActivity whereKey:kDTActivityChallengeDayKey

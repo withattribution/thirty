@@ -45,7 +45,7 @@
         }
         PFQuery *query = [DTCommonRequests queryForActivitiesOnChallengeDay:challengeDay cachePolicy:kPFCachePolicyNetworkOnly];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
-          if (!error) {
+          if (!error) {            
             [[DTCache sharedCache] refreshCacheActivity:objects forChallengeDay:challengeDay];
           }
 #warning send push notification here
