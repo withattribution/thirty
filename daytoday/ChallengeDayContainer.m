@@ -129,6 +129,7 @@
 
   PFObject *intent = [[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]];
   PFObject *challenge = [[[[PFUser currentUser] objectForKey:kDTUserActiveIntent] objectForKey:kDTIntentChallengeKey] fetchIfNeeded];
+  
   [[DTCache sharedCache] cacheChallenge:challenge forIntent:intent];
 
 #warning this does not allow for other users to view other challenges
@@ -533,6 +534,7 @@
 - (void)moveControllerToTopWithOptions:(NSDictionary *)options
 {
   CGFloat keyboardHeight = [[options objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+   CGFloat headerContainerHeight = self.headerContainerView.frame.size.height;
   CGFloat footerContainerHeight = self.footerContainerView.frame.size.height;
   
   [UIView animateWithDuration:.32f
@@ -541,11 +543,11 @@
                    animations:^{
                      [self.view layoutIfNeeded];
                      self.commentController.view.frame = CGRectMake(0.f,
-                                                                    36.f,
+                                                                    headerContainerHeight,
                                                                     self.view.frame.size.width,
                                                                     (self.isAddingComment && options)
-                                                                    ? self.view.frame.size.height-keyboardHeight-footerContainerHeight-36.f
-                                                                    : self.view.frame.size.height);
+                                                                    ? self.view.frame.size.height-keyboardHeight-footerContainerHeight-headerContainerHeight
+                                                                    : self.view.frame.size.height-headerContainerHeight);
                      [[UIApplication sharedApplication] setStatusBarHidden:YES];
                    }
                    completion:^(BOOL finished) {

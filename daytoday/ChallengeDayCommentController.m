@@ -15,7 +15,7 @@
 @interface ChallengeDayCommentController () <DTBaseCommentCellDelegate>
 
 @property (nonatomic,strong) PFObject *challengeDay;
-
+@property (nonatomic,strong) PFQuery *query;
 @end
 
 #define kCommentCellInsetWidth 5.f
@@ -68,9 +68,11 @@
                  equalTo:[PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey objectId:self.challengeDay.objectId]];
   [verificationActivity whereKey:kDTActivityTypeKey equalTo:kDTActivityTypeVerificationFinish];
   
-  PFQuery *query = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:commentActivity,verificationActivity,nil]];
-  [query setCachePolicy:kPFCachePolicyNetworkOnly];
-  [query includeKey:kDTActivityVerificationKey];
+  self.query = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:commentActivity,verificationActivity,nil]];
+  [self.query setCachePolicy:kPFCachePolicyCacheThenNetwork];
+  [self.query includeKey:kDTActivityVerificationKey];
+  
+  NIDINFO(@"cached results: %d",[self.query hasCachedResult]);
 
 // If no objects are loaded in memory, we look to the cache first to fill the table
 // and then subsequently do a query against the network.
@@ -79,14 +81,15 @@
 //  if (self.objects.count == 0 || ![[UIApplication sharedApplication].delegate performSelector:@selector(isParseReachable)]) {
 //    [query setCachePolicy:kPFCachePolicyCacheThenNetwork];
 //  }
-  return query;
+  return self.query;
 }
 
 - (void)objectsDidLoad:(NSError *)error
 {
   [super objectsDidLoad:error];
-  NIDINFO(@"object count: %d",[self.objects count]);
-  
+//  NIDINFO(@"object count: %d",[self.objects count]);
+  NIDINFO(@"cached results: %d",[self.query hasCachedResult]);
+
   [[DTCache sharedCache] refreshCacheActivity:self.objects forChallengeDay:self.challengeDay];
 
 //  for (NSString *k in [d allKeys]) {
