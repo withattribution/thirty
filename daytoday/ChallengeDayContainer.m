@@ -541,10 +541,10 @@
                    animations:^{
                      [self.view layoutIfNeeded];
                      self.commentController.view.frame = CGRectMake(0.f,
-                                                                    0.f,
+                                                                    36.f,
                                                                     self.view.frame.size.width,
                                                                     (self.isAddingComment && options)
-                                                                    ? self.view.frame.size.height-keyboardHeight-footerContainerHeight
+                                                                    ? self.view.frame.size.height-keyboardHeight-footerContainerHeight-36.f
                                                                     : self.view.frame.size.height);
                      [[UIApplication sharedApplication] setStatusBarHidden:YES];
                    }
