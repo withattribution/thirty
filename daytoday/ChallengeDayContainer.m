@@ -12,20 +12,17 @@
 #import "ProfileViewController.h"
 #import "FDTakeController.h"
 
-#import "DTSocialDashBoard.h"
 #import "CommentInputView.h"
 #import "CommentUtilityView.h"
 
 #import "UIImage+Resizing.h"
 
-//#import "DTGlobalNavigation.h"
 #import "DTNavigationBar.h"
 
 #import "VerificationFlowController.h"
-//#import "SWRevealViewController.h"
+
 
 @interface ChallengeDayContainer () <UIGestureRecognizerDelegate,
-                                          DTSocialDashBoardDelegate,
                                          CommentUtilityViewDelegate,
                                            CommentInputViewDelegate,
                                                      FDTakeDelegate,
@@ -45,7 +42,6 @@
 @property (nonatomic,strong) UIView *footerContainerView;
 
 @property (nonatomic,strong) DTNavigationBar *navigationBar;
-@property (nonatomic,strong) DTSocialDashBoard *socialDashBoard;
 @property (nonatomic,strong) CommentInputView *commentInput;
 @property (nonatomic,strong) CommentUtilityView *commentUtility;
 
@@ -349,7 +345,6 @@
   if([self.footerContainerView isKindOfClass:[CommentInputView class]])
     [(CommentInputView *)self.footerContainerView shouldResignFirstResponder];
 
-  [self setHeaderContainerView:self.socialDashBoard];
   [self setFooterContainerView:nil];
   
   [self cleanUpCommentSubmissionInterface];

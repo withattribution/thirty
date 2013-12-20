@@ -132,7 +132,6 @@
 		A1ECF1111860B7CC0012B71D /* VerificationStatusTable.m in Sources */ = {isa = PBXBuildFile; fileRef = A1ECF1101860B7CC0012B71D /* VerificationStatusTable.m */; };
 		A1F79C46183573E700C3B8A3 /* ChallengeDayContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C45183573E700C3B8A3 /* ChallengeDayContainer.m */; };
 		A1F79C491835740A00C3B8A3 /* ChallengeDayCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C481835740A00C3B8A3 /* ChallengeDayCommentController.m */; };
-		A1F79C4C1836652500C3B8A3 /* DTSocialDashBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */; };
 		A1F79C661836731400C3B8A3 /* heart-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = A1F79C621836731400C3B8A3 /* heart-normal.png */; };
 		A1F79C671836731400C3B8A3 /* comment-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A1F79C631836731400C3B8A3 /* comment-selected.png */; };
 		A1F79C681836731400C3B8A3 /* comment-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = A1F79C641836731400C3B8A3 /* comment-normal.png */; };
@@ -397,8 +396,6 @@
 		A1F79C45183573E700C3B8A3 /* ChallengeDayContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDayContainer.m; sourceTree = "<group>"; };
 		A1F79C471835740A00C3B8A3 /* ChallengeDayCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeDayCommentController.h; sourceTree = "<group>"; };
 		A1F79C481835740A00C3B8A3 /* ChallengeDayCommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeDayCommentController.m; sourceTree = "<group>"; };
-		A1F79C4A1836652500C3B8A3 /* DTSocialDashBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTSocialDashBoard.h; sourceTree = "<group>"; };
-		A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTSocialDashBoard.m; sourceTree = "<group>"; };
 		A1F79C621836731400C3B8A3 /* heart-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-normal.png"; sourceTree = "<group>"; };
 		A1F79C631836731400C3B8A3 /* comment-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment-selected.png"; sourceTree = "<group>"; };
 		A1F79C641836731400C3B8A3 /* comment-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment-normal.png"; sourceTree = "<group>"; };
@@ -661,12 +658,10 @@
 		A1275C081806EB7A00019A91 /* ui elements */ = {
 			isa = PBXGroup;
 			children = (
-				A1ECF0FF185F80630012B71D /* DTNavigationBar.h */,
 				A134C19518637E8000DA24C7 /* DTGlobalNavigation.h */,
 				A134C19618637E8000DA24C7 /* DTGlobalNavigation.m */,
+				A1ECF0FF185F80630012B71D /* DTNavigationBar.h */,
 				A1ECF100185F80630012B71D /* DTNavigationBar.m */,
-				A1F79C4A1836652500C3B8A3 /* DTSocialDashBoard.h */,
-				A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */,
 				A1AC68B81816D8A1004A1F5D /* DTInfiniteScrollView.h */,
 				A1AC68B91816D8A1004A1F5D /* DTInfiniteScrollView.m */,
 				A1AC68AF18163D38004A1F5D /* DTSelectionSheet.h */,
@@ -1278,7 +1273,6 @@
 				B73903D117FB701A00B9C9BB /* DTViewController.m in Sources */,
 				B73903C817FB5FED00B9C9BB /* ProfileViewController.m in Sources */,
 				A1ECF101185F80630012B71D /* DTNavigationBar.m in Sources */,
-				A1F79C4C1836652500C3B8A3 /* DTSocialDashBoard.m in Sources */,
 				A1ECF0FE185D0BAA0012B71D /* DTChallengeCalendar.m in Sources */,
 				A120945E182C3991005B20F7 /* LogInForm.m in Sources */,
 				A1209461182C39AE005B20F7 /* UserEntry.m in Sources */,

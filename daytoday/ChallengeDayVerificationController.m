@@ -14,7 +14,6 @@
 #import "DTVerificationCell.h"
 
 #import "ChallengeDayDetail.h"
-#import "DTSocialDashBoard.h"
 #import "DTChallengeCalendar.h"
 #import "DTProgressRow.h"
 
