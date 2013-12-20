@@ -24,14 +24,9 @@
   // Override point for customization after application launch.
   NIMaxLogLevel = NILOGLEVEL_INFO;
 
-//  self.loginController = [[LoginRegistrationViewController alloc] init];
-//  self.profileController = [[ProfileViewController alloc] init];
-  
-//  if(![[NSUserDefaults standardUserDefaults] valueForKey:kDeviceIdentifier])
-//      self.navController = [[DTNavController alloc] initWithRootViewController:self.loginController];
-//  else
-//      self.navController = [[DTNavController alloc] initWithRootViewController:self.profileController];
-//  self.window.rootViewController = self.navController;
+  [Parse setApplicationId:@"pMydn1FlUYwUcXeLRRAMFp3zcZPz3lRQ6IITQEe2"
+                clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
+  [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
   
   //check pch for definition
   #ifdef INTERFACE_DEMO_MODE
@@ -48,11 +43,6 @@
 
   [self.window makeKeyAndVisible];
   
-  [Parse setApplicationId:@"pMydn1FlUYwUcXeLRRAMFp3zcZPz3lRQ6IITQEe2"
-                clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
-  [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-
-//  [PFUser logOut];
 //  [self createTestModels];
 
   return YES;

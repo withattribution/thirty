@@ -26,9 +26,10 @@
 
 #import "FrontViewController.h"
 #import "SWRevealViewController.h"
+#import "DTGlobalNavigation.h"
 
-@interface FrontViewController()
-
+@interface FrontViewController() <DTGlobalNavigationDelegate>
+@property (nonatomic,strong) SWRevealViewController *revealController;
 @end
 
 @implementation FrontViewController
@@ -39,18 +40,31 @@
 {
 	[super viewDidLoad];
 	
-  SWRevealViewController *revealController = [self revealViewController];
+  self.revealController = [self revealViewController];
   
-  UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
-                                                                       style:UIBarButtonItemStyleBordered target:revealController action:@selector(revealToggle:)];
-  self.navigationItem.leftBarButtonItem = revealButtonItem;
-  
+//  UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
+//                                                                       style:UIBarButtonItemStyleBordered target:self.revealController action:@selector(revealToggle:)];
+//  self.navigationItem.leftBarButtonItem = revealButtonItem;
+//  
   [self.view addSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"daytoday.jpg"]]];
-  
-  [self.navigationController.navigationBar setHidden:NO];
+//
+//  [self.navigationController.navigationBar setHidden:YES];
+//
+//	self.title = NSLocalizedString(@"DEMO MODE", nil);
 
-	self.title = NSLocalizedString(@"DEMO MODE", nil);
+  DTGlobalNavigation *globalNav = [DTGlobalNavigation globalNavigationWithType:DTGlobalNavTypeGeneric];
+  [globalNav setInsetWidth:5.f];
+  [globalNav setDelegate:self];
+  [self.view addSubview:globalNav];
+}
 
+
+- (void)userDidTapGlobalNavigationButtonType:(DTGlobalButtonType)type
+{
+  if(type == DTGlobalButtonTypeGlobal)
+  {
+    [self.revealController revealToggle:self];
+  }
 }
 
 //Sample code for generating parts of the challenge day for testing and demo usage

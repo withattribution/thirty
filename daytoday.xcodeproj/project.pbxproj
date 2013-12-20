@@ -66,6 +66,12 @@
 		A134C18E1861F91600DA24C7 /* DTBaseCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A134C18D1861F91600DA24C7 /* DTBaseCommentCell.m */; };
 		A134C191186225B800DA24C7 /* DTVerificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A134C190186225B800DA24C7 /* DTVerificationCell.m */; };
 		A134C194186225CF00DA24C7 /* DTVerificationInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A134C193186225CF00DA24C7 /* DTVerificationInputCell.m */; };
+		A134C19718637E8000DA24C7 /* DTGlobalNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = A134C19618637E8000DA24C7 /* DTGlobalNavigation.m */; };
+		A134C19E1863A0AC00DA24C7 /* globalCommentButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A134C1991863A0AC00DA24C7 /* globalCommentButton.png */; };
+		A134C19F1863A0AC00DA24C7 /* globalLikeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A134C19A1863A0AC00DA24C7 /* globalLikeButton.png */; };
+		A134C1A01863A0AC00DA24C7 /* globalLikeButtonSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = A134C19B1863A0AC00DA24C7 /* globalLikeButtonSelected.png */; };
+		A134C1A11863A0AC00DA24C7 /* globalNavButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A134C19C1863A0AC00DA24C7 /* globalNavButton.png */; };
+		A134C1A21863A0AC00DA24C7 /* globalShareButton.png in Resources */ = {isa = PBXBuildFile; fileRef = A134C19D1863A0AC00DA24C7 /* globalShareButton.png */; };
 		A13DB5E7181EDB1500378901 /* checkIn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E3181EDB1500378901 /* checkIn.jpg */; };
 		A13DB5E8181EDB1500378901 /* photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E4181EDB1500378901 /* photo.jpg */; };
 		A13DB5E9181EDB1500378901 /* timer.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13DB5E5181EDB1500378901 /* timer.jpg */; };
@@ -284,6 +290,13 @@
 		A134C190186225B800DA24C7 /* DTVerificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTVerificationCell.m; sourceTree = "<group>"; };
 		A134C192186225CF00DA24C7 /* DTVerificationInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTVerificationInputCell.h; sourceTree = "<group>"; };
 		A134C193186225CF00DA24C7 /* DTVerificationInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTVerificationInputCell.m; sourceTree = "<group>"; };
+		A134C19518637E8000DA24C7 /* DTGlobalNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTGlobalNavigation.h; sourceTree = "<group>"; };
+		A134C19618637E8000DA24C7 /* DTGlobalNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTGlobalNavigation.m; sourceTree = "<group>"; };
+		A134C1991863A0AC00DA24C7 /* globalCommentButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globalCommentButton.png; sourceTree = "<group>"; };
+		A134C19A1863A0AC00DA24C7 /* globalLikeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globalLikeButton.png; sourceTree = "<group>"; };
+		A134C19B1863A0AC00DA24C7 /* globalLikeButtonSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globalLikeButtonSelected.png; sourceTree = "<group>"; };
+		A134C19C1863A0AC00DA24C7 /* globalNavButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globalNavButton.png; sourceTree = "<group>"; };
+		A134C19D1863A0AC00DA24C7 /* globalShareButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globalShareButton.png; sourceTree = "<group>"; };
 		A13DB5E3181EDB1500378901 /* checkIn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkIn.jpg; sourceTree = "<group>"; };
 		A13DB5E4181EDB1500378901 /* photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo.jpg; sourceTree = "<group>"; };
 		A13DB5E5181EDB1500378901 /* timer.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = timer.jpg; sourceTree = "<group>"; };
@@ -649,6 +662,8 @@
 			isa = PBXGroup;
 			children = (
 				A1ECF0FF185F80630012B71D /* DTNavigationBar.h */,
+				A134C19518637E8000DA24C7 /* DTGlobalNavigation.h */,
+				A134C19618637E8000DA24C7 /* DTGlobalNavigation.m */,
 				A1ECF100185F80630012B71D /* DTNavigationBar.m */,
 				A1F79C4A1836652500C3B8A3 /* DTSocialDashBoard.h */,
 				A1F79C4B1836652500C3B8A3 /* DTSocialDashBoard.m */,
@@ -687,6 +702,7 @@
 			isa = PBXGroup;
 			children = (
 				A198673E183826A300BC229F /* takePhoto.png */,
+				A134C1981863A09800DA24C7 /* globalButtons */,
 				A1ECF102185F979F0012B71D /* challenge day images */,
 				A19867381837CE6300BC229F /* profile images */,
 				A1F79C4D18366AD200C3B8A3 /* social dashboard buttons */,
@@ -695,6 +711,18 @@
 				A1B5E61B1829BF970050A136 /* demo assets */,
 			);
 			name = assets;
+			sourceTree = "<group>";
+		};
+		A134C1981863A09800DA24C7 /* globalButtons */ = {
+			isa = PBXGroup;
+			children = (
+				A134C1991863A0AC00DA24C7 /* globalCommentButton.png */,
+				A134C19A1863A0AC00DA24C7 /* globalLikeButton.png */,
+				A134C19B1863A0AC00DA24C7 /* globalLikeButtonSelected.png */,
+				A134C19C1863A0AC00DA24C7 /* globalNavButton.png */,
+				A134C19D1863A0AC00DA24C7 /* globalShareButton.png */,
+			);
+			name = globalButtons;
 			sourceTree = "<group>";
 		};
 		A13DB5E2181EDAE700378901 /* verfication images */ = {
@@ -1152,18 +1180,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1275C271806F97200019A91 /* profileBlank.png in Resources */,
+				A134C19F1863A0AC00DA24C7 /* globalLikeButton.png in Resources */,
 				A13DB5EA181EDB1500378901 /* tickMark.jpg in Resources */,
 				B7E61D4C17BD6AA5002B681B /* InfoPlist.strings in Resources */,
 				A1ECF0F81858C7660012B71D /* commentImagePlaceholder.jpg in Resources */,
 				A13DB5E8181EDB1500378901 /* photo.jpg in Resources */,
 				A1ECF10D185FCBB80012B71D /* verificationTick.png in Resources */,
+				A134C19E1863A0AC00DA24C7 /* globalCommentButton.png in Resources */,
 				A1F79C691836731400C3B8A3 /* heart-selected.png in Resources */,
 				A1ECF104185F97B00012B71D /* accessoryCaret.png in Resources */,
 				A198673F183826A400BC229F /* takePhoto.png in Resources */,
+				A134C1A01863A0AC00DA24C7 /* globalLikeButtonSelected.png in Resources */,
 				A19A00DB182ADACA00EE3B61 /* daytoday.jpg in Resources */,
 				A19A00DC182ADACA00EE3B61 /* daytoday@2x.jpg in Resources */,
 				A1B5E61F1829BFA00050A136 /* reveal-icon@2x.png in Resources */,
 				B7E61D5417BD6AA5002B681B /* Default.png in Resources */,
+				A134C1A11863A0AC00DA24C7 /* globalNavButton.png in Resources */,
 				A1275C281806F97200019A91 /* anotherCrop.jpg in Resources */,
 				A1F79C661836731400C3B8A3 /* heart-normal.png in Resources */,
 				A19A00E2182ADD8200EE3B61 /* SVProgressHUD.bundle in Resources */,
@@ -1172,6 +1204,7 @@
 				A1F79C681836731400C3B8A3 /* comment-normal.png in Resources */,
 				A1ECF0F21857B3E50012B71D /* UserImagePlaceholder.png in Resources */,
 				B7E61D5617BD6AA5002B681B /* Default@2x.png in Resources */,
+				A134C1A21863A0AC00DA24C7 /* globalShareButton.png in Resources */,
 				A13DB5E9181EDB1500378901 /* timer.jpg in Resources */,
 				A1F79C671836731400C3B8A3 /* comment-selected.png in Resources */,
 				B7E61D5817BD6AA5002B681B /* Default-568h@2x.png in Resources */,
@@ -1263,6 +1296,7 @@
 				A11D9DF118511261007A70ED /* AFHTTPClient.m in Sources */,
 				A11D9DCB18511227007A70ED /* NINavigationAppearance.m in Sources */,
 				A134C194186225CF00DA24C7 /* DTVerificationInputCell.m in Sources */,
+				A134C19718637E8000DA24C7 /* DTGlobalNavigation.m in Sources */,
 				A1F79C46183573E700C3B8A3 /* ChallengeDayContainer.m in Sources */,
 				A1275C171806EB8C00019A91 /* DTDotElement.m in Sources */,
 				A1275C2C1806FD4600019A91 /* ProfileHistoryTableView.m in Sources */,

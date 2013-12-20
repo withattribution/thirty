@@ -18,17 +18,19 @@
 
 #import "UIImage+Resizing.h"
 
+#import "DTGlobalNavigation.h"
 #import "DTNavigationBar.h"
 
-
 #import "VerificationFlowController.h"
+#import "SWRevealViewController.h"
 
 @interface ChallengeDayContainer () <UIGestureRecognizerDelegate,
                                           DTSocialDashBoardDelegate,
                                          CommentUtilityViewDelegate,
                                            CommentInputViewDelegate,
                                                      FDTakeDelegate,
-                                            DTNavigationBarDelegate>
+                                            DTNavigationBarDelegate,
+                                          DTGlobalNavigationDelegate>
 
 @property (nonatomic,strong) ChallengeDetailVerificationController *verficationController;
 @property (nonatomic,strong) ChallengeDayCommentController *commentController;
@@ -153,40 +155,40 @@
   [self.navigationBar setDelegate:self];
   [self.navigationBar setContentText:[challenge objectForKey:kDTChallengeNameKey]];
     
-  _socialDashBoard = [[DTSocialDashBoard alloc] init];
-  [self.socialDashBoard setDelegate:self];
+//  _socialDashBoard = [[DTSocialDashBoard alloc] init];
+//  [self.socialDashBoard setDelegate:self];
+//
+//  [self.socialDashBoard setLikeCount:[[DTCache sharedCache] likeCountForChallengeDay:self.challengeDay]];
+//  [self.socialDashBoard setCommentCount:[[DTCache sharedCache] commentCountForChallengeDay:self.challengeDay]];
+//  [self.socialDashBoard setLiked:[[DTCache sharedCache] isChallengeDayLikedByCurrentUser:self.challengeDay]];
+//  
+//  [self setHeaderContainerView:self.socialDashBoard];
 
-  [self.socialDashBoard setLikeCount:[[DTCache sharedCache] likeCountForChallengeDay:self.challengeDay]];
-  [self.socialDashBoard setCommentCount:[[DTCache sharedCache] commentCountForChallengeDay:self.challengeDay]];
-  [self.socialDashBoard setLiked:[[DTCache sharedCache] isChallengeDayLikedByCurrentUser:self.challengeDay]];
-  
-  [self setHeaderContainerView:self.socialDashBoard];
-
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[social]|"
-                                                                    options:NSLayoutFormatDirectionLeadingToTrailing
-                                                                    metrics:nil
-                                                                      views:@{@"social":self.socialDashBoard}]];
-
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[social(40)]"
-                                                                    options:NSLayoutFormatDirectionLeadingToTrailing
-                                                                    metrics:nil
-                                                                      views:@{@"social":self.socialDashBoard}]];
-
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.headerContainerView
-                                                        attribute:NSLayoutAttributeBottom
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.commentController.tableView
-                                                        attribute:NSLayoutAttributeTop
-                                                       multiplier:1.f
-                                                         constant:0.f]];
-  [self.view layoutIfNeeded];
+//  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[social]|"
+//                                                                    options:NSLayoutFormatDirectionLeadingToTrailing
+//                                                                    metrics:nil
+//                                                                      views:@{@"social":self.socialDashBoard}]];
+//
+//  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[social(40)]"
+//                                                                    options:NSLayoutFormatDirectionLeadingToTrailing
+//                                                                    metrics:nil
+//                                                                      views:@{@"social":self.socialDashBoard}]];
+//
+//  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.headerContainerView
+//                                                        attribute:NSLayoutAttributeBottom
+//                                                        relatedBy:NSLayoutRelationEqual
+//                                                           toItem:self.commentController.tableView
+//                                                        attribute:NSLayoutAttributeTop
+//                                                       multiplier:1.f
+//                                                         constant:0.f]];
+//  [self.view layoutIfNeeded];
 
   [self.commentController.view setFrame:CGRectMake(0.f,
-                                                   [self.verficationController heightForControllerFold] + 40.f,
+                                                   [self.verficationController heightForControllerFold] + 0.f,//40.f,
                                                    self.view.frame.size.width,
                                                    self.view.frame.size.height)];
 
-  self.commentControllerAnchor = _commentController.view.frame.origin.y - 40;
+  self.commentControllerAnchor = _commentController.view.frame.origin.y - 0.f;//40;
   self.panningVelocityYThreshold = 500;
 
   UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]
@@ -198,6 +200,12 @@
   [panRecognizer setDelegate:self];
 
   [self.commentController.view addGestureRecognizer:panRecognizer];
+
+  DTGlobalNavigation *globalNav = [DTGlobalNavigation globalNavigationWithType:DTGlobalNavTypeSocial];
+  [globalNav setDelegate:self];
+  [globalNav setInsetWidth:5.f];
+  
+  [self.view addSubview:globalNav];
 }
 
 - (void)viewDidLoad
@@ -604,6 +612,16 @@
 {
   return [[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]] != nil;
 }
+
+- (void)userDidTapGlobalNavigationButtonType:(DTGlobalButtonType)type
+{
+  if(type == DTGlobalButtonTypeGlobal)
+  {
+    SWRevealViewController *revealController = self.revealViewController;
+    [revealController revealToggle:self];
+  }
+}
+//SWRevealViewController *revealController = self.revealViewController;
 
 #pragma mark - DTChallengeDayRetrieved Notifications
 
