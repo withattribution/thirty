@@ -20,15 +20,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   // Override point for customization after application launch.
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  
   NIMaxLogLevel = NILOGLEVEL_INFO;
 
   [Parse setApplicationId:@"pMydn1FlUYwUcXeLRRAMFp3zcZPz3lRQ6IITQEe2"
                 clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
   
-  //check pch for definition
   #ifdef INTERFACE_DEMO_MODE
   FrontViewController *frontViewController = [[FrontViewController alloc] init];
 	DemoTableViewController *rearViewController = [[DemoTableViewController alloc] init];
@@ -43,8 +43,10 @@
 
   [self.window makeKeyAndVisible];
   
-//  [self createTestModels];
-
+  #ifdef CREATE_CHALLENGE_MODEL
+  [self createTestModels];
+  #endif
+  
   return YES;
 }
 
@@ -73,9 +75,7 @@
   [challenge setObject:@(1) forKey:kDTChallengeFrequencyKey];
   [challenge setObject:@"fitness" forKey:kDTChallengeCategoryKey];
   [challenge setObject:@"YTTP Challenge" forKey:kDTChallengeNameKey];
-
-//  [challenge setObject:@"Do yoga for 30 days" forKey:kDTChallengeImageKey];
-
+  
   [challenge setObject:[PFUser currentUser] forKey:kDTChallengeCreatedByKey];
   [challenge setObject:@(kDTChallengeVerificationTypeTick) forKey:kDTChallengeVerificationTypeKey];
 
@@ -99,7 +99,7 @@
       
       [DTCommonRequests joinChallenge:[challenge objectId]];
       
-//      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
+      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
 //      }
     }
     else {

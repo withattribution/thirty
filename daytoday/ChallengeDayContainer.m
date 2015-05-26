@@ -45,6 +45,7 @@
 @property (nonatomic,strong) CommentInputView *commentInput;
 @property (nonatomic,strong) CommentUtilityView *commentUtility;
 
+@property (nonatomic,strong) PFObject *challenge;
 @property (nonatomic,strong) PFObject *challengeDay;
 
 @property (nonatomic,assign) BOOL commentsAreFullScreen;
@@ -117,28 +118,18 @@
   }
 }
 
-- (void)addChallengeDayInterface
+- (void)addChallengeDayInterface:(PFObject *)intent
 {
   _verficationController = [[ChallengeDetailVerificationController alloc] initWithChallengeDay:self.challengeDay];
   [self.view addSubview:self.verficationController.view];
   [self addChildViewController:self.verficationController];
 
   [self.verficationController didMoveToParentViewController:self];
-
-#warning this does not allow for other users to view other challenges
-
-  PFObject *intent = [[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]];
-  PFObject *challenge = [[[[PFUser currentUser] objectForKey:kDTUserActiveIntent] objectForKey:kDTIntentChallengeKey] fetchIfNeeded];
-  
-  [[DTCache sharedCache] cacheChallenge:challenge forIntent:intent];
-
-#warning this does not allow for other users to view other challenges
   
   self.navigationBar = [[DTNavigationBar alloc] initWithFrame:CGRectMake(0.f,[self padWithStatusBarHeight],self.view.frame.size.width,0.f)];
   [self.view addSubview:self.navigationBar];
   [self.navigationBar setDelegate:self];
-  [self.navigationBar setContentText:[challenge objectForKey:kDTChallengeNameKey]];
-
+  [self.navigationBar setContentText:[self.challenge objectForKey:kDTChallengeNameKey]];
   
   _commentController = [[ChallengeDayCommentController alloc] initWithChallengeDay:self.challengeDay];
 
@@ -168,7 +159,7 @@
   [self.globalNavigation setDelegate:self];
   [self.globalNavigation setInsetWidth:5.f];
   [self.globalNavigation setHeartButtonState:[[DTCache sharedCache] isChallengeDayLikedByCurrentUser:self.challengeDay]];
-  [self.globalNavigation.fomoButton setHidden:([[[intent objectForKey:kDTIntentChallengeKey] objectId] isEqualToString:[challenge objectId]])];
+  [self.globalNavigation.fomoButton setHidden:([[[intent objectForKey:kDTIntentChallengeKey] objectId] isEqualToString:[self.challenge objectId]])];
   
   [self.view addSubview:self.globalNavigation];
 }
@@ -508,7 +499,7 @@
     CGFloat currentVelocityY = currentVelocityPoint.y;
     BOOL viewIsPastAnchor = ([recognizer locationInView:self.view].y <= self.commentControllerAnchor);
     
-    if(viewIsPastAnchor || abs(currentVelocityY) > self.panningVelocityYThreshold)
+    if(viewIsPastAnchor || fabsf(currentVelocityY) > self.panningVelocityYThreshold)
     {
       if(self.commentsAreFullScreen && currentVelocityY < 0)
         [self moveControllerToTopWithOptions:nil];
@@ -619,11 +610,30 @@
                                                    name:DTIntentDidCacheIntentForUserNotification
                                                  object:nil];
     }else {
-      [self addChallengeDayInterface];
+      [self retrieveChallengeFromActiveIntent];
     }
   }else {
     NIDINFO(@"nil challenge day deal with it!");
   }
+}
+
+- (void)retrieveChallengeFromActiveIntent
+{
+#warning this does not allow for other users to view other challenges
+  PFObject *intent = [[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]];
+ [[[[PFUser currentUser] objectForKey:kDTUserActiveIntent]
+                         objectForKey:kDTIntentChallengeKey]
+   fetchIfNeededInBackgroundWithBlock:^(PFObject *challenge, NSError *error){
+     if(error){
+       NIDINFO(@"RETREIVE CHALLENGE ERROR: %@",error.description);
+     }else {
+       self.challenge = challenge;
+       [[DTCache sharedCache] cacheChallenge:self.challenge forIntent:intent];
+       [self addChallengeDayInterface:intent];
+#warning this should be in a view model holy fuck!
+     }
+ }];
+#warning this does not allow for other users to view other challenges
 }
 
 - (void)cachedIntentsForUser:(NSNotification *)aNotification
@@ -632,7 +642,7 @@
   //  NIDINFO(@"the first (and only) intent: %@",[intentsForUser firstObject]);
   //  [DTCommonRequests activeIntent:[intentsForUser firstObject]];
   //  NIDINFO(@"the active intent ID: %@",[[[PFUser currentUser] objectForKey:kDTActiveIntent] objectId]);
-  [self addChallengeDayInterface];
+  [self retrieveChallengeFromActiveIntent];
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:DTIntentDidCacheIntentForUserNotification
                                                 object:nil];

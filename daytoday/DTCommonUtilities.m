@@ -66,7 +66,6 @@
 
 + (uint32_t)challengeUserSeedFromIntent:(PFObject *)intent
 {
-//  NIDINFO(@"the userfrom intent: %@", [[intent objectForKey:kDTIntentUserKey] objectId]);
   MurmurHash *hash = [[MurmurHash alloc] init];
   uint32_t userSeed = [hash hash32:[[intent objectForKey:kDTIntentUserKey] objectId]];
   return [hash hash32:[[intent objectForKey:kDTIntentChallengeKey] objectId]  withSeed:userSeed];

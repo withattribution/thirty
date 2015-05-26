@@ -25,10 +25,10 @@
 @implementation ChallengeDescription
 
 #define DESCRIBE_PLACE_HOLDER  @"Describe the challenge"
-CGFloat static INPUT_VIEW_HEIGHT = 35.f;
-CGFloat static TEXT_PADDING = 5.f;
-CGFloat static BUTTON_TEXT_ALIGN = 2.f;
-NSInteger static MAX_CHARS = 140;
+CGFloat   static INPUT_VIEW_HEIGHT  = 35.f;
+CGFloat   static TEXT_PADDING       = 5.f;
+CGFloat   static BUTTON_TEXT_ALIGN  = 2.f;
+NSInteger static MAX_CHARS          = 140;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -169,7 +169,7 @@ NSInteger static MAX_CHARS = 140;
 {
   //save text here
   if ([_textView hasText]) {
-    self.description = [NSString stringWithString:_textView.text];
+    self.descriptionText = [NSString stringWithString:_textView.text];
   }
 
   if ([_textView isFirstResponder]) {
@@ -219,7 +219,7 @@ NSInteger static MAX_CHARS = 140;
 - (void)textViewDidChange:(UITextView *)textView
 {
   if ([_textView hasText]) {
-    self.description = [NSString stringWithString:_textView.text];
+    self.descriptionText = [NSString stringWithString:_textView.text];
   }
   
   if (textView.text.length > 0) {

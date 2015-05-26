@@ -47,6 +47,15 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+  
+#warning this is the state of how I found things and its not certain that this should be fixed or redone completely
+    static NSString *cellID = @"CommentCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    cell.backgroundColor = [UIColor orangeColor];
+    return cell;
+
+
     //TODO might be interesting to cache the results of the element layout call for each row
     //DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
     
@@ -61,7 +70,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 //            return cell;
 //        }
 
-          static NSString *cellID = @"CommentCell";
+//          static NSString *cellID = @"CommentCell";
 
           if (indexPath.row == 0 && [self.intentsArray count] > 0) {
           ProgressSnapShotTableCell *cell = (ProgressSnapShotTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];

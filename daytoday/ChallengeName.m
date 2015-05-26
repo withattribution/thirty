@@ -15,7 +15,7 @@
 }
 
 @property (nonatomic, strong) UITextField *textField;
-@property (strong, nonatomic) UIView *underline;
+@property (nonatomic, strong) UIView *underline;
 
 @property (copy) void (^completionBlock)();
 

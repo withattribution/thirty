@@ -121,14 +121,15 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   //when the uitextfield is the first responder -- all other text containing elements
   //should be removed or made less distracting to the user.
   if ([keyPath isEqualToString:@"isEditing"]) {
+
     NSLog(@"the changed object %@",[change objectForKey:NSKeyValueChangeNewKey]);
     [descriptionView setAlpha:([[change objectForKey:NSKeyValueChangeNewKey] integerValue])];
   }
   else {
   [self.creationDictionary  setObject:[change objectForKey:NSKeyValueChangeNewKey] forKey:keyPath];
-  //  for (NSString *thekey in self.creationDictionary) {
-  //    NSLog(@"the keys :%@ and object: %@",thekey, [self.creationDictionary objectForKey:thekey]);
-  //  }
+    for (NSString *thekey in self.creationDictionary) {
+      NSLog(@"the keys :%@ and object: %@",thekey, [self.creationDictionary objectForKey:thekey]);
+    }
   }
 }
 
@@ -188,7 +189,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                                                                      multiplier:1.f
                                                                        constant:0]];
   [nameView namingDidComplete:^{
-    if ([[self.creationDictionary objectForKey:@"description"] isEqual:[NSNull null]]) {
+    if ([[self.creationDictionary objectForKey:@"descriptionText"] isEqual:[NSNull null]]) {
       [self shouldEnterDescription];
     }
   }];
@@ -224,10 +225,16 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
     descriptionView = [[ChallengeDescription alloc] init];
     [self.currentChildViewController.view addSubview:descriptionView];
 
+//    [descriptionView addObserver:self
+//               forKeyPath:@"description"
+//                  options:NSKeyValueObservingOptionNew
+//                  context:NULL];
     [descriptionView addObserver:self
-               forKeyPath:@"description"
-                  options:NSKeyValueObservingOptionNew
-                  context:NULL];
+                      forKeyPath:@"descriptionText"
+                         options:NSKeyValueObservingOptionNew
+                         context:NULL];
+    
+    
 
     NSDictionary *descriptionView_metrics = @{@"fieldWidth":@([[UIScreen mainScreen] bounds].size.width*WIDTH_FACTOR)};
 
@@ -369,7 +376,8 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
   freqCount = [NSNumber numberWithInt:1];
   
   [self.creationDictionary setObject:[NSNull null] forKey:@"name"];
-  [self.creationDictionary setObject:[NSNull null] forKey:@"description"];
+//  [self.creationDictionary setObject:[NSNull null] forKey:@"description"];
+  [self.creationDictionary setObject:[NSNull null] forKey:@"descriptionText"];
   [self.creationDictionary setObject:[NSNull null] forKey:@"category"];
   [self.creationDictionary setObject:[duration stringValue] forKey:@"duration"];
   [self.creationDictionary setObject:[verificationType stringValue] forKey:@"verification"];
@@ -609,8 +617,10 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
                    completion:NULL];
 }
 
-//- (void)attemptChallengeCreation:(UIButton *)b
-//{
+- (void)attemptChallengeCreation:(UIButton *)b
+{
+#warning this is the end of the demo for now!
+  NIDINFO(@"DO NOTHING FOR NOW");
 //  __block BOOL failedTest = YES;
 //  [self.creationDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop){
 //    if (obj && [obj isKindOfClass:[NSString class]] && ![obj isEqual:[NSNull null]]) {
@@ -635,7 +645,7 @@ CGFloat static INPUT_VIEW_PADDING = 5.f;        //Padding between text containin
 //    UIAlertView *nope = [[UIAlertView alloc] initWithTitle:@"Nope!" message:@"Try again, you're just missing like maybe even just one thing -- you can do it!" delegate:nil cancelButtonTitle:@"PUT CHIPS IN A SANDWICH!" otherButtonTitles:nil];
 //    [nope show];
 //  }
-//}
+}
 
 #pragma mark END OF CHALLENGE CREATION LOOP BACK TO BEGINNING
 

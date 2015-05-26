@@ -50,7 +50,9 @@
   [challenge setObject:@"name" forKey:kDTChallengeNameKey];
 //  [challenge setObject:@"testCategory" forKey:kDTChallengeImageKey];
 //  [challenge setObject:@"testCategory" forKey:kDTChallengeCreatedByKey];
-  [challenge setObject:kDTChallengeVerificationTypeTick forKey:kDTChallengeVerificationTypeKey];
+    
+//  [challenge setObject:kDTChallengeVerificationTypeTick forKey:kDTChallengeVerificationTypeKey];
+  [challenge setObject:[NSNumber numberWithInteger:kDTChallengeVerificationTypeTick] forKey:kDTChallengeVerificationTypeKey];
   [challenge setObjectId:@"iAEEL19vOK"];
   
   return challenge;

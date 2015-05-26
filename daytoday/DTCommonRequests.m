@@ -98,7 +98,6 @@
   }else {
     challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:[[user objectForKey:kDTUserActiveIntent] fetchIfNeeded]];
   }
-
   NIDINFO(@"seed: %u",challengeUserSeed);
   
   [PFCloud callFunctionInBackground:DTQueryActiveDay

@@ -31,7 +31,7 @@
 
   [PFUser logOut];
   [[DTCache sharedCache] clear];
-  
+#warning this is being used as the logged out view for now
   UIAlertView *logoutAlert = [[UIAlertView alloc] initWithTitle:@"Logged Out"
                                                         message:@"you can't do much of anything now :("
                                                        delegate:nil
