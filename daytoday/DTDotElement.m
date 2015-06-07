@@ -8,7 +8,6 @@
 
 #import "DTDotElement.h"
 #import <QuartzCore/QuartzCore.h>
-#import "NSCalendar+equalWithGranularity.h"
 
 @implementation DTDotColorGroup
 
@@ -129,9 +128,9 @@
   NSCalendar *referenceCalendar = [DTCommonUtilities commonCalendar];
   
   //current day
-  if ([referenceCalendar ojf_isDate:date
+  if ([referenceCalendar isDate:date
                         equalToDate:[NSDate date]
-                    withGranularity:NSDayCalendarUnit]){
+                    toUnitGranularity:NSDayCalendarUnit]){
     
     if (![[challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue] &&
         [[challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] == 0)
@@ -151,7 +150,7 @@
   }
   
   //past day
-  if ([referenceCalendar ojf_compareDate:date
+  if ([referenceCalendar compareDate:date
                                   toDate:[NSDate date]
                        toUnitGranularity:NSCalendarUnitDay] == NSOrderedAscending) {
     

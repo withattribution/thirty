@@ -7,7 +7,6 @@
 //
 
 #import "DTChallengeCalendar.h"
-#import "NSCalendar+equalWithGranularity.h"
 
 #define DEFAULT_ROW_LENGTH 7
 
@@ -163,7 +162,7 @@
   for (int i = 0; i < [self.rows count]; i++) {
     indexForDate = [[self.rows objectAtIndex:i] indexOfObjectPassingTest:^BOOL(NSDate *dateObj, NSUInteger idx, BOOL *stop){
       //      NIDINFO(@"the equality: %d and idx: %d", [localCalendar ojf_isDate:dateObj equalToDate:date withGranularity:NSDayCalendarUnit], idx);
-      if ([localCalendar ojf_isDate:dateObj equalToDate:date withGranularity:NSDayCalendarUnit]) {
+      if ([localCalendar isDate:dateObj equalToDate:date toUnitGranularity:NSDayCalendarUnit]) {
         *stop = YES;
         return YES;
       }else {
@@ -200,8 +199,7 @@
   
   for (int i = 0; i < [self.rows count]; i++) {
     index = [[self.rows objectAtIndex:i] indexOfObjectPassingTest:^BOOL(NSDate *dateObj, NSUInteger idx, BOOL *stop){
-//      NIDINFO(@"the equality: %d and idx: %d", [localCalendar ojf_isDate:dateObj equalToDate:date withGranularity:NSDayCalendarUnit], idx);
-      if ([localCalendar ojf_isDate:dateObj equalToDate:date withGranularity:NSDayCalendarUnit]) {
+      if ([localCalendar isDate:dateObj equalToDate:date toUnitGranularity:NSDayCalendarUnit]) {
         *stop = YES;
         return YES;
       }else {
@@ -221,7 +219,7 @@
   NSDate *today = [NSDate date];
   //test if all indexes in weekrow evaluate to a past date
   NSIndexSet *past = [row indexesOfObjectsPassingTest:^BOOL(NSDate *objDate, NSUInteger idx, BOOL *stop) {
-    return ([localCalendar ojf_compareDate:objDate toDate:today toUnitGranularity:NSCalendarUnitDay] == NSOrderedAscending);
+    return ([localCalendar compareDate:objDate toDate:today toUnitGranularity:NSCalendarUnitDay] == NSOrderedAscending);
   }];
 
   if ([past count] == [row count]) {
@@ -231,7 +229,7 @@
 
   //test if any indexes in weekrow evaluate to a today's date
   NSIndexSet *current = [row indexesOfObjectsPassingTest:^BOOL(NSDate *objDate, NSUInteger idx, BOOL *stop) {
-    return ([localCalendar ojf_isDate:objDate equalToDate:today withGranularity:NSDayCalendarUnit]);
+    return ([localCalendar isDate:objDate equalToDate:today toUnitGranularity:NSDayCalendarUnit]);
   }];
 
   if ([current count] == 1) {
@@ -241,7 +239,7 @@
 
   //test if all indexes in weekrow evaluate to a future date
   NSIndexSet *future = [row indexesOfObjectsPassingTest:^BOOL(NSDate *objDate, NSUInteger idx, BOOL *stop) {
-    return ([localCalendar ojf_compareDate:objDate toDate:today toUnitGranularity:NSCalendarUnitDay] == NSOrderedDescending);
+    return ([localCalendar compareDate:objDate toDate:today toUnitGranularity:NSCalendarUnitDay] == NSOrderedDescending);
   }];
 
   if ([future count] == [row count]) {

@@ -62,7 +62,6 @@
 		A1275C4018090A2400019A91 /* DaysLeftTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C3F18090A2400019A91 /* DaysLeftTableCell.m */; };
 		A1275C431809EEEA00019A91 /* ProgressSnapShotTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C421809EEEA00019A91 /* ProgressSnapShotTableCell.m */; };
 		A1275C461809F66600019A91 /* ParticipantsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C451809F66600019A91 /* ParticipantsTableCell.m */; };
-		A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */ = {isa = PBXBuildFile; fileRef = A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */; };
 		A12F8B0F1836FF9700C9F086 /* CommentUtilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = A12F8B0E1836FF9700C9F086 /* CommentUtilityView.m */; };
 		A134C18E1861F91600DA24C7 /* DTBaseCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A134C18D1861F91600DA24C7 /* DTBaseCommentCell.m */; };
 		A134C191186225B800DA24C7 /* DTVerificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A134C190186225B800DA24C7 /* DTVerificationCell.m */; };
@@ -1215,8 +1214,6 @@
 		A1275C421809EEEA00019A91 /* ProgressSnapShotTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressSnapShotTableCell.m; sourceTree = "<group>"; };
 		A1275C441809F66600019A91 /* ParticipantsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantsTableCell.h; sourceTree = "<group>"; };
 		A1275C451809F66600019A91 /* ParticipantsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsTableCell.m; sourceTree = "<group>"; };
-		A1275C4A180B8BBF00019A91 /* NSCalendar+equalWithGranularity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+equalWithGranularity.h"; sourceTree = "<group>"; };
-		A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+equalWithGranularity.m"; sourceTree = "<group>"; };
 		A12F8B0D1836FF9700C9F086 /* CommentUtilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentUtilityView.h; sourceTree = "<group>"; };
 		A12F8B0E1836FF9700C9F086 /* CommentUtilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentUtilityView.m; sourceTree = "<group>"; };
 		A134C18C1861F91600DA24C7 /* DTBaseCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTBaseCommentCell.h; sourceTree = "<group>"; };
@@ -3302,8 +3299,6 @@
 				A16AC9BC182001C600074AB8 /* Verification.m */,
 				A16AC9BE1820058D00074AB8 /* Category+UIImage.h */,
 				A16AC9BF1820058D00074AB8 /* Category+UIImage.m */,
-				A1275C4A180B8BBF00019A91 /* NSCalendar+equalWithGranularity.h */,
-				A1275C4B180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m */,
 			);
 			name = extensions;
 			sourceTree = "<group>";
@@ -4138,7 +4133,6 @@
 				A11D9DCE18511227007A70ED /* NINonRetainingCollections.m in Sources */,
 				A11D9DCA18511227007A70ED /* NIInvocationMethods.m in Sources */,
 				A11D9DF618511261007A70ED /* AFPropertyListRequestOperation.m in Sources */,
-				A1275C4C180B8BBF00019A91 /* NSCalendar+equalWithGranularity.m in Sources */,
 				A11D9DDD1851124A007A70ED /* NINetworkImageView.m in Sources */,
 				A11D9DF918511261007A70ED /* UIImageView+AFNetworking.m in Sources */,
 				B7E61D4E17BD6AA5002B681B /* main.m in Sources */,

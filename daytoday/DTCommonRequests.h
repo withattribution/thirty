@@ -32,5 +32,4 @@
 + (void)verificationActivity:(NSString *)status;
 + (void)refreshActiveChallengeDay;
 
-
 @end

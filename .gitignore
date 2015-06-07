@@ -1,5 +1,6 @@
 # OS X
 .DS_Store
+external/lib-aok-ios
 
 # Xcode
 build/
@@ -18,3 +19,4 @@ profile
 DerivedData
 *.hmap
 *.xccheckout
+

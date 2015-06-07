@@ -31,10 +31,10 @@
   if (self) {
     self.aUser = user;
     
-    UserInfoHeader *infoHeader = [[UserInfoHeader alloc] initWithFrame:CGRectMake(0.f,
-                                                                                  [self padWithStatusBarHeight],
-                                                                                  self.view.frame.size.width,
-                                                                                  105.f)
+    UserInfoHeader *infoHeader = [[UserInfoHeader alloc] initWithFrame:CGRectMake(0.f
+                                                                                  ,[self padWithStatusBarHeight]
+                                                                                  ,self.view.frame.size.width
+                                                                                  ,105.f)
                                                               withUser:self.aUser];
     [self.view addSubview:infoHeader];
     

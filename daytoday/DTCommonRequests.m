@@ -28,6 +28,7 @@
       PFObject *likeActivity = [PFObject objectWithClassName:kDTActivityClassKey];
       [likeActivity setObject:kDTActivityTypeLike forKey:kDTActivityTypeKey];
       [likeActivity setObject:[PFUser currentUser] forKey:kDTActivityFromUserKey];
+      // TODO: need to use stored intent to retrieve user to associate activity with
 #warning need to use stored intent to retrieve user to associate activity with
 //      [likeActivity setObject:[[challengeDay objectForKey:kDTChallengeDayIntentKey]
 //                               objectForKey:kDTIntentUserKey]
