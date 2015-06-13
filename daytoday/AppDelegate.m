@@ -24,24 +24,29 @@
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   
   NIMaxLogLevel = NILOGLEVEL_INFO;
-
+  
+  [Parse enableLocalDatastore];
   [Parse setApplicationId:@"pMydn1FlUYwUcXeLRRAMFp3zcZPz3lRQ6IITQEe2"
                 clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
   
   #ifdef INTERFACE_DEMO_MODE
   FrontViewController *frontViewController = [[FrontViewController alloc] init];
-	DemoTableViewController *rearViewController = [[DemoTableViewController alloc] init];
+  DemoTableViewController *rearViewController = [[DemoTableViewController alloc] init];
 	
-	UINavigationController *frontNavigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
+  UINavigationController *frontNavigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
   UINavigationController *rearNavigationController = [[UINavigationController alloc] initWithRootViewController:rearViewController];
 	
-  self.demoController = [[SWRevealViewController alloc] initWithRearViewController:rearNavigationController frontViewController:frontNavigationController];
+  self.demoController = [[SWRevealViewController alloc] initWithRearViewController:rearNavigationController
+                                                               frontViewController:frontNavigationController];
   
   self.window.rootViewController = self.demoController;
   #endif
 
   [self.window makeKeyAndVisible];
+//  [self pinIntentForTesting];
+//  [self unPinAllIntentsForTesting];
+//  [self retrieveFromPinnedLabel];
   
   #ifdef CREATE_CHALLENGE_MODEL
   [self createTestModels];
@@ -65,6 +70,43 @@
       }];
     }
   }
+}
+
+- (void)retrieveFromPinnedLabel
+{
+  PFQuery *query = [PFQuery queryWithClassName:kDTIntentClassKey];
+//  PFQuery *query = [PFUser query];
+  [query fromPinWithName:kDTPinnedActiveIntent];
+  [[query findObjectsInBackground] continueWithBlock:^id(BFTask *task) {
+    NIDINFO(@"type: %@", [task.result class]);
+    
+    NSArray *scores = task.result;
+    for (PFObject *score in scores) {
+      NIDINFO(@"the score: %@",score);
+    }
+    return task;
+  }];
+}
+
+- (void)unPinAllIntentsForTesting
+{
+  [PFObject unpinAllObjectsInBackgroundWithName:kDTPinnedActiveIntent];
+}
+
+- (void)pinIntentForTesting
+{
+  PFQuery *userQuery = [PFUser query];
+  [userQuery includeKey:kDTUserActiveIntent];
+  [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *obj, NSError *error){
+    if (!error && [obj objectForKey:kDTUserActiveIntent]) {
+      if ([obj isKindOfClass:[PFObject class]]) {
+         [[obj objectForKey:kDTUserActiveIntent] pinInBackgroundWithName:kDTPinnedActiveIntent];
+        NIDINFO(@"pinnnnnned Intent: %@",[obj objectForKey:kDTUserActiveIntent]);
+      }
+    }else {
+      NIDINFO(@"active intent query failed: %@", [error localizedDescription]);
+    }
+  }];
 }
 
 - (void)createTestModels

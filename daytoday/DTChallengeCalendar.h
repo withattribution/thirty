@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 Studio A-OK, LLC. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "DTProgressRow.h"
 #import "DTProgressElement.h"
+#import <Foundation/Foundation.h>
 
-@interface DTChallengeCalendar : NSObject <DTProgressRowDataSource>
+@interface DTChallengeCalendar : NSObject  <DTProgressRowDataSource>
 
 @property (nonatomic,strong) NSDate *startDate;
 @property (nonatomic,strong) NSDate *endDate;

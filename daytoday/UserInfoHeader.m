@@ -40,7 +40,7 @@ static int LABEL_ROWS = 3;
 //            }
 //        } ];
       UIView *v = [[UIView alloc] initWithFrame:frame];
-      [v setBackgroundColor:[UIColor orangeColor]];
+      [v setBackgroundColor:[UIColor yellowColor]];
       
       [self addSubview:v];
       

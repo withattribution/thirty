@@ -30,22 +30,6 @@
   self = [super init];
   if (self) {
     self.aUser = user;
-    
-    UserInfoHeader *infoHeader = [[UserInfoHeader alloc] initWithFrame:CGRectMake(0.f
-                                                                                  ,[self padWithStatusBarHeight]
-                                                                                  ,self.view.frame.size.width
-                                                                                  ,105.f)
-                                                              withUser:self.aUser];
-    [self.view addSubview:infoHeader];
-    
-    NIDINFO(@"current user: %@",self.aUser);
-    
-    CGFloat profileHeightOffset = infoHeader.frame.origin.y + infoHeader.frame.size.height;
-    self.historyTable = [[ProfileHistoryTableView alloc] initWithFrame:CGRectMake(0,
-                                                                                  profileHeightOffset,
-                                                                                  self.view.frame.size.width,
-                                                                                  self.view.frame.size.height - profileHeightOffset)];
-    [self.view addSubview:self.historyTable];
   }
   return self;
 }
@@ -60,6 +44,22 @@
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.1];
+  
+  UserInfoHeader *infoHeader = [[UserInfoHeader alloc] initWithFrame:CGRectMake(0.f
+                                                                                ,[self padWithStatusBarHeight]
+                                                                                ,self.view.frame.size.width
+                                                                                ,105.f)
+                                                            withUser:self.aUser];
+  [self.view addSubview:infoHeader];
+  
+  NIDINFO(@"current user: %@",self.aUser);
+  
+  CGFloat profileHeightOffset = infoHeader.frame.origin.y + infoHeader.frame.size.height;
+  self.historyTable = [[ProfileHistoryTableView alloc] initWithFrame:CGRectMake(0,
+                                                                                profileHeightOffset,
+                                                                                self.view.frame.size.width,
+                                                                                self.view.frame.size.height - profileHeightOffset)];
+  [self.view addSubview:self.historyTable];
 
   if (![self hasCachedIntents]) {
     [DTCommonRequests queryIntentsForUser:[PFUser currentUser]];
@@ -73,10 +73,10 @@
     [self.historyTable setIntentsArray:[[DTCache sharedCache] intentsForUser:self.aUser]];
     [self.historyTable reloadData];
   }
-//    NSArray *intents = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]];
-//    for (PFObject *i in intents) {
-//      NIDINFO(@"the intents: %@",i);
-//    }
+  NSArray *intents = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]];
+  for (PFObject *i in intents) {
+    NIDINFO(@"the intents: %@",i);
+  }
 }
 
 #pragma mark - Intents for User Cache Refreshed Notification
@@ -84,6 +84,7 @@
 - (void)cachedIntentsForUser:(NSNotification *)aNotification
 {
   if (aNotification.object && [aNotification.object count] > 0) {
+    NIDINFO(@"the object: %@",aNotification.object);
     [self.historyTable setIntentsArray:aNotification.object];
     [self.historyTable reloadData];
   }else {

@@ -16,7 +16,9 @@ NSString *const DTJoinChallenge                        =@"joinChallenge";
 #pragma mark - DTUserDefaults
 // Challenge Seed
 NSString *const kDTChallengeUserSeed                   =@"seed";
-NSString *const kDTActiveIntent                        =@"activeIntent";
+
+#pragma mark - Pinning Labels
+NSString *const kDTPinnedActiveIntent                  =@"activeIntent";
 
 #pragma mark - DTDateFormatString
 // Date Format Constants

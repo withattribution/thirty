@@ -123,7 +123,7 @@
 - (void)didTapChallengeFeedButton:(UIButton *)aButton
 {
   if ([_delegate respondsToSelector:@selector(userDidTapChallengeFeedButton:intent:)]) {
-    [_delegate userDidTapChallengeFeedButton:aButton intent:[self.user objectForKey:kDTActiveIntent]];
+    [_delegate userDidTapChallengeFeedButton:aButton intent:[self.user objectForKey:kDTUserActiveIntent]];
   }
 }
 

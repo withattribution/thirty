@@ -120,7 +120,15 @@
 
 - (void)addChallengeDayInterface:(PFObject *)intent
 {
-  _verficationController = [[ChallengeDetailVerificationController alloc] initWithChallengeDay:self.challengeDay];
+  self.view.backgroundColor = [UIColor whiteColor];
+  
+  UIView *red = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 50, 50)];
+  red.backgroundColor = [UIColor redColor];
+  
+  [self.view addSubview:red];
+  
+  
+  self.verficationController = [[ChallengeDetailVerificationController alloc] initWithChallengeDay:self.challengeDay];
   [self.view addSubview:self.verficationController.view];
   [self addChildViewController:self.verficationController];
 
@@ -131,7 +139,7 @@
   [self.navigationBar setDelegate:self];
   [self.navigationBar setContentText:[self.challenge objectForKey:kDTChallengeNameKey]];
   
-  _commentController = [[ChallengeDayCommentController alloc] initWithChallengeDay:self.challengeDay];
+  self.commentController = [[ChallengeDayCommentController alloc] initWithChallengeDay:self.challengeDay];
 
   [self.view addSubview:self.commentController.view];
   [self addChildViewController:self.commentController];
@@ -525,7 +533,7 @@
 - (void)moveControllerToTopWithOptions:(NSDictionary *)options
 {
   CGFloat keyboardHeight = [[options objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
-   CGFloat headerContainerHeight = self.headerContainerView.frame.size.height;
+  CGFloat headerContainerHeight = self.headerContainerView.frame.size.height;
   CGFloat footerContainerHeight = self.footerContainerView.frame.size.height;
   
   [UIView animateWithDuration:.32f
@@ -604,7 +612,7 @@
     self.challengeDay = (PFObject *)aNotification.object;
 
     if (![self hasActiveIntent]) {
-      [DTCommonRequests queryActiveIntent:[PFUser currentUser]];
+//      [DTCommonRequests queryActiveIntentForUser:[PFUser currentUser]];
       [[NSNotificationCenter defaultCenter] addObserver:self
                                                selector:@selector(cachedIntentsForUser:)
                                                    name:DTIntentDidCacheIntentForUserNotification
@@ -638,10 +646,6 @@
 
 - (void)cachedIntentsForUser:(NSNotification *)aNotification
 {
-  //  NSArray *intentsForUser = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]];
-  //  NIDINFO(@"the first (and only) intent: %@",[intentsForUser firstObject]);
-  //  [DTCommonRequests activeIntent:[intentsForUser firstObject]];
-  //  NIDINFO(@"the active intent ID: %@",[[[PFUser currentUser] objectForKey:kDTActiveIntent] objectId]);
   [self retrieveChallengeFromActiveIntent];
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:DTIntentDidCacheIntentForUserNotification

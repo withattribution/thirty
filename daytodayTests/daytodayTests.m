@@ -7,9 +7,10 @@
 //
 
 #import "NIDebuggingTools.h"
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface daytodayTests : SenTestCase
+
+@interface daytodayTests : XCTestCase
 
 @end
 
@@ -30,7 +31,7 @@
 
 - (void)testMath
 {
-  STAssertTrue(( (2+2) == 4),@"Math stopped working.");
+  XCTAssertTrue(( (2+2) == 4),@"Math stopped working.");
 }
 
 - (void)testDateParsing
@@ -50,11 +51,10 @@
   [challenge setObject:@"name" forKey:kDTChallengeNameKey];
 //  [challenge setObject:@"testCategory" forKey:kDTChallengeImageKey];
 //  [challenge setObject:@"testCategory" forKey:kDTChallengeCreatedByKey];
-    
 //  [challenge setObject:kDTChallengeVerificationTypeTick forKey:kDTChallengeVerificationTypeKey];
-  [challenge setObject:[NSNumber numberWithInteger:kDTChallengeVerificationTypeTick] forKey:kDTChallengeVerificationTypeKey];
+  [challenge setObject:@(kDTChallengeVerificationTypeTick) forKey:kDTChallengeVerificationTypeKey];
   [challenge setObjectId:@"iAEEL19vOK"];
-  
+
   return challenge;
 }
 
@@ -83,29 +83,29 @@
 - (void)testIntentPFObject
 {
   PFObject *intent = [self buildIntent];
-  STAssertTrue([[intent objectForKey:kDTIntentStartingKey] isKindOfClass:[NSDate class]], @"Intent start date should be a date");
-  STAssertTrue([[intent objectForKey:kDTIntentEndingKey] isKindOfClass:[NSDate class]], @"Intent end date should be a date");
-  STAssertEquals([[intent objectForKey:kDTIntentAccomplishedIntentKey] boolValue], NO, @"Intent 'accomplished' key should be false");
-  STAssertEquals([intent objectId], @"m88LIFjt9r" , @"Intent objectId key incorrect");
+  XCTAssertTrue([[intent objectForKey:kDTIntentStartingKey] isKindOfClass:[NSDate class]], @"Intent start date should be a date");
+  XCTAssertTrue([[intent objectForKey:kDTIntentEndingKey] isKindOfClass:[NSDate class]], @"Intent end date should be a date");
+  XCTAssertEqual([[intent objectForKey:kDTIntentAccomplishedIntentKey] boolValue], NO, @"Intent 'accomplished' key should be false");
+  XCTAssertEqual([intent objectId], @"m88LIFjt9r" , @"Intent objectId key incorrect");
 }
 
 - (void)testChallengePFObject
 {
   PFObject *challenge = [self buildChallenge];
-  STAssertEquals([challenge objectForKey:kDTChallengeDescriptionKey], @"description" , @"Challenge description key incorrect");
-  STAssertEquals([[challenge objectForKey:kDTChallengeDurationKey] intValue], 30 , @"Challenge duration int incorrect");
-  STAssertEquals([[challenge objectForKey:kDTChallengeFrequencyKey] intValue], 1 , @"Challenge frequency int incorrect");
-  STAssertEquals([challenge objectForKey:kDTChallengeCategoryKey], @"category" , @"Challenge category key incorrect");
-  STAssertEquals([challenge objectForKey:kDTChallengeNameKey], @"name" , @"Challenge name key incorrect");
-  STAssertEquals([challenge objectForKey:kDTChallengeVerificationTypeKey], kDTChallengeVerificationTypeTick , @"Challenge verification type key incorrect");
-  STAssertEquals([challenge objectId], @"iAEEL19vOK" , @"Challenge objectId key incorrect");
+  XCTAssertEqual([challenge objectForKey:kDTChallengeDescriptionKey], @"description" , @"Challenge description key incorrect");
+  XCTAssertEqual([[challenge objectForKey:kDTChallengeDurationKey] intValue], 30 , @"Challenge duration int incorrect");
+  XCTAssertEqual([[challenge objectForKey:kDTChallengeFrequencyKey] intValue], 1 , @"Challenge frequency int incorrect");
+  XCTAssertEqual([challenge objectForKey:kDTChallengeCategoryKey], @"category" , @"Challenge category key incorrect");
+  XCTAssertEqual([challenge objectForKey:kDTChallengeNameKey], @"name" , @"Challenge name key incorrect");
+  XCTAssertEqual([challenge objectForKey:kDTChallengeVerificationTypeKey], @(kDTChallengeVerificationTypeTick) , @"Challenge verification type key incorrect");
+  XCTAssertEqual([challenge objectId], @"iAEEL19vOK" , @"Challenge objectId key incorrect");
 }
 
 - (void)testPFUser
 {
   PFUser *user = [self buildPFUser];
-  STAssertEquals([user objectForKey:@"username"], @"username" , @"PFUser username key incorrect");
-  STAssertEquals([user objectId], @"UcPhbzrS9A" , @"PFUser objectId key incorrect");
+  XCTAssertEqual([user objectForKey:@"username"], @"username" , @"PFUser username key incorrect");
+  XCTAssertEqual([user objectId], @"UcPhbzrS9A" , @"PFUser objectId key incorrect");
 }
 
 - (void)testCacheActiveIntent
@@ -116,7 +116,7 @@
   [[DTCache sharedCache] cacheActiveIntent:intent user:user];
   PFObject *cachedActiveIntent = [[DTCache sharedCache] activeIntentForUser:user];
 //  NIDINFO(@"the IntentId: %@ and CachedIntentId: %@", [intent objectId], [cachedActiveIntent objectId]);
-  STAssertEquals([intent objectId], [cachedActiveIntent objectId], @"Intent id should equal Cached Intent id");
+  XCTAssertEqual([intent objectId], [cachedActiveIntent objectId], @"Intent id should equal Cached Intent id");
 }
 
 - (void)testRetrieveChallengeWithCachedActiveIntent
@@ -130,7 +130,7 @@
   
   PFObject *cachedChallenge = [[DTCache sharedCache] challengeForIntent:[[DTCache sharedCache] activeIntentForUser:user]];
 //  NIDINFO(@"the challengeId: %@ and CachedChallengeId: %@", [challenge objectId], [cachedChallenge objectId]);
-  STAssertEquals([challenge objectId], [cachedChallenge objectId], @"Challenge id should equal Cached Challenge id");
+  XCTAssertEqual([challenge objectId], [cachedChallenge objectId], @"Challenge id should equal Cached Challenge id");
 }
 
 //- (void)testExample

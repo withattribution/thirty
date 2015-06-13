@@ -172,12 +172,25 @@
     [PFUser logInWithUsernameInBackground:loginCredential password:[self.credentialsDictionary objectForKey:@"passwordField.text"]
                                     block:^(PFUser *user, NSError *error) {
                                       if (user) {
-                                        NIDINFO(@"logged in");
-                                        if ([[user objectForKey:kDTUserActiveIntent] objectId].length > 0) {
-                                          [DTCommonRequests queryActiveIntent:user];
+                                        NIDINFO(@"logged in withIntent: %d",[[user objectForKey:kDTUserActiveIntent] isDataAvailable]);
+                                        if ([user objectForKey:kDTUserActiveIntent]) {
+                                          [[DTCommonRequests retrieveIntentForUser:user] continueWithSuccessBlock:^id(BFTask *task){
+                                            if (!task.error) {
+                                              NIDINFO(@"the result: %@",task.result);
+                                              //                                              [[task.result unpinInBackgroundWithName:kDTPinnedActiveIntent]
+//                                                             continueWithSuccessBlock:^id(BFTask *task){
+//                                                               if (!task.error) {
+//                                                                 [task.result pinInBackgroundWithName:kDTPinnedActiveIntent];
+//                                                               }
+//                                                               return nil;
+//                                              }];
+                                            }
+                                            [PFObject unpinAllObjectsInBackground];
+                                            return nil;
+                                          }];
                                         }
                                       } else {
-                                        NIDINFO(@"%@",[error localizedDescription]);
+                                        NIDINFO(@"butts %@",[error localizedDescription]);
                                       }
                                     }];
   }

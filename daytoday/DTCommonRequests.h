@@ -21,9 +21,10 @@
 
 #pragma mark Intents for User
 
-+ (void)activeIntent:(PFObject *)intent;
++ (void)setCurrentUserActiveIntent:(PFObject *)intent;
 + (void)queryIntentsForUser:(PFUser *)user;
-+ (void)queryActiveIntent:(PFUser *)user;
++ (BFTask *)queryActiveIntentForUser:(PFUser *)user __attribute__((deprecated("use retrieveIntentForUser:user instead")));
++ (BFTask *)retrieveIntentForUser:(PFUser *)user;
 
 + (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy;
 

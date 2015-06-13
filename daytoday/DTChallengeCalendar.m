@@ -14,10 +14,10 @@
   NSCalendar *localCalendar;
 }
 
-/*the current array of challenge days*/
+/*the current array of challenge days in purely ordinal form*/
 @property (nonatomic,strong) NSArray *challengeDays;
 
-/*all the dates for the current challenge*/
+/*all the dates for the current challenge oridinal days as related to calendar dates*/
 @property (nonatomic,strong) NSArray *challengeDates;
 
 /*all the dates for the current challenge plus extra days for*/
@@ -65,7 +65,7 @@
 
 - (void)buildChallengeCalendar
 {
-  self.challengeDates = [self challengeDates];
+  _challengeDates = [self challengeDates];
   self.paddedChallengeDates = [self paddedChallengeDates];
   self.rows = [self rows];
 }

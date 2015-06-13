@@ -84,7 +84,7 @@
     CGFloat progressUnits = (position * (self.dotPadding + self.frame.size.height));
 //    NIDINFO(@"units: %f",progressUnits);
     DTProgressElement *progressElement = [DTProgressElement buildForStyle:endStyle progressUnits:progressUnits frame:CGRectMake(self.rowInset/2.f, 0.f, self.frame.size.width-(1*self.rowInset), self.frame.size.height)];
-//    [progressElement setBackgroundColor:[UIColor orangeColor]];
+    [progressElement setBackgroundColor:[UIColor purpleColor]];
     [self insertSubview:progressElement atIndex:0];
   }
 }

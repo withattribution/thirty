@@ -15,7 +15,14 @@
 #import "ParticipantsTableCell.h"
 #import "ProgressSummaryCell.h"
 
+#import "DTChallengeCalendar.h"
+
 #import "DTProgressElement.h"
+
+
+@interface ProfileHistoryTableView ()
+
+@end
 
 @implementation ProfileHistoryTableView
 
@@ -49,16 +56,16 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 {
   
 #warning this is the state of how I found things and its not certain that this should be fixed or redone completely
-    static NSString *cellID = @"CommentCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    cell.backgroundColor = [UIColor orangeColor];
-    return cell;
+//    static NSString *cellID = @"CommentCell";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+//    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+//    cell.backgroundColor = [UIColor redColor];
+//    return cell;
 
 
-    //TODO might be interesting to cache the results of the element layout call for each row
-    //DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
-    
+//    TODO might be interesting to cache the results of the element layout call for each row
+//    DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
+  
 //    if([((Intent *)[self.intents objectAtIndex:indexPath.section]) daysLeft] > 0){
 //        if (indexPath.row == 0) {
 //            DaysLeftTableCell *cell = (DaysLeftTableCell *)[tableView dequeueReusableCellWithIdentifier:daysLeftCellReuseIdentifier];
@@ -75,23 +82,28 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
           if (indexPath.row == 0 && [self.intentsArray count] > 0) {
           ProgressSnapShotTableCell *cell = (ProgressSnapShotTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
           if (cell == nil) {
-            
-//            DTChallengeCalendar *cc = [DTChallengeCalendar calendarWithIntent:[self.intentsArray objectAtIndex:indexPath.row]];            
-//            cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
-//                                                    reuseIdentifier:progressRowCellReuseIdentifier
-//                                                 withDTProgressRows:[cc progressSnapShotElements]];
+//            DTChallengeCalendar *cc = [DTChallengeCalendar calendarWithIntent:[self.intentsArray objectAtIndex:indexPath.row]];
+            cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                    reuseIdentifier:progressRowCellReuseIdentifier
+                                                 withIntent:[self.intentsArray firstObject]];
             }
           return cell;
           }
         else{
+          
+          static NSString *cellID = @"CommentCell";
           UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-          if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-            //    cell.cellInsetWidth = kPAPCellInsetWidth;
-            //    cell.delegate = self;
-            cell.backgroundColor = [UIColor orangeColor];
-          }
+          cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+          cell.backgroundColor = [UIColor redColor];
           return cell;
+//          UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+//          if (cell == nil) {
+//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+//            //    cell.cellInsetWidth = kPAPCellInsetWidth;
+//            //    cell.delegate = self;
+//            cell.backgroundColor = [UIColor redColor];
+//          }
+//          return cell;
         }
   
 

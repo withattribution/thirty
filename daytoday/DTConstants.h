@@ -14,7 +14,9 @@ extern NSString *const DTJoinChallenge;
 #pragma mark - DTUserDefaults
 // Challenge Seed
 extern NSString *const kDTChallengeUserSeed;
-extern NSString *const kDTActiveIntent;
+
+#pragma mark - Pinning Labels
+extern NSString *const kDTPinnedActiveIntent;
 
 #pragma mark - DTDateFormatString
 // Date Format Constants
@@ -88,7 +90,7 @@ extern NSString *const kDTChallengeDayTaskCompletedCountKey;
 extern NSString *const kDTChallengeDayAccomplishedKey;
 extern NSString *const kDTChallengeDayOrdinalDayKey;
 extern NSString *const kDTChallengeDayActiveHashKey;
-//extern NSString *const kDTChallengeDayIntentKey;
+extern NSString *const kDTChallengeDayIntentKey;
 
 #pragma mark - Cached ChallengeDay ACTIVITY Attributes
 #warning need to make these explicitly ACTIVITY ATTRIBUTES

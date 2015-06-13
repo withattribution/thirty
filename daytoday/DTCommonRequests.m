@@ -92,33 +92,34 @@
 
 + (void)activeDayForDate:(NSDate *)date user:(PFUser *)user
 {
-  uint32_t challengeUserSeed;
-  
-  if ([[DTCache sharedCache] activeIntentForUser:user] != nil) {
-    challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:[[DTCache sharedCache] activeIntentForUser:user]];
-  }else {
-    challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:[[user objectForKey:kDTUserActiveIntent] fetchIfNeeded]];
-  }
-  NIDINFO(@"seed: %u",challengeUserSeed);
-  
-  [PFCloud callFunctionInBackground:DTQueryActiveDay
-                     withParameters:@{@"seed": @(challengeUserSeed) }
-                              block:^(PFObject *day, NSError *error) {
-                                if (!error) {
-                                  NIDINFO(@"the day: %@",day);
-                                  [[NSNotificationCenter defaultCenter]
-                                   postNotificationName:DTChallengeDayRetrievedNotification
-                                                 object:day
-                                               userInfo:nil];
-                                }else {
-                                  NIDINFO("error!: %@",error.localizedDescription);
-                                }
+  [[DTCommonRequests retrieveIntentForUser:user] continueWithSuccessBlock:^id(BFTask *task) {
+    if (!task.error) {
+      uint32_t challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:task.result];
+      
+      NIDINFO(@"seed: %u",challengeUserSeed);
+      
+      [PFCloud callFunctionInBackground:DTQueryActiveDay
+                         withParameters:@{@"seed": @(challengeUserSeed) }
+                                  block:^(PFObject *day, NSError *error) {
+                                    if (!error) {
+                                      NIDINFO(@"the day: %@",day);
+                                      [[NSNotificationCenter defaultCenter]
+                                       postNotificationName:DTChallengeDayRetrievedNotification
+                                       object:day
+                                       userInfo:nil];
+                                    }else {
+                                      NIDINFO("error!: %@",error.localizedDescription);
+                                    }
+                                  }];
+      
+    }
+    return nil;
   }];
 }
 
 + (void)requestDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy
 {
-  PFRelation *intentRelation = [intent relationforKey:kDTIntentChallengeDays];
+  PFRelation *intentRelation = [intent relationForKey:kDTIntentChallengeDays];
   PFQuery *dayQuery = [intentRelation query];
   [dayQuery setCachePolicy:cachePolicy];
   [dayQuery findObjectsInBackgroundWithBlock:^(NSArray *days, NSError *error){
@@ -132,7 +133,7 @@
 
 #pragma mark Itents for User
 
-+ (void)activeIntent:(PFObject *)intent
++ (void)setCurrentUserActiveIntent:(PFObject *)intent
 {
   //only a valid call if user is logged in
   if ([PFUser currentUser])
@@ -149,20 +150,121 @@
         }
       }];
   }
+#warning should disable join challenge button unless user is logged in -- or if not logged in send to login/register vc
 }
 
-+ (void)queryActiveIntent:(PFUser *)user
++ (BFTask *)queryIntentFromPinForUser:(PFUser *)user
 {
-  PFQuery *userQuery = [PFUser query];
-  [userQuery includeKey:kDTUserActiveIntent];
-  [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *obj, NSError *error){
-    if (!error && obj) {
+  return nil;
+}
+
+
+//try to retrieve intent for user
+//case user logged in -- try query from local pin
+//otherwise query cloud
+//case user not logged in -- just query cloud code
+
+
+
++ (BFTask *)retrieveIntentForUser:(PFUser *)user {
+  BFTaskCompletionSource * tcs = [BFTaskCompletionSource taskCompletionSource];
+          NIDINFO(@"jesus christ");
+  if ([[PFUser currentUser] isEqual:user]) {
+    PFQuery *query = [PFQuery queryWithClassName:kDTIntentClassKey];
+    [query fromPinWithName:kDTPinnedActiveIntent];
+    [[query getFirstObjectInBackground] continueWithBlock:^id(BFTask *task){
+      if (!task.error) {
+        [[DTCache sharedCache] cacheActiveIntent:task.result user:user];
+        [tcs setResult:task.result];
+      }else {
+#warning this doesn't look up other users dumb ass
+        [[self queryActiveIntentForUser:user] continueWithSuccessBlock:^id(BFTask *ts){
+          NIDINFO(@"did you find it or what?: %@",ts.result);
+          return ts;
+        }];
+        //cuz this is an error not found then try the query
+//        PFQuery *userQuery = [PFUser query];
+//        [userQuery includeKey:kDTUserActiveIntent];
+//
+//        [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *obj, NSError *error){
+//          if (!error && obj) {
+//            //      NIDINFO(@"the obj: %@",[obj objectForKey:kDTUserActiveIntent]);
+//            [[DTCache sharedCache] cacheActiveIntent:[obj objectForKey:kDTUserActiveIntent] user:user];
+//            [tcs setResult:obj];
+//          }else {
+//            NIDINFO(@"active intent query failed: %@", [error localizedDescription]);
+//            [tcs setError:error];
+//          }
+//        }];
+      }
+      return nil;
+    }];
+  } else {
+#warning add ability to query other users
+    [[self queryActiveIntentForUser:user] continueWithSuccessBlock:^id(BFTask *ts){
+      NIDINFO(@"did you find it or what?: %@",ts.result);
+      return ts;
+    }];
+    
+//    PFQuery *query = [PFQuery queryWithClassName:[PFUser class]];
+
+  }
+//  else {
+//    PFQuery *userQuery = [PFUser query];
+//    [userQuery includeKey:kDTUserActiveIntent];
+//
+//    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *obj, NSError *error){
+//      if (!error && obj) {
+//        //      NIDINFO(@"the obj: %@",[obj objectForKey:kDTUserActiveIntent]);
+//        [[DTCache sharedCache] cacheActiveIntent:[obj objectForKey:kDTUserActiveIntent] user:user];
+//        [tcs setResult:obj];
+//      }else {
+//        NIDINFO(@"active intent query failed: %@", [error localizedDescription]);
+//        [tcs setError:error];
+//      }
+//    }];
+//  }
+  return tcs.task;
+}
+
++ (BFTask *)queryActiveIntentForUser:(PFUser *)user
+{
+  BFTaskCompletionSource * tcs = [BFTaskCompletionSource taskCompletionSource];
+  //If the active intent query is for the current user then we should have one that's been pinned
+  //to the local data store, if there isn't one in the local data store then we should query the
+  //cloud store, when we retrieve it -- dunk it in the local memory cache
+
+//  if ([[PFUser currentUser] isEqual:user]) {
+//    PFQuery *query = [PFQuery queryWithClassName:kDTIntentClassKey];
+//    [query fromPinWithName:kDTPinnedActiveIntent];
+//    [[query findObjectsInBackground] continueWithBlock:^id(BFTask *task) {
+//      if (!task.error) {
+//        NIDINFO(@"the result: %@",[task.result firstObject]);
+//        [[DTCache sharedCache] cacheActiveIntent:[task.result firstObject] user:user];
+//      }
+//      return nil;
+//    }];
+//  }
+//  else {
+    PFQuery *userQuery = [PFUser query];
+    [userQuery includeKey:kDTUserActiveIntent];
+//    [[userQuery getFirstObjectInBackground] continueWithSuccessBlock:^id(BFTask *task){
+//      return nil;
+//    }];
+  
+    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *obj, NSError *error){
+      if (!error && obj) {
+
 //      NIDINFO(@"the obj: %@",[obj objectForKey:kDTUserActiveIntent]);
-      [[DTCache sharedCache] cacheActiveIntent:[obj objectForKey:kDTUserActiveIntent] user:user];
-    }else {
-      NIDINFO(@"active intent query failed: %@", [error localizedDescription]);
-    }
-  }];
+        [[DTCache sharedCache] cacheActiveIntent:[obj objectForKey:kDTUserActiveIntent] user:user];
+        [tcs setResult:[obj valueForKey:kDTUserActiveIntent]];
+      }else {
+        NIDINFO(@"active intent query failed: %@", [error localizedDescription]);
+        [tcs setError:error];
+      }
+    }];
+//  }
+  return tcs.task;
 }
 
 + (void)queryIntentsForUser:(PFUser *)user
@@ -182,12 +284,20 @@
 
 + (void)joinChallenge:(NSString *)challengeId
 {
+#warning needs to check if there is a current unfinished intent and deal with user choice
+#warning because after this the intent is forcibly switched
+  //There can only be one!
+  [PFObject unpinAllObjectsInBackgroundWithName:kDTPinnedActiveIntent];
+
   [PFCloud callFunctionInBackground:DTJoinChallenge
                      withParameters:@{@"challenge":challengeId}
                               block:^(PFObject *intent, NSError *error) {
                                 if (!error && intent) {
                                   NIDINFO(@"success!: %@",intent);
-                                  [DTCommonRequests activeIntent:intent];
+                                  //save to local data store
+                                  [intent pinInBackgroundWithName:kDTPinnedActiveIntent];
+
+                                  [DTCommonRequests setCurrentUserActiveIntent:intent];
                                   [DTCommonRequests requestDaysForIntent:intent cachePolicy:kPFCachePolicyNetworkOnly];
                                 }else {
                                   NIDINFO("error!: %@",error.localizedDescription);
