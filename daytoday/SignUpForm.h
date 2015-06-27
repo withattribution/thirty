@@ -10,8 +10,4 @@
 
 @interface SignUpForm : UIView
 
-@property (nonatomic, strong) UITextField *emailField;
-@property (nonatomic, strong) UITextField *userNameField;
-@property (nonatomic, strong) UITextField *passwordField;
-
 @end

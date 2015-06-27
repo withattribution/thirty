@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface LogInForm : UIView
-
-@property (nonatomic, strong) UITextField *userNameField;
-@property (nonatomic, strong) UITextField *passwordField;
 
 @end

@@ -29,18 +29,7 @@
   [super viewDidLoad];
   self.title = NSLocalizedString(@"Search Challenges", @"search challenges (title)");
 
-  [PFUser logOut];
-  [[DTCache sharedCache] clear];
-#warning this is being used as the logged out view for now
-  UIAlertView *logoutAlert = [[UIAlertView alloc] initWithTitle:@"Logged Out"
-                                                        message:@"you can't do much of anything now :("
-                                                       delegate:nil
-                                              cancelButtonTitle:@":) :) :)"
-                                              otherButtonTitles:nil];
-  [logoutAlert show];
-  
-  
-	// Do any additional setup after loading the view.
+  [DTCommonRequests logoutCurrentUser];
 }
 
 

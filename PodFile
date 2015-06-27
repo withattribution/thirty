@@ -1,0 +1,10 @@
+target :daytoday do
+  	pod 'ReactiveCocoa', '2.4.7'
+end
+
+target :daytodayTests, :exclusive => true do
+    pod 'Specta', 	 '~> 1.0'
+    pod 'Expecta',     '~> 1.0'
+    pod 'OCHamcrest',  '~> 4.1'
+    pod 'OCMockito',   '~> 1.0'  
+end

@@ -7,11 +7,18 @@
 //
 
 #import "SignUpForm.h"
+#import "UserEntryViewModel.h"
 
 @interface SignUpForm () <UITextFieldDelegate>
 
+@property (nonatomic, strong) UITextField *emailField;
+@property (nonatomic, strong) UITextField *passwordField;
+@property (nonatomic, strong) UITextField *userNameField;
+
 @property (nonatomic, strong) UIButton *signupButton;
 @property (nonatomic, strong) UIButton *loginButton;
+
+@property (nonatomic, strong) UserEntryViewModel *viewModel;
 
 @end
 
@@ -19,15 +26,12 @@
 #define PASS_FIELD_PLACEHOLDER NSLocalizedString(@"Password (min 6 characters)", @"Password Creation as textfield placeholder")
 #define USERNAME_FIELD_PLACEHOLDER NSLocalizedString(@"Username", @"Username as textfield placeholder")
 
-@implementation SignUpForm {
-  BOOL _shouldAllowSignUp;
-}
+@implementation SignUpForm
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-      _shouldAllowSignUp = NO; //disable signup until there's enough data to allow it
       
       _emailField = [[UITextField alloc] init];
       [_emailField setDelegate:self];
@@ -86,8 +90,8 @@
       [_signupButton.titleLabel setTextColor:[UIColor whiteColor]];
       [_signupButton setBackgroundColor:[UIColor colorWithWhite:.5f alpha:1.f]];
 
-      [_signupButton setEnabled:_shouldAllowSignUp];
-      [_signupButton addTarget:self.superview action:@selector(signupOrLogin:) forControlEvents:UIControlEventTouchUpInside];
+      [_signupButton setEnabled:NO];
+      [_signupButton addTarget:self action:@selector(attemptSignUp) forControlEvents:UIControlEventTouchUpInside];
       
       [_signupButton.layer setCornerRadius:2.5f];
       [_signupButton setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -106,6 +110,8 @@
       [_loginButton setTranslatesAutoresizingMaskIntoConstraints:NO];
       [self addSubview:_loginButton];
       
+      [self signalsForSignUp];
+
     }
     return self;
 }
@@ -114,7 +120,9 @@
 {
   [super updateConstraints];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[emailField(40)]-(5)-[passwordField(40)]-(5)-[userNameField(40)]-(20)-[signupButton(40)]-(5)-[loginButton(40)]"
+  [self addConstraints:
+   [NSLayoutConstraint constraintsWithVisualFormat:
+    @"V:|[emailField(40)]-(5)-[passwordField(40)]-(5)-[userNameField(40)]-(20)-[signupButton(40)]-(5)-[loginButton(40)]"
                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
                                                                     metrics:nil
                                                                       views:@{@"emailField": _emailField,
@@ -153,13 +161,13 @@
 {
   [UIView animateWithDuration:.42f
                    animations:^{
-                     if (_shouldAllowSignUp)
+                     if (self.signupButton.enabled)
                        [_signupButton setBackgroundColor:[UIColor colorWithRed:(34.f/255.f) green:(247.f/255.f) blue:(255.f/255.f) alpha:1.f]];
                      else
                        [_signupButton setBackgroundColor:[UIColor colorWithWhite:.5f alpha:1.f]];
                    }
                    completion:^(BOOL finished){
-                     [_signupButton setEnabled:_shouldAllowSignUp];
+
                    }];
 }
 
@@ -168,13 +176,6 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-  if (_emailField.hasText && _userNameField.hasText && _passwordField.hasText)
-    _shouldAllowSignUp = YES;
-  else
-    _shouldAllowSignUp = NO;
-  
-  [self toggleAllowSignUp];
-  
   if (textField.hasText && [textField isEqual:_emailField]) {
     if (!_passwordField.hasText) [_passwordField becomeFirstResponder];
     else if(!_userNameField.hasText) [_userNameField becomeFirstResponder];
@@ -202,10 +203,6 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-  //don't allow signup when editing textfields
-  _shouldAllowSignUp = NO;
-  [self toggleAllowSignUp];
-  
   if ( (_userNameField.hasText && _passwordField.hasText) ||
        (_userNameField.hasText && _emailField.hasText   ) ||
        (_passwordField.hasText && _emailField.hasText)  )
@@ -215,6 +212,51 @@
     [textField setReturnKeyType:UIReturnKeyNext];
   }
   return YES;
+}
+
+#pragma mark - Signals and SignUp Methods
+
+- (void)signalsForSignUp
+{
+  self.viewModel = [UserEntryViewModel new];
+  
+  RACSignal *emailValidSignal = [self.emailField.rac_textSignal
+                                 map:^id(NSString *email){
+                                   return @([self.viewModel isValidEmailAddress:email]);
+                                 }];
+  
+  RACSignal *passwordValidSignal = [self.passwordField.rac_textSignal
+                                    map:^id(NSString *pass){
+                                      return @([self.viewModel isValidPassword:pass]);
+                                    }];
+  
+  RACSignal *userNameValidSignal = [self.userNameField.rac_textSignal
+                                    map:^id(NSString *name){
+                                      return @([self.viewModel isValidUserName:name]);
+                                    }];
+  
+  RAC(self.viewModel, emailCredential) = self.emailField.rac_textSignal;
+  RAC(self.viewModel, passwordCredential) = self.passwordField.rac_textSignal;
+  RAC(self.viewModel, usernameCredential) = self.userNameField.rac_textSignal;
+
+  RACSignal *signUpActiveSignal =
+  [RACSignal combineLatest:@[emailValidSignal, passwordValidSignal, userNameValidSignal]
+                    reduce:^id(NSNumber *emailValid, NSNumber *passwordValid, NSNumber *userNameValid){
+                      return @([emailValid boolValue] && [passwordValid boolValue] && [userNameValid boolValue]);
+                    }];
+
+  [signUpActiveSignal subscribeNext:^(NSNumber *signUpActive){
+    self.signupButton.enabled = [signUpActive boolValue];
+    [self toggleAllowSignUp];
+  }];
+}
+
+- (void)attemptSignUp
+{
+  [DTCommonRequests signUpWithEmailCredential:self.viewModel.emailCredential
+                                     password:self.viewModel.passwordCredential
+                                         user:self.viewModel.usernameCredential];
+   
 }
 
 @end

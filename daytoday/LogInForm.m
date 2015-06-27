@@ -7,29 +7,30 @@
 //
 
 #import "LogInForm.h"
+#import "UserEntryViewModel.h"
 
 @interface LogInForm () <UITextFieldDelegate>
+
+@property (nonatomic, strong) UITextField *userNameField;
+@property (nonatomic, strong) UITextField *passwordField;
 
 @property (nonatomic, strong) UIButton *signupButton;
 @property (nonatomic, strong) UIButton *loginButton;
 @property (nonatomic, strong) UIButton *forgotPassButton;
+
+@property (nonatomic, strong) UserEntryViewModel *viewModel;
 
 @end
 
 #define USERNAME_FIELD_PLACEHOLDER NSLocalizedString(@"Email or Username", @"Login as textfield placeholder")
 #define PASSWORD_FIELD_PLACEHOLDER NSLocalizedString(@"Password", @"Password as textfield placeholder")
 
-@implementation LogInForm {
-  BOOL _shouldAllowLogin;
-}
+@implementation LogInForm
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-      
-      _shouldAllowLogin = NO;
-      
       _userNameField = [[UITextField alloc] init];
       [_userNameField setDelegate:self];
       [_userNameField setTextColor:[UIColor whiteColor]];
@@ -71,8 +72,8 @@
       [_loginButton.titleLabel setTextColor:[UIColor whiteColor]];
       [_loginButton setBackgroundColor:[UIColor colorWithWhite:.5f alpha:1.f]];
       
-      [_loginButton addTarget:self.superview action:@selector(signupOrLogin:) forControlEvents:UIControlEventTouchUpInside];
-      [_signupButton setEnabled:_shouldAllowLogin];
+      [_loginButton addTarget:self action:@selector(attemptLogIn) forControlEvents:UIControlEventTouchUpInside];
+      [_signupButton setEnabled:NO];
 
       [_loginButton.layer setCornerRadius:2.5f];
       [_loginButton setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -101,6 +102,8 @@
 
       [_signupButton setTranslatesAutoresizingMaskIntoConstraints:NO];
       [self addSubview:_signupButton];
+      
+      [self signalsForLogin];
     }
     return self;
 }
@@ -109,7 +112,9 @@
 {
   [super updateConstraints];
 
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[userNameField(40)]-(5)-[passwordField(40)]-(20)-[loginButton(40)]-(5)-[forgotPassButton(40)]-(5)-[signupButton(40)]"
+  [self addConstraints:
+   [NSLayoutConstraint constraintsWithVisualFormat:
+    @"V:|[userNameField(40)]-(5)-[passwordField(40)]-(20)-[loginButton(40)]-(5)-[forgotPassButton(40)]-(5)-[signupButton(40)]"
                                                                options:NSLayoutFormatDirectionLeadingToTrailing
                                                                metrics:nil
                                                                  views:@{@"userNameField": _userNameField,
@@ -148,13 +153,10 @@
 {
   [UIView animateWithDuration:.42f
                    animations:^{
-                     if (_shouldAllowLogin)
+                     if (_loginButton.enabled)
                        [_loginButton setBackgroundColor:[UIColor colorWithRed:(34.f/255.f) green:(247.f/255.f) blue:(255.f/255.f) alpha:1.f]];
                      else
                        [_loginButton setBackgroundColor:[UIColor colorWithWhite:.5f alpha:1.f]];
-                   }
-                   completion:^(BOOL finished){
-                     [_loginButton setEnabled:_shouldAllowLogin];
                    }];
 }
 
@@ -162,36 +164,25 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-  if (_userNameField.hasText && _passwordField.hasText)
-    _shouldAllowLogin = YES;
-  else
-    _shouldAllowLogin = NO;
-  
-  [self toggleAllowLogin];
-  
   if (textField.hasText && [textField isEqual:_userNameField]) {
     if(!_passwordField.hasText) [_passwordField becomeFirstResponder];
     else [textField resignFirstResponder];
-    
+
     return YES;
   }
   
   if (textField.hasText && [textField isEqual:_passwordField]) {
     if (!_userNameField.hasText) [_userNameField becomeFirstResponder];
     else [textField resignFirstResponder];
-    
+
     return YES;
   }
-  
+
   return YES;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-  //don't allow login when editing textfields
-  _shouldAllowLogin = NO;
-  [self toggleAllowLogin];
-  
   if ( _userNameField.hasText || _passwordField.hasText )
   {
     [textField setReturnKeyType:UIReturnKeyDone];
@@ -199,6 +190,43 @@
     [textField setReturnKeyType:UIReturnKeyNext];
   }
   return YES;
+}
+
+#pragma mark - Signals and Login Methods
+
+- (void)signalsForLogin
+{
+  self.viewModel = [UserEntryViewModel new];
+  
+  RACSignal *userNameValidSignal = [self.userNameField.rac_textSignal
+                                    map:^id(NSString *name){
+                                      return @([self.viewModel isValidUserName:name]);
+                                    }];
+  
+  RACSignal *passwordValidSignal = [self.passwordField.rac_textSignal
+                                    map:^id(NSString *pass){
+                                      return @([self.viewModel isValidPassword:pass]);
+                                    }];
+  
+  RAC(self.viewModel, usernameCredential) = self.userNameField.rac_textSignal;
+  RAC(self.viewModel, passwordCredential) = self.passwordField.rac_textSignal;
+  
+  RACSignal *loginActiveSignal =
+  [RACSignal combineLatest:@[userNameValidSignal, passwordValidSignal]
+                    reduce:^id(NSNumber *userNameValid, NSNumber *passwordValid){
+                      return @([userNameValid boolValue] && [passwordValid boolValue]);
+                    }];
+  
+  [loginActiveSignal subscribeNext:^(NSNumber *loginActive){
+    self.loginButton.enabled = [loginActive boolValue];
+    [self toggleAllowLogin];
+  }];
+}
+
+- (void)attemptLogIn
+{
+  [DTCommonRequests logInWithUserCredential:self.viewModel.usernameCredential
+                                   password:self.viewModel.passwordCredential];
 }
 
 @end

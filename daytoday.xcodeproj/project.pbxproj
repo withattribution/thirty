@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6E04C25D1B108CEA00A279A2 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E04C1EC1B108CCF00A279A2 /* Parse.framework */; };
+		4120AE7C7A62DCEC9DB9A23C /* libPods-daytodayTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6529BB58636F8BAEEC4E70C /* libPods-daytodayTests.a */; };
+		6E7F9C7F1B2C2F8A0039FC83 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F7F10180C66AF0072954E /* libsqlite3.dylib */; };
+		6E7F9CA61B2C2FD50039FC83 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDAB9451B26E2350056AB69 /* Accounts.framework */; };
+		6E7F9CB01B2C36A10039FC83 /* CommonRequestsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E7F9CAD1B2C34FA0039FC83 /* CommonRequestsSpec.m */; };
+		6E7F9CB81B39158B0039FC83 /* UserEntryViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E7F9CB71B39158B0039FC83 /* UserEntryViewModel.m */; };
 		6EDAB9441B26E22E0056AB69 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDAB9431B26E22E0056AB69 /* Twitter.framework */; };
 		6EDAB9461B26E2350056AB69 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDAB9451B26E2350056AB69 /* Accounts.framework */; };
 		6EDAB94B1B2835040056AB69 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E04BEBB1B108CCD00A279A2 /* FacebookSDK.framework */; };
@@ -160,6 +164,7 @@
 		B7E61D5417BD6AA5002B681B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E61D5317BD6AA5002B681B /* Default.png */; };
 		B7E61D5617BD6AA5002B681B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E61D5517BD6AA5002B681B /* Default@2x.png */; };
 		B7E61D5817BD6AA5002B681B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E61D5717BD6AA5002B681B /* Default-568h@2x.png */; };
+		F81CD324CF0FD5E853585E15 /* libPods-daytoday.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05EA01CC030BC04C4EB07BEB /* libPods-daytoday.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -425,6 +430,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05EA01CC030BC04C4EB07BEB /* libPods-daytoday.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-daytoday.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2381D8C6597F073F8C04ECBC /* Pods-daytodayTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-daytodayTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-daytodayTests/Pods-daytodayTests.release.xcconfig"; sourceTree = "<group>"; };
+		57521DA84665E8287B57897D /* Pods-daytoday.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-daytoday.release.xcconfig"; path = "Pods/Target Support Files/Pods-daytoday/Pods-daytoday.release.xcconfig"; sourceTree = "<group>"; };
 		6E04BEBB1B108CCD00A279A2 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		6E04BEBD1B108CCD00A279A2 /* .gitmodules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitmodules; sourceTree = "<group>"; };
 		6E04BEC01B108CCD00A279A2 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -1109,6 +1117,11 @@
 		6E04C1EC1B108CCF00A279A2 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		6E04C1ED1B108CCF00A279A2 /* TTTTimeIntervalFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTTTimeIntervalFormatter.h; sourceTree = "<group>"; };
 		6E04C1EE1B108CCF00A279A2 /* TTTTimeIntervalFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTTTimeIntervalFormatter.m; sourceTree = "<group>"; };
+		6E7F9CAB1B2C340D0039FC83 /* Specs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Specs.h; sourceTree = "<group>"; };
+		6E7F9CAD1B2C34FA0039FC83 /* CommonRequestsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonRequestsSpec.m; path = daytodayTests/CommonRequestsSpec.m; sourceTree = SOURCE_ROOT; };
+		6E7F9CB61B39158B0039FC83 /* UserEntryViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserEntryViewModel.h; sourceTree = "<group>"; };
+		6E7F9CB71B39158B0039FC83 /* UserEntryViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserEntryViewModel.m; sourceTree = "<group>"; };
+		6EBF1E8C1B394457007303E7 /* Pods */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Pods; sourceTree = "<group>"; };
 		6EDAB9431B26E22E0056AB69 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		6EDAB9451B26E2350056AB69 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		6EDAB94D1B2835040056AB69 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = external/Bolts.framework; sourceTree = "<group>"; };
@@ -1340,6 +1353,7 @@
 		A1F79C651836731400C3B8A3 /* heart-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-selected.png"; sourceTree = "<group>"; };
 		A1F79C6A1836AC4800C3B8A3 /* CommentInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentInputView.h; sourceTree = "<group>"; };
 		A1F79C6B1836AC4800C3B8A3 /* CommentInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentInputView.m; sourceTree = "<group>"; };
+		A6529BB58636F8BAEEC4E70C /* libPods-daytodayTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-daytodayTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B73903AF17FB1C8800B9C9BB /* DTNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTNavController.h; sourceTree = "<group>"; };
 		B73903B017FB1C8800B9C9BB /* DTNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTNavController.m; sourceTree = "<group>"; };
 		B73903B217FB1DB600B9C9BB /* LoginRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRegistrationViewController.h; sourceTree = "<group>"; };
@@ -1372,6 +1386,8 @@
 		B7E61D5517BD6AA5002B681B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		B7E61D5717BD6AA5002B681B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B7E61DF817C27D24002B681B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BF91A5535508DA79DCBF9D33 /* Pods-daytodayTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-daytodayTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-daytodayTests/Pods-daytodayTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C91673C1746827E84722D0F5 /* Pods-daytoday.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-daytoday.debug.xcconfig"; path = "Pods/Target Support Files/Pods-daytoday/Pods-daytoday.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1381,7 +1397,9 @@
 			files = (
 				A1E4256618512E9800DAE577 /* UIKit.framework in Frameworks */,
 				A1E4256518512E9800DAE577 /* Foundation.framework in Frameworks */,
-				6E04C25D1B108CEA00A279A2 /* Parse.framework in Frameworks */,
+				6E7F9CA61B2C2FD50039FC83 /* Accounts.framework in Frameworks */,
+				6E7F9C7F1B2C2F8A0039FC83 /* libsqlite3.dylib in Frameworks */,
+				4120AE7C7A62DCEC9DB9A23C /* libPods-daytodayTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1401,21 +1419,22 @@
 				A1C60D82183D544300C98C69 /* AssetsLibrary.framework in Frameworks */,
 				A1C60D80183D543B00C98C69 /* Accelerate.framework in Frameworks */,
 				A1C60D1D183A7A1A00C98C69 /* Social.framework in Frameworks */,
-				A1C60E0C183E50F500C98C69 /* libNYXImagesKitUniversal.a in Frameworks */,
-				A1C60D19183A781D00C98C69 /* libz.1.1.3.dylib in Frameworks */,
 				A1C60D17183A77FA00C98C69 /* CFNetwork.framework in Frameworks */,
 				A1C60D15183A77EC00C98C69 /* AudioToolbox.framework in Frameworks */,
 				A198673D1837D36900BC229F /* MobileCoreServices.framework in Frameworks */,
 				B77F7F17180C66E40072954E /* CoreTelephony.framework in Frameworks */,
 				B77F7F15180C66D70072954E /* libz.dylib in Frameworks */,
-				B77F7F13180C66C60072954E /* SystemConfiguration.framework in Frameworks */,
+				A1C60D19183A781D00C98C69 /* libz.1.1.3.dylib in Frameworks */,
 				B77F7F11180C66AF0072954E /* libsqlite3.dylib in Frameworks */,
+				A1C60E0C183E50F500C98C69 /* libNYXImagesKitUniversal.a in Frameworks */,
+				B77F7F13180C66C60072954E /* SystemConfiguration.framework in Frameworks */,
 				B77F7F0F180C66A60072954E /* Security.framework in Frameworks */,
 				B77F7F0D180C66980072954E /* CoreLocation.framework in Frameworks */,
 				A1275C231806ECE200019A91 /* QuartzCore.framework in Frameworks */,
 				B7E61D4217BD6AA5002B681B /* UIKit.framework in Frameworks */,
 				B7E61D4417BD6AA5002B681B /* Foundation.framework in Frameworks */,
 				B7E61D4617BD6AA5002B681B /* CoreGraphics.framework in Frameworks */,
+				F81CD324CF0FD5E853585E15 /* libPods-daytoday.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3101,6 +3120,22 @@
 			path = NYXImagesKit;
 			sourceTree = "<group>";
 		};
+		6E7F9CAC1B2C34CB0039FC83 /* Specs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Specs;
+			sourceTree = "<group>";
+		};
+		6E7F9CB51B39155C0039FC83 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				6E7F9CB61B39158B0039FC83 /* UserEntryViewModel.h */,
+				6E7F9CB71B39158B0039FC83 /* UserEntryViewModel.m */,
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
 		A11D9D87185111B6007A70ED /* lib-aok-ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -3510,8 +3545,11 @@
 		A1E4256718512E9800DAE577 /* daytodayTests */ = {
 			isa = PBXGroup;
 			children = (
+				6E7F9CAD1B2C34FA0039FC83 /* CommonRequestsSpec.m */,
+				6E7F9CAC1B2C34CB0039FC83 /* Specs */,
 				A1E4256D18512E9800DAE577 /* daytodayTests.m */,
 				A1E4256818512E9800DAE577 /* Supporting Files */,
+				6E7F9CAB1B2C340D0039FC83 /* Specs.h */,
 			);
 			path = daytodayTests;
 			sourceTree = "<group>";
@@ -3626,6 +3664,7 @@
 				A1C60D89183D57A300C98C69 /* external */,
 				B7E61D4017BD6AA5002B681B /* Frameworks */,
 				B7E61D3F17BD6AA5002B681B /* Products */,
+				F5A896C21B7D9DE9280CF8C3 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3641,6 +3680,7 @@
 		B7E61D4017BD6AA5002B681B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6EBF1E8C1B394457007303E7 /* Pods */,
 				6EDAB94D1B2835040056AB69 /* Bolts.framework */,
 				6EDAB94E1B2835040056AB69 /* ParseUI.framework */,
 				6EDAB9451B26E2350056AB69 /* Accounts.framework */,
@@ -3667,6 +3707,8 @@
 				B7E61D4117BD6AA5002B681B /* UIKit.framework */,
 				B7E61D4317BD6AA5002B681B /* Foundation.framework */,
 				B7E61D4517BD6AA5002B681B /* CoreGraphics.framework */,
+				A6529BB58636F8BAEEC4E70C /* libPods-daytodayTests.a */,
+				05EA01CC030BC04C4EB07BEB /* libPods-daytoday.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3679,6 +3721,7 @@
 				B78481CD1802083E008F2EB8 /* common */,
 				B73903AE17FB1B7400B9C9BB /* controllers */,
 				A1275BEB1806EA8E00019A91 /* views */,
+				6E7F9CB51B39155C0039FC83 /* models */,
 				B7E61D4817BD6AA5002B681B /* Supporting Files */,
 			);
 			path = daytoday;
@@ -3699,6 +3742,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		F5A896C21B7D9DE9280CF8C3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BF91A5535508DA79DCBF9D33 /* Pods-daytodayTests.debug.xcconfig */,
+				2381D8C6597F073F8C04ECBC /* Pods-daytodayTests.release.xcconfig */,
+				C91673C1746827E84722D0F5 /* Pods-daytoday.debug.xcconfig */,
+				57521DA84665E8287B57897D /* Pods-daytoday.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3706,9 +3760,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A1E4257218512E9800DAE577 /* Build configuration list for PBXNativeTarget "daytodayTests" */;
 			buildPhases = (
+				1DB1CC94D0B9C7B83A432D81 /* Check Pods Manifest.lock */,
 				A1E4255F18512E9800DAE577 /* Sources */,
 				A1E4256018512E9800DAE577 /* Frameworks */,
 				A1E4256118512E9800DAE577 /* Resources */,
+				0E8192D92BE7426AF8CE34FE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3724,9 +3780,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B7E61D7617BD6AA5002B681B /* Build configuration list for PBXNativeTarget "daytoday" */;
 			buildPhases = (
+				713D8A604D436F2E0FDADA44 /* Check Pods Manifest.lock */,
 				B7E61D3A17BD6AA5002B681B /* Sources */,
 				B7E61D3B17BD6AA5002B681B /* Frameworks */,
 				B7E61D3C17BD6AA5002B681B /* Resources */,
+				899F14C794E345248753B015 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4119,12 +4177,76 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0E8192D92BE7426AF8CE34FE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-daytodayTests/Pods-daytodayTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1DB1CC94D0B9C7B83A432D81 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		713D8A604D436F2E0FDADA44 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		899F14C794E345248753B015 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-daytoday/Pods-daytoday-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A1E4255F18512E9800DAE577 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A1E4256E18512E9800DAE577 /* daytodayTests.m in Sources */,
+				6E7F9CB01B2C36A10039FC83 /* CommonRequestsSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4160,6 +4282,7 @@
 				A11D9DC218511227007A70ED /* NICommonMetrics.m in Sources */,
 				A1ECF0F61857EA010012B71D /* TTTTimeIntervalFormatter.m in Sources */,
 				A11D9DC618511227007A70ED /* NIError.m in Sources */,
+				6E7F9CB81B39158B0039FC83 /* UserEntryViewModel.m in Sources */,
 				A19867371837CE3000BC229F /* FDTakeController.m in Sources */,
 				A11D9DF418511261007A70ED /* AFJSONRequestOperation.m in Sources */,
 				A1275C191806EB8C00019A91 /* DTProgressElement.m in Sources */,
@@ -4297,6 +4420,7 @@
 /* Begin XCBuildConfiguration section */
 		A1E4257318512E9800DAE577 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF91A5535508DA79DCBF9D33 /* Pods-daytodayTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/daytoday.app/daytoday";
@@ -4308,6 +4432,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/external",
 					"$(PROJECT_DIR)/external",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4322,6 +4447,17 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "daytodayTests/daytodayTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-l\"Pods-daytodayTests-Expecta\"",
+					"-l\"Pods-daytodayTests-OCHamcrest\"",
+					"-l\"Pods-daytodayTests-OCMockito\"",
+					"-l\"Pods-daytodayTests-Specta\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"XCTest\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
@@ -4329,6 +4465,7 @@
 		};
 		A1E4257418512E9800DAE577 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2381D8C6597F073F8C04ECBC /* Pods-daytodayTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/daytoday.app/daytoday";
@@ -4342,6 +4479,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(PROJECT_DIR)/external",
+					"$(PROJECT_DIR)/external",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "daytodayTests/daytodayTests-Prefix.pch";
@@ -4351,6 +4489,17 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "daytodayTests/daytodayTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-l\"Pods-daytodayTests-Expecta\"",
+					"-l\"Pods-daytodayTests-OCHamcrest\"",
+					"-l\"Pods-daytodayTests-OCMockito\"",
+					"-l\"Pods-daytodayTests-Specta\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"XCTest\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
@@ -4381,8 +4530,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "$(inherited)";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4405,8 +4555,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "$(inherited)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4414,6 +4565,7 @@
 		};
 		B7E61D7717BD6AA5002B681B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C91673C1746827E84722D0F5 /* Pods-daytoday.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4436,8 +4588,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/dejeuner/dev/daytoday/external/NYXImagesKitLibrary,
+					"$(PROJECT_DIR)/external/NYXImagesKitLibrary",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "external/lib-aok-ios/";
@@ -4447,6 +4603,7 @@
 		};
 		B7E61D7817BD6AA5002B681B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 57521DA84665E8287B57897D /* Pods-daytoday.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4469,8 +4626,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/dejeuner/dev/daytoday/external/NYXImagesKitLibrary,
+					"$(PROJECT_DIR)/external/NYXImagesKitLibrary",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "external/lib-aok-ios/";

@@ -7,6 +7,7 @@
 //
 
 #import "LoginRegistrationViewController.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 #import "SignUpForm.h"
 #import "UserEntry.h"
@@ -14,23 +15,12 @@
 
 @interface LoginRegistrationViewController () <UIAlertViewDelegate>
 {
-  BOOL _isLogin;
   UILabel *_titleLabel;
 }
 
-@property (nonatomic,strong) NSMutableDictionary *credentialsDictionary;
-
-- (void)signupOrLogin:(id)sender;
-
-- (void)prepareCredentialsDictionary;
-- (BOOL)hasValidCredentialsForState;
-
-- (void)addObserversForState;
-- (void)removeObserversForState;
-
-- (void)constraintsForForm:(UIView *)form;
+- (void)constraintsForView:(UIView *)view;
 - (CGSize)sizeForTitleAnimation;
-- (void)animateToForm;
+- (void)animateToView:(UIView *)view;
 
 @end
 
@@ -38,27 +28,14 @@
   UserEntry *_userEntry;
   SignUpForm *_signUpForm;
   LogInForm  *_logInForm;
+  
+  UIView *entryContainer;
 }
-
-- (void)dealloc
-{
-  if (_isLogin) {
-    [_logInForm removeObserver:self forKeyPath:@"userNameField.text"];
-    [_logInForm removeObserver:self forKeyPath:@"passwordField.text"];
-  }else{
-    [_signUpForm removeObserver:self forKeyPath:@"userNameField.text"];
-    [_signUpForm removeObserver:self forKeyPath:@"passwordField.text"];
-    [_signUpForm removeObserver:self forKeyPath:@"emailField.text"];
-  }
-}
-
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
-  [self prepareCredentialsDictionary];
-  
+
   [self.view setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.f]];
   
   if (!_userEntry) {
@@ -66,12 +43,12 @@
     [_userEntry setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addSubview:_userEntry];
     
-    [self constraintsForForm:_userEntry];
+    [self constraintsForView:_userEntry];
   }
-  
+
   CGSize maxSize = CGSizeMake(280.f, 200.f);
   
-  _titleLabel = [[UILabel alloc] init];
+  _titleLabel = [[UILabel alloc] init];  
   CGSize requiredSize = [_titleLabel sizeThatFits:maxSize];
   [_titleLabel setFrame:CGRectMake(0.f, 0.f, requiredSize.width, requiredSize.height)];
   [_titleLabel setTextColor:[UIColor colorWithWhite:.3f alpha:1.f]];
@@ -87,131 +64,36 @@
 
 - (void)setStateForSignUp:(UIButton *)sender
 {
-  _isLogin = NO;
-  [self animateToForm];
+  if (!_signUpForm) {
+    _signUpForm = [[SignUpForm alloc] init];
+    [_signUpForm setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.view addSubview:_signUpForm];
+    
+    [self constraintsForView:_signUpForm];
+    
+    _signUpForm.transform = CGAffineTransformMakeTranslation(-1*self.view.frame.size.width, 0);
+  }
+  [self animateToView:_signUpForm];
 }
 
 - (void)setStateForLogIn:(UIButton *)sender
 {
-  _isLogin = YES;
-  [self animateToForm];
-}
-
-#pragma mark - KVO Observation and Credential Validation
-
-- (void)prepareCredentialsDictionary
-{
-  _credentialsDictionary = [[NSMutableDictionary alloc] init];
-  
-  [_credentialsDictionary setObject:[NSNull null] forKey:@"userNameField.text"];
-  [_credentialsDictionary setObject:[NSNull null] forKey:@"passwordField.text"];
-  [_credentialsDictionary setObject:[NSNull null] forKey:@"emailField.text"];
-}
-
-- (void)addObserversForState
-{
-  if (_isLogin) {
-    [_logInForm addObserver:self forKeyPath:@"userNameField.text" options:NSKeyValueObservingOptionNew context:NULL];
-    [_logInForm addObserver:self forKeyPath:@"passwordField.text" options:NSKeyValueObservingOptionNew context:NULL];
-  }else{
-    [_signUpForm addObserver:self forKeyPath:@"userNameField.text" options:NSKeyValueObservingOptionNew context:NULL];
-    [_signUpForm addObserver:self forKeyPath:@"passwordField.text" options:NSKeyValueObservingOptionNew context:NULL];
-    [_signUpForm addObserver:self forKeyPath:@"emailField.text"    options:NSKeyValueObservingOptionNew context:NULL];
-  }
-}
-
-- (void)removeObserversForState
-{
-  if (_isLogin) {
-    [_signUpForm removeObserver:self forKeyPath:@"userNameField.text"];
-    [_signUpForm removeObserver:self forKeyPath:@"passwordField.text"];
-    [_signUpForm removeObserver:self forKeyPath:@"emailField.text"];
-  }else{
-    [_logInForm removeObserver:self forKeyPath:@"userNameField.text"];
-    [_logInForm removeObserver:self forKeyPath:@"passwordField.text"];
-  }
-}
-
-- (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
-{
-  // Observe the emailaddress, username, and password textfields
-  [self.credentialsDictionary  setObject:[change objectForKey:NSKeyValueChangeNewKey] forKey:keyPath];
-  
-  for (NSString *thekey in self.credentialsDictionary) {
-    NSLog(@"the keys :%@ and object: %@",thekey, [self.credentialsDictionary objectForKey:thekey]);
-  }
-}
-
-- (BOOL)hasValidCredentialsForState
-{
-  
-  if (_isLogin) {
-    return ( (![[self.credentialsDictionary objectForKey:@"userNameField.text"] isEqual:[NSNull null]] &&
-             ![[self.credentialsDictionary objectForKey:@"passwordField.text"] isEqual:[NSNull null]]) ||
-            (![[self.credentialsDictionary objectForKey:@"emailField.text"] isEqual:[NSNull null]] &&
-             ![[self.credentialsDictionary objectForKey:@"passwordField.text"] isEqual:[NSNull null]] ));
-  }else {
-    return (![[self.credentialsDictionary objectForKey:@"userNameField.text"] isEqual:[NSNull null]] &&
-            ![[self.credentialsDictionary objectForKey:@"passwordField.text"] isEqual:[NSNull null]] &&
-            ![[self.credentialsDictionary objectForKey:@"emailField.text"] isEqual:[NSNull null]]);
-  }
-}
-
-- (void)signupOrLogin:(id)sender
-{
-  PFUser *user = [PFUser user];
-  [user setObject:@([DTCommonUtilities minutesFromGMTForDate:[NSDate date]]) forKey:kDTUserGMTOffset];
-  
-  if(_isLogin && [self hasValidCredentialsForState]) {
-    NSString *loginCredential;
-    if (![[self.credentialsDictionary objectForKey:@"userNameField.text"] isEqual:[NSNull null]]) {
-      loginCredential = [self.credentialsDictionary objectForKey:@"userNameField.text"];
-    }else {
-      loginCredential = [self.credentialsDictionary objectForKey:@"emailField.text"];
-    }
-    [PFUser logInWithUsernameInBackground:loginCredential password:[self.credentialsDictionary objectForKey:@"passwordField.text"]
-                                    block:^(PFUser *user, NSError *error) {
-                                      if (user) {
-                                        NIDINFO(@"logged in withIntent: %d",[[user objectForKey:kDTUserActiveIntent] isDataAvailable]);
-                                        if ([user objectForKey:kDTUserActiveIntent]) {
-                                          [[DTCommonRequests retrieveIntentForUser:user] continueWithSuccessBlock:^id(BFTask *task){
-                                            if (!task.error) {
-                                              NIDINFO(@"the result: %@",task.result);
-                                              //                                              [[task.result unpinInBackgroundWithName:kDTPinnedActiveIntent]
-//                                                             continueWithSuccessBlock:^id(BFTask *task){
-//                                                               if (!task.error) {
-//                                                                 [task.result pinInBackgroundWithName:kDTPinnedActiveIntent];
-//                                                               }
-//                                                               return nil;
-//                                              }];
-                                            }
-                                            [PFObject unpinAllObjectsInBackground];
-                                            return nil;
-                                          }];
-                                        }
-                                      } else {
-                                        NIDINFO(@"butts %@",[error localizedDescription]);
-                                      }
-                                    }];
-  }
-  else if (!_isLogin && [self hasValidCredentialsForState]) {
-    user.username = [self.credentialsDictionary objectForKey:@"userNameField.text"];
-    user.password = [self.credentialsDictionary objectForKey:@"passwordField.text"];
-    user.email    = [self.credentialsDictionary objectForKey:@"emailField.text"];
+  if (!_logInForm) {
+    _logInForm = [[LogInForm alloc] init];
     
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-      if (!error) {
-        NIDINFO(@"signed up");
-      } else {
-        NIDINFO(@"%@",[error localizedDescription]);
-      }
-    }];
+    [_logInForm setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.view addSubview:_logInForm];
+    
+    [self constraintsForView:_logInForm];
+    
+    _logInForm.transform = CGAffineTransformMakeTranslation(1*self.view.frame.size.width, 0);
   }
+  [self animateToView:_logInForm];
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  NIDINFO(@"clicked on %d",buttonIndex);
+  NIDINFO(@"clicked on %ld",buttonIndex);
 }
 
 #pragma mark - Login View Flow and Animations
@@ -228,43 +110,15 @@
   return requiredSize;
 }
 
-- (void)animateToForm
+- (void)animateToView:(UIView *)view
 {
-  //if state is login --> transition to login
-  if (_isLogin) {
-    if (!_logInForm) {
-      _logInForm = [[LogInForm alloc] init];
-      [_logInForm setTranslatesAutoresizingMaskIntoConstraints:NO];
-      [self.view addSubview:_logInForm];
-
-      [self constraintsForForm:_logInForm];
-
-      _logInForm.transform = CGAffineTransformMakeTranslation(1*self.view.frame.size.width, 0);
-    }
-  }
-
-  //if the state is not login --> transition to signup
-  if (!_isLogin) {
-    if (!_signUpForm) {
-      _signUpForm = [[SignUpForm alloc] init];
-      [_signUpForm setTranslatesAutoresizingMaskIntoConstraints:NO];
-      [self.view addSubview:_signUpForm];
-
-      [self constraintsForForm:_signUpForm];
-
-      _signUpForm.transform = CGAffineTransformMakeTranslation(-1*self.view.frame.size.width, 0);
-    }
-  }
-
-  [self addObserversForState];
-
   [UIView animateWithDuration:.42f
                    animations:^{
                      if (![_titleLabel.text isEqualToString:@"DAY TODAY"]) {
                        [_titleLabel setFrame:CGRectMake(0.f, 20.f, 320.f, [self sizeForTitleAnimation].height)];
                      }
                      [_userEntry setAlpha:0.0f];
-                     if (!_isLogin) {
+                     if (![view isKindOfClass:[LogInForm class]]) {
                        _signUpForm.transform = CGAffineTransformMakeTranslation(0, 0);
                        if (_logInForm) {
                          [_logInForm setAlpha:0.0f];
@@ -280,15 +134,15 @@
                      }
                    }
                    completion:^(BOOL finished){
-                     [self removeObserversForState];
+
                    }];
 }
 
 #pragma mark - Constraints for login views
 
-- (void)constraintsForForm:(UIView *)form
+- (void)constraintsForView:(UIView *)view
 {
-  if ([form isKindOfClass:[SignUpForm class]]) {
+  if ([view isKindOfClass:[SignUpForm class]]) {
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[signUp]-(20)-|"
                                                                       options:NSLayoutFormatDirectionLeadingToTrailing
                                                                       metrics:nil
@@ -308,7 +162,7 @@
                                                            constant:0]];
   }
 
-  if ([form isKindOfClass:[LogInForm class]]) {
+  if ([view isKindOfClass:[LogInForm class]]) {
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[logIn]-(20)-|"
                                                                       options:NSLayoutFormatDirectionLeadingToTrailing
                                                                       metrics:nil
@@ -328,7 +182,7 @@
                                                            constant:0]];
   }
 
-  if ([form isKindOfClass:[UserEntry class]]) {
+  if ([view isKindOfClass:[UserEntry class]]) {
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[entry]-(20)-|"
                                                                       options:NSLayoutFormatDirectionLeadingToTrailing
                                                                       metrics:nil
@@ -350,4 +204,5 @@
 
   [self.view layoutIfNeeded];
 }
+
 @end

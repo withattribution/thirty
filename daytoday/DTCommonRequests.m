@@ -158,13 +158,10 @@
   return nil;
 }
 
-
 //try to retrieve intent for user
 //case user logged in -- try query from local pin
 //otherwise query cloud
 //case user not logged in -- just query cloud code
-
-
 
 + (BFTask *)retrieveIntentForUser:(PFUser *)user {
   BFTaskCompletionSource * tcs = [BFTaskCompletionSource taskCompletionSource];
@@ -371,7 +368,70 @@
   }];
 }
 
+#pragma mark User Entry/Exit
 
++ (void)logoutCurrentUser
+{
+  [[PFUser logOutInBackground] continueWithBlock:^id(BFTask *task){
+    if (!task.error) {
 
+      //release cache and unpin all objects
+      [[DTCache sharedCache] clear];
+      [[PFObject unpinAllObjectsInBackground] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *ts){
+
+        UIAlertView *logoutAlert = [[UIAlertView alloc] initWithTitle:@"Logged Out"
+                                                              message:@"you can't do much of anything now :("
+                                                             delegate:nil
+                                                    cancelButtonTitle:@":) :) :)"
+                                                    otherButtonTitles:nil];
+        [logoutAlert show];
+      
+        return nil;
+      }];
+    }
+    else {
+      NIDINFO(@"%@",[task.error localizedDescription]);
+    }
+    return nil;
+  }];
+}
+
++ (void)logInWithUserCredential:(NSString *)userCredential password:(NSString *)passwordCredential
+{
+  [PFUser logInWithUsernameInBackground:userCredential password:passwordCredential
+                                  block:^(PFUser *user, NSError *error) {
+                                    if (user) {
+                                      NIDINFO(@"logged in withIntent: %d",[[user objectForKey:kDTUserActiveIntent] isDataAvailable]);
+                                      if ([user objectForKey:kDTUserActiveIntent]) {
+                                        [[DTCommonRequests retrieveIntentForUser:user] continueWithSuccessBlock:^id(BFTask *task){
+                                          if (!task.error) {
+                                            NIDINFO(@"the result: %@",task.result);
+                                          }
+                                          return nil;
+                                        }];
+                                      }
+                                    } else {
+                                      NIDINFO(@"ERR: %@",[error localizedDescription]);
+                                    }
+                                  }];
+}
+
++ (void)signUpWithEmailCredential:(NSString *)emailCredential password:(NSString *)passwordCredential user:(NSString *)userCredential
+{
+#warning this doesnt take into account user sessions and anonymous user behaviors -- technically this user could already have an intention maybe?
+  PFUser *signUpUser = [PFUser user];
+  signUpUser.username = userCredential;
+  signUpUser.email    = emailCredential;
+  signUpUser.password = passwordCredential;
+
+  [[signUpUser signUpInBackground] continueWithSuccessBlock:^id(BFTask *task){
+    if (!task.error) {
+      NIDINFO(@"created a new user!");
+    }else {
+      NIDINFO(@"SignUp ERROR: %@",[task.error localizedDescription]);
+    }
+    return nil;
+  }];
+}
 
 @end

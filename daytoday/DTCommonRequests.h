@@ -33,4 +33,11 @@
 + (void)verificationActivity:(NSString *)status;
 + (void)refreshActiveChallengeDay;
 
+#pragma mark User Entry/Exit
+
++ (void)logoutCurrentUser;
++ (void)logInWithUserCredential:(NSString *)userCredential password:(NSString *)passwordCredential;
++ (void)signUpWithEmailCredential:(NSString *)emailCredential password:(NSString *)passwordCredential user:(NSString *)userCredential;
+
+
 @end
