@@ -11,9 +11,9 @@
 
 SpecBegin(CommonRequestBehaviors)
 
-  NSString *const kTestingUserName                        =@"Fixture Username";
-  NSString *const kTestingUserPassword                    =@"Fixture Password";
-  NSString *const kTestingChallengeId                     =@"hxVdpImcUK";
+NSString *const kTestingUserName                        =@"Fixture Username";
+NSString *const kTestingUserPassword                    =@"Fixture Password";
+NSString *const kTestingChallengeId                     =@"hxVdpImcUK";
 
 describe(@"User Entry: Login", ^{
 

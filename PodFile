@@ -1,9 +1,17 @@
+
+platform :ios, '8.0'
+
+inhibit_all_warnings!
+
 target :daytoday do
   	pod 'ReactiveCocoa', '2.4.7'
+  	pod 'Nimbus', 		 :head
+  	pod 'AFNetworking', '2.2.1'
+  	pod 'NYXImagesKit',  '~> 2.3'
 end
 
 target :daytodayTests, :exclusive => true do
-    pod 'Specta', 	 '~> 1.0'
+    pod 'Specta', 	   '~> 1.0'
     pod 'Expecta',     '~> 1.0'
     pod 'OCHamcrest',  '~> 4.1'
     pod 'OCMockito',   '~> 1.0'  

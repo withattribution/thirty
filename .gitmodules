@@ -1,4 +1,1 @@
 
-[submodule "external/lib-aok-ios"]
-	path = external/lib-aok-ios
-	url = git@github.com:aok-admin/lib-aok-ios.git
