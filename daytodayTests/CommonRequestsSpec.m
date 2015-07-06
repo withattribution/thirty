@@ -7,35 +7,114 @@
 //
 
 #import "Specs.h"
+#import "DTCommonRequests+Spec.h"
 
-SpecBegin(CommonRequests)
-  describe(@"intent", ^{
-    __block PFUser *currentUser;
+SpecBegin(CommonRequestBehaviors)
 
-    beforeEach(^{
-      currentUser = [PFUser currentUser];
+  NSString *const kTestingUserName                        =@"Fixture Username";
+  NSString *const kTestingUserPassword                    =@"Fixture Password";
+  NSString *const kTestingChallengeId                     =@"hxVdpImcUK";
+
+describe(@"User Entry: Login", ^{
+
+  //Log out any user that has persisted
+  describe(@"Logout user to so that we're starting at a known state", ^{
+    it(@"current user should not exist", ^{
+      waitUntil(^(DoneCallback done) {
+        [[DTCommonRequests logoutCurrentUser]
+         continueWithBlock:^id(BFTask *task){
+            expect([PFUser currentUser]).to.beNil();
+            done();
+            return nil;
+        }];
+      });
     });
+    it(@"should no longer have a pinned intent", ^{
+      waitUntil(^(DoneCallback done) {
+        [[DTCommonRequests helperRetrievePinnedActiveIntentFromCurrentUser]
+         continueWithBlock:^id(BFTask *pinned){
+           expect(pinned.result).to.beNil();
+           done();
+           return nil;
+         }];
+      });
+    });
+    it(@"cache should not have active intent for current user", ^{
+      expect([[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]).to.beNil();
+    });
+  });
 
-    describe(@"intent retrieval", ^{
-      context(@"when user is logged in", ^{
-        it(@"user should not be nil", ^{
-          NSLog(@"the user: %@",currentUser.username);
-          expect(currentUser.username).notTo.equal(nil);
+  describe(@"Log in user", ^{
+    it(@"should be test user", ^{
+      waitUntil(^(DoneCallback done) {
+        [[DTCommonRequests logInWithUserCredential:kTestingUserName
+                                          password:kTestingUserPassword]
+         continueWithBlock:^id(BFTask *task){
+           expect([PFUser currentUser].username).to.equal(kTestingUserName);
+           done();
+           return nil;
+        }];
+      });
+    });
+      //logged in user removes intent to start from known state
+      context(@"removing active intent",^{
+        it(@"active intent should be not exist", ^{
+          waitUntil(^(DoneCallback done) {
+            [[DTCommonRequests leaveChallenge]
+             continueWithBlock:^id(BFTask *task){
+               expect([[PFUser currentUser] objectForKey:kDTUserActiveIntent]).to.beNil();
+               done();
+               return nil;
+             }];
+          });
+        });
+        it(@"pinned active intent should not exist", ^{
+          waitUntil(^(DoneCallback done) {
+            [[DTCommonRequests helperRetrievePinnedActiveIntentFromCurrentUser]
+             continueWithBlock:^id(BFTask *pinned){
+               expect(pinned.result).to.beNil();
+               done();
+               return nil;
+             }];
+          });
+        });
+        it(@"cached active intent should not exist", ^{
+          waitUntil(^(DoneCallback done) {
+            expect([[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]).to.beNil();
+            done();
+          });
         });
       });
-
-      context(@"when user has an active intent", ^{
-
+      //logged in user joins a challenge
+      context(@"User joining a challenge", ^{
+        it(@"should have a pinned active intent", ^{
+          waitUntil(^(DoneCallback done) {
+            [[DTCommonRequests joinChallenge:kTestingChallengeId] continueWithBlock:^id(BFTask *task){
+              return [[DTCommonRequests helperRetrievePinnedActiveIntentFromCurrentUser]
+                      continueWithBlock:^id(BFTask *pinned){
+                        expect(pinned.result).notTo.beNil();
+                        done();
+                        return nil;
+                      }];
+            }];
+          });
+        });
+        it(@"cache should have active intent for current user", ^{
+          expect([[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]).notTo.beNil();
+        });
+        it(@"cached intent should match test challenge id", ^{
+          expect([[[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]] objectForKey:kDTIntentChallengeKey] objectId]).to.equal(kTestingChallengeId);
+        });
+        it(@"user active intent should match cached intent", ^{
+          waitUntil(^(DoneCallback done) {
+            [[DTCommonRequests helperGetCurrentUserObjectFromService] continueWithBlock:^id(BFTask *task){
+              expect([[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]] objectId]).to.equal([[task.result objectForKey:kDTUserActiveIntent] objectId]);
+              done();
+              return nil;
+            }];
+          });
+        });
       });
-
-      context(@"when user does not have an active intent", ^{
-
-      });
-    });
-    
-    afterEach(^{
-      [PFUser logOut];
-    });
-
   });
+});
 SpecEnd

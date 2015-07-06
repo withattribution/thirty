@@ -160,6 +160,16 @@
   [self cacheIntent:intent forUser:user];
 }
 
+- (void)removeActiveIntentForCurrentUser
+{
+  NSMutableArray *intents = [NSMutableArray arrayWithArray:[self intentsForUser:[PFUser currentUser]]];
+  [intents removeObject:[self activeIntentForUser:[PFUser currentUser]]];
+  [self setIntents:intents forUser:[PFUser currentUser]];
+
+  NSString *key = [self keyForActiveIntent:[PFUser currentUser]];
+  [self.cache removeObjectForKey:key];
+}
+
 - (void)cacheIntent:(PFObject *)intent forUser:(PFUser *)user
 {
   NSMutableArray *intents = [NSMutableArray arrayWithArray:[self intentsForUser:user]];

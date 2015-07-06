@@ -51,7 +51,7 @@
   #ifdef CREATE_CHALLENGE_MODEL
   [self createTestModels];
   #endif
-  
+
   return YES;
 }
 
@@ -132,15 +132,15 @@
 
       uint32_t challengeUserHash = [hash hash32:[challenge objectId]  withSeed:userSeed];
 //      NIDINFO(@"challenge user seed: %u",challengeUserHash);
-      
+
       NSNumber *challengeUserSeed = [NSNumber numberWithUnsignedInt:challengeUserHash];
 //      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
 
       [[NSUserDefaults standardUserDefaults] setValue:challengeUserSeed forKey:kDTChallengeUserSeed];
       [[NSUserDefaults standardUserDefaults] synchronize];
-      
+
       [DTCommonRequests joinChallenge:[challenge objectId]];
-      
+
       NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
 //      }
     }

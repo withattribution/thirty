@@ -11,6 +11,8 @@
 #import "DTCache.h"
 #import "DTConstants.h"
 #import "DTCommonUtilities.h"
+#import "DTCommonRequests.h"
+#import <Bolts/Bolts.h>
 #endif
 
 

@@ -19,4 +19,7 @@
 
 + (uint32_t)challengeUserSeedFromIntent:(PFObject *)intent;
 + (uint32_t)dayHashFromDate:(NSDate *)date intent:(PFObject *)intent;
+
++ (BFTask *)isValidDateForActiveIntent:(PFObject *)activeIntent;
+
 @end

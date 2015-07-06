@@ -52,7 +52,7 @@
                                                             withUser:self.aUser];
   [self.view addSubview:infoHeader];
   
-  NIDINFO(@"current user: %@",self.aUser);
+  NIDINFO(@"user who will have profile view: %@",self.aUser);
   
   CGFloat profileHeightOffset = infoHeader.frame.origin.y + infoHeader.frame.size.height;
   self.historyTable = [[ProfileHistoryTableView alloc] initWithFrame:CGRectMake(0,
@@ -62,7 +62,7 @@
   [self.view addSubview:self.historyTable];
 
   if (![self hasCachedIntents]) {
-    [DTCommonRequests queryIntentsForUser:[PFUser currentUser]];
+    [DTCommonRequests retrieveIntentsForUser:self.aUser];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cachedIntentsForUser:)
@@ -73,7 +73,7 @@
     [self.historyTable setIntentsArray:[[DTCache sharedCache] intentsForUser:self.aUser]];
     [self.historyTable reloadData];
   }
-  NSArray *intents = [[DTCache sharedCache] intentsForUser:[PFUser currentUser]];
+  NSArray *intents = [[DTCache sharedCache] intentsForUser:self.aUser];
   for (PFObject *i in intents) {
     NIDINFO(@"the intents: %@",i);
   }

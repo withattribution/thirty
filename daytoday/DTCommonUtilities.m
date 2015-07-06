@@ -74,7 +74,23 @@
 + (uint32_t)dayHashFromDate:(NSDate *)date intent:(PFObject *)intent
 {
   MurmurHash *hash = [[MurmurHash alloc] init];
-  return [hash hash32:[[DTCommonUtilities dayformatterForSeed] stringFromDate:date]  withSeed:[DTCommonUtilities challengeUserSeedFromIntent:intent]];
+  return [hash hash32:[[DTCommonUtilities dayformatterForSeed] stringFromDate:date]
+             withSeed:[DTCommonUtilities challengeUserSeedFromIntent:intent]];
+}
+
++ (BFTask *)isValidDateForActiveIntent:(PFObject *)activeIntent
+{
+  NSDate *today = [NSDate date];
+  NSComparisonResult starting = [[self commonCalendar] compareDate:[activeIntent objectForKey:kDTIntentStartingKey]
+                                                            toDate:today
+                                                 toUnitGranularity:NSCalendarUnitDay];
+  NSComparisonResult ending = [[self commonCalendar] compareDate:[activeIntent objectForKey:kDTIntentEndingKey]
+                                                          toDate:today
+                                               toUnitGranularity:NSCalendarUnitDay];
+  return [BFTask taskWithResult:@((starting == NSOrderedSame ||
+                                   starting == NSOrderedAscending) &&
+                                    (ending == NSOrderedSame ||
+                                     ending == NSOrderedDescending))];
 }
 
 @end

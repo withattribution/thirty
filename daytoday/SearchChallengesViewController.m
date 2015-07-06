@@ -28,8 +28,22 @@
 {
   [super viewDidLoad];
   self.title = NSLocalizedString(@"Search Challenges", @"search challenges (title)");
-
-  [DTCommonRequests logoutCurrentUser];
+  [[[DTCommonRequests logoutCurrentUser]
+    continueWithExecutor:[BFExecutor mainThreadExecutor]
+          withSuccessBlock:^id(BFTask *ts){
+            UIAlertView *logoutAlert = [[UIAlertView alloc] initWithTitle:@"Logged Out"
+                                                                message:@"you can't do much of anything now :("
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"😭 😭 😭"
+                                                      otherButtonTitles:nil];
+            [logoutAlert show];
+            return nil;
+          }] continueWithBlock:^id(BFTask *task){
+            //catch errors and return completed
+            if (task.error)
+              NIDINFO(@"error reporting: %@", [task.error localizedDescription]);
+            return nil;
+          }];
 }
 
 

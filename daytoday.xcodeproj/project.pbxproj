@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4120AE7C7A62DCEC9DB9A23C /* libPods-daytodayTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6529BB58636F8BAEEC4E70C /* libPods-daytodayTests.a */; };
+		6E5C71721B49659100BB97E5 /* DTCommonRequests+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E5C71711B49659100BB97E5 /* DTCommonRequests+Spec.m */; };
 		6E7F9C7F1B2C2F8A0039FC83 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F7F10180C66AF0072954E /* libsqlite3.dylib */; };
 		6E7F9CA61B2C2FD50039FC83 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDAB9451B26E2350056AB69 /* Accounts.framework */; };
 		6E7F9CB01B2C36A10039FC83 /* CommonRequestsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E7F9CAD1B2C34FA0039FC83 /* CommonRequestsSpec.m */; };
@@ -1117,6 +1118,8 @@
 		6E04C1EC1B108CCF00A279A2 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		6E04C1ED1B108CCF00A279A2 /* TTTTimeIntervalFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTTTimeIntervalFormatter.h; sourceTree = "<group>"; };
 		6E04C1EE1B108CCF00A279A2 /* TTTTimeIntervalFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTTTimeIntervalFormatter.m; sourceTree = "<group>"; };
+		6E5C71701B49659100BB97E5 /* DTCommonRequests+Spec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DTCommonRequests+Spec.h"; sourceTree = "<group>"; };
+		6E5C71711B49659100BB97E5 /* DTCommonRequests+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DTCommonRequests+Spec.m"; sourceTree = "<group>"; };
 		6E7F9CAB1B2C340D0039FC83 /* Specs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Specs.h; sourceTree = "<group>"; };
 		6E7F9CAD1B2C34FA0039FC83 /* CommonRequestsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonRequestsSpec.m; path = daytodayTests/CommonRequestsSpec.m; sourceTree = SOURCE_ROOT; };
 		6E7F9CB61B39158B0039FC83 /* UserEntryViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserEntryViewModel.h; sourceTree = "<group>"; };
@@ -3120,9 +3123,19 @@
 			path = NYXImagesKit;
 			sourceTree = "<group>";
 		};
+		6E5C71681B495E9A00BB97E5 /* Spec Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6E5C71701B49659100BB97E5 /* DTCommonRequests+Spec.h */,
+				6E5C71711B49659100BB97E5 /* DTCommonRequests+Spec.m */,
+			);
+			name = "Spec Helpers";
+			sourceTree = "<group>";
+		};
 		6E7F9CAC1B2C34CB0039FC83 /* Specs */ = {
 			isa = PBXGroup;
 			children = (
+				6E7F9CAD1B2C34FA0039FC83 /* CommonRequestsSpec.m */,
 			);
 			name = Specs;
 			sourceTree = "<group>";
@@ -3545,7 +3558,7 @@
 		A1E4256718512E9800DAE577 /* daytodayTests */ = {
 			isa = PBXGroup;
 			children = (
-				6E7F9CAD1B2C34FA0039FC83 /* CommonRequestsSpec.m */,
+				6E5C71681B495E9A00BB97E5 /* Spec Helpers */,
 				6E7F9CAC1B2C34CB0039FC83 /* Specs */,
 				A1E4256D18512E9800DAE577 /* daytodayTests.m */,
 				A1E4256818512E9800DAE577 /* Supporting Files */,
@@ -4247,6 +4260,7 @@
 			files = (
 				A1E4256E18512E9800DAE577 /* daytodayTests.m in Sources */,
 				6E7F9CB01B2C36A10039FC83 /* CommonRequestsSpec.m in Sources */,
+				6E5C71721B49659100BB97E5 /* DTCommonRequests+Spec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4424,7 +4438,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/daytoday.app/daytoday";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
@@ -4469,7 +4483,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/daytoday.app/daytoday";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;

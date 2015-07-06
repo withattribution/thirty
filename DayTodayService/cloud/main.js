@@ -125,8 +125,8 @@ Parse.Cloud.define("joinChallenge",function(request,response){
   console.log("the param for the challenge id: "+challengeId);
 
   var query = new Parse.Query("Challenge");
-  query.get(challengeId).then(function(challenge){
-
+  query.get(challengeId).then(function(challenge)
+  {
     var Intent = Parse.Object.extend("Intent");
     var intent = new Intent();
     intent.save({
@@ -161,6 +161,7 @@ Parse.Cloud.define("joinChallenge",function(request,response){
             //resave intent with related challenge days
             relatedIntent.save(null, {
               success: function(intent) {
+                console.log("FUCK YES INTENT!: "+intent);
                 response.success(intent);
               },          
               error: function(error) {

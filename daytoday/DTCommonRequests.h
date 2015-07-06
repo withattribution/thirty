@@ -17,27 +17,32 @@
 
 + (void)requestDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy;
 
-+ (void)joinChallenge:(NSString *)challengeId;
-
-#pragma mark Intents for User
-
-+ (void)setCurrentUserActiveIntent:(PFObject *)intent;
-+ (void)queryIntentsForUser:(PFUser *)user;
-+ (BFTask *)queryActiveIntentForUser:(PFUser *)user __attribute__((deprecated("use retrieveIntentForUser:user instead")));
-+ (BFTask *)retrieveIntentForUser:(PFUser *)user;
-
-+ (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy;
-
 #pragma mark Verification Activity Request
 
 + (void)verificationActivity:(NSString *)status;
 + (void)refreshActiveChallengeDay;
++ (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy;
+
+#pragma mark Intents for User
+
+/*!
+ An active intent is pinned if it belongs to the current user
+ *** otherwise ***
+ all intents are either cached, available on service, or empty
+*/
+
++ (BFTask *)retrieveActiveIntentForUser:(PFUser *)user;
++ (BFTask *)retrieveIntentsForUser:(PFUser *)user;
+
+#pragma mark Challenge Entry/Exit
+
++ (BFTask *)joinChallenge:(NSString *)challengeId;
++ (BFTask *)leaveChallenge;
 
 #pragma mark User Entry/Exit
 
-+ (void)logoutCurrentUser;
-+ (void)logInWithUserCredential:(NSString *)userCredential password:(NSString *)passwordCredential;
++ (BFTask *)logoutCurrentUser;
++ (BFTask *)logInWithUserCredential:(NSString *)userCredential password:(NSString *)passwordCredential;
 + (void)signUpWithEmailCredential:(NSString *)emailCredential password:(NSString *)passwordCredential user:(NSString *)userCredential;
-
 
 @end
