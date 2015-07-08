@@ -16,7 +16,6 @@ NSString *const kTestingUserPassword                    =@"Fixture Password";
 NSString *const kTestingChallengeId                     =@"hxVdpImcUK";
 
 describe(@"User Entry: Login", ^{
-
   //Log out any user that has persisted
   describe(@"Logout user to so that we're starting at a known state", ^{
     it(@"current user should not exist", ^{
@@ -114,6 +113,18 @@ describe(@"User Entry: Login", ^{
             }];
           });
         });
+        it(@"intent should have pinned days", ^{
+          waitUntil(^(DoneCallback done) {
+            [[DTCommonRequests helperGetDaysFromLocalStoreForActiveIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]] continueWithBlock:^id(BFTask *days){
+              expect(days.result).to.haveCountOf([[[[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]
+                                                                                  objectForKey:kDTIntentChallengeKey]
+                                                                                  objectForKey:kDTChallengeDurationKey] integerValue]);
+              done();
+              return nil;
+            }];
+          });
+        });
+        
       });
   });
 });

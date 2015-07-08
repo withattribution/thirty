@@ -10,17 +10,17 @@
 
 @interface DTCommonRequests : NSObject
 
+#pragma mark Challenge Day Methods
+
++ (void)activeDayForDate:(NSDate *)date user:(PFUser *)user;
++ (BFTask *)retrieveDaysForIntent:(PFObject *)intent;
+
+#pragma mark Activities on Challenge Day
+
 + (void)likeChallengeDayInBackGround:(PFObject *)challengeDay block:(void(^)(BOOL succeeded, NSError *error))completionBlock;
 + (void)unLikeChallengeDayInBackGround:(PFObject *)challengeDay block:(void(^)(BOOL succeeded, NSError *error))completionBlock;
 
-+ (void)activeDayForDate:(NSDate *)date user:(PFUser *)user;
-
-+ (void)requestDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy;
-
-#pragma mark Verification Activity Request
-
 + (void)verificationActivity:(NSString *)status;
-+ (void)refreshActiveChallengeDay;
 + (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy;
 
 #pragma mark Intents for User

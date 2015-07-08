@@ -17,6 +17,7 @@ extern NSString *const kDTChallengeUserSeed;
 
 #pragma mark - Pinning Labels
 extern NSString *const kDTPinnedActiveIntent;
+extern NSString *const kDTPinnedActiveChallengeDays;
 
 #pragma mark - DTDateFormatString
 // Date Format Constants

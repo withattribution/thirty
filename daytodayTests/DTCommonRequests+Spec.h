@@ -14,5 +14,6 @@
 
 + (BFTask *)helperRetrievePinnedActiveIntentFromCurrentUser;
 + (BFTask *)helperGetCurrentUserObjectFromService;
++ (BFTask *)helperGetDaysFromLocalStoreForActiveIntent:(PFObject *)intent;
 
 @end

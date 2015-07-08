@@ -19,6 +19,7 @@ NSString *const kDTChallengeUserSeed                   =@"seed";
 
 #pragma mark - Pinning Labels
 NSString *const kDTPinnedActiveIntent                  =@"activeIntent";
+NSString *const kDTPinnedActiveChallengeDays           =@"activeChallengeDays";
 
 #pragma mark - DTDateFormatString
 // Date Format Constants

@@ -41,6 +41,7 @@
 
 - (NSArray *)challengeDaysForIntent:(PFObject *)intent;
 - (void)cacheChallengeDays:(NSArray *)days forIntent:(PFObject *)intent;
+- (void)removeChallengeDaysForCurrentUser;
 
 #pragma mark - Intents for User
 

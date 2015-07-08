@@ -85,7 +85,7 @@
 - (void)addChallengeProgressElement
 {
   if(![self intentHasChallengeDays]) {
-    [DTCommonRequests requestDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]] cachePolicy:kPFCachePolicyNetworkOnly];
+    [DTCommonRequests retrieveDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cachedChallengeDaysForIntent:)

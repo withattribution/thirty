@@ -25,6 +25,13 @@
   return [userQuery getObjectInBackgroundWithId:[PFUser currentUser].objectId];
 }
 
++ (BFTask *)helperGetDaysFromLocalStoreForActiveIntent:(PFObject *)intent
+{
+  PFQuery *dayQuery = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
+  [dayQuery fromPinWithName:kDTPinnedActiveChallengeDays];
+  return [dayQuery findObjectsInBackground];
+}
+
 @end
 
 //  NSString *const kTestingUserEmail                       =@"Fixture@Email.Com";

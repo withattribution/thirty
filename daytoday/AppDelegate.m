@@ -44,9 +44,6 @@
   #endif
 
   [self.window makeKeyAndVisible];
-//  [self pinIntentForTesting];
-//  [self unPinAllIntentsForTesting];
-//  [self retrieveFromPinnedLabel];
   
   #ifdef CREATE_CHALLENGE_MODEL
   [self createTestModels];
@@ -70,43 +67,6 @@
       }];
     }
   }
-}
-
-- (void)retrieveFromPinnedLabel
-{
-  PFQuery *query = [PFQuery queryWithClassName:kDTIntentClassKey];
-//  PFQuery *query = [PFUser query];
-  [query fromPinWithName:kDTPinnedActiveIntent];
-  [[query findObjectsInBackground] continueWithBlock:^id(BFTask *task) {
-    NIDINFO(@"type: %@", [task.result class]);
-    
-    NSArray *scores = task.result;
-    for (PFObject *score in scores) {
-      NIDINFO(@"the score: %@",score);
-    }
-    return task;
-  }];
-}
-
-- (void)unPinAllIntentsForTesting
-{
-  [PFObject unpinAllObjectsInBackgroundWithName:kDTPinnedActiveIntent];
-}
-
-- (void)pinIntentForTesting
-{
-  PFQuery *userQuery = [PFUser query];
-  [userQuery includeKey:kDTUserActiveIntent];
-  [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *obj, NSError *error){
-    if (!error && [obj objectForKey:kDTUserActiveIntent]) {
-      if ([obj isKindOfClass:[PFObject class]]) {
-         [[obj objectForKey:kDTUserActiveIntent] pinInBackgroundWithName:kDTPinnedActiveIntent];
-        NIDINFO(@"pinnnnnned Intent: %@",[obj objectForKey:kDTUserActiveIntent]);
-      }
-    }else {
-      NIDINFO(@"active intent query failed: %@", [error localizedDescription]);
-    }
-  }];
 }
 
 - (void)createTestModels

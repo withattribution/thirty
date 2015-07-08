@@ -146,6 +146,12 @@
   return [self.cache objectForKey:key];
 }
 
+- (void)removeChallengeDaysForCurrentUser
+{
+  NSString *key = [self keyForIntent:[self activeIntentForUser:[PFUser currentUser]]];
+  return [self.cache removeObjectForKey:key];
+}
+
 #pragma mark - Intents for User
 
 - (PFObject *)activeIntentForUser:(PFUser *)user

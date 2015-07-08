@@ -16,9 +16,10 @@
 + (BFTask *)userNotLoggedIn;
 + (BFTask *)userHasNoActiveIntent;
 
-+ (BFTask *)unPinActiveIntent;
-+ (BFTask *)unPinAndClearCache;
-+ (BFTask *)unPinAndRemoveActiveIntentFromCache;
++ (BFTask *)clearLocalStorage;
+
++ (BFTask *)unpinActiveIntent;
++ (BFTask *)unpinActiveIntentAndRemoveFromCache;
 
 + (BFTask *)pinActiveIntentForCurrentUser:(PFObject *)intent;
 + (BFTask *)pinAndCacheActiveIntent:(PFObject *)intent;
@@ -27,7 +28,6 @@
 + (BFTask *)queryCurrentUserObjectWithActiveIntentKeyFromService;
 
 + (BFTask *)queryPinnedActiveIntentForCurrentUser;
-
 /*!
 assign active intent for current user locally and to service
  */
@@ -37,11 +37,118 @@ completely disassociate active intent for current user locally and from service
  */
 + (BFTask *)disassociateActiveIntentForCurrentUser;
 
++ (BFTask *)queryChallengeDaysFromServiceForIntent:(PFObject *)intent;
++ (BFTask *)queryChallengeDaysFromLocalStoreForActiveIntent:(PFObject *)intent;
+
++ (BFTask *)pinAndCacheChallengeDaysForCurrentUser:(NSArray *)days;
++ (BFTask *)unpinAndRemoveFromCacheChallengeDaysForCurrentUser;
++ (BFTask *)unpinChallengeDaysForCurrentUser;
+
 @end
 
 @implementation DTCommonRequests
 
 #pragma mark Challenge Day Methods
+
++ (void)activeDayForDate:(NSDate *)date user:(PFUser *)user
+{
+  [[DTCommonRequests retrieveActiveIntentForUser:user] continueWithSuccessBlock:^id(BFTask *task) {
+    if (!task.error) {
+      uint32_t challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:task.result];
+      NIDINFO(@"seed: %u",challengeUserSeed);
+      [PFCloud callFunctionInBackground:DTQueryActiveDay
+                         withParameters:@{@"seed": @(challengeUserSeed) }
+                                  block:^(PFObject *day, NSError *error) {
+                                    if (!error) {
+                                      NIDINFO(@"the day: %@",day);
+                                      [[NSNotificationCenter defaultCenter]
+                                       postNotificationName:DTChallengeDayRetrievedNotification
+                                                     object:day
+                                                   userInfo:nil];
+                                    }else {
+                                      NIDINFO("error!: %@",error.localizedDescription);
+                                    }
+                                  }];
+    }
+    return nil;
+  }];
+}
+
++ (BFTask *)retrieveDaysForIntent:(PFObject *)intent
+{
+  //if the intent is NOT the current active intent
+  //then try the local cache and
+  //then just hit the service
+  if(![intent.objectId isEqualToString:[[[PFUser currentUser] objectForKey:kDTUserActiveIntent] objectId]]){
+    NSArray *days = [[DTCache sharedCache] challengeDaysForIntent:intent];
+    if ([days count] > 0) {
+      return [BFTask taskWithResult:days];
+    }else{
+      return [DTCommonRequests queryChallengeDaysFromServiceForIntent:intent];
+    }
+  }
+  
+  //query pinned days, then cache, then try service
+  return [[DTCommonRequests queryPinnedActiveIntentForCurrentUser] continueWithBlock:^id(BFTask *pinned){
+    if (!pinned.result) {
+      NSArray *days = [[DTCache sharedCache] challengeDaysForIntent:intent];
+      if ([days count] > 0) {
+        return [BFTask taskWithResult:days];
+      }else{
+        return [DTCommonRequests queryChallengeDaysFromServiceForIntent:intent];
+      }
+    }
+    return pinned.result;
+  }];
+}
+
++ (BFTask *)queryChallengeDaysFromServiceForIntent:(PFObject *)intent
+{
+  PFRelation *intentRelation = [intent relationForKey:kDTIntentChallengeDays];
+  PFQuery *dayQuery = [intentRelation query];
+  return [[dayQuery findObjectsInBackground] continueWithBlock:^id(BFTask *days){
+    [[DTCache sharedCache] cacheChallengeDays:days.result forIntent:intent];
+
+    return days.result;
+  }];
+}
+
++ (BFTask *)queryChallengeDaysFromLocalStoreForActiveIntent:(PFObject *)intent
+{
+  PFQuery *dayQuery = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
+  [dayQuery fromPinWithName:kDTPinnedActiveChallengeDays];
+  return [[dayQuery findObjectsInBackground] continueWithBlock:^id(BFTask *days){
+    [[DTCache sharedCache] cacheChallengeDays:days.result forIntent:intent];
+
+    return days.result;
+  }];
+}
+
++ (BFTask *)pinAndCacheChallengeDaysForCurrentUser:(NSArray *)days
+{
+  return [[PFObject pinAllInBackground:days withName:kDTPinnedActiveChallengeDays]
+          continueWithSuccessBlock:^id(BFTask *pinned){
+            [[DTCache sharedCache] cacheChallengeDays:days
+                                            forIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
+            return nil;
+  }];
+}
+
++ (BFTask *)unpinAndRemoveFromCacheChallengeDaysForCurrentUser
+{
+  return [[DTCommonRequests unpinChallengeDaysForCurrentUser]
+          continueWithSuccessBlock:^id(BFTask *task){
+            [[DTCache sharedCache] removeChallengeDaysForCurrentUser];
+            return nil;
+  }];
+}
+
++ (BFTask *)unpinChallengeDaysForCurrentUser
+{
+  return [PFObject unpinAllObjectsInBackgroundWithName:kDTPinnedActiveChallengeDays];
+}
+
+#pragma mark Activities on Challenge Day
 
 + (void)likeChallengeDayInBackGround:(PFObject *)challengeDay block:(void(^)(BOOL succeeded, NSError *error))completionBlock
 {
@@ -56,29 +163,29 @@ completely disassociate active intent for current user locally and from service
       for (PFObject *activity in activities) {
         [activity deleteInBackground];
       }
-
+      
       PFObject *likeActivity = [PFObject objectWithClassName:kDTActivityClassKey];
       [likeActivity setObject:kDTActivityTypeLike forKey:kDTActivityTypeKey];
       [likeActivity setObject:[PFUser currentUser] forKey:kDTActivityFromUserKey];
       // TODO: need to use stored intent to retrieve user to associate activity with
 #warning need to use stored intent to retrieve user to associate activity with
-//      [likeActivity setObject:[[challengeDay objectForKey:kDTChallengeDayIntentKey]
-//                               objectForKey:kDTIntentUserKey]
-//                       forKey:kDTActivityToUserKey];
+      //      [likeActivity setObject:[[challengeDay objectForKey:kDTChallengeDayIntentKey]
+      //                               objectForKey:kDTIntentUserKey]
+      //                       forKey:kDTActivityToUserKey];
       likeActivity[kDTActivityChallengeDayKey] = [PFObject objectWithoutDataWithClassName:kDTChallengeDayClassKey
                                                                                  objectId:challengeDay.objectId];
-
+      
       PFACL *likeACL = [PFACL ACLWithUser:[PFUser currentUser]];
       [likeACL setPublicReadAccess:YES];
       likeActivity.ACL = likeACL;
-
+      
       [likeActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
         if (completionBlock) {
           completionBlock(succeeded,error);
         }
         PFQuery *query = [DTCommonRequests queryForActivitiesOnChallengeDay:challengeDay cachePolicy:kPFCachePolicyNetworkOnly];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
-          if (!error) {            
+          if (!error) {
             [[DTCache sharedCache] refreshCacheActivity:objects forChallengeDay:challengeDay];
           }
 #warning send push notification here
@@ -100,11 +207,11 @@ completely disassociate active intent for current user locally and from service
       for (PFObject *activity in activities) {
         [activity deleteInBackground];
       }
-
+      
       if (completionBlock) {
         completionBlock(YES,nil);
       }
-
+      
       PFQuery *query = [DTCommonRequests queryForActivitiesOnChallengeDay:challengeDay cachePolicy:kPFCachePolicyNetworkOnly];
       [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
         if (!error) {
@@ -119,49 +226,6 @@ completely disassociate active intent for current user locally and from service
     }
   }];
 }
-
-+ (void)activeDayForDate:(NSDate *)date user:(PFUser *)user
-{
-  [[DTCommonRequests retrieveActiveIntentForUser:user] continueWithSuccessBlock:^id(BFTask *task) {
-    if (!task.error) {
-      uint32_t challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:task.result];
-
-      NIDINFO(@"seed: %u",challengeUserSeed);
-
-      [PFCloud callFunctionInBackground:DTQueryActiveDay
-                         withParameters:@{@"seed": @(challengeUserSeed) }
-                                  block:^(PFObject *day, NSError *error) {
-                                    if (!error) {
-                                      NIDINFO(@"the day: %@",day);
-                                      [[NSNotificationCenter defaultCenter]
-                                       postNotificationName:DTChallengeDayRetrievedNotification
-                                                     object:day
-                                                   userInfo:nil];
-                                    }else {
-                                      NIDINFO("error!: %@",error.localizedDescription);
-                                    }
-                                  }];
-    }
-    return nil;
-  }];
-}
-//looking into replacing
-+ (void)requestDaysForIntent:(PFObject *)intent cachePolicy:(PFCachePolicy)cachePolicy
-{
-  #warning I'm not entirely sure i remember why this is a thing
-  PFRelation *intentRelation = [intent relationForKey:kDTIntentChallengeDays];
-  PFQuery *dayQuery = [intentRelation query];
-  [dayQuery setCachePolicy:cachePolicy];
-  [dayQuery findObjectsInBackgroundWithBlock:^(NSArray *days, NSError *error){
-    if (!error && [days count] > 0) {
-      [[DTCache sharedCache] cacheChallengeDays:days forIntent:intent];
-    }else {
-      NIDINFO(@"error: %@",[error localizedDescription]);
-    }
-  }];
-}
-
-#pragma mark Activities
 
 + (PFQuery *)queryForActivitiesOnChallengeDay:(PFObject *)challengeDay cachePolicy:(PFCachePolicy)cachePolicy
 {
@@ -278,23 +342,26 @@ completely disassociate active intent for current user locally and from service
   return [BFTask taskWithError:[NSError errorWithDomain:@"kDTDomainUserHasNoActiveIntent" code:-200 userInfo:nil]];
 }
 
-+ (BFTask *)unPinActiveIntent
++ (BFTask *)unpinActiveIntent
 {
   return [PFObject unpinAllObjectsInBackgroundWithName:kDTPinnedActiveIntent];
 }
 
-+ (BFTask *)unPinAndClearCache
++ (BFTask *)clearLocalStorage
 {
-  return [[DTCommonRequests unPinActiveIntent]
-          continueWithSuccessBlock:^id(BFTask *task){
-            [[DTCache sharedCache] clear];
-            return nil;
+  return [[DTCommonRequests unpinAndRemoveFromCacheChallengeDaysForCurrentUser]
+            continueWithSuccessBlock:^id(BFTask *task){
+              return [[DTCommonRequests unpinActiveIntent]
+                      continueWithSuccessBlock:^id(BFTask *task){
+                        [[DTCache sharedCache] clear];
+                        return nil;
+              }];
           }];
 }
 
-+ (BFTask *)unPinAndRemoveActiveIntentFromCache
++ (BFTask *)unpinActiveIntentAndRemoveFromCache
 {
-  return [[DTCommonRequests unPinActiveIntent]
+  return [[DTCommonRequests unpinActiveIntent]
           continueWithSuccessBlock:^id(BFTask *task){
             [[DTCache sharedCache] removeActiveIntentForCurrentUser];
             return nil;
@@ -366,7 +433,7 @@ completely disassociate active intent for current user locally and from service
   [[PFUser currentUser] removeObjectForKey:kDTUserActiveIntent];
   return [[[PFUser currentUser] saveInBackground]
           continueWithSuccessBlock:^id(BFTask *task) {
-            return [DTCommonRequests unPinAndRemoveActiveIntentFromCache];
+            return [DTCommonRequests unpinActiveIntentAndRemoveFromCache];
   }];
 }
 
@@ -374,16 +441,25 @@ completely disassociate active intent for current user locally and from service
 
 + (BFTask *)joinChallenge:(NSString *)challengeId
 {
-  return [[DTCommonRequests unPinActiveIntent] continueWithSuccessBlock:^id(BFTask *join){
+  return [[DTCommonRequests unpinActiveIntent] continueWithSuccessBlock:^id(BFTask *join){
     return [[PFCloud callFunctionInBackground:DTJoinChallenge
                                withParameters:@{@"challenge":challengeId}]
-            continueWithBlock:^id(BFTask *task){
-              if (!task.error) {
-                return [DTCommonRequests associateActiveIntentForCurrentUser:task.result];
-              }else {
-                NIDINFO("error!: %@",task.error.localizedDescription);
+            continueWithBlock:^id(BFTask *intent){
+              if (!intent.error) {
+                return [[DTCommonRequests queryChallengeDaysFromServiceForIntent:intent.result]
+                        continueWithBlock:^id(BFTask *days){
+                          if (!days.error) {
+                            return [[DTCommonRequests pinAndCacheChallengeDaysForCurrentUser:days.result]
+                                    continueWithSuccessBlock:^id(BFTask *task){
+                                      return [DTCommonRequests associateActiveIntentForCurrentUser:intent.result];
+                                    }];
+                          }
+                          NIDINFO("error!: %@",days.error.localizedDescription);
+                          return days.error;
+                        }];
               }
-              return nil;
+              NIDINFO("error!: %@",intent.error.localizedDescription);
+              return intent.error;
             }];
   }];
 }
@@ -393,7 +469,9 @@ completely disassociate active intent for current user locally and from service
   [[[PFUser currentUser] objectForKey:kDTUserActiveIntent] setObject:@(YES) forKey:kDTIntentAccomplishedIntentKey];
 
   return [[[[PFUser currentUser] objectForKey:kDTUserActiveIntent] saveInBackground] continueWithSuccessBlock:^id(BFTask *task){
-    return [DTCommonRequests disassociateActiveIntentForCurrentUser];
+    return [[DTCommonRequests unpinAndRemoveFromCacheChallengeDaysForCurrentUser] continueWithSuccessBlock:^id(BFTask *task){
+      return [DTCommonRequests disassociateActiveIntentForCurrentUser];
+    }];
   }];
 }
 
@@ -402,7 +480,7 @@ completely disassociate active intent for current user locally and from service
 + (BFTask *)logoutCurrentUser
 {
   return [[PFUser logOutInBackground] continueWithSuccessBlock:^id(BFTask *task){
-    return [DTCommonRequests unPinAndClearCache];
+    return [DTCommonRequests clearLocalStorage];
   }];
 }
 
