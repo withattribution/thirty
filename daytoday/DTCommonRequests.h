@@ -12,8 +12,10 @@
 
 #pragma mark Challenge Day Methods
 
-+ (void)activeDayForDate:(NSDate *)date user:(PFUser *)user;
++ (BFTask *)retrieveActiveChallengeDayForDate:(NSDate *)date user:(PFUser *)user;
 + (BFTask *)retrieveDaysForIntent:(PFObject *)intent;
+
++ (void)activeDayForDate:(NSDate *)date user:(PFUser *)user;
 
 #pragma mark Activities on Challenge Day
 

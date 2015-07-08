@@ -50,6 +50,30 @@ completely disassociate active intent for current user locally and from service
 
 #pragma mark Challenge Day Methods
 
++ (BFTask *)retrieveActiveChallengeDayForDate:(NSDate *)date user:(PFUser *)user
+{
+#warning a possible way to optimize this might be to sort the pinned challenge days by ordinal and then translate the active hash to ordinal and lookup the active day locally for current users -- and only hit the service directly for other users (but not now)
+  return [[DTCommonRequests retrieveActiveIntentForUser:user]
+          continueWithSuccessBlock:^id(BFTask *task){
+            uint32_t challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:task.result];
+            NIDINFO(@"seed: %u",challengeUserSeed);
+            return [[PFCloud callFunctionInBackground:DTQueryActiveDay
+                                       withParameters:@{@"seed": @(challengeUserSeed) }]
+                    continueWithBlock:^id(BFTask *day){
+                      if (!day.error) {
+                        NIDINFO(@"the day: %@",day.result);
+                        [[NSNotificationCenter defaultCenter]
+                         postNotificationName:DTChallengeDayRetrievedNotification
+                         object:day.result
+                         userInfo:nil];
+                        return day.result;
+                      }
+                      NIDINFO("error!: %@",day.error.localizedDescription);
+                      return nil;
+                    }];
+  }];
+}
+
 + (void)activeDayForDate:(NSDate *)date user:(PFUser *)user
 {
   [[DTCommonRequests retrieveActiveIntentForUser:user] continueWithSuccessBlock:^id(BFTask *task) {
@@ -63,8 +87,8 @@ completely disassociate active intent for current user locally and from service
                                       NIDINFO(@"the day: %@",day);
                                       [[NSNotificationCenter defaultCenter]
                                        postNotificationName:DTChallengeDayRetrievedNotification
-                                                     object:day
-                                                   userInfo:nil];
+                                       object:day
+                                       userInfo:nil];
                                     }else {
                                       NIDINFO("error!: %@",error.localizedDescription);
                                     }

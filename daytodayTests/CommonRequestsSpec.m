@@ -11,6 +11,9 @@
 
 SpecBegin(CommonRequestBehaviors)
 
+//when in the philippines LOLZ
+setAsyncSpecTimeout(20.0);
+
 NSString *const kTestingUserName                        =@"Fixture Username";
 NSString *const kTestingUserPassword                    =@"Fixture Password";
 NSString *const kTestingChallengeId                     =@"hxVdpImcUK";
