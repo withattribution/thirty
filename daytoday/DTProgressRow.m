@@ -16,6 +16,7 @@
 @property (nonatomic,strong) NSArray *rowDates;
 
 @property (nonatomic,strong) DTProgressElement *progressElement;
+
 + (CGFloat)paddingForRowInset:(CGFloat)rowInset numberOfDTDots:(NSUInteger)dotCount frame:(CGRect)frame;
 
 @end
@@ -84,7 +85,7 @@
     CGFloat progressUnits = (position * (self.dotPadding + self.frame.size.height));
 //    NIDINFO(@"units: %f",progressUnits);
     DTProgressElement *progressElement = [DTProgressElement buildForStyle:endStyle progressUnits:progressUnits frame:CGRectMake(self.rowInset/2.f, 0.f, self.frame.size.width-(1*self.rowInset), self.frame.size.height)];
-    [progressElement setBackgroundColor:[UIColor purpleColor]];
+//    [progressElement setBackgroundColor:[UIColor orangeColor]];
     [self insertSubview:progressElement atIndex:0];
   }
 }

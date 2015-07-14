@@ -111,9 +111,10 @@ completely disassociate active intent for current user locally and from service
       return [DTCommonRequests queryChallengeDaysFromServiceForIntent:intent];
     }
   }
-  
+
   //query pinned days, then cache, then try service
-  return [[DTCommonRequests queryPinnedActiveIntentForCurrentUser] continueWithBlock:^id(BFTask *pinned){
+  return [[DTCommonRequests queryChallengeDaysFromLocalStoreForActiveIntent:intent] continueWithBlock:^id(BFTask *pinned){
+
     if (!pinned.result) {
       NSArray *days = [[DTCache sharedCache] challengeDaysForIntent:intent];
       if ([days count] > 0) {
@@ -517,14 +518,17 @@ completely disassociate active intent for current user locally and from service
         return nil;
 
       return [[DTCommonRequests queryCurrentUserObjectWithActiveIntentKeyFromService]
-              continueWithSuccessBlock:^id(BFTask *intent){
-                if (![intent.result objectForKey:kDTUserActiveIntent]) {
+              continueWithSuccessBlock:^id(BFTask *user){
+                if (![user.result objectForKey:kDTUserActiveIntent]) {
                   return [DTCommonRequests userHasNoActiveIntent];
                 }
-                return [[DTCommonUtilities isValidDateForActiveIntent:[intent.result objectForKey:kDTUserActiveIntent]]
+                return [[DTCommonUtilities isValidDateForActiveIntent:[user.result objectForKey:kDTUserActiveIntent]]
                         continueWithSuccessBlock:^id(BFTask *validate){
                           if ([validate.result boolValue])
-                            return [DTCommonRequests pinAndCacheActiveIntent:[intent.result objectForKey:kDTUserActiveIntent]];
+                            return [[DTCommonRequests pinAndCacheActiveIntent:[user.result objectForKey:kDTUserActiveIntent]] continueWithSuccessBlock:^id(BFTask *pinned){
+                              NIDINFO(@"the pinned intent: %@",[user.result objectForKey:kDTUserActiveIntent]);
+                              return [DTCommonRequests retrieveDaysForIntent:[user.result objectForKey:kDTUserActiveIntent]];
+                            }];
                           else
                             return [DTCommonRequests leaveChallenge];
                         }];

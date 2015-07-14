@@ -27,35 +27,39 @@ static int WEEK_ROWS = 2;
 //[self.rowView setRowInset:kVerificationDayInset];
 //[self.view addSubview:self.rowView];
 
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withIntent:(PFObject *)intent
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
 //        self.snapShotElements = rows;
       NSArray *rows = [[DTChallengeCalendar calendarWithIntent:intent] rows];
-      
+
       if (rows.count > 0) {
         DTProgressRow *rowTest = [[DTProgressRow alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, 50.0f)];
+
+        [rowTest setDataSource:[DTChallengeCalendar calendarWithIntent:intent]];
         [rowTest setRowInset:3.0];
+        [rowTest setBackgroundColor:[UIColor orangeColor]];
         [self addSubview:rowTest];
       }
-      
+
 //        [self setFrame:CGRectMake(0.f,
 //                                  self.frame.origin.y,
 //                                  self.frame.size.width,
 //                                  (WEEK_ROWS * ROW_HEIGHT) + (2*TOP_PADDING) + ROW_SPACING)];
-//        
+
 //        if (self.snapShotElements && [self.snapShotElements count] > 0) {
 //            [self addSubview:[self.snapShotElements objectAtIndex:0]];
 //        }
-      
+
         UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0.f,
                                                                       ROW_HEIGHT + 2.f,
                                                                       self.frame.size.width,
                                                                       ROW_SPACING)];
         [spacerView setBackgroundColor:[UIColor colorWithWhite:1.f alpha:1.f]];
 //        [self addSubview:spacerView];
-//        
+
 //        if (self.snapShotElements && [self.snapShotElements count] > 0) {
 //            [[self.snapShotElements objectAtIndex:1] setFrame:CGRectMake(0.,
 //                                                                         spacerView.frame.origin.y + spacerView.frame.size.height,
@@ -65,7 +69,7 @@ static int WEEK_ROWS = 2;
 //            [self addSubview:[self.snapShotElements objectAtIndex:1]];
 //        }
       
-        [self setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.f]];
+        [self setBackgroundColor:[UIColor colorWithWhite:.5f alpha:1.f]];
     }
     return self;
 }

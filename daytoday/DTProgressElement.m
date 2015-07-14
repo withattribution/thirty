@@ -173,7 +173,7 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
     CGPoint endCenter = CGPointZero;
   
     UIBezierPath *progressPath = [UIBezierPath bezierPath];
-    
+
     [progressPath moveToPoint:startPoint];
     [progressPath addLineToPoint:CGPointMake(self.frame.origin.x-END_PADDING,0.0f)];
     [progressPath addLineToPoint:CGPointMake(progressUnits-(2*endRadius), progressPath.currentPoint.y)];

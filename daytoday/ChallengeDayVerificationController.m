@@ -30,7 +30,6 @@
 
 #define kVerificationDayInset 5.f
 
-
 @implementation ChallengeDetailVerificationController
 
 - (id)initWithChallengeDay:(PFObject *)chDay
@@ -84,21 +83,33 @@
 
 - (void)addChallengeProgressElement
 {
-  if(![self intentHasChallengeDays]) {
-    [DTCommonRequests retrieveDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
+  
+//  if(![self intentHasChallengeDays]) {
+  [[DTCommonRequests retrieveDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]] continueWithBlock:^id(BFTask *ts){
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(cachedChallengeDaysForIntent:)
-                                                 name:DTChallengeDayDidCacheDaysForIntentNotification
-                                               object:nil];
-  }
-  self.calendarObject = [DTChallengeCalendar calendarWithIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
-  self.rowView = [[DTProgressRow alloc] initWithFrame:CGRectMake(0.f, self.cdd.frame.origin.y + self.cdd.frame.size.height + 15., self.view.frame.size.width, 40.f)];
+    if (!ts.error) {
+      
+      
+      self.calendarObject = [DTChallengeCalendar calendarWithIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
+      self.rowView = [[DTProgressRow alloc] initWithFrame:CGRectMake(0.f, self.cdd.frame.origin.y + self.cdd.frame.size.height + 15., self.view.frame.size.width, 40.f)];
+      
+      [self.rowView setDelegate:self];
+      [self.rowView setDataSource:self.calendarObject];
+      [self.rowView setRowInset:kVerificationDayInset];
+      [self.view addSubview:self.rowView];
+      [self.rowView reloadData:YES date:[NSDate date]];
+    }
 
-  [self.rowView setDelegate:self];
-  [self.rowView setDataSource:self.calendarObject];
-  [self.rowView setRowInset:kVerificationDayInset];
-  [self.view addSubview:self.rowView];
+    return nil;
+  }];;
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(cachedChallengeDaysForIntent:)
+//                                                 name:DTChallengeDayDidCacheDaysForIntentNotification
+//                                               object:nil];
+//  }
+
+  
 }
 
 - (CGFloat)heightForControllerFold
@@ -171,6 +182,7 @@
 
 - (void)cachedChallengeDaysForIntent:(NSNotification *)aNotification
 {
+  
   [self.rowView reloadData:YES date:[NSDate date]];
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:DTChallengeDayDidCacheDaysForIntentNotification

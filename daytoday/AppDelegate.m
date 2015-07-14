@@ -39,16 +39,10 @@
 	
   self.demoController = [[SWRevealViewController alloc] initWithRearViewController:rearNavigationController
                                                                frontViewController:frontNavigationController];
-  
   self.window.rootViewController = self.demoController;
   #endif
 
   [self.window makeKeyAndVisible];
-  
-  #ifdef CREATE_CHALLENGE_MODEL
-  [self createTestModels];
-  #endif
-
   return YES;
 }
 
@@ -67,47 +61,6 @@
       }];
     }
   }
-}
-
-- (void)createTestModels
-{
-  PFObject *challenge = [PFObject objectWithClassName:kDTChallengeClassKey];
-  [challenge setObject:@"Do yoga for 30 days" forKey:kDTChallengeDescriptionKey];
-  [challenge setObject:@(30) forKey:kDTChallengeDurationKey];
-  [challenge setObject:@(1) forKey:kDTChallengeFrequencyKey];
-  [challenge setObject:@"fitness" forKey:kDTChallengeCategoryKey];
-  [challenge setObject:@"YTTP Challenge" forKey:kDTChallengeNameKey];
-  
-  [challenge setObject:[PFUser currentUser] forKey:kDTChallengeCreatedByKey];
-  [challenge setObject:@(kDTChallengeVerificationTypeTick) forKey:kDTChallengeVerificationTypeKey];
-
-  [challenge saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
-    if(succeeded){
-      NIDINFO(@"saved an example challenge!");
-//      if([[NSUserDefaults standardUserDefaults] valueForKey:kDTChallengeUserSeed] == nil ){
-      MurmurHash *hash = [[MurmurHash alloc] init];
-      uint32_t userSeed = [hash hash32:[[PFUser currentUser] objectId]];
-//      NIDINFO(@"user seed: %u",userSeed);
-//      NIDINFO(@"challenge id: %@",[challenge objectId]);
-
-      uint32_t challengeUserHash = [hash hash32:[challenge objectId]  withSeed:userSeed];
-//      NIDINFO(@"challenge user seed: %u",challengeUserHash);
-
-      NSNumber *challengeUserSeed = [NSNumber numberWithUnsignedInt:challengeUserHash];
-//      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
-
-      [[NSUserDefaults standardUserDefaults] setValue:challengeUserSeed forKey:kDTChallengeUserSeed];
-      [[NSUserDefaults standardUserDefaults] synchronize];
-
-      [DTCommonRequests joinChallenge:[challenge objectId]];
-
-      NIDINFO(@"challenge user seed number-int: %u",[challengeUserSeed unsignedIntValue]);
-//      }
-    }
-    else {
-//      NIDINFO(@"%@",[err localizedDescription]);
-    }
-  }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

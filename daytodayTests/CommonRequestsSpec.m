@@ -18,7 +18,7 @@ NSString *const kTestingUserName                        =@"Fixture Username";
 NSString *const kTestingUserPassword                    =@"Fixture Password";
 NSString *const kTestingChallengeId                     =@"hxVdpImcUK";
 
-describe(@"User Entry: Login", ^{
+xdescribe(@"User Entry: Login", ^{
   //Log out any user that has persisted
   describe(@"Logout user to so that we're starting at a known state", ^{
     it(@"current user should not exist", ^{

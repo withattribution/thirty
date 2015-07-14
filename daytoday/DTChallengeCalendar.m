@@ -94,10 +94,10 @@
   //the division of the calendar into rows (of NUM_DAYS_FOR_ROW length)
   NSMutableArray *paddedCalendarDates = [NSMutableArray arrayWithArray:self.challengeDates];
   
-  int mod = [self.challengeDates count] % self.rowLength;
+  NSInteger mod = [self.challengeDates count] % self.rowLength;
   
   if (mod != 0) {
-    int toAdd = self.rowLength - mod;
+    NSUInteger toAdd = self.rowLength - mod;
     
     NSMutableArray *dates = [NSMutableArray arrayWithCapacity:toAdd];
     NSDateComponents *offSetComp = [localCalendar components:(NSCalendarUnitDay)
@@ -123,8 +123,8 @@
   NSArray *swapArray = [NSArray arrayWithArray:self.paddedChallengeDates];
   NSMutableArray *arrayOfWeeks = [NSMutableArray array];
   
-  int itemsRemaining = [swapArray count];
-  int aa = 0;
+  NSUInteger itemsRemaining = [swapArray count];
+  NSUInteger aa = 0;
   
   while(aa < [swapArray count]) {
     NSRange range = NSMakeRange(aa, MIN(self.rowLength, itemsRemaining));
@@ -149,7 +149,6 @@
 }
 
 #pragma mark DTProgressRow DataSource Methods
-
 
 - (NSUInteger)numberOfDaysForProgressRow:(DTProgressRow *)row
 {

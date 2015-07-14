@@ -16,13 +16,12 @@
     self = [super initWithFrame:frame];
     if (self) {
       [self setBackgroundColor:[UIColor clearColor]];
-      
       self.profileImageView = [[PFImageView alloc] init];
       self.profileImageView.layer.cornerRadius = 15;
 //      self.profileImageView.layer.cornerRadius = self.frame.size.height/2.f;
 //      self.profileImageView.layer.masksToBounds = YES;
       [self addSubview:self.profileImageView];
-      
+
       self.profileButton  = [UIButton buttonWithType:UIButtonTypeCustom];
       [self addSubview:self.profileButton];
     }

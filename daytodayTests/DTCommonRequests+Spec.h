@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DTCommonRequests (Specs)
+@interface DTCommonRequests (Spec)
 
 //DTCommonRequests used to test User Entry/Exit Intent Retrieval etc
 

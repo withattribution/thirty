@@ -50,89 +50,43 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
     return self;
 }
 
+- (UIColor *)randomColor {
+  return RGBCOLOR(arc4random_uniform(128) + 128,
+                  arc4random_uniform(128) + 128,
+                  arc4random_uniform(128) + 128);
+}
+
 #pragma mark - Table View Datasource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  
+
 #warning this is the state of how I found things and its not certain that this should be fixed or redone completely
-//    static NSString *cellID = @"CommentCell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-//    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-//    cell.backgroundColor = [UIColor redColor];
-//    return cell;
 
 
-//    TODO might be interesting to cache the results of the element layout call for each row
-//    DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
-  
-//    if([((Intent *)[self.intents objectAtIndex:indexPath.section]) daysLeft] > 0){
-//        if (indexPath.row == 0) {
-//            DaysLeftTableCell *cell = (DaysLeftTableCell *)[tableView dequeueReusableCellWithIdentifier:daysLeftCellReuseIdentifier];
-//            if (cell == nil) {
-//                cell = [[DaysLeftTableCell alloc] initWithStyle:UITableViewCellStyleDefault
-//                                                reuseIdentifier:daysLeftCellReuseIdentifier
-//                                                     withIntent:(Intent *)[self.intents objectAtIndex:indexPath.section]];
-//            }
-//            return cell;
-//        }
+//          if (indexPath.row == 0 && [self.intentsArray count] > 0) {
 
-//          static NSString *cellID = @"CommentCell";
-
-          if (indexPath.row == 0 && [self.intentsArray count] > 0) {
-          ProgressSnapShotTableCell *cell = (ProgressSnapShotTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
-          if (cell == nil) {
-//            DTChallengeCalendar *cc = [DTChallengeCalendar calendarWithIntent:[self.intentsArray objectAtIndex:indexPath.row]];
-            cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                    reuseIdentifier:progressRowCellReuseIdentifier
-                                                 withIntent:[self.intentsArray firstObject]];
-            }
-          return cell;
-          }
-        else{
-          
-          static NSString *cellID = @"CommentCell";
-          UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-          cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-          cell.backgroundColor = [UIColor redColor];
-          return cell;
-//          UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-//          if (cell == nil) {
-//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-//            //    cell.cellInsetWidth = kPAPCellInsetWidth;
-//            //    cell.delegate = self;
-//            cell.backgroundColor = [UIColor redColor];
-//          }
 //          return cell;
-        }
-  
-
-
-
-//        if (indexPath.row == 2) {
-//          ParticipantsTableCell *cell = (ParticipantsTableCell *)[tableView dequeueReusableCellWithIdentifier:participantsRowCellReuseIdentifier];
-//          if (cell == nil) {
-//            cell = [[ParticipantsTableCell alloc] initWithStyle:UITableViewCellStyleDefault
-//                                                reuseIdentifier:participantsRowCellReuseIdentifier
-//                                                     withIntent:(Intent *)[self.intents objectAtIndex:indexPath.section]];
 //          }
-//            return cell;
-//        }
-//    }
+//        else{
 
-// DTProgress Summary cell
-//    }else {
-//        ProgressSummaryCell *cell = (ProgressSummaryCell *)[tableView dequeueReusableCellWithIdentifier:summaryProgressCellReuseIdentifier];
-//        if (cell == nil) {
-//            DTProgressElementLayout *pl = [[DTProgressElementLayout alloc] initWithIntent:[self.intents objectAtIndex:indexPath.section]];
-//            cell = [[ProgressSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault
-//                                              reuseIdentifier:summaryProgressCellReuseIdentifier
-//                                              withSummaryView:[pl summaryProgressView]
-//                                                   completion:[((Intent *)[self.intents objectAtIndex:indexPath.section]) percentCompleted]];
-//        }
-//        return cell;
-//    }
+  ProgressSnapShotTableCell *cell = (ProgressSnapShotTableCell *)[tableView
+                                                                  dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
+  if (cell == nil) {
+    cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                            reuseIdentifier:progressRowCellReuseIdentifier
+                                         withIntent:[self.intentsArray firstObject]];
+    }
 
+  
+//  static NSString *cellID = @"CommentCell";
+//  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+//  if (cell == nil) {
+//    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+//  }
+//
+//  cell.backgroundColor = [self randomColor];
+  return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -145,10 +99,11 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if([((Intent *)[self.intents objectAtIndex:section]) daysLeft] > 0)
+  return [self.intentsArray count];
+//    if([([self.intents objectAtIndex:section]) daysLeft] > 0)
 //        return 3;
 //    else
-        return 1;
+//        return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

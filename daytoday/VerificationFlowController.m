@@ -20,9 +20,9 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
+
   //handle the selection of an image here
-  
+
   //since this is a first pass for the tick mark verification type -- skip directly to the status input screen
   self.statusTable = [[VerificationStatusTable alloc] initWithFrame:self.view.frame];
   //set the image or set the mkmapview to be uploaded or set the time to be uploaded here as well

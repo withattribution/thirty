@@ -9,7 +9,7 @@
 #import "DTCommonRequests.h"
 #import "DTCommonRequests+Spec.h"
 
-@implementation DTCommonRequests (Specs)
+@implementation DTCommonRequests (Spec)
 
 + (BFTask *)helperRetrievePinnedActiveIntentFromCurrentUser
 {
