@@ -26,6 +26,7 @@
 
 + (BFTask *)queryActiveIntentForUserFromService:(PFUser *)user;
 + (BFTask *)queryCurrentUserObjectWithActiveIntentKeyFromService;
++ (BFTask *)queryIntentsForUserFromService:(PFUser *)user;
 
 + (BFTask *)queryPinnedActiveIntentForCurrentUser;
 /*!
@@ -319,6 +320,7 @@ completely disassociate active intent for current user locally and from service
 #warning need to test
 + (BFTask *)retrieveActiveIntentForUser:(PFUser *)user
 {
+  
   if ([[PFUser currentUser] isEqual:user]) {
     return [[self queryPinnedActiveIntentForCurrentUser] continueWithBlock:^id(BFTask *pinned){
       
@@ -343,18 +345,18 @@ completely disassociate active intent for current user locally and from service
 + (BFTask *)retrieveIntentsForUser:(PFUser *)user
 {
   if([[DTCache sharedCache] intentsForUser:user] != nil){
+    //check to see if the current intent cached is the active intent, and if so there
+    //may be more intents that are on the service (sometime the user has a cached active intent
+    //and this may look like all the intents but in fact there are more ;)
+    if ([[[DTCache sharedCache] intentsForUser:user] count] == 1 &&
+        [[[[[DTCache sharedCache] intentsForUser:user] firstObject] objectId] isEqualToString:
+         [[user objectForKey:kDTUserActiveIntent] objectId]]) {
+          return [DTCommonRequests queryIntentsForUserFromService:user];
+    }
     return [BFTask taskWithResult:[[DTCache sharedCache] intentsForUser:user]];
   }
-
-  PFQuery *intentQuery = [PFQuery queryWithClassName:kDTIntentClassKey];
-  [intentQuery whereKey:kDTIntentUserKey equalTo:user];
-  return [[intentQuery findObjectsInBackground] continueWithSuccessBlock:^id(BFTask *intents){
-    if (intents.result) {
-      [[DTCache sharedCache] cacheIntents:intents.result forUser:user];
-      return intents.result;
-    }
-    return nil;
-  }];
+  //else check service
+  return [DTCommonRequests queryIntentsForUserFromService:user];
 }
 
 + (BFTask *)userNotLoggedIn
@@ -423,6 +425,20 @@ completely disassociate active intent for current user locally and from service
   }];
 }
 
++ (BFTask *)queryIntentsForUserFromService:(PFUser *)user
+{
+  PFQuery *intentQuery = [PFQuery queryWithClassName:kDTIntentClassKey];
+  [intentQuery whereKey:kDTIntentUserKey equalTo:user];
+  return [[intentQuery findObjectsInBackground] continueWithSuccessBlock:^id(BFTask *intents){
+    if (intents.result) {
+      [[DTCache sharedCache] cacheIntents:intents.result forUser:user];
+      return intents.result;
+    }
+    //just try to return what's in the cache, and if it's nothing then it's nothing (deal with it)
+    return [BFTask taskWithResult:[[DTCache sharedCache] intentsForUser:user]];
+  }];
+}
+
 + (BFTask *)queryCurrentUserObjectWithActiveIntentKeyFromService
 {
   //query service for intent object that the current user has
@@ -437,6 +453,7 @@ completely disassociate active intent for current user locally and from service
   PFQuery *query = [PFQuery queryWithClassName:kDTIntentClassKey];
   [query fromPinWithName:kDTPinnedActiveIntent];
   return [[query getFirstObjectInBackground] continueWithBlock:^id(BFTask *task){
+  
     if (task.result){
       [[DTCache sharedCache] cacheActiveIntent:task.result user:[PFUser currentUser]];
       return task.result;

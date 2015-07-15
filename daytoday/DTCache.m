@@ -118,10 +118,7 @@
   
   NSIndexSet *match = [[self challengeDaysForIntent:intent]
                         indexesOfObjectsPassingTest:^BOOL(PFObject *chDay, NSUInteger idx, BOOL *stop) {
-                          if ([[chDay objectForKey:kDTChallengeDayActiveHashKey] unsignedIntValue] == dayHash) {
-                            *stop = YES;
-                          }
-                          return idx;
+                          return ([[chDay objectForKey:kDTChallengeDayActiveHashKey] unsignedIntValue] == dayHash);
   }];
 
   return [[self challengeDaysForIntent:intent] objectAtIndex:[match firstIndex]];

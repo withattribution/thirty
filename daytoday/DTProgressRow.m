@@ -55,6 +55,8 @@
 
 - (void)reloadData:(BOOL)animated date:(NSDate *)date
 {
+  
+  
   if (_dataSource) {
     //compensate for changed row inset
     self.dotCount = [_dataSource numberOfDaysForProgressRow:self];
