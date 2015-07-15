@@ -43,6 +43,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  
+  for (int i = 1; i < [_names count]; i++) {
+    [[self.tableView cellForRowAtIndexPath:
+      [NSIndexPath indexPathForRow:i inSection:0]].textLabel setTextColor:
+     (![PFUser currentUser]) ? [UIColor lightGrayColor] : [UIColor blackColor]];
+  }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -72,6 +83,14 @@
     return cell;
   }
   return cell;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  if (![PFUser currentUser] && indexPath.row != 0) {
+    return nil;
+  }
+  return indexPath;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
