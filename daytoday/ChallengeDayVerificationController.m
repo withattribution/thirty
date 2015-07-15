@@ -76,20 +76,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-- (BOOL)intentHasChallengeDays
-{
-  return [[DTCache sharedCache] challengeDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]] != nil;
-}
-
 - (void)addChallengeProgressElement
 {
-  
-//  if(![self intentHasChallengeDays]) {
-  [[DTCommonRequests retrieveDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]] continueWithBlock:^id(BFTask *ts){
+  [[DTCommonRequests retrieveDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *ts){
     
     if (!ts.error) {
-      
-      
       self.calendarObject = [DTChallengeCalendar calendarWithIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
       self.rowView = [[DTProgressRow alloc] initWithFrame:CGRectMake(0.f, self.cdd.frame.origin.y + self.cdd.frame.size.height + 15., self.view.frame.size.width, 40.f)];
       
@@ -97,19 +88,13 @@
       [self.rowView setDataSource:self.calendarObject];
       [self.rowView setRowInset:kVerificationDayInset];
       [self.view addSubview:self.rowView];
+      //this need this to be called before it is drawn to the screen and that seems wrong wrong wrong
+#warning wrong wrong wrong !!!
       [self.rowView reloadData:YES date:[NSDate date]];
     }
 
     return nil;
-  }];;
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(cachedChallengeDaysForIntent:)
-//                                                 name:DTChallengeDayDidCacheDaysForIntentNotification
-//                                               object:nil];
-//  }
-
-  
+  }];
 }
 
 - (CGFloat)heightForControllerFold
@@ -122,9 +107,7 @@
   [super viewWillAppear:animated];
   [self.verifyElement reloadData:YES];
   
-  if([self intentHasChallengeDays]){
-    [self.rowView reloadData:NO date:[NSDate date]];
-  }
+  [self.rowView reloadData:NO date:[NSDate date]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -142,7 +125,7 @@
 
 -(void)verificationElement:(DTVerificationElement *)element didVerifySection:(NSUInteger)section
 {
-  NIDINFO(@"element: %@ and section:%d",element,section);
+  NIDINFO(@"element: %@ and section:%lu",element,(unsigned long)section);
   if ([[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] <
       [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue]  &&
       ![[self.challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue])
@@ -178,16 +161,6 @@
   return [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue];
 }
 
-#pragma mark - Intents for User Cache Refreshed Notification
-
-- (void)cachedChallengeDaysForIntent:(NSNotification *)aNotification
-{
-  
-  [self.rowView reloadData:YES date:[NSDate date]];
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:DTChallengeDayDidCacheDaysForIntentNotification
-                                                object:nil];
-}
 
 #pragma mark - Challenge Day Refreshed Notification
 

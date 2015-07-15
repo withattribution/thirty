@@ -25,11 +25,15 @@
 */
 
 #import "FrontViewController.h"
-//#import "SWRevealViewController.h"
-//#import "DTGlobalNavigation.h"
+
+//DTProgressRow TESTING
+#import "DTChallengeCalendarSpecHelpers.h"
+#import "DTChallengeCalendar.h"
+#import "DTProgressRow.h"
+//DTProgressRow TESTING
 
 @interface FrontViewController() <DTGlobalNavigationDelegate>
-//@property (nonatomic,strong) SWRevealViewController *revealController;
+
 @end
 
 @implementation FrontViewController
@@ -38,26 +42,19 @@
 
 - (void)viewDidLoad
 {
-	[super viewDidLoad];
+  [super viewDidLoad];
 	
   self.revealController = [self revealViewController];
   
-//  UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
-//                                                                       style:UIBarButtonItemStyleBordered target:self.revealController action:@selector(revealToggle:)];
-//  self.navigationItem.leftBarButtonItem = revealButtonItem;
-//  
-  [self.view addSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"daytoday.jpg"]]];
-//
-//  [self.navigationController.navigationBar setHidden:YES];
-//
-//	self.title = NSLocalizedString(@"DEMO MODE", nil);
+  [self buildDemoInterface];
+//  [self buildProgressRowTestingInterface];
+//  [self buildActiveDayTestingInterface];
 
   self.globalNavigation = [DTGlobalNavigation globalNavigationWithType:DTGlobalNavTypeGeneric];
   [self.globalNavigation setInsetWidth:5.f];
   [self.globalNavigation setDelegate:self];
   [self.view addSubview:self.globalNavigation];
 }
-
 
 - (void)userDidTapGlobalNavigationButtonType:(DTGlobalButtonType)type
 {
@@ -67,68 +64,78 @@
   }
 }
 
-//Sample code for generating parts of the challenge day for testing and demo usage
+- (void)buildActiveDayTestingInterface
+{
+  [[DTCommonRequests retrieveActiveChallengeDayForDate:[NSDate date] user:[PFUser currentUser]]
+   continueWithBlock:^id(BFTask *task){
+     if (!task.error) {
+       return [[DTCommonRequests retrieveDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]]
+               continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *ts){
+                 if (!ts.error) {
+                   CGRect rowRect = CGRectMake(0.f,
+                                               40.f,
+                                               self.view.frame.size.width,
+                                               40.f);
+                   TICK;
+                   DTChallengeCalendar *calendarObject = [DTChallengeCalendar calendarWithIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
+                   DTProgressRow *rowView = [[DTProgressRow alloc] initWithFrame:rowRect];
+                   [rowView setDataSource:calendarObject];
+                   [rowView setRowInset:5.0f];
+                   [self.view addSubview:rowView];
+                   [rowView reloadData:YES date:[NSDate date]];
+                   TOCK;
+                 }
+                 return nil;
+               }];
+     }
+     return nil;
+  }];
+}
 
-// build a challenge day model
-//  PFQuery *currentChallengeDay = [PFQuery queryWithClassName:kDTChallengeDayClassKey];
-//
-//  [currentChallengeDay whereKey:@"objectId" equalTo:@"v9xN4EbG71"];
-//
-//  [currentChallengeDay getObjectInBackgroundWithId:@"v9xN4EbG71" block:^(PFObject *obj, NSError *err){
-//    if(!err){
-//      self.challengeDayId = obj.objectId;
-//      NIDINFO(@"got object id: %@",self.challengeDayId);
-//      [self addChallengeDayInterface];
-//    }else{
-//      NIDINFO(@"%@",[err localizedDescription]);
-//    }
-//  }];
 
-//      self.challengeDay[kDTChallengeDayIntentKey] = [PFObject objectWithoutDataWithClassName:kDTIntentClassKey objectId:intent.objectId];
-//      [self.challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
-//        if(succeeded){
-//          NIDINFO(@"now we have an intent referencing the challenge day which is how we include the user for the challenge day");
-//
-//
-//
-//        }else {
-//          NIDINFO(@"%@",[error localizedDescription]);
-//        }
-//      }];
+- (void)buildProgressRowTestingInterface
+{
+  PFObject *intent = [DTChallengeCalendarSpecHelpers intentEndingInOneWeek];
+  DTChallengeCalendar *challengeCalendar = [DTChallengeCalendar calendarWithIntent:intent];
+  CGRect rowRect = CGRectMake(0.f,
+                              40.f,
+                              self.view.frame.size.width,
+                              40.f);
+  
+  DTProgressRow *prow1 = [[DTProgressRow alloc] initWithFrame:rowRect];
+  [prow1 setDataSource:challengeCalendar];
+  [prow1 setRowInset:5.0f];
+  [self.view addSubview:prow1];
+  [prow1 reloadData:YES date:[DTChallengeCalendarSpecHelpers startingDate:intent]];
+  
+  rowRect.origin.y += 50.0f;
+  
+  DTProgressRow *prow2 = [[DTProgressRow alloc] initWithFrame:rowRect];
+  [prow2 setDataSource:challengeCalendar];
+  [prow2 setRowInset:5.0f];
+  [self.view addSubview:prow2];
+  [prow2 reloadData:YES date:[DTChallengeCalendarSpecHelpers oneWeekAfterStarting:intent]];
+  
+  rowRect.origin.y += 50.0f;
+  
+  DTProgressRow *prow3 = [[DTProgressRow alloc] initWithFrame:rowRect];
+  [prow3 setDataSource:challengeCalendar];
+  [prow3 setRowInset:5.0f];
+  [self.view addSubview:prow3];
+  [prow3 reloadData:YES date:[DTChallengeCalendarSpecHelpers halfWayDone:intent]];
+  
+  rowRect.origin.y += 50.0f;
+  
+  DTProgressRow *prow4 = [[DTProgressRow alloc] initWithFrame:rowRect];
+  [prow4 setDataSource:challengeCalendar];
+  [prow4 setRowInset:5.0f];
+  [self.view addSubview:prow4];
+  [prow4 reloadData:YES date:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]];
+}
 
-// build an intent model
-
-//NSString *const kDTIntentStartingKey                   =@"start";
-//NSString *const kDTIntentEndingKey                     =@"end";
-//NSString *const kDTIntentUserKey                       =@"user";
-//NSString *const kDTIntentChallengeKey                  =@"challenge";
-
-//create an example intent: save it:
-//      PFObject *intent = [PFObject objectWithClassName:kDTIntentClassKey];
-//      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]] forKey:kDTIntentStartingKey];
-//      [intent setObject:[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]] forKey:kDTIntentEndingKey];
-//      [intent setObject:[PFUser currentUser] forKey:kDTIntentUserKey];
-//
-//      [intent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
-//        if(succeeded){
-//          NIDINFO(@"saved an example intent!");
-//          self.challengeDay[kDTChallengeDayIntentKey] = [PFObject objectWithoutDataWithClassName:kDTIntentClassKey objectId:intent.objectId];
-//          [self.challengeDay saveInBackgroundWithBlock:^(BOOL succeeded, NSError *err){
-//            if(succeeded){
-//              NIDINFO(@"now we have an intent referencing the challenge day which is how we include the user for the challenge day");
-//            }else {
-//              NIDINFO(@"%@",[error localizedDescription]);
-//            }
-//          }];
-//
-//        }
-//        else {
-//          NIDINFO(@"%@",[error localizedDescription]);
-//        }
-//      }];
-
-//      NIDINFO(@"date past: %@",[NSDate dateWithTimeInterval:(60.*60.*24*14*-1) sinceDate:[NSDate date]]);
-//      NIDINFO(@"date NOW: %@",[NSDate date]);
-//      NIDINFO(@"date future: %@",[NSDate dateWithTimeInterval:(60.*60.*24*14*1) sinceDate:[NSDate date]]);
+- (void)buildDemoInterface
+{
+  [self.view addSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"daytoday.jpg"]]];
+}
 
 @end

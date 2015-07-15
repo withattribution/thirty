@@ -125,6 +125,7 @@
       break;
     }
   }
+  
   return chDayForDate;
 }
 

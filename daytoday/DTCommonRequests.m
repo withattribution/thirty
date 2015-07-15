@@ -111,20 +111,19 @@ completely disassociate active intent for current user locally and from service
       return [DTCommonRequests queryChallengeDaysFromServiceForIntent:intent];
     }
   }
-
   //query pinned days, then cache, then try service
-  return [[DTCommonRequests queryChallengeDaysFromLocalStoreForActiveIntent:intent] continueWithBlock:^id(BFTask *pinned){
-
-    if (!pinned.result) {
-      NSArray *days = [[DTCache sharedCache] challengeDaysForIntent:intent];
-      if ([days count] > 0) {
-        return [BFTask taskWithResult:days];
-      }else{
-        return [DTCommonRequests queryChallengeDaysFromServiceForIntent:intent];
-      }
-    }
-    return pinned.result;
-  }];
+  return [[DTCommonRequests queryChallengeDaysFromLocalStoreForActiveIntent:intent]
+          continueWithBlock:^id(BFTask *pinned){
+            if ([pinned.result count] == 0) {
+              NSArray *days = [[DTCache sharedCache] challengeDaysForIntent:intent];
+              if ([days count] > 0) {
+                return [BFTask taskWithResult:days];
+              }else{
+                return [DTCommonRequests queryChallengeDaysFromServiceForIntent:intent];
+              }
+            }
+            return pinned.result;
+          }];
 }
 
 + (BFTask *)queryChallengeDaysFromServiceForIntent:(PFObject *)intent
@@ -132,8 +131,11 @@ completely disassociate active intent for current user locally and from service
   PFRelation *intentRelation = [intent relationForKey:kDTIntentChallengeDays];
   PFQuery *dayQuery = [intentRelation query];
   return [[dayQuery findObjectsInBackground] continueWithBlock:^id(BFTask *days){
-    [[DTCache sharedCache] cacheChallengeDays:days.result forIntent:intent];
-
+    if([intent.objectId isEqualToString:[[[PFUser currentUser] objectForKey:kDTUserActiveIntent] objectId]]){
+      return [DTCommonRequests pinAndCacheChallengeDaysForCurrentUser:days.result];
+    }else {
+      [[DTCache sharedCache] cacheChallengeDays:days.result forIntent:intent];
+    }
     return days.result;
   }];
 }
@@ -144,7 +146,6 @@ completely disassociate active intent for current user locally and from service
   [dayQuery fromPinWithName:kDTPinnedActiveChallengeDays];
   return [[dayQuery findObjectsInBackground] continueWithBlock:^id(BFTask *days){
     [[DTCache sharedCache] cacheChallengeDays:days.result forIntent:intent];
-
     return days.result;
   }];
 }
@@ -155,7 +156,7 @@ completely disassociate active intent for current user locally and from service
           continueWithSuccessBlock:^id(BFTask *pinned){
             [[DTCache sharedCache] cacheChallengeDays:days
                                             forIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
-            return nil;
+            return [BFTask taskWithResult:days];
   }];
 }
 
@@ -322,6 +323,7 @@ completely disassociate active intent for current user locally and from service
 {
   if ([[PFUser currentUser] isEqual:user]) {
     return [[self queryPinnedActiveIntentForCurrentUser] continueWithBlock:^id(BFTask *pinned){
+      
       if (pinned.result) {
         return pinned.result;
       }

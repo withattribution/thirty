@@ -15,7 +15,8 @@
 		6E7F9CA61B2C2FD50039FC83 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDAB9451B26E2350056AB69 /* Accounts.framework */; };
 		6E7F9CB01B2C36A10039FC83 /* CommonRequestsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E7F9CAD1B2C34FA0039FC83 /* CommonRequestsSpec.m */; };
 		6E7F9CB81B39158B0039FC83 /* UserEntryViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E7F9CB71B39158B0039FC83 /* UserEntryViewModel.m */; };
-		6E95F4521B54D083003B32CB /* MockPFObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E95F4511B54D083003B32CB /* MockPFObject.m */; };
+		6E95F4531B54EBFF003B32CB /* MockPFObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E95F4511B54D083003B32CB /* MockPFObject.m */; };
+		6E95F4541B54EC03003B32CB /* DTChallengeCalendarSpecHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E6396ED1B5384140040199B /* DTChallengeCalendarSpecHelpers.m */; };
 		6EDAB9441B26E22E0056AB69 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDAB9431B26E22E0056AB69 /* Twitter.framework */; };
 		6EDAB9461B26E2350056AB69 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDAB9451B26E2350056AB69 /* Accounts.framework */; };
 		6EDAB94B1B2835040056AB69 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E04BEBB1B108CCD00A279A2 /* FacebookSDK.framework */; };
@@ -1089,7 +1090,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E7F9CB01B2C36A10039FC83 /* CommonRequestsSpec.m in Sources */,
-				6E95F4521B54D083003B32CB /* MockPFObject.m in Sources */,
 				6E5C71721B49659100BB97E5 /* DTCommonRequests+Spec.m in Sources */,
 				6E6396EA1B5380490040199B /* DTChallengeCalendarSpec.m in Sources */,
 				6E6396EE1B5384140040199B /* DTChallengeCalendarSpecHelpers.m in Sources */,
@@ -1106,6 +1106,7 @@
 				A16AC9C01820058D00074AB8 /* Category+UIImage.m in Sources */,
 				B7E61D5217BD6AA5002B681B /* AppDelegate.m in Sources */,
 				A162B6F418453796007B3CE1 /* DTCommonUtilities.m in Sources */,
+				6E95F4531B54EBFF003B32CB /* MockPFObject.m in Sources */,
 				A1275C021806EB5B00019A91 /* UserInfoHeader.m in Sources */,
 				A1C60D63183C185800C98C69 /* DTCommonRequests.m in Sources */,
 				A1ECF0FB185CBA3B0012B71D /* DTProgressRow.m in Sources */,
@@ -1127,6 +1128,7 @@
 				B73903D117FB701A00B9C9BB /* DTViewController.m in Sources */,
 				B73903C817FB5FED00B9C9BB /* ProfileViewController.m in Sources */,
 				6EDEA73D1B4A876100918159 /* TTTTimeIntervalFormatter.m in Sources */,
+				6E95F4541B54EC03003B32CB /* DTChallengeCalendarSpecHelpers.m in Sources */,
 				A1ECF101185F80630012B71D /* DTNavigationBar.m in Sources */,
 				A1ECF0FE185D0BAA0012B71D /* DTChallengeCalendar.m in Sources */,
 				A120945E182C3991005B20F7 /* LogInForm.m in Sources */,
