@@ -75,7 +75,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
   if (cell == nil) {
     cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
                                             reuseIdentifier:progressRowCellReuseIdentifier
-                                         withIntent:[self.intentsArray firstObject]];
+                                         withIntent:[self.intentsArray objectAtIndex:indexPath.row]];
     }
 
   

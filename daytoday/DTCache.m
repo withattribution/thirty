@@ -113,20 +113,18 @@
 - (PFObject *)challengeDayForDate:(NSDate *)date intent:(PFObject *)intent
 {
   uint32_t dayHash = [DTCommonUtilities dayHashFromDate:date intent:intent];
-//  NIDINFO(@"dayHash: %u",dayHash);
+  
+  NIDINFO(@"dayHash: %u",dayHash);
+  
+  NSIndexSet *match = [[self challengeDaysForIntent:intent]
+                        indexesOfObjectsPassingTest:^BOOL(PFObject *chDay, NSUInteger idx, BOOL *stop) {
+                          if ([[chDay objectForKey:kDTChallengeDayActiveHashKey] unsignedIntValue] == dayHash) {
+                            *stop = YES;
+                          }
+                          return idx;
+  }];
 
-  PFObject *chDayForDate = nil;
-  NSArray *challengeDays = [self challengeDaysForIntent:intent];
-  
-  for (int i = 0; i < [challengeDays count]; i++) {
-    if ([[[challengeDays objectAtIndex:i] objectForKey:kDTChallengeDayActiveHashKey] unsignedIntValue] == dayHash)
-    {
-      chDayForDate = [challengeDays objectAtIndex:i];
-      break;
-    }
-  }
-  
-  return chDayForDate;
+  return [[self challengeDaysForIntent:intent] objectAtIndex:[match firstIndex]];
 }
 
 #pragma mark - Challenge Days For Intent
@@ -180,7 +178,18 @@
 - (void)cacheIntent:(PFObject *)intent forUser:(PFUser *)user
 {
   NSMutableArray *intents = [NSMutableArray arrayWithArray:[self intentsForUser:user]];
-  [intents addObject:intent];
+  //check if intents exists in cache
+  __block BOOL cachedIntentExists = NO;
+  [intents enumerateObjectsUsingBlock:^(PFObject *obj, NSUInteger idx, BOOL *stop){
+    if ([[obj objectId] isEqualToString:[intent objectId]]) {
+      *stop = cachedIntentExists = YES;
+    }
+  }];
+  
+  if (!cachedIntentExists) {
+    [intents addObject:intent];
+  }
+  
   [self setIntents:intents forUser:user];
   
   [[NSNotificationCenter defaultCenter]
@@ -191,6 +200,7 @@
 
 - (void)cacheIntents:(NSArray *)intents forUser:(PFUser *)user
 {
+  
   [self setIntents:intents forUser:user];
   
   [[NSNotificationCenter defaultCenter]

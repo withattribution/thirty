@@ -68,7 +68,6 @@ static int WEEK_ROWS = 2;
 //            
 //            [self addSubview:[self.snapShotElements objectAtIndex:1]];
 //        }
-      
         [self setBackgroundColor:[UIColor colorWithWhite:.5f alpha:1.f]];
     }
     return self;

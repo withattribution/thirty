@@ -120,14 +120,6 @@
 
 - (void)addChallengeDayInterface:(PFObject *)intent
 {
-  self.view.backgroundColor = [UIColor whiteColor];
-  
-  UIView *red = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 50, 50)];
-  red.backgroundColor = [UIColor redColor];
-  
-  [self.view addSubview:red];
-  
-  
   self.verficationController = [[ChallengeDetailVerificationController alloc] initWithChallengeDay:self.challengeDay];
   [self.view addSubview:self.verficationController.view];
   [self addChildViewController:self.verficationController];

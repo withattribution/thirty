@@ -77,7 +77,6 @@ completely disassociate active intent for current user locally and from service
 + (void)activeDayForDate:(NSDate *)date user:(PFUser *)user
 {
   [[DTCommonRequests retrieveActiveIntentForUser:user] continueWithSuccessBlock:^id(BFTask *task) {
-    if (!task.error) {
       uint32_t challengeUserSeed = [DTCommonUtilities challengeUserSeedFromIntent:task.result];
       NIDINFO(@"seed: %u",challengeUserSeed);
       [PFCloud callFunctionInBackground:DTQueryActiveDay
@@ -93,7 +92,6 @@ completely disassociate active intent for current user locally and from service
                                       NIDINFO("error!: %@",error.localizedDescription);
                                     }
                                   }];
-    }
     return nil;
   }];
 }
@@ -347,7 +345,7 @@ completely disassociate active intent for current user locally and from service
   if([[DTCache sharedCache] intentsForUser:user] != nil){
     return [BFTask taskWithResult:[[DTCache sharedCache] intentsForUser:user]];
   }
-  
+
   PFQuery *intentQuery = [PFQuery queryWithClassName:kDTIntentClassKey];
   [intentQuery whereKey:kDTIntentUserKey equalTo:user];
   return [[intentQuery findObjectsInBackground] continueWithSuccessBlock:^id(BFTask *intents){
