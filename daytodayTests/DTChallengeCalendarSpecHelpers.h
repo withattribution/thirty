@@ -13,10 +13,12 @@
 + (PFObject *)intentStartingOneWeekAgo;
 + (PFObject *)intentHalfWayDone;
 + (PFObject *)intentEndingInOneWeek;
++ (PFObject *)intentEndingToday;
 
 + (NSDate *)startingDate:(PFObject *)intent;
 + (NSDate *)oneWeekAfterStarting:(PFObject *)intent;
 + (NSDate *)halfWayDone:(PFObject *)intent;
 + (NSDate *)lastWeekUntilEnding:(PFObject *)intent;
++ (NSDate *)endingDate:(PFObject *)intent;
 
 @end

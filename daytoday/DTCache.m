@@ -113,15 +113,12 @@
 - (PFObject *)challengeDayForDate:(NSDate *)date intent:(PFObject *)intent
 {
   uint32_t dayHash = [DTCommonUtilities dayHashFromDate:date intent:intent];
-  
-  NIDINFO(@"dayHash: %u",dayHash);
-  
-  NSIndexSet *match = [[self challengeDaysForIntent:intent]
-                        indexesOfObjectsPassingTest:^BOOL(PFObject *chDay, NSUInteger idx, BOOL *stop) {
-                          return ([[chDay objectForKey:kDTChallengeDayActiveHashKey] unsignedIntValue] == dayHash);
-  }];
-
-  return [[self challengeDaysForIntent:intent] objectAtIndex:[match firstIndex]];
+//  NIDINFO(@"dayHash: %u",dayHash);
+  NSUInteger match = [[self challengeDaysForIntent:intent]
+                      indexOfObjectPassingTest:^BOOL(PFObject *chDay, NSUInteger idx, BOOL *stop) {
+                        return ([[chDay objectForKey:kDTChallengeDayActiveHashKey] unsignedIntValue] == dayHash);
+                      }];
+  return [[self challengeDaysForIntent:intent] objectAtIndex:match];
 }
 
 #pragma mark - Challenge Days For Intent

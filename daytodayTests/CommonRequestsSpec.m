@@ -127,7 +127,6 @@ xdescribe(@"User Entry: Login", ^{
             }];
           });
         });
-        
       });
   });
 });

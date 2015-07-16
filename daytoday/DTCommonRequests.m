@@ -53,6 +53,8 @@ completely disassociate active intent for current user locally and from service
 
 + (BFTask *)retrieveActiveChallengeDayForDate:(NSDate *)date user:(PFUser *)user
 {
+#warning, should only query if active day for date is not locally stored, but this is an optimization not necessary this burning instant
+
 #warning a possible way to optimize this might be to sort the pinned challenge days by ordinal and then translate the active hash to ordinal and lookup the active day locally for current users -- and only hit the service directly for other users (but not now)
   return [[DTCommonRequests retrieveActiveIntentForUser:user]
           continueWithSuccessBlock:^id(BFTask *task){

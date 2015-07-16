@@ -105,7 +105,8 @@
     for (int iterator = 1; iterator <= toAdd; iterator++)
     {
       [offSetComp setDay:iterator];
-      NSDate *offsetDate = [localCalendar dateByAddingComponents:offSetComp toDate:self.endDate/*[intent objectForKey:kDTIntentEndingKey]*/ options:0];
+      NSDate *offsetDate = [localCalendar dateByAddingComponents:offSetComp
+                                                          toDate:self.endDate/*[intent objectForKey:kDTIntentEndingKey]*/ options:0];
       [dates addObject:offsetDate];
     }
     [paddedCalendarDates addObjectsFromArray:dates];
@@ -185,9 +186,19 @@
 - (NSArray *)challengeDaysForProgressRow:(DTProgressRow *)row date:(NSDate *)date
 {
   NSArray *progressRowDates = [self rowForDate:date];
+//  NIDINFO(@"progress row dates: %ld", [progressRowDates count]);
+  
   NSMutableArray *challengeDaysForRow = [[NSMutableArray alloc] init];
   for (int i = 0; i < [progressRowDates count]; i++) {
-    [challengeDaysForRow addObject:[[DTCache sharedCache] challengeDayForDate:[progressRowDates objectAtIndex:i] intent:self.intent]];
+    [challengeDaysForRow addObject:[[DTCache sharedCache] challengeDayForDate:[progressRowDates objectAtIndex:i]
+                                                                       intent:self.intent]];
+    //block off effect of having padded dates -- this is because we used to show
+    //dates instead of just the ordinal numbers which we will move to shortly
+    if ([[DTCommonUtilities commonCalendar] compareDate:[progressRowDates objectAtIndex:i]
+                                                 toDate:self.endDate
+                                      toUnitGranularity:NSCalendarUnitDay] == NSOrderedSame) {
+      break;
+    }
   }
   return challengeDaysForRow;
 }
@@ -195,7 +206,7 @@
 - (NSArray *)rowForDate:(NSDate *)date
 {
   NSUInteger index = NSIntegerMax;
-  
+#warning i secretly want to clean this up (not a priority though)
   for (int i = 0; i < [self.rows count]; i++) {
     index = [[self.rows objectAtIndex:i] indexOfObjectPassingTest:^BOOL(NSDate *dateObj, NSUInteger idx, BOOL *stop){
       if ([localCalendar isDate:dateObj equalToDate:date toUnitGranularity:NSDayCalendarUnit]) {

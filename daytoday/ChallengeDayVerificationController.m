@@ -58,7 +58,7 @@
                          [[self.challengeDay objectForKey:kDTChallengeDayTaskRequiredCountKey] intValue] -
                          [[self.challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue]];
   
-  self.frequencyDot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 50.f) andColorGroup:[DTDotColorGroup frequenctCountColorGroup] andNumber:remaining];
+  self.frequencyDot = [[DTDotElement alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 50.f) andColorGroup:[DTDotColorGroup frequencyCountColorGroup] andNumber:remaining];
   [self.frequencyDot setAlpha:0.80];
   [self.frequencyDot setUserInteractionEnabled:NO];
   [self.frequencyDot setCenter:self.verifyElement.center];

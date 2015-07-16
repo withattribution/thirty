@@ -46,8 +46,8 @@
 	
   self.revealController = [self revealViewController];
   
-  [self buildDemoInterface];
-//  [self buildProgressRowTestingInterface];
+//  [self buildDemoInterface];
+  [self buildProgressRowTestingInterface];
 //  [self buildActiveDayTestingInterface];
 
   self.globalNavigation = [DTGlobalNavigation globalNavigationWithType:DTGlobalNavTypeGeneric];
@@ -92,10 +92,9 @@
   }];
 }
 
-
 - (void)buildProgressRowTestingInterface
 {
-  PFObject *intent = [DTChallengeCalendarSpecHelpers intentEndingInOneWeek];
+  PFObject *intent = [DTChallengeCalendarSpecHelpers intentEndingToday];
   DTChallengeCalendar *challengeCalendar = [DTChallengeCalendar calendarWithIntent:intent];
   CGRect rowRect = CGRectMake(0.f,
                               40.f,
@@ -131,6 +130,14 @@
   [prow4 setRowInset:5.0f];
   [self.view addSubview:prow4];
   [prow4 reloadData:YES date:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]];
+
+  rowRect.origin.y += 50.0f;
+  
+  DTProgressRow *prow5 = [[DTProgressRow alloc] initWithFrame:rowRect];
+  [prow5 setDataSource:challengeCalendar];
+  [prow5 setRowInset:5.0f];
+  [self.view addSubview:prow5];
+  [prow5 reloadData:YES date:[DTChallengeCalendarSpecHelpers endingDate:intent]];
 }
 
 - (void)buildDemoInterface

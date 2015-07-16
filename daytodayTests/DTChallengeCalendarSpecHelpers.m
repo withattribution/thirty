@@ -26,7 +26,7 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
 {
   return [self generateIntentStarting:[NSDate date]
                                ending:[[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitDay
-                                                                               value:30
+                                                                               value:29
                                                                               toDate:[NSDate date]
                                                                              options:0]
                     andIsAccomplished:NO];
@@ -40,7 +40,7 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
                                                                                    options:0]
           
                                ending:[[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
-                                                                               value:23
+                                                                               value:22
                                                                               toDate:[NSDate date]
                                                                              options:0]
                     andIsAccomplished:NO];
@@ -54,7 +54,7 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
                                                                                    options:0]
           
                                ending:[[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
-                                                                                     value:15
+                                                                                     value:14
                                                                                     toDate:[NSDate date]
                                                                                    options:0]
                     andIsAccomplished:NO];
@@ -68,9 +68,19 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
                                                                                    options:0]
           
                                ending:[[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
-                                                                                     value:7
+                                                                                     value:6
                                                                                     toDate:[NSDate date]
                                                                                    options:0]
+                    andIsAccomplished:NO];
+}
+
++ (PFObject *)intentEndingToday
+{
+  return [self generateIntentStarting:[[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
+                                                                                     value:-29
+                                                                                    toDate:[NSDate date]
+                                                                                   options:0]
+                               ending:[NSDate date]
                     andIsAccomplished:NO];
 }
 
@@ -118,9 +128,18 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
 
 + (void)generateChallengeDaysToSimulateIntent:(PFObject *)intent
 {
-  NSMutableArray *days = [NSMutableArray arrayWithCapacity:[[[intent objectForKey:kDTIntentChallengeKey] objectForKey:kDTChallengeDurationKey] integerValue]];
+  NSMutableArray *days = [NSMutableArray new];
+  int i = 1;
 
-  for (int i = 1; i <= [[[intent objectForKey:kDTIntentChallengeKey] objectForKey:kDTChallengeDurationKey] integerValue]; i++) {
+  for (id start = [intent objectForKey:kDTIntentStartingKey];
+       [[DTCommonUtilities commonCalendar] compareDate:start
+                                                toDate:[intent objectForKey:kDTIntentEndingKey]
+                                     toUnitGranularity:NSCalendarUnitDay] != NSOrderedDescending;
+        start = [[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
+                                                       value:1
+                                                      toDate:start
+                                                     options:0])
+  {
     PFObject *day = [PFObject objectWithClassName:kDTChallengeDayClassKey];
     [day setObject:[[intent objectForKey:kDTIntentChallengeKey]
                             objectForKey:kDTChallengeFrequencyKey]
@@ -129,17 +148,15 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
     [day setObject:[NSNumber numberWithInteger:0] forKey:kDTChallengeDayTaskCompletedCountKey];
     [day setObject:@(NO) forKey:kDTChallengeDayAccomplishedKey];
     [day setObject:[NSNumber numberWithInteger:i] forKey:kDTChallengeDayOrdinalDayKey];
-
-    NSDate *dateForHash = [[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
-                                                                        value:(i - 1)
-                                                                       toDate:[intent objectForKey:kDTIntentStartingKey]
-                                                                      options:0];
-
-    [day setObject:@([DTCommonUtilities dayHashFromDate:dateForHash intent:intent]) forKey:kDTChallengeDayActiveHashKey];
+//    NIDINFO(@"the day ordinal : %d",i);
+//    NIDINFO(@"date generated: %@", start);
+    [day setObject:@([DTCommonUtilities dayHashFromDate:start intent:intent]) forKey:kDTChallengeDayActiveHashKey];
 //    NIDINFO(@"regular: %@ uint: %u",@([DTCommonUtilities dayHashFromDate:dateForHash intent:intent]),[DTCommonUtilities dayHashFromDate:dateForHash intent:intent]);
 //    day.set("active",murmurHash3.x86.hash32(d.format("MM/DD/YYYY"),defaults.challengeUserSeed));
     [days addObject:day];
+    i++;
   }
+//  NIDINFO(@"NUMBER OF DAYS: %lu",(unsigned long)[days count]);
   [[DTCache sharedCache] cacheChallengeDays:days forIntent:intent];
 }
 
@@ -147,6 +164,7 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
 {
   return [intent objectForKey:kDTIntentStartingKey];
 }
+
 + (NSDate *)oneWeekAfterStarting:(PFObject *)intent
 {
   return  [[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
@@ -154,6 +172,7 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
                                                         toDate:[intent objectForKey:kDTIntentStartingKey]
                                                        options:0];
 }
+
 + (NSDate *)halfWayDone:(PFObject *)intent
 {
   return  [[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
@@ -161,11 +180,17 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
                                                         toDate:[intent objectForKey:kDTIntentStartingKey]
                                                        options:0];
 }
+
 + (NSDate *)lastWeekUntilEnding:(PFObject *)intent
 {
   return  [[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
                                                          value:-7
                                                         toDate:[intent objectForKey:kDTIntentEndingKey]
                                                        options:0];
+}
+
++ (NSDate *)endingDate:(PFObject *)intent
+{
+  return [intent objectForKey:kDTIntentEndingKey];
 }
 @end

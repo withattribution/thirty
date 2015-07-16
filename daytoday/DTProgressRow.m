@@ -62,10 +62,13 @@
     self.dotCount = [_dataSource numberOfDaysForProgressRow:self];
     self.dotPadding = [DTProgressRow paddingForRowInset:self.rowInset numberOfDTDots:self.dotCount frame:self.frame];
 
+
 //    NIDINFO(@"dot padding: %f",self.dotPadding);
 //    NIDINFO(@"dot inset: %f",self.rowInset);
 
     self.rowChallengeDays   = [_dataSource challengeDaysForProgressRow:self date:date];
+//    NIDINFO(@"rowChallengeDays count: %ld",[self.rowChallengeDays count]);
+    
     self.rowDates           = [_dataSource datesForProgressRow:self date:date];
 
     NSMutableArray *dtDotRow = [[NSMutableArray alloc] init];

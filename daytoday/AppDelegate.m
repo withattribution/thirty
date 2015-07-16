@@ -22,21 +22,21 @@
 {
   // Override point for customization after application launch.
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  
+
   NIMaxLogLevel = NILOGLEVEL_INFO;
-  
+
   [Parse enableLocalDatastore];
   [Parse setApplicationId:@"pMydn1FlUYwUcXeLRRAMFp3zcZPz3lRQ6IITQEe2"
                 clientKey:@"QJKFAJmMVCx69Nx7gWgK7s3ytyp7VgWrfhq1BCBk"];
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-  
+
   #ifdef INTERFACE_DEMO_MODE
   FrontViewController *frontViewController = [[FrontViewController alloc] init];
   DemoTableViewController *rearViewController = [[DemoTableViewController alloc] init];
-	
+
   UINavigationController *frontNavigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
   UINavigationController *rearNavigationController = [[UINavigationController alloc] initWithRootViewController:rearViewController];
-	
+
   self.demoController = [[SWRevealViewController alloc] initWithRearViewController:rearNavigationController
                                                                frontViewController:frontNavigationController];
   self.window.rootViewController = self.demoController;

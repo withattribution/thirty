@@ -54,7 +54,7 @@
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
   dcg.strokeColor      = [UIColor yellowColor];
   dcg.fillColor        = [UIColor yellowColor];
-  dcg.textColor        = [UIColor whiteColor];
+  dcg.textColor        = [UIColor blackColor];
   return dcg;
 }
 
@@ -77,7 +77,7 @@
   return dcg;
 }
 
-+(DTDotColorGroup *) frequenctCountColorGroup
++(DTDotColorGroup *) frequencyCountColorGroup
 {
   DTDotColorGroup *dcg = [[DTDotColorGroup alloc] init];
   dcg.strokeColor      = [UIColor clearColor];
