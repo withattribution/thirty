@@ -94,13 +94,12 @@
 
 - (void)buildProgressRowTestingInterface
 {
-  PFObject *intent = [DTChallengeCalendarSpecHelpers intentEndingToday];
+  PFObject *intent = [DTChallengeCalendarSpecHelpers intentHalfWayDone];
   DTChallengeCalendar *challengeCalendar = [DTChallengeCalendar calendarWithIntent:intent];
   CGRect rowRect = CGRectMake(0.f,
                               40.f,
                               self.view.frame.size.width,
                               40.f);
-  
   DTProgressRow *prow1 = [[DTProgressRow alloc] initWithFrame:rowRect];
   [prow1 setDataSource:challengeCalendar];
   [prow1 setRowInset:5.0f];

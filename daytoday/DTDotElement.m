@@ -129,8 +129,8 @@
   
   //current day
   if ([referenceCalendar isDate:date
-                        equalToDate:[NSDate date]
-                    toUnitGranularity:NSDayCalendarUnit]){
+                    equalToDate:[NSDate date]
+              toUnitGranularity:NSDayCalendarUnit]){
     
     if (![[challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue] &&
         [[challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] == 0)
@@ -151,8 +151,8 @@
   
   //past day
   if ([referenceCalendar compareDate:date
-                                  toDate:[NSDate date]
-                       toUnitGranularity:NSCalendarUnitDay] == NSOrderedAscending) {
+                              toDate:[NSDate date]
+                   toUnitGranularity:NSCalendarUnitDay] == NSOrderedAscending) {
     
     if (![[challengeDay objectForKey:kDTChallengeDayAccomplishedKey] boolValue] &&
         [[challengeDay objectForKey:kDTChallengeDayTaskCompletedCountKey] intValue] == 0)
@@ -207,9 +207,12 @@ static CGFloat DOT_STROKE_SCALE = 0.03f; //scale stroke widdth to some percentag
 
 + (DTDotElement *)buildForChallengeDay:(PFObject *)challengeDay andDate:(NSDate *)date frame:(CGRect)frame
 {
+//  return [[DTDotElement alloc] initWithFrame:frame
+//                               andColorGroup:[DTDotColorGroup colorGroupForChallengeDay:challengeDay withDate:date]
+//                                     andDate:date];
   return [[DTDotElement alloc] initWithFrame:frame
                                andColorGroup:[DTDotColorGroup colorGroupForChallengeDay:challengeDay withDate:date]
-                                     andDate:date];
+                                     andNumber:[challengeDay objectForKey:kDTChallengeDayOrdinalDayKey]];
 }
 
 - (id)initWithFrame:(CGRect)frame

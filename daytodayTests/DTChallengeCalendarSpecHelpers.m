@@ -49,12 +49,12 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
 + (PFObject *)intentHalfWayDone
 {
   return [self generateIntentStarting:[[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
-                                                                                     value:-15
+                                                                                     value:-14
                                                                                     toDate:[NSDate date]
                                                                                    options:0]
           
                                ending:[[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
-                                                                                     value:14
+                                                                                     value:15
                                                                                     toDate:[NSDate date]
                                                                                    options:0]
                     andIsAccomplished:NO];
@@ -176,7 +176,7 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
 + (NSDate *)halfWayDone:(PFObject *)intent
 {
   return  [[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
-                                                         value:15
+                                                         value:abs((([[[intent objectForKey:kDTIntentChallengeKey] objectForKey:kDTChallengeDurationKey] intValue] / 2) - 1))
                                                         toDate:[intent objectForKey:kDTIntentStartingKey]
                                                        options:0];
 }
