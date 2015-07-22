@@ -80,7 +80,7 @@
 {
   [super layoutSubviews];
   CGFloat textBackingY = self.userImageView.frame.origin.y+userImageDim*.80;
-  
+
   if (self.contentImageView.image != nil)
   {
     textBackingY += imageContentDim+vertElemSpacing;

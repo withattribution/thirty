@@ -21,5 +21,6 @@
 + (uint32_t)dayHashFromDate:(NSDate *)date intent:(PFObject *)intent;
 
 + (BFTask *)isValidDateForActiveIntent:(PFObject *)activeIntent;
++ (NSInteger)durationOfChallengeFromIntent:(PFObject *)intent;
 
 @end

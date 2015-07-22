@@ -225,6 +225,8 @@
 
 - (void)attemptLogIn
 {
+  [self.userNameField resignFirstResponder];
+  [self.passwordField resignFirstResponder];
   [DTCommonRequests logInWithUserCredential:self.viewModel.usernameCredential
                                    password:self.viewModel.passwordCredential];
 }

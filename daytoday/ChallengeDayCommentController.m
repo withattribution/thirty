@@ -37,22 +37,22 @@
 
 #pragma mark - Table View Datasource
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-////  if (self.intents && [self.intents count] > 0)
-////    return [self.intents count];
-////  else
-//    return 1;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-////  if([((Intent *)[self.intents objectAtIndex:section]) daysLeft] > 0)
-////    return 3;
-////  else
-//    return 20;
-//}
-//
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+//  if (self.intents && [self.intents count] > 0)
+//    return [self.intents count];
+//  else
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+//  if([((Intent *)[self.intents objectAtIndex:section]) daysLeft] > 0)
+//    return 3;
+//  else
+    return 20;
+}
+
 
 #pragma mark - PFQueryTableViewController
 
@@ -69,7 +69,7 @@
   [verificationActivity whereKey:kDTActivityTypeKey equalTo:kDTActivityTypeVerificationFinish];
   
   self.query = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:commentActivity,verificationActivity,nil]];
-  [self.query setCachePolicy:kPFCachePolicyCacheThenNetwork];
+//  [self.query setCachePolicy:kPFCachePolicyCacheThenNetwork];
   [self.query includeKey:kDTActivityVerificationKey];
   
   NIDINFO(@"cached results: %d",[self.query hasCachedResult]);
@@ -140,7 +140,7 @@
       cell.cellInsetWidth = kCommentCellInsetWidth;
       cell.delegate = self;
     }
-    
+
     if (object) {
       [cell setUser:[object objectForKey:kDTActivityFromUserKey]];
       [cell setContentText:[object objectForKey:kDTActivityContentKey]];

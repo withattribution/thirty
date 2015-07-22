@@ -193,4 +193,22 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
 {
   return [intent objectForKey:kDTIntentEndingKey];
 }
+
++ (NSDate *)oneWeekBeforeStartingDate:(PFObject *)intent
+{
+  return  [[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
+                                                         value:-7
+                                                        toDate:[intent objectForKey:kDTIntentStartingKey]
+                                                       options:0];
+}
+
++ (NSDate *)oneWeekAfterEndingDate:(PFObject *)intent
+{
+  return  [[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
+                                                         value:7
+                                                        toDate:[intent objectForKey:kDTIntentEndingKey]
+                                                       options:0];
+}
+
+
 @end

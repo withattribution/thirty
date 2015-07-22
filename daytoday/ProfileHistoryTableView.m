@@ -7,7 +7,6 @@
 //
 
 #import "ProfileHistoryTableView.h"
-
 #import "ProfileSectionHeaderView.h"
 
 #import "DaysLeftTableCell.h"
@@ -18,7 +17,6 @@
 #import "DTChallengeCalendar.h"
 
 #import "DTProgressElement.h"
-
 
 @interface ProfileHistoryTableView ()
 
@@ -50,42 +48,17 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
     return self;
 }
 
-- (UIColor *)randomColor {
-  return RGBCOLOR(arc4random_uniform(128) + 128,
-                  arc4random_uniform(128) + 128,
-                  arc4random_uniform(128) + 128);
-}
-
 #pragma mark - Table View Datasource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-#warning this is the state of how I found things and its not certain that this should be fixed or redone completely
-
-
-//          if (indexPath.row == 0 && [self.intentsArray count] > 0) {
-
-//          return cell;
-//          }
-//        else{
-
   ProgressSnapShotTableCell *cell = (ProgressSnapShotTableCell *)[tableView
                                                                   dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
   if (cell == nil) {
     cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
                                             reuseIdentifier:progressRowCellReuseIdentifier
                                          withIntent:[self.intentsArray objectAtIndex:indexPath.row]];
-    }
-
-  
-//  static NSString *cellID = @"CommentCell";
-//  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-//  if (cell == nil) {
-//    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-//  }
-//
-//  cell.backgroundColor = [self randomColor];
+  }
   return cell;
 }
 
@@ -117,8 +90,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 //            return 40.f;
 //    }
 //    else
-        return 87;
-
+  return 140;
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

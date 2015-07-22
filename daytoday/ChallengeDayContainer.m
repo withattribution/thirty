@@ -131,29 +131,29 @@
   [self.navigationBar setDelegate:self];
   [self.navigationBar setContentText:[self.challenge objectForKey:kDTChallengeNameKey]];
   
-  self.commentController = [[ChallengeDayCommentController alloc] initWithChallengeDay:self.challengeDay];
+//  self.commentController = [[ChallengeDayCommentController alloc] initWithChallengeDay:self.challengeDay];
+//
+//  [self.view addSubview:self.commentController.view];
+//  [self addChildViewController:self.commentController];
+//  [self.commentController didMoveToParentViewController:self];
+//  
+//  [self.commentController.view setFrame:CGRectMake(0.f,
+//                                                   [self.verficationController heightForControllerFold] + 0.f,//40.f,
+//                                                   self.view.frame.size.width,
+//                                                   self.view.frame.size.height)];
+//
+//  self.commentControllerAnchor = _commentController.view.frame.origin.y - 0.f;//40;
+//  self.panningVelocityYThreshold = 500;
 
-  [self.view addSubview:self.commentController.view];
-  [self addChildViewController:self.commentController];
-  [self.commentController didMoveToParentViewController:self];
-  
-  [self.commentController.view setFrame:CGRectMake(0.f,
-                                                   [self.verficationController heightForControllerFold] + 0.f,//40.f,
-                                                   self.view.frame.size.width,
-                                                   self.view.frame.size.height)];
+//  UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]
+//                                           initWithTarget:self
+//                                           action:@selector(moveCommentController:)];
+//  [panRecognizer setMinimumNumberOfTouches:1];
+//  [panRecognizer setMaximumNumberOfTouches:1];
+//  [panRecognizer setCancelsTouchesInView:NO];
+//  [panRecognizer setDelegate:self];
 
-  self.commentControllerAnchor = _commentController.view.frame.origin.y - 0.f;//40;
-  self.panningVelocityYThreshold = 500;
-
-  UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]
-                                           initWithTarget:self
-                                           action:@selector(moveCommentController:)];
-  [panRecognizer setMinimumNumberOfTouches:1];
-  [panRecognizer setMaximumNumberOfTouches:1];
-  [panRecognizer setCancelsTouchesInView:NO];
-  [panRecognizer setDelegate:self];
-
-  [self.commentController.view addGestureRecognizer:panRecognizer];
+//  [self.commentController.view addGestureRecognizer:panRecognizer];
 
   self.globalNavigation = [DTGlobalNavigation globalNavigationWithType:DTGlobalNavTypeSocial];
   [self.globalNavigation setDelegate:self];
@@ -557,9 +557,9 @@
                      [self.view layoutIfNeeded];
                      
                      self.commentController.view.frame = CGRectMake(0.f,
-                                                                [self.verficationController heightForControllerFold],
-                                                                self.view.frame.size.width,
-                                                                self.view.frame.size.height - [self.verficationController heightForControllerFold]);
+                                                                    [self.verficationController heightForControllerFold],
+                                                                    self.view.frame.size.width,
+                                                                    self.view.frame.size.height - [self.verficationController heightForControllerFold]);
                      [[UIApplication sharedApplication] setStatusBarHidden:NO];
                    }
                    completion:^(BOOL finished) {

@@ -15,10 +15,14 @@
 + (PFObject *)intentEndingInOneWeek;
 + (PFObject *)intentEndingToday;
 
+//Test inside bounds
 + (NSDate *)startingDate:(PFObject *)intent;
 + (NSDate *)oneWeekAfterStarting:(PFObject *)intent;
 + (NSDate *)halfWayDone:(PFObject *)intent;
 + (NSDate *)lastWeekUntilEnding:(PFObject *)intent;
 + (NSDate *)endingDate:(PFObject *)intent;
+//Test outside bounds
++ (NSDate *)oneWeekBeforeStartingDate:(PFObject *)intent;
++ (NSDate *)oneWeekAfterEndingDate:(PFObject *)intent;
 
 @end

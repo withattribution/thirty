@@ -93,6 +93,20 @@
                                      ending == NSOrderedDescending))];
 }
 
++ (NSInteger)durationOfChallengeFromIntent:(PFObject *)intent
+{
+
+  NSUInteger startOrdinalDay = [[self commonCalendar] ordinalityOfUnit:NSDayCalendarUnit
+                                                               inUnit:NSYearCalendarUnit
+                                                              forDate:[intent objectForKey:kDTIntentStartingKey]];
+
+  NSUInteger endOridinalDay = [[self commonCalendar] ordinalityOfUnit:NSDayCalendarUnit
+                                                               inUnit:NSYearCalendarUnit
+                                                              forDate:[intent objectForKey:kDTIntentEndingKey]];
+  // +1 is to include the last entire day in the duration
+  return (endOridinalDay - startOrdinalDay + 1);
+}
+
 @end
 
 

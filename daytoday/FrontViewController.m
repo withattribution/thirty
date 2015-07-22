@@ -46,8 +46,8 @@
 	
   self.revealController = [self revealViewController];
   
-//  [self buildDemoInterface];
-  [self buildProgressRowTestingInterface];
+  [self buildDemoInterface];
+//  [self buildProgressRowTestingInterface];
 //  [self buildActiveDayTestingInterface];
 
   self.globalNavigation = [DTGlobalNavigation globalNavigationWithType:DTGlobalNavTypeGeneric];
@@ -94,7 +94,7 @@
 
 - (void)buildProgressRowTestingInterface
 {
-  PFObject *intent = [DTChallengeCalendarSpecHelpers intentHalfWayDone];
+  PFObject *intent = [DTChallengeCalendarSpecHelpers intentEndingToday];
   DTChallengeCalendar *challengeCalendar = [DTChallengeCalendar calendarWithIntent:intent];
   CGRect rowRect = CGRectMake(0.f,
                               40.f,

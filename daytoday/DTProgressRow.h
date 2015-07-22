@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, DTProgressRowTemporalStatus) {
 - (NSArray *)datesForProgressRow:(DTProgressRow *)row date:(NSDate *)date;
 - (NSArray *)challengeDaysForProgressRow:(DTProgressRow *)row date:(NSDate *)date;
 - (NSUInteger)indexForDate:(DTProgressRow *)row date:(NSDate *)date;
-- (DTProgressRowEndStyle)endStyleForProgressRow:(DTProgressRow *)row date:(NSDate *)date;
+- (DTProgressRowEndStyle)endStyleForDate:(NSDate *)date;
 @end
 
 @interface DTProgressRow : UIView

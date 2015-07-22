@@ -18,10 +18,9 @@
 + (DTChallengeCalendar *)calendarWithIntent:(PFObject *)intent;
 
 - (void)setProgressRowLength:(NSUInteger)length;
+- (NSUInteger)rowLength;
 
 - (NSArray *)challengeDates;
-- (NSArray *)challengeDays;
-- (NSArray *)paddedChallengeDates;
 - (NSArray *)rows;
 
 @end

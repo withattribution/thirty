@@ -78,8 +78,8 @@
 
 - (void)addChallengeProgressElement
 {
-  [[DTCommonRequests retrieveDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *ts){
-    
+  [[DTCommonRequests retrieveDaysForIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]]
+   continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *ts){
     if (!ts.error) {
       self.calendarObject = [DTChallengeCalendar calendarWithIntent:[[DTCache sharedCache] activeIntentForUser:[PFUser currentUser]]];
       self.rowView = [[DTProgressRow alloc] initWithFrame:CGRectMake(0.f, self.cdd.frame.origin.y + self.cdd.frame.size.height + 15., self.view.frame.size.width, 40.f)];

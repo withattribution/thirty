@@ -15,7 +15,7 @@
 }
 
 /*the current array of challenge days in purely ordinal form*/
-@property (nonatomic,strong) NSArray *challengeDays;
+//@property (nonatomic,strong) NSArray *challengeDays;
 
 /*all the dates for the current challenge oridinal days as related to calendar dates*/
 @property (nonatomic,strong) NSArray *challengeDates;
@@ -58,6 +58,11 @@
   return self;
 }
 
+- (NSUInteger)rowLength
+{
+  return _rowLength;
+}
+
 - (void)setProgressRowLength:(NSUInteger)length
 {
   _rowLength = length;
@@ -74,7 +79,10 @@
 {
   NSDateComponents *offSetComp = [localCalendar components:(NSCalendarUnitDay) fromDate:self.startDate];
   NSMutableArray *dates = [NSMutableArray arrayWithObject:self.startDate];
-  for (int iterator = 1; iterator < [self.challengeDays count]; iterator++)
+//  for (int iterator = 1; iterator < [self.challengeDays count]; iterator++)
+    for (int iterator = 1;
+         iterator < [DTCommonUtilities durationOfChallengeFromIntent:self.intent];
+         iterator++)
   {
     [offSetComp setDay:iterator];
     NSDate *offsetDate = [localCalendar dateByAddingComponents:offSetComp toDate:self.startDate options:0];
@@ -144,11 +152,6 @@
   return arrayOfWeeks;
 }
 
-- (NSArray *)challengeDays
-{
-  return [[DTCache sharedCache] challengeDaysForIntent:self.intent];
-}
-
 #pragma mark DTProgressRow DataSource Methods
 
 - (NSUInteger)numberOfDaysForProgressRow:(DTProgressRow *)row
@@ -187,11 +190,12 @@
 {
   NSArray *progressRowDates = [self rowForDate:date];
 //  NIDINFO(@"progress row dates: %ld", [progressRowDates count]);
-  
-  NSMutableArray *challengeDaysForRow = [[NSMutableArray alloc] init];
+  NSMutableArray *challengeDaysForRow = [NSMutableArray new];
+
   for (int i = 0; i < [progressRowDates count]; i++) {
     [challengeDaysForRow addObject:[[DTCache sharedCache] challengeDayForDate:[progressRowDates objectAtIndex:i]
                                                                        intent:self.intent]];
+//    NIDINFO(@"the challenge days for row: %ld",[challengeDaysForRow count]);
     //block off effect of having padded dates -- this is because we used to show
     //dates instead of just the ordinal numbers which we will move to shortly
     if ([[DTCommonUtilities commonCalendar] compareDate:[progressRowDates objectAtIndex:i]
@@ -200,6 +204,7 @@
       break;
     }
   }
+  
   return challengeDaysForRow;
 }
 
@@ -259,9 +264,12 @@
   return DTProgressRowTemporalStatusUndefined;
 }
 
-- (DTProgressRowEndStyle)endStyleForProgressRow:(DTProgressRow *)row date:(NSDate *)date
+- (DTProgressRowEndStyle)endStyleForDate:(NSDate *)date
 {
   NSArray *dateRow = [self rowForDate:date];
+  if ([dateRow count] == 0)
+    return DTProgressRowEndUndefined;
+
   NSSet *rowSet = [NSSet setWithArray:dateRow];
   if ([self temporalStatusForDateRow:dateRow] == DTProgressRowPast &&
       (![rowSet containsObject:self.startDate] && ![rowSet containsObject:self.startDate]) )

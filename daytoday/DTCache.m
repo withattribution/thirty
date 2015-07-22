@@ -118,6 +118,7 @@
                       indexOfObjectPassingTest:^BOOL(PFObject *chDay, NSUInteger idx, BOOL *stop) {
                         return ([[chDay objectForKey:kDTChallengeDayActiveHashKey] unsignedIntValue] == dayHash);
                       }];
+//  NIDINFO(@"the index: %ld", match);
   return [[self challengeDaysForIntent:intent] objectAtIndex:match];
 }
 

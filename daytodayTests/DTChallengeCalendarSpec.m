@@ -41,16 +41,14 @@ describe(@"Challenge Calendars", ^{
       DTProgressRow *prow = [[DTProgressRow alloc] initWithFrame:CGRectZero];
       [prow setDataSource:challengeCalendar];
 
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers startingDate:intent]]).to.equal(DTProgressRowEndBothRounded);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers oneWeekAfterStarting:intent]]).to.equal(DTProgressRowEndUndefined);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers halfWayDone:intent]]).to.equal(DTProgressRowEndUndefined);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]]).to.equal(DTProgressRowEndUndefined);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers endingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers startingDate:intent]]).to.equal(DTProgressRowEndBothRounded);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekAfterStarting:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers halfWayDone:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers endingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekBeforeStartingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekAfterEndingDate:intent]]).to.equal(DTProgressRowEndUndefined);
     });
   });
 
@@ -65,16 +63,14 @@ describe(@"Challenge Calendars", ^{
       DTProgressRow *prow = [[DTProgressRow alloc] initWithFrame:CGRectZero];
       [prow setDataSource:challengeCalendar];
 
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers startingDate:intent]]).to.equal(DTProgressRowEndFlatRight);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers oneWeekAfterStarting:intent]]).to.equal(DTProgressRowEndFlatLeft);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers halfWayDone:intent]]).to.equal(DTProgressRowEndUndefined);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]]).to.equal(DTProgressRowEndUndefined);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers endingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers startingDate:intent]]).to.equal(DTProgressRowEndFlatRight);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekAfterStarting:intent]]).to.equal(DTProgressRowEndFlatLeft);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers halfWayDone:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers endingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekBeforeStartingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekAfterEndingDate:intent]]).to.equal(DTProgressRowEndUndefined);
     });
   });
 
@@ -89,16 +85,14 @@ describe(@"Challenge Calendars", ^{
       DTProgressRow *prow = [[DTProgressRow alloc] initWithFrame:CGRectZero];
       [prow setDataSource:challengeCalendar];
       
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers startingDate:intent]]).to.equal(DTProgressRowEndFlatRight);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers oneWeekAfterStarting:intent]]).to.equal(DTProgressRowEndFlat);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers halfWayDone:intent]]).to.equal(DTProgressRowEndFlatLeft);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]]).to.equal(DTProgressRowEndUndefined);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers endingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers startingDate:intent]]).to.equal(DTProgressRowEndFlatRight);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekAfterStarting:intent]]).to.equal(DTProgressRowEndFlat);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers halfWayDone:intent]]).to.equal(DTProgressRowEndFlatLeft);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers endingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekBeforeStartingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekAfterEndingDate:intent]]).to.equal(DTProgressRowEndUndefined);
     });
   });
 
@@ -113,16 +107,14 @@ describe(@"Challenge Calendars", ^{
       DTProgressRow *prow = [[DTProgressRow alloc] initWithFrame:CGRectZero];
       [prow setDataSource:challengeCalendar];
       
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers startingDate:intent]]).to.equal(DTProgressRowEndFlatRight);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers oneWeekAfterStarting:intent]]).to.equal(DTProgressRowEndFlat);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers halfWayDone:intent]]).to.equal(DTProgressRowEndFlat);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]]).to.equal(DTProgressRowEndFlatLeft);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers endingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers startingDate:intent]]).to.equal(DTProgressRowEndFlatRight);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekAfterStarting:intent]]).to.equal(DTProgressRowEndFlat);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers halfWayDone:intent]]).to.equal(DTProgressRowEndFlat);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]]).to.equal(DTProgressRowEndFlatLeft);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers endingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekBeforeStartingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekAfterEndingDate:intent]]).to.equal(DTProgressRowEndUndefined);
     });
   });
 
@@ -137,16 +129,14 @@ describe(@"Challenge Calendars", ^{
       DTProgressRow *prow = [[DTProgressRow alloc] initWithFrame:CGRectZero];
       [prow setDataSource:challengeCalendar];
       
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers startingDate:intent]]).to.equal(DTProgressRowEndFlatRight);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers oneWeekAfterStarting:intent]]).to.equal(DTProgressRowEndFlat);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers halfWayDone:intent]]).to.equal(DTProgressRowEndFlat);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]]).to.equal(DTProgressRowEndFlat);
-      expect([challengeCalendar endStyleForProgressRow:prow
-                                                  date:[DTChallengeCalendarSpecHelpers endingDate:intent]]).to.equal(DTProgressRowEndFlatLeft);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers startingDate:intent]]).to.equal(DTProgressRowEndFlatRight);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekAfterStarting:intent]]).to.equal(DTProgressRowEndFlat);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers halfWayDone:intent]]).to.equal(DTProgressRowEndFlat);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers lastWeekUntilEnding:intent]]).to.equal(DTProgressRowEndFlat);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers endingDate:intent]]).to.equal(DTProgressRowEndFlatLeft);
+      
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekBeforeStartingDate:intent]]).to.equal(DTProgressRowEndUndefined);
+      expect([challengeCalendar endStyleForDate:[DTChallengeCalendarSpecHelpers oneWeekAfterEndingDate:intent]]).to.equal(DTProgressRowEndUndefined);
     });
   });
   

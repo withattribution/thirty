@@ -25,7 +25,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
     if (!timeFormatter) {
       timeFormatter = [[TTTTimeIntervalFormatter alloc] init];
     }
-    
+
     self.cellInsetWidth = 0;
     horizontalTextSpace =  [DTVerificationCell horizontalTextSpaceForInsetWidth:self.cellInsetWidth];
     
