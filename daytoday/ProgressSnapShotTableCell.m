@@ -23,41 +23,38 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-      if (![[intent objectForKey:kDTIntentAccomplishedIntentKey] boolValue])
-      {
-        [[DTCommonRequests retrieveDaysForIntent:intent]
-         continueWithExecutor:[BFExecutor mainThreadExecutor]
-         withBlock:^id(BFTask *days) {
-          if ([days.result count] > 0) {
-            DTChallengeCalendar *challengeCalendar = [DTChallengeCalendar calendarWithIntent:intent];
-         
-            CGRect rowRect = CGRectMake(0.f,
-                                        0.f,
-                                        self.frame.size.width,
-                                        40.f);
-            
-            for (int i = 0; i < [[challengeCalendar rows] count]; i++) {
-              NSDate *rowWeekDate = [[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
-                                                                                   value:-1*([challengeCalendar rowLength])*i
-                                                                                  toDate:[NSDate date]
-                                                                                  options:0];
+      [[DTCommonRequests retrieveDaysForIntent:intent]
+       continueWithExecutor:[BFExecutor mainThreadExecutor]
+       withBlock:^id(BFTask *days) {
+        if ([days.result count] > 0) {
+          DTChallengeCalendar *challengeCalendar = [DTChallengeCalendar calendarWithIntent:intent];
+       
+          CGRect rowRect = CGRectMake(0.f,
+                                      0.f,
+                                      self.frame.size.width,
+                                      40.f);
+          
+          for (int i = 0; i < [[challengeCalendar rows] count]; i++) {
+            NSDate *rowWeekDate = [[DTCommonUtilities commonCalendar] dateByAddingUnit:NSCalendarUnitDay
+                                                                                 value:-1*([challengeCalendar rowLength])*i
+                                                                                toDate:[NSDate date]
+                                                                                options:0];
 
-              if( [challengeCalendar endStyleForDate:rowWeekDate] != DTProgressRowEndUndefined) {
-                
-                rowRect.origin.y = 45.0f*i+5.0f;
-                
-                DTProgressRow *prow1 = [[DTProgressRow alloc] initWithFrame:rowRect];
-                [prow1 setDataSource:challengeCalendar];
-                [prow1 setRowInset:5.0f];
-                [self addSubview:prow1];
-                [prow1 reloadData:YES date:rowWeekDate];
-              }
+            if( [challengeCalendar endStyleForDate:rowWeekDate] != DTProgressRowEndUndefined) {
+              
+              rowRect.origin.y = 45.0f*i+5.0f;
+              
+              DTProgressRow *prow1 = [[DTProgressRow alloc] initWithFrame:rowRect];
+              [prow1 setDataSource:challengeCalendar];
+              [prow1 setRowInset:5.0f];
+              [self addSubview:prow1];
+              [prow1 reloadData:YES date:rowWeekDate];
             }
           }
-          return nil;
-        }];
-        [self setBackgroundColor:[UIColor colorWithWhite:.5f alpha:1.f]];
-      }
+        }
+        return nil;
+      }];
+      [self setBackgroundColor:[UIColor colorWithWhite:.5f alpha:1.f]];
     }
     return self;
 }

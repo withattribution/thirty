@@ -10,6 +10,6 @@
 
 @interface ProgressSummaryCell : UITableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withSummaryView:(UIView *)sv completion:(CGFloat)percent;
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withIntent:(PFObject *)intent;
 
 @end

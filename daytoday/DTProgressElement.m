@@ -54,7 +54,6 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
 
 + (DTProgressElement *)buildForStyle:(DTProgressRowEndStyle)style progressUnits:(CGFloat)units frame:(CGRect)frame
 {
-  
 //  NIDINFO(@"the self frame before: %@",CGRectCreateDictionaryRepresentation(frame));
   return [[DTProgressElement alloc] initWithEndStyle:style andColorGroup:[DTProgressColorGroup snapshotProgress] progressUnits:units frame:frame];
 }
@@ -101,6 +100,9 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
         progressUnits = [self convertPercentToProgressUnits:p];
         progressColorGroup = [DTProgressColorGroup summaryProgressForeground];
         [self drawRoundedProgressElement];
+      
+      self.center = CGPointMake(CGRectGetMidX(self.bounds), self.center.y);
+      
     }
     return self;
 }
@@ -162,12 +164,12 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
     [progressPath addLineToPoint:CGPointMake(progressPath.currentPoint.x, self.frame.size.height)];
     [progressPath addLineToPoint:startPoint];
 
-    [self drawFinalShapeWithPath:progressPath];
+    [self drawFinalShapeWithPath:progressPath withOffset:0.f];
 }
 
 - (void)drawFlatLeftProgressElement
 {
-  
+
 #warning address this when working on the profile view
     CGPoint startPoint = CGPointMake(self.frame.origin.x-END_PADDING,0.0f);
     CGPoint endCenter = CGPointZero;
@@ -192,7 +194,7 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
     [progressPath addLineToPoint:CGPointMake(self.frame.origin.x-END_PADDING, progressPath.currentPoint.y)];
     [progressPath addLineToPoint:startPoint];
     
-    [self drawFinalShapeWithPath:progressPath];
+    [self drawFinalShapeWithPath:progressPath withOffset:0.f];
 }
 
 - (void)drawFlatRightProgressElement
@@ -225,7 +227,7 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
     [progressPath addLineToPoint:CGPointMake(progressPath.currentPoint.x, self.frame.size.height)];
     [progressPath addLineToPoint:startPoint];
     
-    [self drawFinalShapeWithPath:progressPath];
+    [self drawFinalShapeWithPath:progressPath withOffset:0.f];
 }
 
 - (void)drawRoundedProgressElement
@@ -234,6 +236,8 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
     CGPoint startPoint = [self pointOnCircleWithCenter:endCenter
                                                 radius:endRadius
                                         angleInDegrees:90];
+  
+
 
     UIBezierPath *progressPath = [UIBezierPath bezierPath];
     [progressPath moveToPoint:startPoint];
@@ -262,14 +266,14 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
 
     [progressPath addLineToPoint:startPoint];
     
-    [self drawFinalShapeWithPath:progressPath];
+  [self drawFinalShapeWithPath:progressPath withOffset:endRadius];
 }
 
-- (void)drawFinalShapeWithPath:(UIBezierPath *)path
+- (void)drawFinalShapeWithPath:(UIBezierPath *)path withOffset:(CGFloat)offset
 {
     CAShapeLayer *progressShape  = [CAShapeLayer layer];
     progressShape.opacity        = 1.0;
-    progressShape.position       = CGPointMake(END_PADDING,0.f);
+    progressShape.position       = CGPointMake(END_PADDING+offset,0.f);
     progressShape.fillColor      = progressColorGroup.fillColor.CGColor;
     progressShape.strokeColor    = progressColorGroup.strokeColor.CGColor;
     progressShape.lineWidth      = DOT_STROKE_WIDTH;
@@ -289,12 +293,12 @@ static CGFloat DOT_STROKE_WIDTH = 1.5f;
 
 -(CGFloat) convertPercentToProgressUnits:(CGFloat)p
 {
-    return (self.frame.size.width - (2*END_PADDING) - (2*endRadius))*p;
+    return (self.bounds.size.width - (2*END_PADDING) - (2*endRadius) )*p;
 }
 
 -(void) determineRoundedRadius
 {
-  endRadius = (self.frame.size.height)/2.f;
+  endRadius = (self.bounds.size.height)/2.f;
 }
 
 //- (CGPoint)rightCenter

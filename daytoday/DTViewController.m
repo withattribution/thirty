@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "DTViewController.h"
-//#import "SWRevealViewController.h"
 
 @interface DTViewController ()
 
@@ -20,6 +19,8 @@
 {
   [super viewDidLoad];
 
+  [[UIApplication sharedApplication] setStatusBarHidden:YES];
+  
 #ifdef INTERFACE_DEMO_MODE
   self.revealController = [self revealViewController];
   [self.navigationController.view addGestureRecognizer:self.revealController.panGestureRecognizer];

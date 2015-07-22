@@ -52,45 +52,44 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  ProgressSnapShotTableCell *cell = (ProgressSnapShotTableCell *)[tableView
-                                                                  dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
-  if (cell == nil) {
-    cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                            reuseIdentifier:progressRowCellReuseIdentifier
-                                         withIntent:[self.intentsArray objectAtIndex:indexPath.row]];
+  UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"generic"];
+  
+  if (![[[self.intentsArray objectAtIndex:indexPath.row] objectForKey:kDTIntentAccomplishedIntentKey] boolValue]) {
+    cell = (ProgressSnapShotTableCell *)[tableView dequeueReusableCellWithIdentifier:progressRowCellReuseIdentifier];
+    if (cell == nil) {
+      cell = [[ProgressSnapShotTableCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                              reuseIdentifier:progressRowCellReuseIdentifier
+                                                   withIntent:[self.intentsArray objectAtIndex:indexPath.row]];
+    }
+  }else{
+    cell = (ProgressSummaryCell *)[tableView dequeueReusableCellWithIdentifier:summaryProgressCellReuseIdentifier];
+    if (cell == nil) {
+      cell = [[ProgressSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                        reuseIdentifier:summaryProgressCellReuseIdentifier
+                                             withIntent:[self.intentsArray objectAtIndex:indexPath.row]];
+    }
   }
   return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    if (self.intents && [self.intents count] > 0)
-//        return [self.intents count];
-//    else
-        return 1;
+  return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   return [self.intentsArray count];
-//    if([([self.intents objectAtIndex:section]) daysLeft] > 0)
-//        return 3;
-//    else
-//        return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if([((Intent *)[self.intents objectAtIndex:indexPath.section]) daysLeft] > 0){
-//        if (indexPath.row == 1)
-//            return 87.f;
-//        if (indexPath.row == 2)
-//            return 45.f;
-//        else
-//            return 40.f;
-//    }
-//    else
-  return 140;
+  if (![[[self.intentsArray objectAtIndex:indexPath.row] objectForKey:kDTIntentAccomplishedIntentKey] boolValue]) {
+    return 140;
+  }else {
+    return 80;
+  }
+  
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
