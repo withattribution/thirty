@@ -129,6 +129,7 @@ Parse.Cloud.define("joinChallenge",function(request,response){
              end: moment().zone(offset).add('days',(challenge.get("duration") - 1)).toDate(),
             user: request.user,
     accomplished: false,
+      percentage: 0.0,
        challenge: challenge
     }, {
       success: function(intent) {

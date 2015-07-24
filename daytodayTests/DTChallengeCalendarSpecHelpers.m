@@ -111,6 +111,7 @@ NSString *const kMockChallengeId   = @"FwklKM8984";
   [intent setObject:starting forKey:kDTIntentStartingKey];
   [intent setObject:ending forKey:kDTIntentEndingKey];
   [intent setObject:@(finished) forKey:kDTIntentAccomplishedIntentKey];
+  [intent setObject:@(0.0) forKey:kDTIntentPercentComplete];
 
   //create a mock intent user object for hashing purposes
   PFObject *intentUser = [MockPFObject objectWithoutDataWithClassName:@"MockPFObject" objectId:kMockIntentUserId];
