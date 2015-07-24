@@ -104,7 +104,6 @@ Parse.Cloud.define("activeDay",function(request,response){
   //console.log("the offset date: "+moment().zone(offset).format("MM/DD/YYYY"));
   var query = new Parse.Query("ChallengeDay");
   query.equalTo("active",activeDay);
-  query.include("intent");
   query.first({
     success: function(day) {
       response.success(day);
@@ -114,10 +113,6 @@ Parse.Cloud.define("activeDay",function(request,response){
     }
   });
 });
-
-function saveIntent(defaults) {
-
-}
 
 Parse.Cloud.define("joinChallenge",function(request,response){
   var challengeId = request.params.challenge;
@@ -178,10 +173,40 @@ Parse.Cloud.define("joinChallenge",function(request,response){
       error: function(intent, error) {
         response.error("intent creation error: " +error.code);
       }
-
     });
   });
+});
 
+Parse.Cloud.define("leaveChallenge",function(request,response){
+  var Intent = Parse.Object.extend("Intent"),
+      intentQuery = new Parse.Query(Intent),
+      activeIntent;
+
+  intentQuery.get(request.params.intent).then(function(intent){    
+    activeIntent = intent;
+    activeIntent.relation("days").query().find({
+      success: function(days) {
+        activeIntent.days = days;
+        var passed = 0;
+        for (var i = days.length - 1; i >= 0; i--) {
+          if (days[i].get("accomplished") == true) {
+            passed++;
+          }
+        }
+        //percentage completed to two trailing decimal points
+        var percentageCompleted = Math.round((passed/days.length)*100)/100;
+        activeIntent.save({
+          percentage: percentageCompleted
+        }).then(function(savedIntent) {
+          response.success(savedIntent);
+        }, function(error) {
+          response.error("saving percentage: "+error.code);
+        });
+      }
+    });
+  },function(error){
+    response.error("fetching days: "+error.code);
+  });
 });
 
 function relateToIntent(object)

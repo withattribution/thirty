@@ -122,7 +122,7 @@ NSString *const kDTIntentUserKey                       =@"user";
 NSString *const kDTIntentChallengeDays                 =@"days";
 NSString *const kDTIntentAccomplishedIntentKey         =@"accomplished";
 NSString *const kDTIntentChallengeKey                  =@"challenge";
-#warning need an ATTRIBUTE FOR PERCENT COMPLETED FOR INTENT -- this makes a summary view
+NSString *const kDTIntentPercentComplete               =@"percentage";
 
 #pragma mark - Challenge Class
 // Class Key

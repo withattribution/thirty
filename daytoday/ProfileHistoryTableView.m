@@ -41,7 +41,7 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
         [self setContentInset:UIEdgeInsetsZero];
         [self setDelegate:self];
         [self setDataSource:self];
-        
+
         //register the header view so that we can "fancy deque it"
         [self registerClass:[ProfileSectionHeaderView class] forHeaderFooterViewReuseIdentifier:sectionHeaderViewReuseIdentifier];
     }
@@ -89,7 +89,6 @@ static NSString *sectionHeaderViewReuseIdentifier = @"sectionHeaderViewReuseIden
   }else {
     return 80;
   }
-  
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

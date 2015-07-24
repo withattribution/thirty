@@ -508,6 +508,17 @@ completely disassociate active intent for current user locally and from service
   }];
 }
 
+#warning where does this go -- server or locally and should everything else about leaving a challenge be on server too?
++ (BFTask *)serviceLeave
+{
+  return [[PFCloud callFunctionInBackground:@"leaveChallenge"
+                             withParameters:@{@"intent":[[[PFUser currentUser] objectForKey:kDTUserActiveIntent] objectId]}]
+         continueWithBlock:^id(BFTask *intent){
+           NIDINFO(@"intent task: %@",intent);
+           return nil;
+         }];
+}
+
 + (BFTask *)leaveChallenge
 {
   [[[PFUser currentUser] objectForKey:kDTUserActiveIntent] setObject:@(YES) forKey:kDTIntentAccomplishedIntentKey];

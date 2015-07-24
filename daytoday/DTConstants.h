@@ -91,7 +91,7 @@ extern NSString *const kDTChallengeDayTaskCompletedCountKey;
 extern NSString *const kDTChallengeDayAccomplishedKey;
 extern NSString *const kDTChallengeDayOrdinalDayKey;
 extern NSString *const kDTChallengeDayActiveHashKey;
-extern NSString *const kDTChallengeDayIntentKey;
+//extern NSString *const kDTChallengeDayIntentKey;
 
 #pragma mark - Cached ChallengeDay ACTIVITY Attributes
 #warning need to make these explicitly ACTIVITY ATTRIBUTES
@@ -113,6 +113,7 @@ extern NSString *const kDTIntentUserKey;
 extern NSString *const kDTIntentChallengeDays;
 extern NSString *const kDTIntentAccomplishedIntentKey;
 extern NSString *const kDTIntentChallengeKey;
+extern NSString *const kDTIntentPercentComplete;
 
 #pragma mark - Challenge Class
 // Class Key

@@ -19,13 +19,13 @@ static CGFloat PADDING = 1.5f;
     if (self) {
       //generate progress view here
       
-      UIView *sv = [[DTProgressElement alloc] initForSummaryElement:0.8f];
+      CGFloat percent = [[intent objectForKey:kDTIntentPercentComplete] floatValue];
+      
+      UIView *sv = [[DTProgressElement alloc] initForSummaryElement:percent];
       sv.center = CGPointMake(self.frame.size.width/2, sv.center.y+10);
 
       [self addSubview:sv];
-      
-      CGFloat percent = 0.8f;
-
+    
       NSString *percentText = [NSString stringWithFormat:@"%.0f%% COMPLETED",(percent * 100.)];
       
       CGRect percentLabelRect = [percentText boundingRectWithSize:CGSizeMake(self.frame.size.width/2.f,FLT_MAX)
